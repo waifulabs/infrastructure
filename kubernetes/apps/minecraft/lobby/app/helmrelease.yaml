@@ -63,6 +63,8 @@ spec:
       spawnMonsters: false
       ops: "Kashall"
       spawnNPCs: false
+      pluginUrls:
+        - https://cdn.modrinth.com/data/1u6JkXh5/versions/Jk1z2u7n/worldedit-bukkit-7.3.16.jar
       pvp: false
       levelType: FLAT
       generatorSettings: >-
