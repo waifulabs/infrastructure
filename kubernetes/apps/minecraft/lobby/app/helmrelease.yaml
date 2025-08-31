@@ -61,6 +61,7 @@ spec:
       difficulty: peaceful
       spawnAnimals: false
       spawnMonsters: false
+      ops: "Kashall"
       spawnNPCs: false
       pvp: false
       levelType: FLAT
