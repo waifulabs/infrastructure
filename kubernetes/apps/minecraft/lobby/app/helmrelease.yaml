@@ -65,6 +65,7 @@ spec:
       spawnNPCs: false
       pluginUrls:
         - https://cdn.modrinth.com/data/1u6JkXh5/versions/Jk1z2u7n/worldedit-bukkit-7.3.16.jar
+        - https://cdn.modrinth.com/data/TSZZyvNu/versions/BzZ72l2y/Akropolis-1.9.3.jar
       pvp: false
       levelType: FLAT
       generatorSettings: >-
