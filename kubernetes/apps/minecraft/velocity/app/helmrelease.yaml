@@ -49,6 +49,7 @@ spec:
                 https://cdn.modrinth.com/data/KkmSfl3v/versions/LsmNou60/Velocircon-1.0.2.jar
                 https://cdn.modrinth.com/data/Gpn18C8b/versions/ROhWZCMQ/VelocityDiscord-1.9.0.jar
                 https://github.com/unilock/YepLib/releases/download/2.3.0/yeplib-2.3.0.jar
+                https://cdn.modrinth.com/data/IwrVv7dD/versions/6qXm6kRw/Kiri%20no%20Michi-0.0.1-all.jar
               MEMORY: 512M
               MAX_MEMORY: 2048M
             envFrom:
