@@ -79,9 +79,11 @@ enable-player-address-logging = true
 # represents the IP address of the server to connect to.
 lobby = "lobby.minecraft.svc.cluster.local:25565"
 limbo = "limbo.minecraft.svc.cluster.local:25565"
+survival = "survival-minecraft.minecraft.svc.cluster.local:25565"
+marianland = "marianland-minecraft.minecraft.svc.cluster.local:25565"
 
 # In what order we should try servers when a player logs in or is kicked from a server.
-try = ["limbo"]
+try = ["lobby", "limbo"]
 
 [forced-hosts]
 "mc.ok8.sh" = ["lobby", "limbo"]
@@ -128,7 +130,7 @@ failover-on-unexpected-server-disconnect = true
 announce-proxy-commands = true
 
 # Enables the logging of commands
-log-command-executions = false
+log-command-executions = true
 
 # Enables logging of player connections when connecting to the proxy, switching servers
 # and disconnecting from the proxy.
@@ -173,7 +175,7 @@ enabled = true
 port = 25565
 
 # This is the map name that is reported to the query services.
-map = "KashMC"
+map = "Kashall's Network"
 
 # Whether plugins should be shown in query response by default or not
 show-plugins = false
