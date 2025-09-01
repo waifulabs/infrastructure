@@ -18,13 +18,15 @@ spec:
       strategy: rollback
       retries: 3
   values:
+    common_settings: &common_settings
+      annotations:
+        reloader.stakater.com/auto: "true"
+      pod:
+        nodeSelector:
+          rtlamr.feature.node.kubernetes.io/rtlamr: "true"
     controllers:
-      acars-decoder:
-        annotations:
-          reloader.stakater.com/auto: "true"
-        pod:
-          nodeSelector:
-            rtlamr.feature.node.kubernetes.io/rtlamr: "true"
+      acars-decoder-1:
+        <<: *common_settings
         containers:
           acars-decoder:
             image:
@@ -32,9 +34,10 @@ spec:
               tag: latest-build-412
             env:
               FEED_ID: KASHUWU-ACARS-1
+              DEVICE: ""
               TZ: Etc/UTC
-              SOAPYSDR: driver=rtlsdr,serial=00000001
-              FREQUENCIES: "130.025;130.450;131.550;131.725"
+              SOAPYSDR: driver=rtlsdr,serial=$(DEVICE)
+              FREQUENCIES: "131.725;131.550;131.425;131.125"
               # Enabling all frequencies to determine which are actually used
               # RTL-SDR can only scan 2MHz range
               # See https://app.airframes.io/about
@@ -53,9 +56,65 @@ spec:
               limits:
                 cpu: 200m
                 memory: 128Mi
+      acars-decoder-2:
+        <<: *common_settings
+        containers:
+          acars-decoder:
+            image:
+              repository: ghcr.io/sdr-enthusiasts/docker-acarsdec
+              tag: latest-build-412
+            env:
+              FEED_ID: KASHUWU-ACARS-2
+              DEVICE: ""
+              TZ: Etc/UTC
+              SOAPYSDR: driver=rtlsdr,serial=$(DEVICE)
+              FREQUENCIES: "130.025;130.450;130.825"
+              # Enabling all frequencies to determine which are actually used
+              # RTL-SDR can only scan 2MHz range
+              # See https://app.airframes.io/about
+              # FREQUENCIES: >-
+              #   130.025;130.425;130.450;130.825;130.850;131.125;131.425;
+              #   131.450;131.475;131.525;131.550;131.725;131.825;131.850
+              OUTPUT_SERVER: acars-acars-router
+              OUTPUT_SERVER_PORT: "5550"
+              OUTPUT_SERVER_MODE: tcp
+            securityContext:
+              privileged: true
+            resources:
+              requests:
+                cpu: 150m
+                memory: 64Mi
+              limits:
+                cpu: 200m
+                memory: 128Mi
+      dumpvdl2:
+        <<: *common_settings
+        replicas: 1
+        containers:
+          dumpvdl2:
+            securityContext:
+              privileged: true
+            image:
+              repository: ghcr.io/sdr-enthusiasts/docker-dumpvdl2
+              tag: latest-build-348
+            env:
+              FEED_ID: TYZBIT-VDL2-1
+              DEVICE: "13055074"
+              TZ: Etc/UTC
+              SOAPYSDR: driver=rtlsdr,serial=$(DEVICE)
+              # See https://app.airframes.io/about
+              # See also https://gist.github.com/tyzbit/8df46263085b0f3d9e2dd09069438f89
+              FREQUENCIES: 136.650;136.975;136.800;136.100;136.675
+              ZMQ_MODE: client
+              ZMQ_ENDPOINT: tcp://acars-acarsrouter:35555
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits:
+                memory: 256Mi
       acars-router:
-        annotations:
-          reloader.stakater.com/auto: "true"
+        <<: *common_settings
         containers:
           acars-router:
             image:
@@ -63,10 +122,8 @@ spec:
               tag: 1.3.1_linux_amd64
             env:
               TZ: Etc/UTC
-              AR_RECV_ZMQ_VDLM2: acars-acars-hub:45555
-            envFrom:
-              - secretRef:
-                  name: acars-secret
+              AR_SEND_UDP_ACARS: acars-acarshub:5550;feedthe.acarsdrama.com:5550 #;feed.acars.io:5550
+              AR_SEND_UDP_VDLM2: acars-acarshub:5555;feedthe.acarsdrama.com:5555 #;feed.airframes.io:5552
             resources:
               requests:
                 cpu: 10m
@@ -74,6 +131,7 @@ spec:
               limits:
                 memory: 96Mi
       acars-hub:
+        <<: *common_settings
         containers:
           acars-hub:
             image:
@@ -124,13 +182,24 @@ spec:
               - name: acars-hub
                 port: *port
     persistence:
-      usb:
+      # For kubectl, usbreset and usb-devices
+      binaries:
+        type: hostPath
+        hostPath: /bin
+        advancedMounts:
+          acars-usb-watchdog: {acars-usb-watchdog: [{path: /usr/local/sbin}]}
+      # For resetting individual USB devices
+      usbdevices:
         type: hostPath
         hostPath: /dev/bus/usb
         advancedMounts:
-          acars-decoder:
-            acars-decoder:
-              - path: /dev/bus/usb
+          acars-usb-watchdog: {acars-usb-watchdog: [{path: /dev/bus/usb}]}
+      # For resetting the USB Hub
+      usbhub:
+        type: hostPath
+        hostPath: /sys/bus/pci/drivers/xhci_hcd
+        advancedMounts:
+          acars-usb-watchdog: {acars-usb-watchdog: [{path: /sys/bus/pci/drivers/xhci_hcd}]}
       acars-hub:
         type: persistentVolumeClaim
         storageClass: ceph-block
