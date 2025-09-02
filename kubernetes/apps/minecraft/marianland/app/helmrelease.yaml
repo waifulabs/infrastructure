@@ -1,0 +1,78 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app marianland
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  install:
+    remediation:
+      retries: -1
+  values:
+    controllers:
+      minecraft:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/itzg/minecraft-server
+              tag: 2025.8.1-java21
+            env:
+              TZ: America/Los_Angeles
+              KEEP_INVENTORY: true
+              OFFLINE_MODE: false
+              ENABLE_ROLLING_LOGS: true
+              ALLOW_FLIGHT: true
+              INIT_MEMORY: 1G
+              MAX_MEMORY: &max-memory 6G
+              MODRINTH_PROJECTS: |
+                bluemap
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 2
+                memory: *max-memory
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            runAsNonRoot: true
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+    service:
+      minecraft:
+        controller: minecraft
+        ports:
+          game:
+            port: &game-port 25565
+          rcon:
+            port: &rcon-port 25578
+          web:
+            port: &web-port 8100
+    route:
+      minecraft:
+        hostnames: ["mcmap.ok8.sh"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *web-port
+            matches:
+              - path: /marianland
+                type: PathPrefix
+    persistence:
+      data:
+        existingClaim: *app
+        globalMounts:
+          - path: /data

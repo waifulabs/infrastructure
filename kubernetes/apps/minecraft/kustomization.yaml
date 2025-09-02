@@ -9,5 +9,6 @@ resources:
   - ./namespace.yaml
   - ./limbo/ks.yaml
   - ./lobby/ks.yaml
+  - ./marianland/ks.yaml
   - ./velocity/ks.yaml
   - ./survival/ks.yaml
