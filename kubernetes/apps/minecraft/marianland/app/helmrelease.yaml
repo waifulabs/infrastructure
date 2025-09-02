@@ -28,7 +28,7 @@ spec:
               repository: ghcr.io/itzg/minecraft-server
               tag: 2025.8.1-java21
             env:
-              EULA: true
+              EULA: "true"
               TZ: America/Los_Angeles
               KEEP_INVENTORY: true
               OFFLINE_MODE: false
