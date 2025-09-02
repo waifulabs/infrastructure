@@ -63,9 +63,3 @@ spec:
     persistence:
       tmp:
         type: emptyDir
-      web:
-        type: emptyDir
-      data:
-        type: emptyDir
-      config:
-        type: emptyDir
