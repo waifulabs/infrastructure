@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app marianland
+  name: &app bluemap
 spec:
   interval: 1h
   chartRef:
@@ -23,53 +23,34 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          marianland:
+          bluemap:
             image:
-              repository: ghcr.io/itzg/minecraft-server
-              tag: 2025.8.1-java21
+              repository: ghcr.io/bluemap-minecraft/bluemap
+              tag: v5.11@sha256:d11a151f52c6b158134226ab7abb8085e4a5c8bb678a91eb6b125d7121918063
             env:
-              EULA: "true"
-              TZ: America/Los_Angeles
-              TYPE: "PAPER"
-              VERSION: "1.21.8"
-              ONLINE_MODE: false
-              SERVER_NAME: *app
-              DIFFICULTY: easy
-              MAX_PLAYERS: 40
-              KEEP_INVENTORY: true
-              ENABLE_ROLLING_LOGS: true
-              ALLOW_FLIGHT: true
-              INIT_MEMORY: 1G
-              MAX_MEMORY: &max-memory 6G
-              MODRINTH_PROJECTS: |
-                bluemap
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 2
-                memory: *max-memory
+                cpu: 0.5
+                memory: 1G
         pod:
           securityContext:
-            runAsUser: 568
-            runAsGroup: 568
+            runAsUser: 1000
+            runAsGroup: 1000
             runAsNonRoot: true
-            fsGroup: 568
+            fsGroup: 1000
             fsGroupChangePolicy: OnRootMismatch
     service:
-      minecraft:
+      bluemap:
         controller: minecraft
         ports:
-          game:
-            port: &game-port 25565
-          rcon:
-            port: &rcon-port 25578
           web:
             port: &web-port 8100
     route:
-      minecraft:
+      bluemap:
         hostnames: ["map.ok8.sh"]
         parentRefs:
           - name: external
@@ -79,15 +60,10 @@ spec:
           - backendRefs:
               - name: *app
                 port: *web-port
-            matches:
-              - path:
-                  type: PathPrefix
-                  # https://bluemap.bluecolored.de/wiki/getting-started/ServerNetworks.html#steps-1
-                  value: /maps/marianland
     persistence:
       tmp:
         type: emptyDir
-      data:
+      app:
         existingClaim: *app
         globalMounts:
-          - path: /data
+          - path: /app
