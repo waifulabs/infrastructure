@@ -74,8 +74,9 @@ spec:
               - name: *app
                 port: *web-port
             matches:
-              - path: /marianland
-                type: PathPrefix
+              - path:
+                  type: PathPrefix
+                  value: /marianland
     persistence:
       data:
         existingClaim: *app
