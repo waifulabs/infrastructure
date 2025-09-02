@@ -30,8 +30,13 @@ spec:
             env:
               EULA: "true"
               TZ: America/Los_Angeles
+              TYPE: "PAPER"
+              VERSION: "1.21.8"
+              ONLINE_MODE: false
+              SERVER_NAME: *app
+              DIFFICULTY: easy
+              MAX_PLAYERS: 40
               KEEP_INVENTORY: true
-              OFFLINE_MODE: false
               ENABLE_ROLLING_LOGS: true
               ALLOW_FLIGHT: true
               INIT_MEMORY: 1G
@@ -79,6 +84,8 @@ spec:
                   type: PathPrefix
                   value: /marianland
     persistence:
+      tmp:
+        type: emptyDir
       data:
         existingClaim: *app
         globalMounts:
