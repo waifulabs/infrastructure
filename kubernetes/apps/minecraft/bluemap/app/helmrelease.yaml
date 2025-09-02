@@ -30,7 +30,7 @@ spec:
             # command: "java -jar /app/cli.jar -g && java -jar /app/cli.jar -w"
             securityContext:
               allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: false
+              readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
             resources:
               requests:
@@ -63,3 +63,7 @@ spec:
     persistence:
       tmp:
         type: emptyDir
+      config:
+        existingClaim: *app
+        globalMounts:
+          - path: /app/config
