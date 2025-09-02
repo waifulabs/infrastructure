@@ -66,8 +66,14 @@ spec:
         type: emptyDir
       data:
         type: emptyDir
+        globalMounts:
+          - path: /app/data
       config:
         type: persistentVolumeClaim
         existingClaim: *app
+        globalMounts:
+          - path: /app/config
       web:
         type: emptyDir
+        globalMounts:
+          - path: /app/web
