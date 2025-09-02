@@ -68,6 +68,4 @@ spec:
       data:
         type: emptyDir
       config:
-        existingClaim: *app
-        globalMounts:
-          - path: /app/config
+        type: emptyDir
