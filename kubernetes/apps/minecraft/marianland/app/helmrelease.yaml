@@ -11,14 +11,19 @@ spec:
     name: app-template
   install:
     remediation:
-      retries: -1
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
   values:
     controllers:
       minecraft:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          app:
+          marianland:
             image:
               repository: ghcr.io/itzg/minecraft-server
               tag: 2025.8.1-java21
