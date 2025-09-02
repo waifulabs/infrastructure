@@ -30,7 +30,7 @@ spec:
             # command: "java -jar /app/cli.jar -g && java -jar /app/cli.jar -w"
             securityContext:
               allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
+              readOnlyRootFilesystem: false
               capabilities: { drop: ["ALL"] }
             resources:
               requests:
