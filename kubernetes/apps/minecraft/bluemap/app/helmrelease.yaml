@@ -64,3 +64,10 @@ spec:
     persistence:
       tmp:
         type: emptyDir
+      data:
+        type: emptyDir
+      config:
+        type: persistentVolumeClaim
+        existingClaim: *app
+      web:
+        type: emptyDir
