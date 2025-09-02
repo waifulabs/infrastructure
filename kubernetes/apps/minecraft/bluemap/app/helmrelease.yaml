@@ -27,10 +27,10 @@ spec:
             image:
               repository: ghcr.io/bluemap-minecraft/bluemap
               tag: v5.11@sha256:d11a151f52c6b158134226ab7abb8085e4a5c8bb678a91eb6b125d7121918063
-            args: ["-g", "-w"]
+            command: ["java -jar cli.jar -g", "java -jar cli.jar -w"]
             securityContext:
               allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
+              readOnlyRootFilesystem: false
               capabilities: { drop: ["ALL"] }
             resources:
               requests:
@@ -63,7 +63,3 @@ spec:
     persistence:
       tmp:
         type: emptyDir
-      app:
-        existingClaim: *app
-        globalMounts:
-          - path: /app
