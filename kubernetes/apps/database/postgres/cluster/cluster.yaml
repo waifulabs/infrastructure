@@ -65,6 +65,7 @@ spec:
         compress-level: "9"
         repo2-block: "y"
         repo2-bundle: "y"
+        repo2-path: /
         repo2-retention-full: "7" # days
         repo2-retention-full-type: time
       jobs:
