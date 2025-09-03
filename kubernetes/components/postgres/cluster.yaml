@@ -30,7 +30,7 @@ spec:
           app.kubernetes.io/name: ${APP}-crunchy-postgres
       replicas: &replicas 3 # One per node
       dataVolumeClaimSpec:
-        storageClassName: local-hostpath
+        storageClassName: openebs-hostpath
         accessModes: ["ReadWriteOnce"]
         resources:
           requests:
