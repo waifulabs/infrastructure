@@ -68,6 +68,7 @@ spec:
         repo2-path: /
         repo2-retention-full: "7" # days
         repo2-retention-full-type: time
+        repo2-s3-uri-style: path
       jobs:
         ttlSecondsAfterFinished: 60
       manual:
