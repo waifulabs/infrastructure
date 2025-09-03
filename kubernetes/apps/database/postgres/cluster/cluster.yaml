@@ -79,14 +79,14 @@ spec:
           schedules:
             full: "30 2 * * 0" # Sunday at 02:30
             incremental: "30 2 * * 1-6/2" # Mon-Sat at 02:30, every 2nd day
-  #dataSource:
-  #  pgbackrest:
-  #    stanza: db
-  #    configuration: *backupConfig
-  #    global: *backupFlag
-  #    repo:
-  #      name: repo2
-  #      s3: *s3
+  dataSource:
+    pgbackrest:
+      stanza: db
+      configuration: *backupConfig
+      global: *backupFlag
+      repo:
+        name: repo2
+        s3: *s3
   proxy:
     pgBouncer:
       port: 5432
