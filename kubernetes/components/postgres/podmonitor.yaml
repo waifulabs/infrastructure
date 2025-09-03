@@ -1,0 +1,27 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/monitoring.coreos.com/podmonitor_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: &name ${APP}-postgres
+spec:
+  jobLabel: *name
+  podMetricsEndpoints:
+    - honorLabels: true
+      path: /metrics
+      port: exporter
+      relabelings:
+        - sourceLabels: ["__meta_kubernetes_namespace", "__meta_kubernetes_pod_label_postgres_operator_crunchydata_com_cluster"]
+          targetLabel: pg_cluster
+          separator: "/"
+          replacement: '$1$2'
+        - sourceLabels: [__meta_kubernetes_pod_label_postgres_operator_crunchydata_com_instance]
+          targetLabel: deployment
+        - sourceLabels: [__meta_kubernetes_pod_label_postgres_operator_crunchydata_com_role]
+          targetLabel: role
+        - sourceLabels: [__meta_kubernetes_pod_name]
+          targetLabel: instance
+  selector:
+    matchLabels:
+      postgres-operator.crunchydata.com/cluster: ${APP}
+      postgres-operator.crunchydata.com/crunchy-postgres-exporter: "true"
