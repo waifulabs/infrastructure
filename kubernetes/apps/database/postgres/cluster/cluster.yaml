@@ -24,7 +24,7 @@ spec:
         parameters:
           max_connections: 500
   instances:
-    - name: postgres
+    - name: &instance-name postgres
       metadata:
         labels:
           app.kubernetes.io/name: *name
@@ -35,6 +35,14 @@ spec:
         resources:
           requests:
             storage: 10Gi
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - topologyKey: kubernetes.io/hostname
+            labelSelector:
+              matchLabels:
+                postgres-operator.crunchydata.com/cluster: *name
+                postgres-operator.crunchydata.com/instance-set: *instance-name
   users:
     # Superuser
     - name: "postgres"
