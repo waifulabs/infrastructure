@@ -73,9 +73,9 @@ spec:
       repos:
         - name: repo2
           s3: &s3
-            bucket: crunchy-pgo
-            endpoint: https://3ed51f2c99510cd7fe8fcd8ed0621a37.r2.cloudflarestorage.com/crunchy-postgres
-            region: us-east-1 # https://developers.cloudflare.com/r2/api/s3/api/#bucket-region
+            bucket: super-awesome-postgres
+            endpoint: s3.us-west-004.backblazeb2.com
+            region: us-west-004
           schedules:
             full: "30 2 * * 0" # Sunday at 02:30
             incremental: "30 2 * * 1-6/2" # Mon-Sat at 02:30, every 2nd day
