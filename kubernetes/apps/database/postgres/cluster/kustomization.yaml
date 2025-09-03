@@ -6,9 +6,3 @@ resources:
   - ./cluster.yaml
   - ./externalsecret.yaml
   - ./podmonitor.yaml
-patches:
-  - patch: |-
-      - op: remove
-        path: /spec/dataSource
-    target:
-      kind: PostgresCluster
