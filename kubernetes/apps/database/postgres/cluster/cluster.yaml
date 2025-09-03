@@ -57,7 +57,7 @@ spec:
         compress-level: "9"
         repo2-block: "y"
         repo2-bundle: "y"
-        repo2-path: /${APP}
+        repo2-path: /postgres
         repo2-retention-full: "7" # days
         repo2-retention-full-type: time
         repo2-s3-uri-style: path
