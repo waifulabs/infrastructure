@@ -18,4 +18,4 @@ spec:
       matches:
         - path:
             type: RegularExpression
-            value: ^/maps/survival_.*
+            value: ^/maps/survival.*

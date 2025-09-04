@@ -83,7 +83,7 @@ spec:
             matches:
               - path:
                   type: RegularExpression
-                  value: ^/maps/marianland_.*
+                  value: ^/maps/marianland.*
     persistence:
       tmp:
         type: emptyDir
