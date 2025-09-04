@@ -106,3 +106,10 @@ spec:
           - name: *app
             secret:
               secretName: *app
+    extraPorts:
+      - name: bluemap
+        containerPort: 8100
+        protocol: TCP
+        service:
+          enabled: true
+          port: 8100
