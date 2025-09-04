@@ -83,6 +83,13 @@ spec:
         # https://dev.bukkit.org/projects/spawnersilk
         # https://dev.bukkit.org/projects/wolfyutilities
         # https://dev.bukkit.org/projects/yetanotherharvest
+      extraPorts:
+        - name: bluemap
+          protocol: TCP
+          service:
+            enabled: true
+            type: ClusterIP
+            port: 8100
       rcon:
         enabled: true
         port: 25577
@@ -105,10 +112,3 @@ spec:
           - name: *app
             secret:
               secretName: *app
-    extraPorts:
-      - name: bluemap
-        protocol: TCP
-        service:
-          enabled: true
-          type: ClusterIP
-          port: 8100
