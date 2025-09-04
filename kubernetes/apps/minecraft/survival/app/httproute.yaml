@@ -12,7 +12,7 @@ spec:
       sectionName: https
   rules:
     - backendRefs:
-        - name: survival
+        - name: survival-minecraft-bluemap
           port: 8100
       matches:
         - path:
