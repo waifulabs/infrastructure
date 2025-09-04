@@ -32,6 +32,10 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
               capabilities: { drop: ["ALL"] }
+          jdbc:
+            image:
+              repository: alpine
+            command: []
         containers:
           bluemap:
             image:
@@ -82,7 +86,6 @@ spec:
         existingClaim: *app
         globalMounts:
           - path: /app/config
-      web:
-        type: emptyDir
-        globalMounts:
+            subPath: config
           - path: /app/web
+            subPath: web
