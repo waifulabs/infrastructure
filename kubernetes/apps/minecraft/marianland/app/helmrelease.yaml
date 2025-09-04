@@ -81,9 +81,8 @@ spec:
                 port: *web-port
             matches:
               - path:
-                  type: PathPrefix
-                  # https://bluemap.bluecolored.de/wiki/getting-started/ServerNetworks.html#steps-1
-                  value: /maps/marianland
+                  type: RegularExpression
+                  value: ^/maps/marianland_.*
     persistence:
       tmp:
         type: emptyDir
