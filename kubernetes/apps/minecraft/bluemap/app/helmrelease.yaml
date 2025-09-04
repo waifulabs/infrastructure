@@ -23,25 +23,12 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
-          generator:
-            image:
-              repository: ghcr.io/bluemap-minecraft/bluemap
-              tag: v5.11@sha256:d11a151f52c6b158134226ab7abb8085e4a5c8bb678a91eb6b125d7121918063
-            args: "-g"
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: false
-              capabilities: { drop: ["ALL"] }
-          jdbc:
-            image:
-              repository: alpine
-            command: []
         containers:
           bluemap:
             image:
               repository: ghcr.io/bluemap-minecraft/bluemap
               tag: v5.11@sha256:d11a151f52c6b158134226ab7abb8085e4a5c8bb678a91eb6b125d7121918063
-            args: "-w"
+            args: "-w" # For initial configuration, use -g"
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: false
