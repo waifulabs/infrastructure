@@ -79,7 +79,7 @@ spec:
           - backendRefs:
               - name: *app
                 port: *web-port
-                weight: 8
+                weight: 10
             matches:
               - path:
                   type: RegularExpression
