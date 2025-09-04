@@ -60,6 +60,10 @@ spec:
           - backendRefs:
               - name: *app
                 port: *web-port
+            matches:
+              - path:
+                  type: RegularExpression
+                  value: "^(?!.*\\/maps).*"
     persistence:
       tmp:
         type: emptyDir
