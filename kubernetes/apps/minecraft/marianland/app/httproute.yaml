@@ -5,7 +5,7 @@ kind: HTTPRoute
 metadata:
   name: survival-map23
 spec:
-  hostnames: ["map2.ok8.sh"]
+  hostnames: ["mapdev.ok8.sh"]
   parentRefs:
     - name: external
       namespace: kube-system
