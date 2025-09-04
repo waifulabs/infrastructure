@@ -84,6 +84,17 @@ spec:
               - path:
                   type: RegularExpression
                   value: ^/maps/marianland_.*
+      test:
+        hostnames: ["mapdev.ok8.sh"]
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *web-port
+                weight: 10
     persistence:
       tmp:
         type: emptyDir
