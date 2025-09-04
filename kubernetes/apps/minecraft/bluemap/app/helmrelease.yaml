@@ -22,7 +22,6 @@ spec:
       minecraft:
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
         containers:
           bluemap:
             image:
