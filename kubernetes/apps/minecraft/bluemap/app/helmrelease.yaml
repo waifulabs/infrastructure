@@ -64,10 +64,11 @@ spec:
     persistence:
       tmp:
         type: emptyDir
-      data:
-        type: emptyDir
         globalMounts:
+          - path: /tmp
+            subPath: tmp
           - path: /app/data
+            subPath: data
       config:
         type: persistentVolumeClaim
         existingClaim: *app
