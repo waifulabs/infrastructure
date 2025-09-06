@@ -63,10 +63,10 @@ spec:
         controller: minecraft
         type: LoadBalancer
         ports:
-          #game:
-          #  port: &game-port 25565
-          #rcon:
-          #  port: &rcon-port 25578
+          game:
+           port: &game-port 25565
+          rcon:
+           port: &rcon-port 25578
           http:
             port: &web-port 8100
     route:
