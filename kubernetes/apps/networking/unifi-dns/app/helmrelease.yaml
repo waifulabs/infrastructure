@@ -64,7 +64,13 @@ spec:
           initialDelaySeconds: 10
           timeoutSeconds: 5
     policy: sync
-    sources: ["gateway-httproute", "service"]
+    sources:
+      - gateway-httproute
+      - gateway-grpcroute
+      - gateway-tlsroute
+      - gateway-tcproute
+      - gateway-udproute
+      - service
     txtOwnerId: default
     txtPrefix: k8s.
     domainFilters: ["ok8.sh"]
