@@ -11,7 +11,11 @@ spec:
       namespace: kube-system
       sectionName: https
   rules:
-    - backendRefs:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
         - name: marianland
           port: 8100
           weight: 10
