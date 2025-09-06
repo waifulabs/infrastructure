@@ -3,7 +3,7 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: survival-map2
+  name: mapdev
 spec:
   hostnames: ["mapdev.ok8.sh"]
   parentRefs:
@@ -18,5 +18,4 @@ spec:
       backendRefs:
         - name: marianland
           port: 8100
-          weight: 10
 

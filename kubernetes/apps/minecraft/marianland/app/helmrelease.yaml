@@ -66,7 +66,7 @@ spec:
             port: &game-port 25565
           rcon:
             port: &rcon-port 25578
-          web:
+          http:
             port: &web-port 8100
     route:
       marianland:
