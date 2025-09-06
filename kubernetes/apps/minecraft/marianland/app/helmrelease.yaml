@@ -68,22 +68,22 @@ spec:
             port: &rcon-port 25578
           web:
             port: &web-port 8100
-    route:
-      minecraft:
-        hostnames: ["map.ok8.sh"]
-        parentRefs:
-          - name: external
-            namespace: kube-system
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *web-port
-                weight: 10
-            matches:
-              - path:
-                  type: RegularExpression
-                  value: ^/maps/marianland_.*
+    #route:
+    #  minecraft:
+    #    hostnames: ["map.ok8.sh"]
+    ##    parentRefs:
+    #     - name: external
+    #        namespace: kube-system
+    #        sectionName: https
+    #    rules:
+    #      - backendRefs:
+    #          - name: *app
+    #            port: *web-port
+    #            weight: 10
+    #        matches:
+    #          - path:
+    #              type: RegularExpression
+    #              value: ^/maps/marianland_.*
     persistence:
       tmp:
         type: emptyDir
