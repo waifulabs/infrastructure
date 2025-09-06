@@ -61,6 +61,7 @@ spec:
     service:
       marianland:
         controller: minecraft
+        type: LoadBalancer
         ports:
           #game:
           #  port: &game-port 25565
