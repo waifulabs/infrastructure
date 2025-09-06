@@ -8,7 +8,7 @@ spec:
   hostnames: ["mapdev.ok8.sh"]
   parentRefs:
     - name: external
-      namespace: kube-system
+      namespace: networking
       sectionName: https
   rules:
     - matches:

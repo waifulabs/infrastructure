@@ -44,7 +44,7 @@ spec:
           hostnames: ["alertmanager.ok8.sh"]
           parentRefs:
             - name: internal
-              namespace: kube-system
+              namespace: networking
               sectionName: https
       alertmanagerSpec:
         alertmanagerConfiguration:
@@ -82,7 +82,7 @@ spec:
           hostnames: ["prometheus.ok8.sh"]
           parentRefs:
             - name: internal
-              namespace: kube-system
+              namespace: networking
               sectionName: https
       prometheusSpec:
         ruleSelectorNilUsesHelmValues: false
