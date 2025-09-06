@@ -182,24 +182,6 @@ spec:
               - name: acars-hub
                 port: *port
     persistence:
-      # For kubectl, usbreset and usb-devices
-      binaries:
-        type: hostPath
-        hostPath: /bin
-        advancedMounts:
-          acars-usb-watchdog: {acars-usb-watchdog: [{path: /usr/local/sbin}]}
-      # For resetting individual USB devices
-      usbdevices:
-        type: hostPath
-        hostPath: /dev/bus/usb
-        advancedMounts:
-          acars-usb-watchdog: {acars-usb-watchdog: [{path: /dev/bus/usb}]}
-      # For resetting the USB Hub
-      usbhub:
-        type: hostPath
-        hostPath: /sys/bus/pci/drivers/xhci_hcd
-        advancedMounts:
-          acars-usb-watchdog: {acars-usb-watchdog: [{path: /sys/bus/pci/drivers/xhci_hcd}]}
       acars-hub:
         type: persistentVolumeClaim
         storageClass: ceph-block
