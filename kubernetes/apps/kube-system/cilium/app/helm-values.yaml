@@ -9,7 +9,7 @@ bpf:
   datapathMode: netkit
   masquerade: true
   preallocateMaps: true
-  # tproxy: true # Incompaitable with gateway
+  tproxy: true # Incompatible with gateway
 bpfClockProbe: true
 cgroup:
   automount:
