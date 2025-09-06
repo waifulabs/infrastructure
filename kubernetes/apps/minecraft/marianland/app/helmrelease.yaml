@@ -59,7 +59,7 @@ spec:
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
     service:
-      minecraft:
+      marianland:
         controller: minecraft
         ports:
           game:
@@ -69,7 +69,7 @@ spec:
           web:
             port: &web-port 8100
     #route:
-    #  minecraft:
+    #  marianland:
     #    hostnames: ["map.ok8.sh"]
     ##    parentRefs:
     #     - name: external
