@@ -63,7 +63,7 @@ spec:
             matches:
               - path:
                   type: RegularExpression
-                  value: "^((?!\/maps).)*$"
+                  value: "^/(?!maps).*"
     persistence:
       tmp:
         type: emptyDir
