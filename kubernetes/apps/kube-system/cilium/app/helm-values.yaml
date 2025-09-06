@@ -24,9 +24,9 @@ endpointRoutes:
 envoy:
   rollOutPods: true
 gatewayAPI:
-  enabled: true
-  enableAlpn: true
-  xffNumTrustedHops: 1
+  enabled: false
+  # enableAlpn: true
+  # xffNumTrustedHops: 1
 ipam:
   mode: kubernetes
 ipv4NativeRoutingCIDR: 172.30.0.0/16

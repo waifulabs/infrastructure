@@ -11,4 +11,5 @@ resources:
   - ./cloudflare-tunnel/ks.yaml
   - ./echo/ks.yaml
   - ./envoy-gateway/ks.yaml
+  - ./gateway-api/ks.yaml
   - ./unifi-dns/ks.yaml

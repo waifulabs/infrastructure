@@ -18,3 +18,63 @@ spec:
     namespace: flux-system
   targetNamespace: *namespace
   timeout: 15m
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app envoy-gateway-config
+  namespace: &namespace networking
+spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
+  dependsOn:
+    - name: envoy-gateway
+      namespace: networking
+  interval: 1h
+  path: ./kubernetes/apps/networking/envoy-gateway/config
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+    namespace: flux-system
+  targetNamespace: *namespace
+  timeout: 15m
+  healthChecks:
+    - apiVersion: gateway.networking.k8s.io/v1
+      kind: Gateway
+      name: external
+      namespace: *namespace
+    - apiVersion: gateway.networking.k8s.io/v1
+      kind: Gateway
+      name: internal
+      namespace: *namespace
+    - apiVersion: gateway.envoyproxy.io/v1alpha1
+      kind: ClientTrafficPolicy
+      name: client
+      namespace: *namespace
+    - apiVersion: gateway.envoyproxy.io/v1alpha1
+      kind: BackendTrafficPolicy
+      name: backend
+  healthCheckExprs:
+    - apiVersion: gateway.networking.k8s.io/v1
+      kind: Gateway
+      current: |-
+        status.listeners.exists(l,
+          l.conditions.filter(e, e.type == 'Accepted').exists(e, e.status == 'True') &&
+          l.conditions.filter(e, e.type == 'Programmed').exists(e, e.status == 'True') &&
+          l.conditions.filter(e, e.type == 'OverlappingCertificates').all(e, e.status == 'False'))
+      failed: |-
+        status.listeners.exists(l,
+          l.conditions.filter(e, e.type == 'Accepted').exists(e, e.status == 'False') ||
+          l.conditions.filter(e, e.type == 'Programmed').exists(e, e.status == 'False') ||
+          l.conditions.filter(e, e.type == 'OverlappingCertificates').exists(e, e.status == 'True'))
+    - apiVersion: gateway.envoyproxy.io/v1alpha1
+      kind: ClientTrafficPolicy
+      current: status.ancestors.exists(e, e.conditions.filter(e, e.type == 'Accepted').exists(e, e.status == 'True'))
+      failed: status.ancestors.exists(e, e.conditions.filter(e, e.type == 'Accepted').exists(e, e.status == 'False'))
+    - apiVersion: gateway.envoyproxy.io/v1alpha1
+      kind: BackendTrafficPolicy
+      current: status.ancestors.exists(e, e.conditions.filter(e, e.type == 'Accepted').exists(e, e.status == 'True'))
+      failed: status.ancestors.exists(e, e.conditions.filter(e, e.type == 'Accepted').exists(e, e.status == 'False'))

@@ -1,0 +1,43 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/cert-manager.io/certificate_v1.json
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ok8-sh
+spec:
+  secretName: ok8-sh-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: ok8.sh
+  dnsNames:
+    - ok8.sh
+    - "*.ok8.sh"
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/external-secrets.io/pushsecret_v1alpha1.json
+apiVersion: external-secrets.io/v1alpha1
+kind: PushSecret
+metadata:
+  name: ok8-sh-tls
+spec:
+  secretStoreRefs:
+    - name: onepassword-connect
+      kind: ClusterSecretStore
+  selector:
+    secret:
+      name: ok8-sh-tls
+  template:
+    data:
+      tls.crt: '{{ index . "tls.crt" | b64enc }}'
+      tls.key: '{{ index . "tls.key" | b64enc }}'
+  data:
+    - match:
+        secretKey: &key tls.crt
+        remoteRef:
+          remoteKey: ok8-sh-tls
+          property: *key
+    - match:
+        secretKey: &key tls.key
+        remoteRef:
+          remoteKey: ok8-sh-tls
+          property: *key
