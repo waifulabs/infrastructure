@@ -57,6 +57,7 @@ spec:
     - apiVersion: gateway.envoyproxy.io/v1alpha1
       kind: BackendTrafficPolicy
       name: backend
+      namespace: *namespace
   healthCheckExprs:
     - apiVersion: gateway.networking.k8s.io/v1
       kind: Gateway
