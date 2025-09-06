@@ -14,7 +14,6 @@ spec:
     - backendRefs:
         - name: survival-minecraft-bluemap
           port: 8100
-          weight: 10
       matches:
         - path:
             type: RegularExpression
