@@ -62,8 +62,8 @@ spec:
                 port: *web-port
             matches:
               - path:
-                  type: RegularExpression
-                  value: "^/(?!maps).*"
+                  type: PathPrefix
+                  value: /
     persistence:
       tmp:
         type: emptyDir
