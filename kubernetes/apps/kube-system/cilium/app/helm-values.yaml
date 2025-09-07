@@ -22,7 +22,7 @@ enableIPv4BIGTCP: true
 endpointRoutes:
   enabled: true
 envoy:
-  rollOutPods: true
+  enabled: false
 gatewayAPI:
   enabled: false
   # enableAlpn: true
