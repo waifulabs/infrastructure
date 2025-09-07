@@ -4,7 +4,7 @@ originRequest:
 
 ingress:
   - hostname: "ok8.sh"
-    service: https://envoy-networking-external-8c60613e.networking.svc.cluster.local
+    service: https://envoy-external.networking.svc.cluster.local
   - hostname: "*.ok8.sh"
-    service: https://envoy-networking-external-8c60613e.networking.svc.cluster.local
+    service: https://envoy-external.networking.svc.cluster.local
   - service: http_status:404
