@@ -33,7 +33,7 @@ spec:
           limbo:
             image:
               repository: ghcr.io/itzg/minecraft-server
-              tag: 2025.8.1@sha256:92681e6745391ed80c7e59ebe9ba9956e787178b9e52c34e734e998bc80a8649
+              tag: 2025.9.2@sha256:1de76802ab088730e40c9d1866b8b7d2b4d341b946342892a1dbb6f7f4feeb18
             env:
               TZ: America/Los_Angeles
               EULA: "TRUE"

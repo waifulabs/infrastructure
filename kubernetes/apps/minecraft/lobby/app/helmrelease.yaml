@@ -27,7 +27,7 @@ spec:
     nameOverride: *app
     image:
       repository: ghcr.io/itzg/minecraft-server
-      tag: 2025.8.1-java21
+      tag: 2025.9.2-java21
     resources:
       requests:
         cpu: 1.5
