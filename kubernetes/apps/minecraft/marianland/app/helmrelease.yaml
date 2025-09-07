@@ -35,6 +35,7 @@ spec:
               ONLINE_MODE: false
               SERVER_NAME: *app
               DIFFICULTY: easy
+              OPS: "Kashall"
               MAX_PLAYERS: 40
               KEEP_INVENTORY: true
               ENABLE_ROLLING_LOGS: true
