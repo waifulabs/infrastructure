@@ -80,7 +80,7 @@ enable-player-address-logging = true
 lobby = "lobby.minecraft.svc.cluster.local:25565"
 limbo = "limbo.minecraft.svc.cluster.local:25565"
 survival = "survival-minecraft.minecraft.svc.cluster.local:25565"
-marianland = "marianland-minecraft.minecraft.svc.cluster.local:25565"
+marianland = "marianland.minecraft.svc.cluster.local:25565"
 
 # In what order we should try servers when a player logs in or is kicked from a server.
 try = ["lobby", "limbo"]
