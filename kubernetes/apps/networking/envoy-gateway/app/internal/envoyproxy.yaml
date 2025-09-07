@@ -42,4 +42,7 @@ spec:
             stabilizationWindowSeconds: 300
       envoyService:
         externalTrafficPolicy: Cluster
-        name: envoy-internal
+        patch:
+          value:
+            metadata:
+              name: envoy-internal
