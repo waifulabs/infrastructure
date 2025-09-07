@@ -6,6 +6,7 @@ resources:
   - ./external
   - ./internal
   - ./policy
+  - ./certificate.yaml
   - ./helmrelease.yaml
   - ./podmonitor.yaml
   - ./servicemonitor.yaml

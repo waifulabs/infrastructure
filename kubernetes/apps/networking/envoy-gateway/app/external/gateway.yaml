@@ -8,10 +8,17 @@ metadata:
     external-dns.alpha.kubernetes.io/target: &hostname external.ok8.sh
 spec:
   gatewayClassName: envoy-external
+  addresses:
+    - type: IPAddress
+      value: &address 172.16.0.31
   infrastructure:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: *hostname
-      lbipam.cilium.io/ips: 172.16.0.31
+      lbipam.cilium.io/ips: *address
+    parametersRef:
+      group: gateway.envoyproxy.io
+      kind: EnvoyProxy
+      name: envoy-external
   listeners:
     - name: http
       protocol: HTTP
