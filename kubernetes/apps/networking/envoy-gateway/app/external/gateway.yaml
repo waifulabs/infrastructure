@@ -3,29 +3,25 @@
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: internal
-  labels:
-    type: internal
+  name: external
   annotations:
-    external-dns.alpha.kubernetes.io/target: &hostname internal.ok8.sh
+    external-dns.alpha.kubernetes.io/target: &hostname external.ok8.sh
 spec:
-  gatewayClassName: envoy
+  gatewayClassName: envoy-external
   infrastructure:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: *hostname
-      lbipam.cilium.io/ips: 172.16.0.30
+      lbipam.cilium.io/ips: 172.16.0.31
   listeners:
     - name: http
       protocol: HTTP
       port: 80
-      hostname: "*.ok8.sh"
       allowedRoutes:
         namespaces:
           from: Same
     - name: https
       protocol: HTTPS
       port: 443
-      hostname: "*.ok8.sh"
       allowedRoutes:
         namespaces:
           from: All
