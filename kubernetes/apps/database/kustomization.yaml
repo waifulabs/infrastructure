@@ -8,4 +8,4 @@ components:
 resources:
   - ./mongodb/ks.yaml
   - ./postgres/ks.yaml
-  - ./mysql/ks.yaml
+  #- ./mysql/ks.yaml
