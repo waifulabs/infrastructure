@@ -10,7 +10,7 @@ spec:
       app.kubernetes.io/name: gateway-helm
   namespaceSelector:
     matchNames:
-      - network
+      - networking
   endpoints:
     - port: metrics
       path: /metrics
