@@ -27,7 +27,7 @@ spec:
           copyparty:
             image:
               repository: ghcr.io/9001/copyparty-ac
-              tag: 1.19.7@sha256:388f31708e60af14669d56ff52d6c964310f00a0606f6da623fda547c31d6daa
+              tag: 1.19.8@sha256:de469aeb4ba18c0192b886302ed876487f47d3572ba5fba14caaaf34da127aa1
             securityContext:
               allowPrivilegeEscalation: false
               capabilities: { drop: ["ALL"] }
