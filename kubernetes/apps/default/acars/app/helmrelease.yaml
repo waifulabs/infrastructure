@@ -112,7 +112,7 @@ spec:
               # See also https://gist.github.com/tyzbit/8df46263085b0f3d9e2dd09069438f89
               FREQUENCIES: 136.650;136.975;136.800;136.100;136.675
               ZMQ_MODE: client
-              ZMQ_ENDPOINT: tcp://acars-acarsrouter:35555
+              ZMQ_ENDPOINT: tcp://acars-acars-router:35555
             resources:
               requests:
                 cpu: 10m
