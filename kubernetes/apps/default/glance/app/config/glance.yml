@@ -11,6 +11,12 @@ pages:
         widgets:
           - type: calendar
 
+          - type: clock
+            hour-format: 12h
+            timezones:
+              - timzeone: America/Chicago
+                label: WWT Time
+
           - type: rss
             limit: 10
             collapse-after: 3
@@ -50,17 +56,20 @@ pages:
       - size: small
         widgets:
           - type: weather
+            units: imperial
             location: Eugene, Oregon, United States
-
+          - type: repository
+            repository: waifulabs/infrastructure
+            pull-requests-limit: 5
+            issues-limit: 3
           - type: monitor
             cache: 1m
             title: Services
+            style: compact
             sites:
               - title: Home Assistant
                 url: https://hass.ok8.sh
               - title: Grafana
                 url: https://grafana.ok8.sh
-              - title: ID
-                url: https://id.ok8.sh
-              - title: DynMC
-                url: https://dynmc.ok8.sh
+              - title: BlueMap
+                url: https://map.ok8.sh
