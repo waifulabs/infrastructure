@@ -129,8 +129,8 @@ spec:
               tag: 1.3.1_linux_amd64
             env:
               TZ: Etc/UTC
-              AR_SEND_UDP_ACARS: acars-acarshub:5550;feedthe.acarsdrama.com:5550 #;feed.acars.io:5550
-              AR_SEND_UDP_VDLM2: acars-acarshub:5555;feedthe.acarsdrama.com:5555 #;feed.airframes.io:5552
+              AR_SEND_UDP_ACARS: acars-acars-hub:5550;feedthe.acarsdrama.com:5550 #;feed.acars.io:5550
+              AR_SEND_UDP_VDLM2: acars-acars-hub:5555;feedthe.acarsdrama.com:5555 #;feed.airframes.io:5552
             resources:
               requests:
                 cpu: 10m
