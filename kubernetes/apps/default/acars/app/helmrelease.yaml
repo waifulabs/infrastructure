@@ -104,7 +104,7 @@ spec:
               repository: ghcr.io/sdr-enthusiasts/docker-dumpvdl2
               tag: latest-build-348
             env:
-              FEED_ID: TYZBIT-VDL2-1
+              FEED_ID: KASHUWU-VDL2-1
               DEVICE: "00000003"
               TZ: Etc/UTC
               SOAPYSDR: driver=rtlsdr,serial=$(DEVICE)
