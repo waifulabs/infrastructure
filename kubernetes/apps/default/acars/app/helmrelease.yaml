@@ -161,8 +161,18 @@ spec:
       acars-router:
         controller: acars-router
         ports:
-          router:
+          acars:
             port: 5550
+          vdlm2-zmq:
+            port: 35555
+      dumpvdl2:
+        controller: dumpvdl2
+        type: ClusterIP
+        ports:
+          vdlm2:
+            port: 5555
+          vdlm2-zmq:
+            port: 45555
       acars-hub:
         controller: acars-hub
         ports:
