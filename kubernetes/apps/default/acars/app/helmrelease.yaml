@@ -149,7 +149,7 @@ spec:
               TZ: Etc/UTC
               ENABLE_ADSB: "false"
               ENABLE_ACARS: external
-              # ENABLE_VDLM: external
+              ENABLE_VDLM: external
               QUIET_MESSAGES: "false" # This logs the messages themselves
             resources:
               requests:
