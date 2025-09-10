@@ -9,13 +9,12 @@ pages:
     columns:
       - size: small
         widgets:
-          - type: calendar
-
           - type: clock
             hour-format: 12h
             timezones:
-              - timzeone: America/Chicago
+              - timezone: America/Chicago
                 label: WWT Time
+          - type: calendar
 
           - type: rss
             limit: 10
