@@ -133,6 +133,6 @@ UniFi released a new feature update with UniFi routers that allow you to create 
 
 Thanks to all the people who donate their time to the [Home Operations](https://discord.gg/home-operations) community.
 
-Special thanks to: [ᗪєνιη ᗷυнʟ](https://github.com/onedr0p/home-cluster), [Bᴇʀɴᴅ Sᴄʜᴏʀɢᴇʀs](https://github.com/bjw-s/k8s-gitops), and [Toboshii Nakama](https://github.com/toboshii/home-cluster) for their assistance.
+Special thanks to: [ᗪєνιη ᗷυнʟ](https://github.com/onedr0p/home-cluster), [Bᴇʀɴᴅ Sᴄʜᴏʀɢᴇʀs](https://github.com/bjw-s-labs/k8s-gitops), and [Toboshii Nakama](https://github.com/toboshii/home-cluster) for their assistance.
 
 Check out [kubesearch.dev](https://kubesearch.dev) to see what other users are running in their kubernetes home labs!

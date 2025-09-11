@@ -9,7 +9,7 @@
       automergeType: "branch",
       matchUpdateTypes: ["digest"],
       matchPackagePatterns: [
-        "ghcr.io/bjw-s",
+        "ghcr.io/bjw-s-labs",
         "ghcr.io/home-operations",
         "ghcr.io/kashalls",
       ],
