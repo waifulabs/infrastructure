@@ -45,7 +45,7 @@ pages:
       - size: full
         widgets:
           - type: extension
-            url: http://glance-k8s-extension/extension/nodes
+            url: http://glance-k8s-extension:8080/extension/nodes
             allow-potentially-dangerous-html: true
             cache: 1s
             parameters:
