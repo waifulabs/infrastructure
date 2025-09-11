@@ -80,12 +80,10 @@ spec:
       config-file:
         type: configMap
         name: glance-configmap
-        advancedMounts:
-          glance:
-            app:
-              - path: /app/config/glance.yml
-                subPath: glance.yml
-                readOnly: true
+        globalMounts:
+          - path: /app/config/glance.yml
+            subPath: glance.yml
+            readOnly: true
     serviceAccount:
       glance:
         enabled: true
