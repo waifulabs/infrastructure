@@ -50,6 +50,21 @@ spec:
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
             resources: {}
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/healthz
+                    port: 8080
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/healthz
+                    port: 8080
         serviceAccount:
           identifier: *app
         pod:
@@ -60,13 +75,18 @@ spec:
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
     service:
-      app:
+      glance:
         controller: glance
         ports:
           http:
-            port: &port 8080
+            port: &port 80
+      k8s-extension:
+        controller: glance
+        ports:
+          http:
+            port: 8080
     route:
-      app:
+      glance:
         hostnames: ["{{ .Release.Name }}.ok8.sh", "g.ok8.sh"]
         parentRefs:
           - name: internal
