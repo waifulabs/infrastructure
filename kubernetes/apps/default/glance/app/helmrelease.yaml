@@ -23,7 +23,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          app:
+          glance:
             image:
               repository: glanceapp/glance
               tag: v0.8.4@sha256:6df86a7e8868d1eda21f35205134b1962c422957e42a0c44d4717c8e8f741b1a
@@ -39,6 +39,19 @@ spec:
                 memory: 64Mi
               limits:
                 memory: 96Mi
+          k8s-extension:
+            image:
+              repository: ghcr.io/lukasdietrich/glance-k8s/glance-k8s
+              tag: v0.3.5@sha256:9dad71e553b3978d335d92c725593713e31cd588aa4526da3e3652fb782efd11
+            env:
+              TZ: America/Los_Angeles
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources: {}
+        serviceAccount:
+          identifier: *app
         pod:
           securityContext:
             runAsUser: 568
@@ -73,3 +86,35 @@ spec:
               - path: /app/config/glance.yml
                 subPath: glance.yml
                 readOnly: true
+    serviceAccount:
+      glance:
+        enabled: true
+    rbac:
+      roles:
+        list:
+          type: ClusterRole
+          forceRename: *app
+          rules:
+            - apiGroups: ["", "metrics.k8s.io"]
+              resources: ["nodes"]
+              verbs: ["list"]
+            - apiGroups: [""]
+              resources: ["services"]
+              verbs: ["list"]
+            - apiGroups: ["networking.k8s.io"] # networking.k8s.io/v1
+              resources: ["ingresses", "ingressclasses"]
+              verbs: ["list"]
+            - apiGroups: ["apps"]
+              resources: ["deployments", "statefulsets", "daemonsets"]
+              verbs: ["list"]
+      bindings:
+        list:
+          type: ClusterRoleBinding
+          forceRename: *app
+          roleRef:
+            kind: ClusterRole
+            name: *app
+          subjects:
+            - kind: ServiceAccount
+              name: *app
+              namespace: "{{ .Release.Namespace }}"
