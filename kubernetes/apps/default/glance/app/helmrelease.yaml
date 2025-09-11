@@ -56,14 +56,14 @@ spec:
                 custom: true
                 spec:
                   httpGet:
-                    path: /api/healthz
+                    path: /healthz
                     port: 8080
               readiness:
                 enabled: true
                 custom: true
                 spec:
                   httpGet:
-                    path: /api/healthz
+                    path: /healthz
                     port: 8080
         serviceAccount:
           identifier: *app
