@@ -73,11 +73,14 @@ While most of my infrastructure and workloads are self-hosted I do rely upon the
 
 ```mermaid
 flowchart LR
-    A[["#quot;The Internet#quot;"]] -- 2Gbps ↓ 350Mbps  ↑ --> B("UDM Pro Max");
-    B -- 10Gbps ↕ --> C("USW Pro Max 16")
-    C -- 10Gbps ↕ --> D["1x MS-01 Main (Talos)"]
-    C -- 10Gbps ↕ --> E["1x Storage (TrueNAS)"]
-    C -- 1Gbps ↕ --> F["4x Rasbian (Talos)"]
+    A[["#quot;The Internet#quot;"]] -- 2Gbps ↓ 350Mbps  ↑ --> B("UXG Max");
+    B -- 2.5Gbps ↕ --> C("USW Flex 2.5G 8 PoE")
+    C -- 2.5Gbps ↕ --> D["U6 LR (Home Network)"]
+    C -- 10Gbps ↕ --> E("USW Aggregation")
+    E -- 10Gbps ↕ --> F("UDM Pro SE (Lab Network)")
+    F -- 10Gbps ↕ --> G("USW Pro Max 16")
+    E -- 10Gbps ↕ --> H["3x MS-01 (Talos)"]
+    E -- 10Gbps ↕ --> I["1x Storage (TrueNAS)"]
 ```
 
 ### Networks & Vlans
