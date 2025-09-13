@@ -67,7 +67,7 @@ spec:
         controller: mosquitto
         type: LoadBalancer
         annotations:
-          external-dns.alpha.kubernetes.io/hostname: mosquitto.ok8.sh
+          external-dns.alpha.kubernetes.io/hostname: mqtt.ok8.sh
         ports:
           http:
             port: 1883
