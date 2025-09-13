@@ -17,7 +17,7 @@ spec:
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &name waifulabs-runner
+  name: &name waifulabs-kubernetes
 spec:
   interval: 1h
   chartRef:
@@ -32,7 +32,7 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    runnerScaleSetName: waifulabs-amd64
+    runnerScaleSetName: waifulabs
     githubConfigUrl: https://github.com/waifulabs
     githubConfigSecret: waifulabs-runner-secret
     minRunners: 1
@@ -45,6 +45,60 @@ spec:
         resources:
           requests:
             storage: 25Gi
+    annotations:
+      reloader.stakater.com/auto: "true"
+    controllerServiceAccount:
+      name: actions-runner-controller
+      namespace: actions-runner-system
+    template:
+      spec:
+        containers:
+          - name: runner
+            image: ghcr.io/home-operations/actions-runner:2.328.0@sha256:c43873ef6800697dfa181582f6bb02366a9a0afb52026bde7bad7c71b21b1052
+            command: ["/home/runner/run.sh"]
+            env:
+              - name: ACTIONS_RUNNER_REQUIRE_JOB_CONTAINER
+                value: "false"
+              - name: NODE
+                valueFrom:
+                  fieldRef:
+                    fieldPath: status.hostIP
+            volumeMounts:
+              - mountPath: /var/run/secrets/talos.dev
+                name: talos
+                readOnly: true
+        serviceAccountName: *name
+        volumes:
+          - name: talos
+            secret:
+              secretName: *name
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &name waifulabs-dind
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: gha-runner-scale-set
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    runnerScaleSetName: waifulabs-dind
+    githubConfigUrl: https://github.com/waifulabs
+    githubConfigSecret: waifulabs-runner-secret
+    minRunners: 1
+    maxRunners: 7
+    containerMode:
+      type: dind
     annotations:
       reloader.stakater.com/auto: "true"
     controllerServiceAccount:
