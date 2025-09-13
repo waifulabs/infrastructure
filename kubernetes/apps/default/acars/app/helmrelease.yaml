@@ -59,7 +59,7 @@ spec:
           reloader.stakater.com/auto: "true"
         pod:
           nodeSelector:
-            feature.node.kubernetes.io/usb-ff_0bda_2838_00000002.present: "true"
+            feature.node.kubernetes.io/usb-ff_0bda_2838_00000001.present: "true"
         containers:
           acars-decoder:
             image:
@@ -67,7 +67,7 @@ spec:
               tag: latest-build-412
             env:
               FEED_ID: KASHUWU-ACARS-2
-              DEVICE: "00000002"
+              DEVICE: "00000001"
               TZ: Etc/UTC
               SOAPYSDR: driver=rtlsdr,serial=$(DEVICE)
               FREQUENCIES: "130.025;130.450;130.825"
@@ -94,7 +94,7 @@ spec:
           reloader.stakater.com/auto: "true"
         pod:
           nodeSelector:
-            feature.node.kubernetes.io/usb-ff_0bda_2838_00000001.present: "true"
+            feature.node.kubernetes.io/usb-ff_0bda_2838_00000002.present: "true"
         replicas: 1
         containers:
           dumpvdl2:
@@ -105,7 +105,7 @@ spec:
               tag: latest-build-348
             env:
               FEED_ID: KASHUWU-VDL2-1
-              DEVICE: "00000001"
+              DEVICE: "00000002"
               TZ: Etc/UTC
               SOAPYSDR: driver=rtlsdr,serial=$(DEVICE)
               # See https://app.airframes.io/about
