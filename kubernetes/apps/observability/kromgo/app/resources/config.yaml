@@ -21,9 +21,9 @@ metrics:
   - name: cluster_node_count
     query: count(count by (node) (kube_node_status_condition{ condition="Ready"}))
     colors:
-      - { color: "green", min: 6, max: 7 }
-      - { color: "orange", min: 4, max: 5 }
-      - { color: "red", min: 0, max: 3 }
+      - { color: "green", min: 3, max: 999 }
+      - { color: "orange", min: 2, max: 2 }
+      - { color: "red", min: 0, max: 1 }
 
   - name: cluster_network_transmit_usage
     query: round(avg(instance:node_network_transmit_bytes_excluding_lo:rate5m / 1024 / 1024), 0.1)
@@ -72,5 +72,5 @@ metrics:
     query: count(ALERTS{alertstate="firing"})
     colors:
       - { color: "green", min: 0, max: 1 }
-      - { color: "orange", min: 2, max: 4 }
-      - { color: "red", min: 5, max: 9999 }
+      - { color: "orange", min: 2, max: 10 }
+      - { color: "red", min: 11, max: 9999 }
