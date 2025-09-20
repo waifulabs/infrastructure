@@ -89,7 +89,7 @@ flowchart LR
 |---------------------|------|-------------------------------------------------------------------------------------|
 | Management          | 1    | Servers + Network Management                                                        |
 | Devices             | 2    | Wireless Devices and Workstations                                                   |
-| IoT                 | 3    | Small devices that *could* be compromised, so they don't get to talk to each other. |
+| IoT                 | 3    | Small devices that *have the potential* to be compromised, so they don't get to talk to each other. |
 | Services            | 4    | No DHCP, Simply a network for Cluster BGP                                           |
 | "I Don't Trust You" | 86   | Non-affiliated organization issued devices (school or work devices)                 |
 
