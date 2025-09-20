@@ -23,7 +23,7 @@ on:
 jobs:
   sync:
     name: Flux Helm Repository Sync
-    runs-on: ["waifulabs-amd64"]
+    runs-on: ["waifulabs"]
     steps:
       - name: Generate Token
         uses: actions/create-github-app-token@v2

@@ -89,7 +89,7 @@ jobs:
     if: ${{ needs.diff.outputs.images != '[]' }}
     needs: diff
     name: Image Pull - Pull Images
-    runs-on: waifulabs-amd64
+    runs-on: waifulabs
     strategy:
       matrix:
         image: ${{ fromJSON(needs.diff.outputs.images) }}
