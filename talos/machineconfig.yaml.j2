@@ -110,8 +110,8 @@ cluster:
     certSANs: ["127.0.0.1", "172.16.0.2"]
     extraArgs:
       enable-aggregator-routing: true
-      # feature-gates: MutatingAdmissionPolicy=true
-      # runtime-config: admissionregistration.k8s.io/v1alpha1=true
+      feature-gates: MutatingAdmissionPolicy=true
+      runtime-config: admissionregistration.k8s.io/v1alpha1=true
     disablePodSecurityPolicy: true
     auditPolicy:
       apiVersion: audit.k8s.io/v1
