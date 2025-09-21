@@ -1,0 +1,16 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/gateway.networking.k8s.io/tcproute_v1alpha2.json
+apiVersion: gateway.networking.k8s.io/v1alpha2
+kind: TCPRoute
+metadata:
+  name: minecraft-router
+spec:
+  parentRefs:
+    - name: external
+      namespace: networking
+    - name: internal
+      namespace: networking
+  rules:
+    - backendRefs:
+        - name: minecraft-router
+          port: 25565
