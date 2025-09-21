@@ -8,7 +8,7 @@ resources:
   - ./namespace.yaml
   - ./app-template.yaml
   # Flux-Kustomizations
-  - ./system-upgrade-controller/ks.yaml
+  #- ./system-upgrade-controller/ks.yaml
 configMapGenerator:
   - name: system-upgrade-plan-versions
     env: ../../../talos/talos.env
