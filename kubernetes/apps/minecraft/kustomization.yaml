@@ -11,5 +11,6 @@ resources:
   - ./limbo/ks.yaml
   - ./lobby/ks.yaml
   - ./marianland/ks.yaml
+  - ./router/ks.yaml
   - ./velocity/ks.yaml
   - ./survival/ks.yaml
