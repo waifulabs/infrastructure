@@ -101,7 +101,7 @@ tasks:
       - for: { var: IP_ADDRS }
         task: upgrade-node
         vars:
-          IP: "{{.ITEM}}"
+          NODE: "{{.ITEM}}"
     vars:
       IP_ADDRS:
         sh: talosctl config info --output json | jq --join-output '[.nodes[]] | join(" ")'

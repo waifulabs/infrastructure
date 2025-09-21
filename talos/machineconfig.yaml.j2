@@ -191,12 +191,3 @@ name: enp2s0f1np1
 rings:
   rx: 8160
   tx: 8160
----
-apiVersion: v1alpha1
-kind: ExtensionServiceConfig
-name: nut-client
-configFiles:
-  - content: |-
-      MONITOR 172.16.0.3 1 slaveuser "op://Kubernetes/nut/NUT_PASSWORD" slave
-      SHUTDOWNCMD "/sbin/poweroff"
-    mountPath: /usr/local/etc/nut/upsmon.conf
