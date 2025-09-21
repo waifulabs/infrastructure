@@ -1,0 +1,83 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app minecraft-router
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: minecraft-router
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    serviceAccount:
+      main:
+        enabled: true
+    defaultPodOptions:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    controllers:
+      main:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          minecraft-router:
+            image:
+              repository: ghcr.io/itzg/mc-router
+              tag: 1.34.2@sha256:4111f146129e45716cf1b2caef73f03b9e9569d84e3992f1011c919a4f48726d
+            env:
+              TZ: America/Los_Angeles
+              IN_KUBE_CLUSTER: "true"
+              API_BINDING: ":8080"
+              PORT: &port 25565
+              AUTO_SCALE_UP: false
+              CONNECTION_RATE_LIMIT: 10
+              DEFAULT: minecraft-void.minecraft.svc.cluster.local:25565
+              METRICS_BACKEND: prometheus
+              SIMPLIFY_SRV: false
+              USE_PROXY_PROTOCOL: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 350m
+                memory: 64Mi
+              limits:
+                cpu: 500m
+                memory: 96Mi
+        serviceAccount:
+          identifier: main
+    service:
+      minecraft-router:
+        annotations:
+          lbipam.cilium.io/ips: 172.16.0.40
+        type: LoadBalancer
+        controller: main
+        ports:
+          java:
+            port: *port
+          api:
+            port: 8080
+    serviceMonitor:
+      minecraft-router:
+        serviceName: minecraft-router
+        endpoints:
+          - port: api
+            scheme: http
+            path: /metrics
+            interval: 1m
+            scrapeTimeout: 30s
