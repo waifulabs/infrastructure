@@ -63,6 +63,8 @@ spec:
       marianland:
         controller: minecraft
         type: LoadBalancer
+        annotations:
+          mc-router.itzg.me/externalServerName: "marianland.ok8.sh"
         ports:
           game:
            port: &game-port 25565

@@ -72,7 +72,8 @@ spec:
                 enabled: false
     service:
       limbo:
-        controller: main
+        annotations:
+          mc-router.itzg.me/defaultServer: "true"
         ports:
           limbo:
             port: 25565
