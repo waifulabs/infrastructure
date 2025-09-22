@@ -1,0 +1,1 @@
+motd = "<b><gradient:#439cfb:#f187fb>Kashall's Network</gradient></b> [1.13-1.21.8]\n<white>ꜱᴜʀᴠɪᴠᴀʟ</white> x <white>ᴄᴏᴍᴘᴇᴛɪᴛɪᴠᴇ ɪᴄᴇ ꜱᴋᴀᴛɪɴɢ</white> x <white>ᴄᴀᴛꜱ</white>"
