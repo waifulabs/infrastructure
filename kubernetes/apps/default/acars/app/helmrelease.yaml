@@ -228,7 +228,7 @@ spec:
         storageClass: ceph-block
         size: 2G
         accessMode: ReadWriteOnce
-        advancedMounts: {acarshub: {acarshub: [path: /run/acars]}}
+        advancedMounts: {acars-hub: {acars-hub: [path: /run/acars]}}
       # For kubectl, usbreset and usb-devices
       binaries:
         type: hostPath
