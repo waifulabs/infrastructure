@@ -42,10 +42,9 @@ spec:
             env:
               SERIALS: "00000001,00000002,00000003"
               STATEFULSETS: >-
-                acars-acarsdec,
-                acars-acarsdec2,
-                acars-dumpvdl2,
-                acars-dumpvdl2-2
+                acars-acars-decoder-1,
+                acars-acars-decoder-2,
+                acars-dumpvdl2
       acars-decoder-1:
         <<: *common_settings
         replicas: 1
