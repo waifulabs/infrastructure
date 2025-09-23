@@ -39,18 +39,18 @@ function scale() {
     log "Scaling to $1"
     scaled=$1
     value=0
-    for s in $${STS[@]}; do
-    kubectl scale statefulset $s --replicas $1
-    [[ $? != 0 ]] && value=1
+    for s in $STS; do
+        kubectl scale statefulset $s --replicas $1
+        [[ $? != 0 ]] && value=1
     done
     return $value
 }
 
 function activereplicas() {
     count=0
-    for s in $${STS[@]}; do
+    for s in $STS; do
         if [[ $(kubectl get statefulset $s | grep "$s " | awk '{print $2}') != "0/0" ]]; then
-        let count++
+            let count++
         fi
     done
     echo $count
