@@ -1,4 +1,6 @@
- #!bin/bash
+#!bin/bash
+
+apt update -y && apt install util-linux curl -y
 
 if ! command -v kubectl &> /dev/null; then
     log "kubectl not found, installing..."
