@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - ./ocirepository.yaml
   - ./helmrelease.yaml
+  - ./rbac.yaml
 configMapGenerator:
   - name: acars-usb-watchdog
     files:
