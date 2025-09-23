@@ -8,7 +8,7 @@ spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
-    name: app-template
+    name: acars
   install:
     remediation:
       retries: 3
@@ -18,13 +18,37 @@ spec:
       strategy: rollback
       retries: 3
   values:
+    common_settings: &common_settings
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
+      pod:
+        terminationGracePeriodSeconds: 1
+        nodeSelector:
+          rtlamr.feature.node.kubernetes.io/rtlamr: "true"
     controllers:
+      acars-usb-watchdog:
+        <<: *common_settings
+        forceRename: acars-usb-watchdog
+        serviceAccount:
+          name: acars-usb-watchdog
+        replicas: 1
+        containers:
+          acars-usb-watchdog:
+            securityContext: {privileged: true}
+            image: {repository: debian,tag: latest}
+            # command: [sleep,infinity]
+            command: [bash,"/tmp/acars-usb-watchdog.sh"]
+            env:
+              SERIALS: "00000001,00000002,00000003"
+              STATEFULSETS: >-
+                acars-acarsdec,
+                acars-acarsdec2,
+                acars-dumpvdl2,
+                acars-dumpvdl2-2
       acars-decoder-1:
-        annotations:
-          reloader.stakater.com/auto: "true"
-        pod:
-          nodeSelector:
-            feature.node.kubernetes.io/usb-ff_0bda_2838_00000003.present: "true"
+        <<: *common_settings
+        replicas: 1
         containers:
           acars-decoder:
             image:
@@ -50,16 +74,12 @@ spec:
             resources:
               requests:
                 cpu: 150m
-                memory: 64Mi
-              limits:
-                cpu: 1
                 memory: 128Mi
+              limits:
+                memory: 256Mi
       acars-decoder-2:
-        annotations:
-          reloader.stakater.com/auto: "true"
-        pod:
-          nodeSelector:
-            feature.node.kubernetes.io/usb-ff_0bda_2838_00000001.present: "true"
+        <<: *common_settings
+        replicas: 1
         containers:
           acars-decoder:
             image:
@@ -85,16 +105,11 @@ spec:
             resources:
               requests:
                 cpu: 150m
-                memory: 64Mi
-              limits:
-                cpu: 1
                 memory: 128Mi
+              limits:
+                memory: 256Mi
       dumpvdl2:
-        annotations:
-          reloader.stakater.com/auto: "true"
-        pod:
-          nodeSelector:
-            feature.node.kubernetes.io/usb-ff_0bda_2838_00000002.present: "true"
+        <<: *common_settings
         replicas: 1
         containers:
           dumpvdl2:
@@ -120,8 +135,8 @@ spec:
               limits:
                 memory: 256Mi
       acars-router:
-        annotations:
-          reloader.stakater.com/auto: "true"
+        <<: *common_settings
+        replicas: 1
         containers:
           acars-router:
             image:
@@ -134,12 +149,13 @@ spec:
             resources:
               requests:
                 cpu: 10m
-                memory: 64Mi
+                memory: 128Mi
               limits:
-                memory: 96Mi
+                memory: 256Mi
       acars-hub:
-        annotations:
-          reloader.stakater.com/auto: "true"
+        <<: *common_settings
+        replicas:
+        pod: { terminationGracePeriodSeconds: 10 }
         containers:
           acars-hub:
             image:
@@ -151,12 +167,19 @@ spec:
               ENABLE_ACARS: external
               ENABLE_VDLM: external
               QUIET_MESSAGES: "false" # This logs the messages themselves
+            probes:
+              liveness:
+                enabled: true
+                port: 15550
+              readiness:
+                enabled: true
+                port: 15550
             resources:
               requests:
-                cpu: 300m
-                memory: 192Mi
+                cpu: 10m
+                memory: 128Mi
               limits:
-                memory: 256Mi
+                memory: 512Mi
     service:
       acars-router:
         controller: acars-router
@@ -205,7 +228,30 @@ spec:
         storageClass: ceph-block
         size: 2G
         accessMode: ReadWriteOnce
+        advancedMounts: {acarshub: {acarshub: [path: /run/acars]}}
+      # For kubectl, usbreset and usb-devices
+      binaries:
+        type: hostPath
+        hostPath: /bin
         advancedMounts:
-          acars-hub:
-            acars-hub:
-              - path: /run/acars
+          acars-usb-watchdog: {acars-usb-watchdog: [{path: /usr/local/sbin}]}
+      # For resetting individual USB devices
+      usbdevices:
+        type: hostPath
+        hostPath: /dev/bus/usb
+        advancedMounts:
+          acars-usb-watchdog: {acars-usb-watchdog: [{path: /dev/bus/usb}]}
+      # For resetting the USB Hub
+      usbhub:
+        type: hostPath
+        hostPath: /sys/bus/pci/drivers/xhci_hcd
+        advancedMounts:
+          acars-usb-watchdog: {acars-usb-watchdog: [{path: /sys/bus/pci/drivers/xhci_hcd}]}
+      script:
+        type: configMap
+        name: acars-usb-watchdog
+        advancedMounts:
+          acars-usb-watchdog: {acars-usb-watchdog: [
+            {path: /tmp/acars-usb-watchdog.sh,subPath: acars-usb-watchdog.sh}
+            ]
+          }

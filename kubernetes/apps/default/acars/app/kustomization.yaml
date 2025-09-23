@@ -3,5 +3,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./externalsecret.yaml
+  - ./ocirepository.yaml
   - ./helmrelease.yaml
+configMapGenerator:
+  - name: acars-usb-watchdog
+    files:
+      - acars-usb-watchdog.sh=./resources/acars-usb-watchdog.sh
+generatorOptions:
+  disableNameSuffixHash: true
