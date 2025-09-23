@@ -62,6 +62,13 @@ spec:
             per_listener_settings false
             persistence true
             persistence_location /config
+
+            connection meshtastic-bridge
+            address mqtt.meshtastic.org:1883
+            remote_username meshdev
+            remote_password large4cats
+            cleansession true
+            topic msh/US/OR/# in
     persistence:
       config:
         existingClaim: mosquitto
