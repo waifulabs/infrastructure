@@ -8,10 +8,10 @@ machine:
     key: op://Kubernetes/talos/CERTS_OS_KEY
   certSANs: ["127.0.0.1", "172.16.0.2"]
   features:
-    rbac: true
-    stableHostname: true
     apidCheckExtKeyUsage: true
     diskQuotaSupport: true
+    stableHostname: true
+    rbac: true
     kubePrism:
       enabled: true
       port: 7445
@@ -35,7 +35,7 @@ machine:
         hard=True
         nconnect=16
         noatime=True
-      permissions: 420
+      permissions: 0o644
       path: /etc/nfsmount.conf
       op: overwrite
   install:
@@ -110,8 +110,8 @@ cluster:
     certSANs: ["127.0.0.1", "172.16.0.2"]
     extraArgs:
       enable-aggregator-routing: true
-      #feature-gates: MutatingAdmissionPolicy=true
-      #runtime-config: admissionregistration.k8s.io/v1alpha1=true
+      feature-gates: MutatingAdmissionPolicy=true
+      runtime-config: admissionregistration.k8s.io/v1beta1=true
     disablePodSecurityPolicy: true
     auditPolicy:
       apiVersion: audit.k8s.io/v1
@@ -155,23 +155,6 @@ cluster:
     image: registry.k8s.io/kube-scheduler:{{ ENV.KUBERNETES_VERSION }}
     extraArgs:
       bind-address: 0.0.0.0
-    config:
-      apiVersion: kubescheduler.config.k8s.io/v1
-      kind: KubeSchedulerConfiguration
-      profiles:
-        - schedulerName: default-scheduler
-          plugins:
-            score:
-              disabled:
-                - name: ImageLocality
-          pluginConfig:
-            - name: PodTopologySpread
-              args:
-                defaultingType: List
-                defaultConstraints:
-                  - maxSkew: 1
-                    topologyKey: kubernetes.io/hostname
-                    whenUnsatisfiable: ScheduleAnyway
   secret: op://Kubernetes/talos/CLUSTER_SECRET
   secretboxEncryptionSecret: op://Kubernetes/talos/SECRETS_ENCRYPTIONSECRET
   serviceAccount:
