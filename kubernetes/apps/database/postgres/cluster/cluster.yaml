@@ -1,9 +1,11 @@
 ---
-# yaml-language-server: $schema=https://kube-schemas.ok8.sh/postgres-operator.crunchydata.com/postgrescluster_v1beta1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/postgres-operator.crunchydata.com/postgrescluster_v1beta1.json
 apiVersion: postgres-operator.crunchydata.com/v1beta1
 kind: PostgresCluster
 metadata:
   name: &name postgres
+  annotations:
+    postgres-operator.crunchydata.com/autoCreateUserSchema: true
 spec:
   postgresVersion: 17
   monitoring:
