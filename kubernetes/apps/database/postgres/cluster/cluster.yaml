@@ -55,6 +55,10 @@ spec:
       databases: ["bluemap"]
       password:
         type: AlphaNumeric
+    - name: "sunlight"
+      databases: ["sunlight"]
+      password:
+        type: AlphaNumeric
   backups:
     pgbackrest:
       configuration: &backupConfig
