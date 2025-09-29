@@ -15,7 +15,7 @@ spec:
       namespace: kube-system
     - name: mosquitto
       namespace: default
-    - name: onepassword-store
+    - name: onepassword
       namespace: external-secrets
   path: ./kubernetes/apps/default/rtlamr2mqtt/app
   prune: true

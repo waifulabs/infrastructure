@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: onepassword-store
+    - name: onepassword
       namespace: external-secrets
   path: ./kubernetes/apps/sunlight/sunlight/app
   prune: true

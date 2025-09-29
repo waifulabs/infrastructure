@@ -19,7 +19,7 @@ spec:
       kind: CustomResourceDefinition
       name: dnsendpoints.externaldns.k8s.io
   dependsOn:
-    - name: onepassword-store
+    - name: onepassword
       namespace: external-secrets
   path: ./kubernetes/apps/networking/unifi-dns/app
   prune: false

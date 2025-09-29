@@ -13,7 +13,7 @@ spec:
   components:
     - ../../../../components/volsync
   dependsOn:
-    - name: onepassword-store
+    - name: onepassword
       namespace: external-secrets
   path: ./kubernetes/apps/default/zigbee2mqtt/app
   postBuild:
