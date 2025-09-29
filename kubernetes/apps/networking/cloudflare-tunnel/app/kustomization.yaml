@@ -6,9 +6,4 @@ resources:
   - ./externalsecret.yaml
   - ./dnsendpoint.yaml
   - ./helmrelease.yaml
-configMapGenerator:
-  - name: cloudflare-tunnel-configmap
-    files:
-      - config.yaml=./resources/config.yaml
-generatorOptions:
-  disableNameSuffixHash: true
+  - ./ocirepository.yaml
