@@ -111,6 +111,10 @@ spec:
           client_tls_sslmode: prefer
           default_pool_size: "100"
           max_client_conn: "500"
+      service:
+        metadata:
+          annotations:
+            external-dns.alpha.kubernetes.io/target: "postgres.ok8.sh"
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
