@@ -21,7 +21,7 @@ metadata:
   name: ok8-sh-tls
 spec:
   secretStoreRefs:
-    - name: onepassword-connect
+    - name: onepassword
       kind: ClusterSecretStore
   selector:
     secret:
