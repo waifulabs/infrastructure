@@ -123,12 +123,18 @@ spec:
           revision: 6
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
-        envoy:
-          # renovate: depName="Envoy Proxy Monitoring gRPC"
-          gnetId: 23239
-          revision: 1
-          datasource:
-            - { name: DS_AFRANET_PROMETHEUS, value: Prometheus }
+        envoy-gateway-global:
+          url: https://raw.githubusercontent.com/envoyproxy/gateway/refs/heads/main/charts/gateway-addons-helm/dashboards/envoy-gateway-global.json
+          datasource: Prometheus
+        envoy-proxy-global:
+          url: https://raw.githubusercontent.com/envoyproxy/gateway/refs/heads/main/charts/gateway-addons-helm/dashboards/envoy-proxy-global.json
+          datasource: Prometheus
+        envoy-global-ratelimit:
+          url: https://raw.githubusercontent.com/envoyproxy/gateway/refs/heads/main/charts/gateway-addons-helm/dashboards/global-ratelimit.json
+          datasource: Prometheus
+        envoy-clusters:
+          url: https://raw.githubusercontent.com/envoyproxy/gateway/refs/heads/main/charts/gateway-addons-helm/dashboards/envoy-clusters.json
+          datasource: Prometheus
         external-dns:
           # renovate: depName="External-dns"
           gnetId: 15038
