@@ -5,7 +5,7 @@ kind: HTTPRoute
 metadata:
   name: survival-map
 spec:
-  hostnames: ["map.ok8.sh"]
+  hostnames: ["mc.ok8.sh"]
   parentRefs:
     - name: external
       namespace: networking
@@ -16,5 +16,5 @@ spec:
           port: 8100
       matches:
         - path:
-            type: RegularExpression
-            value: ^/maps/survival.*
+            type: PathPrefix
+            value: /

@@ -32,7 +32,7 @@ spec:
     resources:
       requests:
         cpu: 2
-        memory: &memory-limit 6G
+        memory: &memory-limit 12G
     livenessProbe:
       initialDelaySeconds: 0
     readinessProbe:

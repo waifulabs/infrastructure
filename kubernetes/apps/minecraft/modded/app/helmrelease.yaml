@@ -41,7 +41,7 @@ spec:
               ENABLE_ROLLING_LOGS: true
               ALLOW_FLIGHT: true
               INIT_MEMORY: 1G
-              MAX_MEMORY: &max-memory 6G
+              MAX_MEMORY: &max-memory 12G
               MODRINTH_PROJECTS: |
                 bluemap
             securityContext:
@@ -64,7 +64,7 @@ spec:
         controller: minecraft
         type: LoadBalancer
         annotations:
-          mc-router.itzg.me/externalServerName: "marianland.ok8.sh"
+          mc-router.itzg.me/externalServerName: "modded.ok8.sh"
         ports:
           game:
            port: &game-port 25565
@@ -74,7 +74,7 @@ spec:
             port: &web-port 8100
     route:
       marianland:
-        hostnames: ["map.ok8.sh"]
+        hostnames: ["modded.ok8.sh"]
         parentRefs:
           - name: external
             namespace: networking
@@ -85,8 +85,8 @@ spec:
                 port: *web-port
             matches:
               - path:
-                 type: RegularExpression
-                 value: ^/maps/marianland_.*
+                 type: PathPrefix
+                 value: /
     persistence:
       tmp:
         type: emptyDir

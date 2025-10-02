@@ -8,7 +8,6 @@ components:
 resources:
   - ./namespace.yaml
   - ./limbo/ks.yaml
-  - ./lobby/ks.yaml
-  - ./marianland/ks.yaml
+  - ./modded/ks.yaml
   - ./router/ks.yaml
   - ./survival/ks.yaml
