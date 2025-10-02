@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app marianland
+  name: &app modded
   namespace: &namespace minecraft
 spec:
   targetNamespace: *namespace
@@ -17,7 +17,7 @@ spec:
       namespace: external-secrets
     - name: rook-ceph-cluster
       namespace: rook-ceph
-  path: ./kubernetes/apps/minecraft/marianland/app
+  path: ./kubernetes/apps/minecraft/modded/app
   postBuild:
     substitute:
       APP: *app
