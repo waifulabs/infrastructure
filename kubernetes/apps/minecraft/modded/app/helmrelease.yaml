@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app marianland
+  name: &app modded
 spec:
   interval: 1h
   chartRef:
@@ -23,7 +23,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
-          marianland:
+          modded:
             image:
               repository: ghcr.io/itzg/minecraft-server
               tag: 2025.9.2-java21
@@ -60,7 +60,7 @@ spec:
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
     service:
-      marianland:
+      modded:
         controller: minecraft
         type: LoadBalancer
         annotations:
@@ -73,7 +73,7 @@ spec:
           http:
             port: &web-port 8100
     route:
-      marianland:
+      modded:
         hostnames: ["modded.ok8.sh"]
         parentRefs:
           - name: external
