@@ -58,3 +58,14 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
+      hijack:
+        enabled: true
+        kind: TCPRoute
+        parentRefs:
+          - name: internal
+            namespace: networking
+            sectionName: tcp
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port

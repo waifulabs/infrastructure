@@ -42,3 +42,4 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
+    - name
