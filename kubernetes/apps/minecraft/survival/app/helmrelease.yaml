@@ -50,7 +50,7 @@ spec:
     minecraftServer:
       eula: true
       version: 1.21.8
-      onlineMode: false
+      onlineMode: true
       type: PAPER
       generateStructures: true
       difficulty: normal
