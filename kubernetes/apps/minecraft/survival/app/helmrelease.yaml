@@ -71,6 +71,7 @@ spec:
         - 83767 # https://www.spigotmc.org/resources/huskhomes-1-16-1-20-set-homes-warps-spawn-tp-and-tpa-public-homes-works-cross-server.83767/
         - 64346 # https://www.spigotmc.org/resources/thizzyz-tree-feller.64346/
         - 57242 # https://www.spigotmc.org/resources/spark.57242/
+        - 128196 # https://www.spigotmc.org/resources/servermotd.128196/
       pluginUrls:
         - https://mediafilez.forgecdn.net/files/5502/330/dead-chest-4.21.1.jar
         - https://github.com/sladkoff/minecraft-prometheus-exporter/releases/download/v3.1.0/minecraft-prometheus-exporter-3.1.0.jar
@@ -106,12 +107,3 @@ spec:
       dataDir:
         enabled: true
         existingClaim: *app
-    extraVolumes:
-      - volumeMounts:
-          - name: *app
-            mountPath: /config
-            subPath: paper-global.yml
-        volumes:
-          - name: *app
-            secret:
-              secretName: *app
