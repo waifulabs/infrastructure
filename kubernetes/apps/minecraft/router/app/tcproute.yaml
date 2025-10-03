@@ -8,8 +8,10 @@ spec:
   parentRefs:
     - name: external
       namespace: networking
+      sectionName: minecraft
     - name: internal
       namespace: networking
+      sectionName: minecraft
   rules:
     - backendRefs:
         - name: minecraft-router
