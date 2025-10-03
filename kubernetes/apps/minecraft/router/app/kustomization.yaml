@@ -7,4 +7,3 @@ resources:
   - ./helmrelease.yaml
   - ./servicemonitor.yaml
   - ./rbac.yaml
-  - ./tcproute.yaml
