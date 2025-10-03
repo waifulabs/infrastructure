@@ -14,5 +14,5 @@ spec:
       sectionName: minecraft
   rules:
     - backendRefs:
-        - name: minecraft-router
+        - name: survival-minecraft
           port: 25565
