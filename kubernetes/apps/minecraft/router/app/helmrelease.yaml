@@ -47,7 +47,7 @@ spec:
               DEFAULT: limbo.minecraft.svc.cluster.local:25565
               METRICS_BACKEND: prometheus
               SIMPLIFY_SRV: true
-              USE_PROXY_PROTOCOL: true
+              USE_PROXY_PROTOCOL: false
               TRUSTED_PROXIES: 172.30.0.0/16
               RECORD_LOGINS: true
             securityContext:
