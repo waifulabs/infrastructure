@@ -26,6 +26,11 @@ spec:
         terminationGracePeriodSeconds: 1
         nodeSelector:
           rtlamr.feature.node.kubernetes.io/rtlamr: "true"
+        securityContext:
+          runAsUser: 1001
+          runAsGroup: 1001
+          fsGroup: 1001
+          fsGroupChangePolicy: OnRootMismatch
     controllers:
       acars-usb-watchdog:
         <<: *common_settings
@@ -35,10 +40,10 @@ spec:
         replicas: 1
         containers:
           acars-usb-watchdog:
-            securityContext: {privileged: true}
-            image: {repository: debian,tag: latest}
+            securityContext: { privileged: true }
+            image: { repository: debian, tag: latest }
             # command: [sleep,infinity]
-            command: [bash,"/tmp/acars-usb-watchdog.sh"]
+            command: [bash, "/tmp/acars-usb-watchdog.sh"]
             env:
               SERIALS: "00000001,00000002,00000003"
               STATEFULSETS: >-
@@ -65,7 +70,7 @@ spec:
               # FREQUENCIES: >-
               #   130.025;130.425;130.450;130.825;130.850;131.125;131.425;
               #   131.450;131.475;131.525;131.550;131.725;131.825;131.850
-              OUTPUT_SERVER: acars-acars-router
+              OUTPUT_SERVER: acars-acars-router.default.svc.cluster.local
               OUTPUT_SERVER_PORT: "5550"
               OUTPUT_SERVER_MODE: tcp
             securityContext:
@@ -96,7 +101,7 @@ spec:
               # FREQUENCIES: >-
               #   130.025;130.425;130.450;130.825;130.850;131.125;131.425;
               #   131.450;131.475;131.525;131.550;131.725;131.825;131.850
-              OUTPUT_SERVER: acars-acars-router
+              OUTPUT_SERVER: acars-acars-router.default.svc.cluster.local
               OUTPUT_SERVER_PORT: "5550"
               OUTPUT_SERVER_MODE: tcp
             securityContext:
@@ -126,7 +131,7 @@ spec:
               # See also https://gist.github.com/tyzbit/8df46263085b0f3d9e2dd09069438f89
               FREQUENCIES: 136.650;136.975;136.800;136.100;136.675
               ZMQ_MODE: client
-              ZMQ_ENDPOINT: tcp://acars-acars-router:35555
+              ZMQ_ENDPOINT: tcp://acars-acars-router.default.svc.cluster.local:35555
             resources:
               requests:
                 cpu: 10m
@@ -143,8 +148,8 @@ spec:
               tag: 1.3.1_linux_amd64
             env:
               TZ: Etc/UTC
-              AR_SEND_UDP_ACARS: acars-acars-hub:5550;feedthe.acarsdrama.com:5550 #;feed.acars.io:5550
-              AR_SEND_UDP_VDLM2: acars-acars-hub:5555;feedthe.acarsdrama.com:5555 #;feed.airframes.io:5552
+              AR_SEND_UDP_ACARS: acars-acars-hub.default.svc.cluster.local:5550;feedthe.acarsdrama.com:5550 #;feed.acars.io:5550
+              AR_SEND_UDP_VDLM2: acars-acars-hub.default.svc.cluster.local:5555;feedthe.acarsdrama.com:5555 #;feed.airframes.io:5552
             resources:
               requests:
                 cpu: 10m
@@ -220,30 +225,38 @@ spec:
         storageClass: ceph-block
         size: 2G
         accessMode: ReadWriteOnce
-        advancedMounts: {acars-hub: {acars-hub: [path: /run/acars]}}
+        advancedMounts: { acars-hub: { acars-hub: [path: /run/acars] } }
       # For kubectl, usbreset and usb-devices
       binaries:
         type: hostPath
         hostPath: /bin
         advancedMounts:
-          acars-usb-watchdog: {acars-usb-watchdog: [{path: /usr/local/sbin}]}
+          acars-usb-watchdog:
+            { acars-usb-watchdog: [{ path: /usr/local/sbin }] }
       # For resetting individual USB devices
       usbdevices:
         type: hostPath
         hostPath: /dev/bus/usb
         advancedMounts:
-          acars-usb-watchdog: {acars-usb-watchdog: [{path: /dev/bus/usb}]}
+          acars-usb-watchdog: { acars-usb-watchdog: [{ path: /dev/bus/usb }] }
       # For resetting the USB Hub
       usbhub:
         type: hostPath
         hostPath: /sys/bus/pci/drivers/xhci_hcd
         advancedMounts:
-          acars-usb-watchdog: {acars-usb-watchdog: [{path: /sys/bus/pci/drivers/xhci_hcd}]}
+          acars-usb-watchdog:
+            { acars-usb-watchdog: [{ path: /sys/bus/pci/drivers/xhci_hcd }] }
       script:
         type: configMap
         name: acars-usb-watchdog
         advancedMounts:
-          acars-usb-watchdog: {acars-usb-watchdog: [
-            {path: /tmp/acars-usb-watchdog.sh,subPath: acars-usb-watchdog.sh}
-            ]
-          }
+          acars-usb-watchdog:
+            {
+              acars-usb-watchdog:
+                [
+                  {
+                    path: /tmp/acars-usb-watchdog.sh,
+                    subPath: acars-usb-watchdog.sh,
+                  },
+                ],
+            }
