@@ -71,7 +71,8 @@ spec:
           api:
             port: 8080
     route:
-      minecraft-router:
+      api:
+        kind: HTTPRoute
         hostnames: ["{{ .Release.Name }}.ok8.sh"]
         parentRefs:
           - name: internal
@@ -81,6 +82,19 @@ spec:
           - backendRefs:
               - name: minecraft-router
                 port: 8080
+      minecraft:
+        kind: TCPRoute
+        parentRefs:
+          - name: external
+            namespace: networking
+            sectionName: minecraft
+          - name: internal
+            namespace: networking
+            sectionName: minecraft
+        rules:
+          - backendRefs:
+              - name: minecraft-router
+                port: *port
     serviceMonitor:
       minecraft-router:
         serviceName: minecraft-router
