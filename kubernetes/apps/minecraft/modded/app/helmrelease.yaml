@@ -63,7 +63,7 @@ spec:
       modded:
         controller: minecraft
         annotations:
-          mc-router.itzg.me/externalServerName: "modded.ok8.sh"
+          mc-router.itzg.me/externalServerName: "modded.ok8.sh, modded-srv.ok8.sh"
         ports:
           game:
            port: &game-port 25565

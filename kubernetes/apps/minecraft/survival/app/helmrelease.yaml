@@ -97,7 +97,7 @@ spec:
       lbipam.cilium.io/ips: 172.16.0.42
       lbipam.cilium.io/sharing-key: rcon
     serviceAnnotations:
-      mc-router.itzg.me/externalServerName: "mc.ok8.sh"
+      mc-router.itzg.me/externalServerName: "mc.ok8.sh, mc-srv.ok8.sh"
     persistence:
       dataDir:
         enabled: true
