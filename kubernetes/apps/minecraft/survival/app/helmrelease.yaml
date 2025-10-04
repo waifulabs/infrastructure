@@ -33,12 +33,6 @@ spec:
       requests:
         cpu: 2
         memory: &memory-limit 12G
-    livenessProbe:
-      enabled: false
-      command: ["mc-health", "--use-proxy"]
-    readinessProbe:
-      enabled: false
-      command: ["mc-health", "--use-proxy"]
     extraEnv:
       TZ: "America/Los_Angeles"
       KEEP_INVENTORY: true
@@ -47,6 +41,7 @@ spec:
       INIT_MEMORY: 1G
       MAX_MEMORY: *memory-limit
       SEED: "8485994731059868771"
+      DISABLE_HEALTHCHECK: "true"
     minecraftServer:
       eula: true
       version: 1.21.8
