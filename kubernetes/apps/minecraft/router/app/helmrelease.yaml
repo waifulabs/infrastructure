@@ -46,7 +46,7 @@ spec:
               CONNECTION_RATE_LIMIT: 10
               DEFAULT: limbo.minecraft.svc.cluster.local:25565
               METRICS_BACKEND: prometheus
-              SIMPLIFY_SRV: true
+              SIMPLIFY_SRV: false
               USE_PROXY_PROTOCOL: false
               TRUSTED_PROXIES: 172.30.0.0/16
               RECORD_LOGINS: true
