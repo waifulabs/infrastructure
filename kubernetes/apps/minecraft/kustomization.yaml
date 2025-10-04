@@ -7,7 +7,6 @@ components:
   - ../../components/common
 resources:
   - ./namespace.yaml
-  - ./limbo/ks.yaml
   - ./modded/ks.yaml
   - ./router/ks.yaml
   - ./survival/ks.yaml
