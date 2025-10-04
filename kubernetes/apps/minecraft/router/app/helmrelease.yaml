@@ -47,7 +47,7 @@ spec:
               CONNECTION_RATE_LIMIT: 10
               METRICS_BACKEND: prometheus
               SIMPLIFY_SRV: true
-              USE_PROXY_PROTOCOL: false
+              USE_PROXY_PROTOCOL: true
               RECORD_LOGINS: true
             securityContext:
               allowPrivilegeEscalation: false
