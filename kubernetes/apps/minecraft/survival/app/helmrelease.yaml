@@ -100,7 +100,9 @@ spec:
       lbipam.cilium.io/ips: 172.16.0.42
       lbipam.cilium.io/sharing-key: rcon
     serviceAnnotations:
-      mc-router.itzg.me/externalServerName: "mc.ok8.sh"
+      # SRV Record is _minecraft._tcp.mc.ok8.sh which points to mc-srv.ok8.sh.
+      # MC-Router is getting all of these portforwards to it and when the SRV resolves it points to mc-srv.ok8.sh which is this external server name.
+      mc-router.itzg.me/externalServerName: "mc-srv.ok8.sh"
     persistence:
       dataDir:
         enabled: true
