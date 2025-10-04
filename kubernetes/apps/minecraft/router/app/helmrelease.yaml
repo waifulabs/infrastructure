@@ -50,6 +50,7 @@ spec:
               USE_PROXY_PROTOCOL: false
               TRUSTED_PROXIES: 172.30.0.0/16
               RECORD_LOGINS: true
+              DEBUG: true
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
