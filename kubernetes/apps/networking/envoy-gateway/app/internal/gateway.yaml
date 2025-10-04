@@ -36,9 +36,3 @@ spec:
         certificateRefs:
           - kind: Secret
             name: ok8-sh-tls
-    - name: minecraft
-      protocol: TCP
-      port: 25565
-      allowedRoutes:
-        namespaces:
-          from: All
