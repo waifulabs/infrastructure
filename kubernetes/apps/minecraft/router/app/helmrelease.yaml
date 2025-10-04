@@ -39,17 +39,16 @@ spec:
               tag: 1.36.0@sha256:c864081f958b2df4182f85b357fcbc9b613749c3c4f23a0f2e4c3b0c5eb615a7
             env:
               TZ: America/Los_Angeles
+              DEBUG: true
               IN_KUBE_CLUSTER: "true"
               API_BINDING: ":8080"
               PORT: &port 25565
               AUTO_SCALE_UP: false
               CONNECTION_RATE_LIMIT: 10
-              #DEFAULT: limbo.minecraft.svc.cluster.local:25565
               METRICS_BACKEND: prometheus
               SIMPLIFY_SRV: true
-              USE_PROXY_PROTOCOL: true
+              USE_PROXY_PROTOCOL: false
               RECORD_LOGINS: true
-              DEBUG: true
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
