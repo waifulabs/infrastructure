@@ -62,7 +62,6 @@ spec:
     service:
       modded:
         controller: minecraft
-        type: LoadBalancer
         annotations:
           mc-router.itzg.me/externalServerName: "modded.ok8.sh"
         ports:
