@@ -39,9 +39,6 @@ spec:
     readinessProbe:
       initialDelaySeconds: 0
       command: ["mc-health --use-proxy"]
-    startupProbe:
-      enabled: true
-      command: ["mc-health --use-proxy"]
     extraEnv:
       TZ: "America/Los_Angeles"
       KEEP_INVENTORY: true
