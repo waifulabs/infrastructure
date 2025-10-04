@@ -44,7 +44,7 @@ spec:
               PORT: &port 25565
               AUTO_SCALE_UP: false
               CONNECTION_RATE_LIMIT: 10
-              DEFAULT: limbo.minecraft.svc.cluster.local:25565
+              #DEFAULT: limbo.minecraft.svc.cluster.local:25565
               METRICS_BACKEND: prometheus
               SIMPLIFY_SRV: true
               USE_PROXY_PROTOCOL: true
