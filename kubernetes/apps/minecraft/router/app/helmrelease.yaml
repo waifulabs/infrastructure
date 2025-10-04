@@ -64,6 +64,7 @@ spec:
           identifier: main
     service:
       minecraft-router:
+        controller: main
         type: LoadBalancer
         annotations:
           lbipam.cilium.io/ips: 172.16.0.38
