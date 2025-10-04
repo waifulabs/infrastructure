@@ -35,10 +35,10 @@ spec:
         memory: &memory-limit 12G
     livenessProbe:
       initialDelaySeconds: 0
-      command: ["mc-health --use-proxy"]
+      command: ["mc-health", "--use-proxy"]
     readinessProbe:
       initialDelaySeconds: 0
-      command: ["mc-health --use-proxy"]
+      command: ["mc-health", "--use-proxy"]
     extraEnv:
       TZ: "America/Los_Angeles"
       KEEP_INVENTORY: true
