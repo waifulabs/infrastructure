@@ -64,9 +64,7 @@ spec:
         controller: minecraft
         type: LoadBalancer
         annotations:
-          # SRV Record is _minecraft._tcp.modded.ok8.sh which points to modded-srv.ok8.sh.
-          # MC-Router is getting all of these portforwards to it and when the SRV resolves it points to modded-srv.ok8.sh which is this external server name.
-          mc-router.itzg.me/externalServerName: "modded-srv.ok8.sh"
+          mc-router.itzg.me/externalServerName: "modded.ok8.sh"
         ports:
           game:
            port: &game-port 25565
