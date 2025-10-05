@@ -33,7 +33,6 @@ spec:
           fsGroupChangePolicy: OnRootMismatch
     controllers:
       acars-usb-watchdog:
-        <<: *common_settings
         forceRename: acars-usb-watchdog
         serviceAccount:
           name: acars-usb-watchdog
