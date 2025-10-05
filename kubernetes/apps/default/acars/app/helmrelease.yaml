@@ -128,7 +128,6 @@ spec:
               limits:
                 memory: 256Mi
       dumpvdl2:
-        <<: *common_settings
         replicas: 1
         containers:
           dumpvdl2:
