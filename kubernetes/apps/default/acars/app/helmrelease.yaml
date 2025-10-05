@@ -31,8 +31,22 @@ spec:
           runAsGroup: 1001
           fsGroup: 1001
           fsGroupChangePolicy: OnRootMismatch
+    probe: &probes
+      liveness:
+        enabled: true
+        custom: true
+        spec:
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          failureThreshold: 3
+          exec:
+            command:
+              - bash
+              - -c
+              - netstat -punt | awk "NR > 2 && !/127\.0\.0\.1/ && !/::1/ { found=1 } END { if (!found) exit 1 }"
     controllers:
       acars-usb-watchdog:
+        <<: *common_settings
         forceRename: acars-usb-watchdog
         serviceAccount:
           name: acars-usb-watchdog
@@ -74,6 +88,7 @@ spec:
               OUTPUT_SERVER_MODE: tcp
             securityContext:
               privileged: true
+            probes: *probes
             resources:
               requests:
                 cpu: 150m
@@ -105,6 +120,7 @@ spec:
               OUTPUT_SERVER_MODE: tcp
             securityContext:
               privileged: true
+            probes: *probes
             resources:
               requests:
                 cpu: 150m
@@ -131,6 +147,7 @@ spec:
               FREQUENCIES: 136.650;136.975;136.800;136.100;136.675
               ZMQ_MODE: client
               ZMQ_ENDPOINT: tcp://acars-acars-router.default.svc.cluster.local:35555
+            probes: *probes
             resources:
               requests:
                 cpu: 10m
@@ -170,6 +187,13 @@ spec:
               ENABLE_ACARS: external
               ENABLE_VDLM: external
               QUIET_MESSAGES: "false" # This logs the messages themselves
+            probes:
+              liveness:
+                enabled: true
+                port: 15550
+              readiness:
+                enabled: true
+                port: 15550
             resources:
               requests:
                 cpu: 10m
