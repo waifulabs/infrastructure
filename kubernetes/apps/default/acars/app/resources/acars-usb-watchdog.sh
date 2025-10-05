@@ -73,7 +73,7 @@ function waitforzero() {
 }
 
 function bounce() {
-    kubectl rollout restart sts $${HOSTNAME%-0}
+    kubectl rollout restart sts ${HOSTNAME%-0}
 }
 
 log "Watching USB for: $DEVICES"
