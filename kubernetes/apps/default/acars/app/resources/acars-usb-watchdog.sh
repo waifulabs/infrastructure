@@ -1,11 +1,13 @@
 #!bin/bash
 
+chmod ugo+s /usr/bin/apt
 apt update -y && apt install curl usbutils -y
 if ! command -v kubectl &> /dev/null; then
     curl -sLO "https://dl.k8s.io/release/$(curl -sL https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
     install -m 0755 kubectl /usr/local/bin/kubectl
     rm kubectl
 fi
+
 
 DEVICES=$SERIALS
 # Turn this into iterable
