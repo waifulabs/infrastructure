@@ -1,0 +1,21 @@
+---
+connectivity:
+  checker:
+    target: 1.1.1.1:53
+    interval: 1m
+
+metrics: true
+
+ui:
+  title: Infrastructure Status
+  header: Status
+  logo: https://avatars.githubusercontent.com/u/17620516
+  link: https://github.com/kashalls
+  buttons:
+    - name: Github
+      link: https://github.com/kashalls
+    - name: Homelab
+      link: https://github.com/waifulabs/infrastructure
+
+web:
+  port: ${GATUS_WEB_PORT}
