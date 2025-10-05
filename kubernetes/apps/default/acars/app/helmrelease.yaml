@@ -26,11 +26,11 @@ spec:
         terminationGracePeriodSeconds: 1
         nodeSelector:
           rtlamr.feature.node.kubernetes.io/rtlamr: "true"
-        securityContext:
-          runAsUser: 1001
-          runAsGroup: 1001
-          fsGroup: 1001
-          fsGroupChangePolicy: OnRootMismatch
+        #securityContext:
+        #  runAsUser: 1001
+        #  runAsGroup: 1001
+        # fsGroup: 1001
+        #  fsGroupChangePolicy: OnRootMismatch
     probe: &probes
       liveness:
         enabled: true
@@ -47,7 +47,6 @@ spec:
     controllers:
       acars-usb-watchdog:
         <<: *common_settings
-        pod: { securityContext: { runAsUser: 0 }}
         forceRename: acars-usb-watchdog
         serviceAccount:
           name: acars-usb-watchdog
