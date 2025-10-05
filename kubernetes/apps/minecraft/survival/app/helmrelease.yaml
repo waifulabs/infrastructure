@@ -71,9 +71,10 @@ spec:
         - https://mediafilez.forgecdn.net/files/5502/330/dead-chest-4.21.1.jar
         - https://github.com/sladkoff/minecraft-prometheus-exporter/releases/download/v3.1.0/minecraft-prometheus-exporter-3.1.0.jar
         - https://mediafilez.forgecdn.net/files/4301/100/YetAnotherHarvest-1.1.jar
-        # - https://snapshot.discordsrv.com/discordsrv.jar
-        - https://get.discordsrv.com/discordserv.jar # Release version
-        # https://mediafilez.forgecdn.net/files/5382/326/spawner-silk-5.7.0.jar
+        - https://snapshot.discordsrv.com/discordsrv.jar
+        #- https://get.discordsrv.com/discordserv.jar # Release version
+        - https://mediafilez.forgecdn.net/files/5382/326/spawner-silk-5.7.0.jar
+        - https://github.com/Wolfity/FancyCrates/releases/download/v1.3.0/FancyCrates-1.3.0.jar
         # https://dev.bukkit.org/projects/customcrafting-advanced-custom-recipes
         # https://dev.bukkit.org/projects/dead-chest
         # https://dev.bukkit.org/projects/spawnersilk
