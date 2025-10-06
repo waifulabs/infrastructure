@@ -10,6 +10,7 @@ instance:
     - kustomize-controller
     - helm-controller
     - notification-controller
+    - source-watcher
   sync:
     kind: GitRepository
     name: home-kubernetes
