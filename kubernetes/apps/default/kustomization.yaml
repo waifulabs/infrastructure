@@ -11,6 +11,7 @@ resources:
   - ./glance/ks.yaml
   - ./home-assistant/ks.yaml
   - ./mosquitto/ks.yaml
+  - ./opencloud/ks.yaml
   - ./openspeedtest/ks.yaml
   #- ./rtlamr2mqtt/ks.yaml
   - ./zigbee2mqtt/ks.yaml

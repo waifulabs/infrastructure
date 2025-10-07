@@ -1,0 +1,86 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: opencloud
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: opencloud
+  interval: 30m
+  values:
+    controllers:
+      opencloud:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          securityContext:
+            fsGroup: 2000
+            fsGroupChangePolicy: OnRootMismatch
+            runAsGroup: 2000
+            runAsNonRoot: true
+            runAsUser: 2000
+        containers:
+          opencloud:
+            image:
+              repository: docker.io/opencloudeu/opencloud-rolling
+              tag: 3.5.0@sha256:15963603ee31edf92317dea6ccd420afd9c40caf95d5ebc9901e42eb339789ef
+            command:
+              - "/bin/sh"
+              - "-c"
+              - "opencloud init || true; opencloud server"
+            env:
+              IDM_CREATE_DEMO_USERS: false
+              IDM_ADMIN_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: opencloud-secret
+                    key: idm-admin-password
+              OC_ENABLE_OCM: false
+              OC_INSECURE: false
+              OC_LOG_LEVEL: info
+              OC_URL: https://files.ok8.sh
+              PROXY_TLS: false
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            resources:
+              requests:
+                cpu: 50m
+                memory: 128Mi
+              limits:
+                memory: 1024Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+    service:
+      app:
+        ports:
+          http:
+            port: 9200
+    persistence:
+      data:
+        existingClaim: opencloud
+        globalMounts:
+          - path: /var/lib/opencloud
+            subPath: data
+          - path: /etc/opencloud
+            subPath: config
+      tmpfs:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+            subPath: tmp
+    route:
+      app:
+        hostnames: ["files.ok8.sh"]
+        parentRefs:
+          - name: external
+            namespace: networking
+            sectionName: https
