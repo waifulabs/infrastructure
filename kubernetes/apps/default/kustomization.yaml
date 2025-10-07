@@ -8,7 +8,6 @@ resources:
   - ./app-template.yaml
   # Flux-Kustomizations
   - ./acars/ks.yaml
-  - ./copyparty/ks.yaml
   - ./glance/ks.yaml
   - ./home-assistant/ks.yaml
   - ./mosquitto/ks.yaml
