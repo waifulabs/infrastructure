@@ -14,5 +14,4 @@ resources:
   - ./mosquitto/ks.yaml
   - ./openspeedtest/ks.yaml
   #- ./rtlamr2mqtt/ks.yaml
-  #- ./smtp-relay/ks.yaml
   - ./zigbee2mqtt/ks.yaml
