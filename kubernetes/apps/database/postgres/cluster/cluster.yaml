@@ -115,7 +115,7 @@ spec:
         type: LoadBalancer
         metadata:
           annotations:
-            external-dns.alpha.kubernetes.io/target: "postgres.ok8.sh"
+            external-dns.alpha.kubernetes.io/target: postgres.ok8.sh
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
