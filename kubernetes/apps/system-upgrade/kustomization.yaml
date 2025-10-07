@@ -3,14 +3,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: system-upgrade
+components:
+  - ../../components/namespace
+replacements:
+  - path: ../../components/replacements/ks.yaml
 resources:
-  # Pre Flux-Kustomizations
-  - ./namespace.yaml
-  - ./app-template.yaml
-  # Flux-Kustomizations
-  #- ./system-upgrade-controller/ks.yaml
-configMapGenerator:
-  - name: system-upgrade-plan-versions
-    env: ../../../talos/talos.env
-generatorOptions:
-  disableNameSuffixHash: true
+  - ./tuppr/ks.yaml
