@@ -77,6 +77,9 @@ spec:
             port: 32400
     route:
       app:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 401"]
         hostnames:
           - "{{ .Release.Name }}.ok8.sh"
         parentRefs:
