@@ -108,17 +108,31 @@ UniFi released a new feature update with UniFi routers that allow you to create 
   <img src="https://owo.whats-th.is/2drDDRN.jpg" align="center" width="200px" alt="rack"/>
 </details>
 
+### Office Rack
+
 | Device                  | Count | OS Disk Size | Data Disk Size       | Ram  | Operating System | Purpose           |
 |-------------------------|-------|--------------|----------------------|------|------------------|-------------------|
-| UDM Pro                 | 1     | -            | -                    | -    | UniFi OS         | Router            |
-| USW 16 Pro Max          | 1     | -            | -                    | -    | UniFi OS         | Switching         |
+| UXG Max                 | 1     | -            | -                    | -    | UniFi OS         | Router            |
+| UCK G2 Plus             | 1     | -            | -                    | -    | UniFi OS         | Controller        |
+| USW Flex 2.5G 8 PoE     | 1     | -            | -                    | -    | UniFi OS         | Office Switch
 | U6-LR                   | 1     | -            | -                    | -    | -                | Office AP         |
-| UAP-AC-Pro              | 1     | -            | -                    | -    | -                | Dining Room AP    |
-| USP-PDU-Pro             | 1     | -            | -                    | -    | -                | Rack PDU          |
-| MS-01                   | 1     | 1TB NVMe     | 2x1TB NVMe           | 32GB | Talos            | Main Cluster      |
-| Fran                    | 1     | 2x1TB SSD    | 5x8TB (raidz2)       | 64GB | Debian           | Storage Cluster   |
-| JetKVM                  | 1     | 16GB (Flash) | -                    | -    | JetKVM           | Network KVM       |
-| APC Back-Ups 1500       | 1     | -            | -                    | -    | -                | UPS               |
+| Airgradient             | 1     | -            | -                    | -    | -                | Dining Room AP    |
+
+### Server Rack
+
+| Device                  | Count | OS Disk Size | Data Disk Size       | Ram  | Operating System | Purpose            | Network
+|-------------------------|-------|--------------|----------------------|------|------------------|--------------------|----------|
+| UDM Pro                 | 1     | -            | -                    | -    | UniFi OS         | Router             | Lab      |
+| USW 16 Pro Max          | 1     | -            | -                    | -    | UniFi OS         | Switching          | Lab      |
+| USW Aggregation         | 1     | -            | -                    | -    | UniFi OS         | Office Aggregation | Office   |
+| U7-Pro                  | 1     | -            | -                    | -    | -                | Lab AP             | Lab      |
+| UAP-AC-Pro              | 1     | -            | -                    | -    | -                | Dining Room AP     | Lab      |
+| USP-PDU-Pro             | 1     | -            | -                    | -    | -                | Rack PDU           | Lab      |
+| MS-01                   | 3     | 1TB NVMe     | 2TB PM9A3 U.2        | 96GB | Talos            | Main Cluster       | Office
+| Fran                    | 1     | 2x1TB SSD    | 5x8TB (raidz2)       | 64GB | Debian           | Storage            | Office
+| JetKVM                  | 1     | 16GB (Flash) | -                    | -    | JetKVM           | Network KVM        | Lab
+| APC Back-Ups 1500       | 1     | -            | -                    | -    | -                | UPS                | -
+| Meshtastic MQTT GW      | 1     | -            | -                    | -    | -                | MQTT GW            | Lab
 
 ---
 
