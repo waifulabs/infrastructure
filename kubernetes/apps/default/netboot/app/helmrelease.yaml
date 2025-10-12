@@ -1,0 +1,59 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app netboot
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: netboot
+  interval: 30m
+  values:
+    controllers:
+      netboot:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          opencloud:
+            image:
+              repository: ghcr.io/netbootxyz/netbootxyz
+              tag: 0.7.6-nbxyz4
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+    service:
+      app:
+        type: LoadBalancer
+        annotations:
+
+        ports:
+          control:
+            port: &port 3000
+          tftp:
+            port: 69
+            protocol: UDP
+          http:
+            port: 80
+    persistence:
+      config:
+        existingClaim: *app
+      tmpfs:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+            subPath: tmp
+    route:
+      app:
+        hostnames: ["netboot.ok8.sh"]
+        parentRefs:
+          - name: internal
+            namespace: networking
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
