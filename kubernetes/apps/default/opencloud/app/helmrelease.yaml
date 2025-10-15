@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: opencloud
+  name: &app opencloud
 spec:
   chartRef:
     kind: OCIRepository
@@ -16,11 +16,11 @@ spec:
           reloader.stakater.com/auto: "true"
         pod:
           securityContext:
-            fsGroup: 2000
+            fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
-            runAsGroup: 2000
+            runAsGroup: 568
             runAsNonRoot: true
-            runAsUser: 2000
+            runAsUser: 568
         containers:
           opencloud:
             image:
@@ -63,7 +63,7 @@ spec:
       app:
         ports:
           http:
-            port: 9200
+            port: &port 9200
     persistence:
       data:
         existingClaim: opencloud
@@ -80,6 +80,10 @@ spec:
     route:
       app:
         hostnames: ["files.ok8.sh"]
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
         parentRefs:
           - name: external
             namespace: networking
