@@ -80,10 +80,6 @@ spec:
     route:
       app:
         hostnames: ["files.ok8.sh"]
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
         parentRefs:
           - name: external
             namespace: networking
