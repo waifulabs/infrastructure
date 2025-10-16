@@ -41,8 +41,8 @@ spec:
               OC_INSECURE: false
               OC_LOG_LEVEL: info
               OC_URL: https://files.ok8.sh
-              # PROXY_HTTP_ADDR: 0.0.0.0:9200
-              PROXY_TLS: true
+              PROXY_HTTP_ADDR: 0.0.0.0:9200
+              PROXY_TLS: false
             probes:
               liveness:
                 enabled: true
