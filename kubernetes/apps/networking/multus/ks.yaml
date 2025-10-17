@@ -14,7 +14,7 @@ spec:
       name: *appname
       namespace: networking
   interval: 1h
-  path: ./kubernetes/apps/network/multus/app
+  path: ./kubernetes/apps/networking/multus/app
   prune: true
   sourceRef:
     kind: GitRepository
