@@ -16,6 +16,10 @@ machine:
         mtu: 9000
         vip:
           ip: 172.16.0.2
+        vlans:
+          - vlanId: 42
+            dhcp: false
+            mtu: 9000
       - deviceSelector: { busPath: 1-1.0 } # Shylily
         dhcp: false
         mtu: 65520

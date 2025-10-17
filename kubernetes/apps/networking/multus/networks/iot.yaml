@@ -1,0 +1,28 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/k8s.cni.cncf.io/networkattachmentdefinition_v1.json
+apiVersion: "k8s.cni.cncf.io/v1"
+kind: NetworkAttachmentDefinition
+metadata:
+  name: multus-iot
+spec:
+  config: |-
+    {
+      "cniVersion": "1.1.0",
+      "name": "multus-iot",
+      "plugins": [
+        {
+          "type": "macvlan",
+          "master": "bond0.42",
+          "mode": "bridge",
+          "ipam": {
+            "type": "static",
+            "routes": [
+              { "dst": "0.0.0.0/0", "gw": "10.42.42.1" }
+            ]
+          }
+        },
+        {
+          "type": "sbr"
+        }
+      ]
+    }
