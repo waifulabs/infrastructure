@@ -27,7 +27,7 @@ spec:
               DB_URL:
                 valueFrom:
                   secretKeyRef:
-                    name: &postgresSecret postgres-pguser-immich
+                    name: immich-pguser-immich
                     key: pgbouncer-uri
               REDIS_HOSTNAME: &redisHostname "valkey.default.svc.cluster.local"
             resources:
