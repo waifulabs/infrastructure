@@ -29,7 +29,7 @@ spec:
                   secretKeyRef:
                     name: immich-pguser-immich
                     key: pgbouncer-uri
-              REDIS_HOSTNAME: &redisHostname "valkey.default.svc.cluster.local"
+              REDIS_HOSTNAME: &redisHostname "immich-valkey.default.svc.cluster.local"
             resources:
               requests:
                 cpu: 100m
