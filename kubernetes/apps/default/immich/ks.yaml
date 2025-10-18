@@ -8,15 +8,9 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  components:
-    - ../../../../components/volsync
   dependsOn:
     - name: immich-postgres
   path: ./kubernetes/apps/default/immich/app
-  postBuild:
-    substitute:
-      APP: *app
-      VOLSYNC_CAPACITY: 20Gi
   prune: true
   sourceRef:
     kind: GitRepository
