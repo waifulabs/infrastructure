@@ -62,7 +62,7 @@ spec:
     pgbackrest:
       configuration: &backupConfig
         - secret:
-            name: postgres-secret
+            name: immich-postgres-secret
       global: &backupFlag
         compress-type: "bz2"
         compress-level: "9"
