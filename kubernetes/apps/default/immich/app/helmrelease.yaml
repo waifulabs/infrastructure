@@ -117,6 +117,7 @@ spec:
                   failureThreshold: 30
     service:
       immich:
+        controller: immich
         ports:
           http:
             port: &port 2283
@@ -125,10 +126,12 @@ spec:
           metrics-ms:
             port: 8082
       machine-learning:
+        controller: machine-learning
         ports:
           http:
             port: 3003
       valkey:
+        controller: valkey
         ports:
           http:
             port: 6379
