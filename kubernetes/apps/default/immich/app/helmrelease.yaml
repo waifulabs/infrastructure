@@ -1,0 +1,185 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: immich
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: immich
+  values:
+    controllers:
+      immich:
+        strategy: RollingUpdate
+        pod:
+          annotations:
+            reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              repository: ghcr.io/immich-app/immich-server
+              tag: v2.0.1@sha256:8286638680f0a38a7cb380be64ed77d1d1cfe6d0e0b843f64bff92b24289078d
+            env:
+              IMMICH_WEB_URL:
+              IMMICH_MEDIA_LOCATION: &mediaLocation /data
+              DB_URL:
+                valueFrom:
+                  secretKeyRef:
+                    name: &postgresSecret postgres-pguser-immich
+                    key: pgbouncer-uri
+              REDIS_HOSTNAME: &redisHostname "valkey.default.svc.cluster.local"
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                memory: 2G
+      machine-learning:
+        strategy: RollingUpdate
+        pod:
+          annotations:
+            reloader.stakater.com/auto: "true"
+          nodeSelector:
+            kubernetes.io/hostname: s01
+        containers:
+          main:
+            image:
+              repository: ghcr.io/immich-app/immich-machine-learning
+              tag: v2.0.1@sha256:45626a33361ef7ed361de41b0d2dc19e5949442cdf0a8eb64b157dc8a04e9855
+            env:
+              REDIS_HOSTNAME: *redisHostname
+              MPLCONFIGDIR: "/cache/matplotlib"
+              IMMICH_MEDIA_LOCATION: *mediaLocation
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                memory: 2G
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: http
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: http
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 60
+      valkey:
+        nameOverride: valkey
+        containers:
+          app:
+            image:
+              repository: ghcr.io/valkey-io/valkey
+              tag: 8.1.4
+          probes:
+            liveness:
+              enabled: true
+              custom: true
+              spec:
+                exec: &probe-exec { command: ["sh", "-c", "valkey-cli ping | grep PONG"] }
+                initialDelaySeconds: 30
+                periodSeconds: 10
+                timeoutSeconds: 5
+                failureThreshold: 3
+            readiness:
+              enabled: true
+              custom: true
+              spec:
+                exec: *probe-exec
+                initialDelaySeconds: 5
+                periodSeconds: 10
+                timeoutSeconds: 5
+                failureThreshold: 3
+            startup:
+              enabled: true
+              custom: true
+              spec:
+                exec: *probe-exec
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 5
+                failureThreshold: 30
+    service:
+      immich:
+        ports:
+          http:
+            port: &port 2283
+          metrics-api:
+            port: 8081
+          metrics-ms:
+            port: 8082
+      machine-learning:
+        ports:
+          http:
+            port: 3003
+      valkey:
+        ports:
+          http:
+            port: 6379
+    serviceMonitor:
+      immich:
+        enabled: true
+        endpoints:
+          - port: metrics-api
+            scheme: http
+          - port: metrics-ms
+            scheme: http
+    route:
+      immich:
+        hostnames: ["photos.ok8.sh"]
+        parentRefs:
+          - name: external
+            namespace: networking
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: immich
+                port: *port
+    persistence:
+      matplotlib:
+        type: emptyDir
+        advancedMounts:
+          immich:
+            main:
+              - path: /config/matplotlib
+      library:
+        type: nfs
+        server: fran.outsideour.casa
+        path: /mnt/loki/immich
+        globalMounts:
+          - path: *mediaLocation
+      cache:
+        type: persistentVolumeClaim
+        storageClass: openebs-hostpath
+        size: 10Gi
+        globalMounts:
+          - path: /cache
+            subPath: cache
+          - path: /.cache
+            subPath: dotCache
+      tmpfs:
+        type: emptyDir
+        advancedMounts:
+          immich:
+            main:
+              - path: /usr/src/app/.reverse-geocoding-dump
+                subPath: geocoding
+              - path: /usr/src/app/.transformers_cache
+                subPath: transformers
