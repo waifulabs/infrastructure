@@ -166,7 +166,8 @@ spec:
           - path: *mediaLocation
       cache:
         type: persistentVolumeClaim
-        storageClass: openebs-hostpath
+        storageClass: ceph-block
+        accessModes: ["ReadWriteMany"]
         size: 10Gi
         globalMounts:
           - path: /cache
