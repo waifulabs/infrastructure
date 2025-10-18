@@ -55,6 +55,7 @@ spec:
     # Applications
     - name: "immich"
       databases: ["immich"]
+      options: "SUPERUSER"
       password:
         type: AlphaNumeric
   backups:
