@@ -138,6 +138,7 @@ spec:
     serviceMonitor:
       immich:
         enabled: true
+        controller: immich
         endpoints:
           - port: metrics-api
             scheme: http
