@@ -7,7 +7,6 @@ metadata:
   annotations:
     postgres-operator.crunchydata.com/autoCreateUserSchema: true
 spec:
-  image: ghcr.io/tensorchord/vchord-postgres:pg17-v0.5.3
   postgresVersion: 17
   monitoring:
     pgmonitor:
@@ -32,6 +31,8 @@ spec:
         labels:
           app.kubernetes.io/name: *name
       replicas: &replicas 3
+      containers:
+        - name:
       dataVolumeClaimSpec:
         storageClassName: openebs-hostpath
         accessModes: ["ReadWriteOnce"]
