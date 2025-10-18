@@ -8,7 +8,7 @@ metadata:
     postgres-operator.crunchydata.com/autoCreateUserSchema: true
 spec:
   # https://docs.immich.app/administration/postgres-standalone/#updating-vectorchord
-  image: ghcr.io/tensorchord/vchord-postgres:pg17-v0.5.3
+  #image: ghcr.io/tensorchord/vchord-postgres:pg17-v0.5.3
   postgresVersion: 17
   databaseInitSQL:
     key: init.sql
