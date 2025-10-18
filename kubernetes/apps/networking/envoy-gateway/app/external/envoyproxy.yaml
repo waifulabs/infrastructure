@@ -41,5 +41,5 @@ spec:
           scaleDown:
             stabilizationWindowSeconds: 300
       envoyService:
-        externalTrafficPolicy: Cluster
+        internalTrafficPolicy: Cluster
         name: envoy-external
