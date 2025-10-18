@@ -63,7 +63,7 @@ spec:
                 spec:
                   httpGet:
                     path: /ping
-                    port: http
+                    port: &mlPort 3003
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
@@ -75,7 +75,7 @@ spec:
                 spec:
                   httpGet:
                     path: /ping
-                    port: http
+                    port: *mlPort
                   initialDelaySeconds: 0
                   periodSeconds: 10
                   timeoutSeconds: 1
@@ -128,7 +128,7 @@ spec:
         controller: machine-learning
         ports:
           http:
-            port: 3003
+            port: *mlPort
       valkey:
         controller: valkey
         ports:
