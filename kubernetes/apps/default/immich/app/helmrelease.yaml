@@ -167,7 +167,7 @@ spec:
       cache:
         type: persistentVolumeClaim
         storageClass: ceph-block
-        accessModes: ["ReadWriteMany"]
+        accessMode: ReadWriteMany
         size: 10Gi
         globalMounts:
           - path: /cache
