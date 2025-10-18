@@ -171,14 +171,16 @@ spec:
           - path: *mediaLocation
       cache:
         type: persistentVolumeClaim
-        storageClass: ceph-block
-        accessMode: ReadWriteMany
+        storageClass: openebs-hostpath
+        accessMode: ReadWriteOnce
         size: 10Gi
-        globalMounts:
-          - path: /cache
-            subPath: cache
-          - path: /.cache
-            subPath: dotCache
+        advancedMounts:
+          machine-learning:
+            main:
+              - path: /cache
+                subPath: cache
+              - path: /.cache
+                subPath: dotCache
       tmpfs:
         type: emptyDir
         advancedMounts:
