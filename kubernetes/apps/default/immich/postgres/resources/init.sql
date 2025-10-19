@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS immich;
+CREATE DATABASE "immich";
 \c immich
 BEGIN;
 ALTER DATABASE "immich" OWNER TO "immich";

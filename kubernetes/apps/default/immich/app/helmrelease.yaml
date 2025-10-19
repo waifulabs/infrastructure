@@ -55,7 +55,7 @@ spec:
                 cpu: 100m
                 memory: 256Mi
               limits:
-                memory: 2G
+                memory: 4G
             probes:
               liveness: &probes
                 enabled: true
