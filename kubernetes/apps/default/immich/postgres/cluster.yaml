@@ -10,9 +10,9 @@ spec:
   # https://docs.immich.app/administration/postgres-standalone/#updating-vectorchord
   #image: ghcr.io/tensorchord/vchord-postgres:pg17-v0.5.3
   postgresVersion: 17
-  databaseInitSQL:
-    key: init.sql
-    name: immich-postgres-secret
+  #databaseInitSQL:
+  #  key: init.sql
+  #  name: immich-postgres-secret
   monitoring:
     pgmonitor:
       exporter:
