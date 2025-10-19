@@ -60,7 +60,7 @@ spec:
     # Applications
     - name: "immich"
       databases: ["immich"]
-      options: "SUPERUSER"
+      options: "NOSUPERUSER CREATEDB CREATEROLE"
       password:
         type: AlphaNumeric
   backups:
