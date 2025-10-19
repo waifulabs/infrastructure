@@ -23,7 +23,7 @@ spec:
               tag: v2.0.1@sha256:8286638680f0a38a7cb380be64ed77d1d1cfe6d0e0b843f64bff92b24289078d
             env:
               TZ: "America/Los_Angeles"
-              # IMMICH_WEB_URL:
+              IMMICH_TRUSTED_PROXIES: "172.31.0.0/16"
               IMMICH_MEDIA_LOCATION: &mediaLocation /library
               DB_URL:
                 valueFrom:
@@ -36,7 +36,7 @@ spec:
                 cpu: 100m
                 memory: 256Mi
               limits:
-                memory: 2G
+                memory: 6G
       machine-learning:
         strategy: RollingUpdate
         pod:
