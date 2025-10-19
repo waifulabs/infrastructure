@@ -28,7 +28,7 @@ spec:
                 valueFrom:
                   secretKeyRef:
                     name: immich-pguser-immich
-                    key: uri
+                    key: pgbouncer-uri
               REDIS_HOSTNAME: &redisHostname "immich-valkey.default.svc.cluster.local"
             resources:
               requests:
