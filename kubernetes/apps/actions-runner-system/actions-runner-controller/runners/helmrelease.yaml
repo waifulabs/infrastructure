@@ -33,7 +33,6 @@ spec:
       retries: 3
   values:
     runnerScaleSetName: waifulabs
-    runnerGroup: "Self Hosted"
     githubConfigUrl: https://github.com/waifulabs
     githubConfigSecret: waifulabs-runner-secret
     minRunners: 1
