@@ -123,6 +123,13 @@ cluster:
     key: op://Kubernetes/talos/CERTS_K8S_KEY
   controlPlane:
     endpoint: https://k8s.internal:6443
+  discovery:
+    enabled: true
+    registries:
+      kubernetes:
+        disabled: true
+      service:
+        disabled: false
   controllerManager:
     image: registry.k8s.io/kube-controller-manager:{{ ENV.KUBERNETES_VERSION }}
     extraArgs:
