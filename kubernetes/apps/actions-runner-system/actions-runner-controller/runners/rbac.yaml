@@ -2,49 +2,24 @@
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: waifulabs-kubernetes
+  name: waifulabs
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: waifulabs-kubernetes
+  name: waifulabs
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: cluster-admin
 subjects:
   - kind: ServiceAccount
-    name: waifulabs-kubernetes
+    name: waifulabs
     namespace: actions-runner-system
 ---
 apiVersion: talos.dev/v1alpha1
 kind: ServiceAccount
 metadata:
-  name: waifulabs-kubernetes
-spec:
-  roles: ["os:admin"]
----
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: waifulabs-dind
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: waifulabs-dind
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: cluster-admin
-subjects:
-  - kind: ServiceAccount
-    name: waifulabs-dind
-    namespace: actions-runner-system
----
-apiVersion: talos.dev/v1alpha1
-kind: ServiceAccount
-metadata:
-  name: waifulabs-dind
+  name: waifulabs
 spec:
   roles: ["os:admin"]
