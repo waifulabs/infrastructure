@@ -9,15 +9,20 @@ machine:
     interfaces:
       - deviceSelector: { busPath: 0000:59:00.0 } # Intel IPMI
         ignore: true
-      - dhcp: true
-        deviceSelector:
-          hardwareAddr: 58:47:ca:*
-          physical: true
+      - interface: bond0
+        bond:
+          deviceSelectors:
+            - hardwareAddr: 58:47:ca:*
+              driver: i40e
+          lacpRate: fast
+          miimon: 1000
+          mode: 802.3ad
+          xmitHashPolicy: layer3+4
+        dhcp: true
         mtu: 9000
-        vip:
-          ip: 172.16.0.2
         vlans:
-          - vlanId: 42
+          - # IOT
+            vlanId: 42
             dhcp: false
             mtu: 9000
       - deviceSelector: { busPath: 0-1.0 } # Fenrys

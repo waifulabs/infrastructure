@@ -45,30 +45,37 @@ spec:
               limits:
                 cpu: 750m
                 memory: 2G
-        pod:
-          securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            runAsNonRoot: true
-            fsGroup: 568
-            fsGroupChangePolicy: OnRootMismatch
+    defaultPodOptions:
+      annotations:
+        k8s.v1.cni.cncf.io/networks: |-
+          [{
+            "name": "iot",
+            "namespace": "networking",
+            "ips": ["10.42.42.5/24"],
+            "mac": "c6:07:27:af:fb:53"
+          }]
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     service:
       app:
         controller: home-assistant
         ports:
           http:
-            port: &port 8123
+            port: 8123
     route:
       app:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 200"]
         hostnames: ["{{ .Release.Name }}.ok8.sh", "hass.ok8.sh"]
         parentRefs:
           - name: external
             namespace: networking
             sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
     persistence:
       config:
         existingClaim: home-assistant
