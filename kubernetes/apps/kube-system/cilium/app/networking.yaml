@@ -1,16 +1,4 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/cilium.io/ciliuml2announcementpolicy_v2alpha1.json
-apiVersion: cilium.io/v2alpha1
-kind: CiliumL2AnnouncementPolicy
-metadata:
-  name: l2-policy
-spec:
-  loadBalancerIPs: true
-  interfaces: ["^enp.*"]
-  nodeSelector:
-    matchLabels:
-      kubernetes.io/os: linux
----
 # yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/cilium.io/ciliumbgpadvertisement_v2.json
 apiVersion: "cilium.io/v2"
 kind: CiliumBGPAdvertisement
@@ -52,12 +40,12 @@ spec:
     matchLabels:
       kubernetes.io/os: linux
   bgpInstances:
-    - name: "instance-64514"
+    - name: cilium
       localASN: 64514
       peers:
-        - name: "peer-64513-ipv4"
+        - name: unifi
           peerASN: 64513
-          peerAddress: "172.16.0.1"
+          peerAddress: 172.16.0.1
           peerConfigRef:
             name: "cilium-bgp-peer-config-ipv4"
 ---
@@ -67,7 +55,6 @@ kind: CiliumLoadBalancerIPPool
 metadata:
   name: lb-pool
 spec:
-  allowFirstLastIPs: "Yes"
+  allowFirstLastIPs: "No"
   blocks:
-    - start: 172.16.0.30
-      stop: 172.16.0.60
+    - cidr: 172.16.10.0/24

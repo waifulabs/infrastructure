@@ -67,7 +67,7 @@ spec:
         controller: main
         type: LoadBalancer
         annotations:
-          lbipam.cilium.io/ips: 172.16.0.38
+          lbipam.cilium.io/ips: 172.16.10.38
         ports:
           java:
             port: *port
