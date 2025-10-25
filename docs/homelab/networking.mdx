@@ -65,7 +65,7 @@ router bgp 64513
 
 ip prefix-list kubernetes-main-ipv4 seq 10 permit 172.30.0.0/24
 ! Allows any /32 routes within this range.
-ip prefix-list kubernetes-main-ipv4 seq 11 permit 172.16.10.0/24 ge 32 le 32
+ip prefix-list kubernetes-main-ipv4 seq 11 permit 10.0.96.0/24 ge 32 le 32
 ip prefix-list kubernetes-main-ipv4 seq 20 deny any
 
 route-map kubernetes-main-ipv4-filter permit 10

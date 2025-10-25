@@ -29,7 +29,7 @@ spec:
               tag: 2025.10.4@sha256:25a113a6d3e42ac66ba6b4172300b8c9a66f91e707a03cab5ad454910ca37eeb
             env:
               TZ: America/Los_Angeles
-              HASS_HTTP_TRUSTED_PROXY_1: 172.16.10.0/24
+              HASS_HTTP_TRUSTED_PROXY_1: 10.0.96.0/24
               HASS_HTTP_TRUSTED_PROXY_2: 172.30.0.0/16
             envFrom:
               - secretRef:
