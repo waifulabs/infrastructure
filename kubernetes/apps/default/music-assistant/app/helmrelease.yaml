@@ -1,0 +1,74 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: music-assistant
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: music-assistant
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      music-assistant:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/music-assistant/server
+              tag: 2.6.0@sha256:9b0b0c8476e5b208265cbede313558ca20202bbeaebfd70a3467081e75827e67
+            env:
+              TZ: America/Los_Angeles
+              LOG_LEVEL: info
+            envFrom:
+              - secretRef:
+                  name: music-assistant-secret
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"], add: ["SYS_ADMIN", "DAC_READ_SEARCH"] }
+            resources: {}
+    defaultPodOptions:
+      annotations:
+        k8s.v1.cni.cncf.io/networks: |-
+          [{
+            "name": "iot",
+            "namespace": "networking",
+            "ips": ["10.42.42.6/24"],
+            "mac": "c6:07:27:af:fb:54"
+          }]
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        controller: music-assistant
+        ports:
+          http:
+            port: 8123
+    route:
+      app:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 200"]
+        hostnames: ["{{ .Release.Name }}.ok8.sh", "mass.ok8.sh"]
+        parentRefs:
+          - name: external
+            namespace: networking
+            sectionName: https
+    persistence:
+      data:
+        existingClaim: music-assistant
