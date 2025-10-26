@@ -71,3 +71,10 @@ spec:
     persistence:
       data:
         existingClaim: music-assistant
+        advancedMounts:
+          music-assistant:
+            app:
+              - path: /data
+                subPath: data
+              - path: /cache
+                subPath: cache
