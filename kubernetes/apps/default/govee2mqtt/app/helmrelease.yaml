@@ -1,0 +1,77 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app govee2mqtt
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: govee2mqtt
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: mosquitto
+      namespace: default
+    - name: openebs
+      namespace: openebs-system
+  values:
+    controllers:
+      zigbee2mqtt:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/wez/govee2mqtt
+              tag: latest@sha256:351e3625a56026c6b1be369815758ce49c420cdb9409e1d668fada1448feba49
+            env:
+              TZ: America/Los_Angeles
+              GOVEE_MQTT_HOST: mosquitto.default.svc.cluster.local
+              GOVEE_MQTT_PORT: 1883
+              GOVEE_TEMPERATURE_SCALE: F
+              RUST_LOG_STYLE: always
+              #RUST_LOG: govee=trace
+            envFrom:
+              - secretRef:
+                  name: govee2mqtt-secret
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 256Mi
+    defaultPodOptions:
+      annotations:
+        k8s.v1.cni.cncf.io/networks: |-
+          [{
+            "name": "iot",
+            "namespace": "networking",
+            "ips": ["10.42.42.7/24"],
+            "mac": "c6:07:27:af:fb:55"
+          }]
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        controller: govee2mqtt
+        ports:
+          http:
+            port: 4002
+    persistence:
+      data:
+        existingClaim: *app
