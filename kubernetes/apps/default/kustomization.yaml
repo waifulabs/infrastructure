@@ -13,7 +13,7 @@ resources:
   - ./home-assistant/ks.yaml
   - ./immich/ks.yaml
   - ./mosquitto/ks.yaml
-  #- ./music-assistant/ks.yaml
+  - ./music-assistant/ks.yaml
   - ./opencloud/ks.yaml
   - ./openspeedtest/ks.yaml
   #- ./rtlamr2mqtt/ks.yaml
