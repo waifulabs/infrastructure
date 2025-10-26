@@ -78,3 +78,5 @@ spec:
                 subPath: data
               - path: /cache
                 subPath: cache
+      tmp:
+        type: emptyDir
