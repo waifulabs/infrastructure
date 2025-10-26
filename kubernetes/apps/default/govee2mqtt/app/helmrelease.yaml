@@ -24,7 +24,7 @@ spec:
       namespace: openebs-system
   values:
     controllers:
-      zigbee2mqtt:
+      govee2mqtt:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
