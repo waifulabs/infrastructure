@@ -30,9 +30,6 @@ spec:
             env:
               TZ: America/Los_Angeles
               LOG_LEVEL: info
-            envFrom:
-              - secretRef:
-                  name: music-assistant-secret
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
