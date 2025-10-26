@@ -55,7 +55,9 @@ spec:
         controller: music-assistant
         ports:
           http:
-            port: 8123
+            port: 8095
+          stream:
+            port: 8097
     route:
       app:
         annotations:
