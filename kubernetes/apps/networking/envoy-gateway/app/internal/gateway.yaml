@@ -16,7 +16,7 @@ spec:
   gatewayClassName: envoy-internal
   addresses:
     - type: IPAddress
-      value: &address 10.0.96.10
+      value: &address 10.0.20.10
   infrastructure:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: *hostname

@@ -45,7 +45,7 @@ spec:
       peers:
         - name: unifi
           peerASN: 64513
-          peerAddress: 172.16.0.1
+          peerAddress: 10.0.10.1
           peerConfigRef:
             name: "cilium-bgp-peer-config-ipv4"
 ---
@@ -57,4 +57,4 @@ metadata:
 spec:
   allowFirstLastIPs: "No"
   blocks:
-    - cidr: 10.0.96.0/24
+    - cidr: 10.0.20.0/24

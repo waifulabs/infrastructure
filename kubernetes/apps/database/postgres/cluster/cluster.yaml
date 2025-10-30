@@ -116,7 +116,7 @@ spec:
         metadata:
           annotations:
             external-dns.alpha.kubernetes.io/hostname: postgres.ok8.sh
-            lbipam.cilium.io/ips: 10.0.96.100
+            lbipam.cilium.io/ips: 10.0.20.100
       topologySpreadConstraints:
         - maxSkew: 1
           topologyKey: kubernetes.io/hostname
