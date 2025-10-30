@@ -21,10 +21,10 @@ machine:
         dhcp: true
         mtu: 9000
         vip:
-          ip: 172.16.0.2
+          ip: 10.0.10.2
         vlans:
           - # IOT
-            vlanId: 42
+            vlanId: 30
             dhcp: false
             mtu: 9000
       - deviceSelector: { busPath: 1-1.0 } # Shylily

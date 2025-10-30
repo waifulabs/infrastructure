@@ -41,7 +41,7 @@ Here's my config:
 
 ```
 router bgp 64513
-  bgp router-id 172.16.0.1
+  bgp router-id 10.0.10.1
   no bgp ebgp-requires-policy
 
   neighbor kubernetes peer-group
@@ -50,11 +50,11 @@ router bgp 64513
   neighbor kubernetes capability extended-nexthop
   neighbor kubernetes soft-reconfiguration inbound
 
-  neighbor 172.16.0.2 peer-group kubernetes
+  neighbor 10.0.10.2 peer-group kubernetes
 
   address-family ipv4 unicast
     neighbor kubernetes next-hop-self
-    neighbor 172.16.0.2 route-map kubernetes-main-ipv4-filter in
+    neighbor 10.0.10.2 route-map kubernetes-main-ipv4-filter in
   exit-address-family
 
   address-family ipv6 unicast

@@ -6,7 +6,7 @@ machine:
   ca:
     crt: op://Kubernetes/talos/CERTS_OS_CRT
     key: op://Kubernetes/talos/CERTS_OS_KEY
-  certSANs: ["127.0.0.1", "172.16.0.2"]
+  certSANs: ["127.0.0.1", "10.0.10.2"]
   features:
     apidCheckExtKeyUsage: true
     diskQuotaSupport: true
@@ -55,9 +55,9 @@ machine:
         source: /var/mnt/extra
         options: ["bind", "rshared", "rw"]
     nodeIP:
-      validSubnets: ["172.16.0.0/24"]
+      validSubnets: ["10.0.10.0/24"]
   network:
-    nameservers: ["172.16.0.1"]
+    nameservers: ["10.0.10.1"]
     disableSearchDomain: true
   token: op://Kubernetes/talos/TRUSTDINFO_TOKEN
   sysctls:
@@ -138,7 +138,7 @@ cluster:
     disabled: true
   clusterName: main
   etcd:
-    advertisedSubnets: ["172.16.0.0/24"]
+    advertisedSubnets: ["10.0.10.0/24"]
     ca:
       crt: op://Kubernetes/talos/CERTS_ETCD_CRT
       key: op://Kubernetes/talos/CERTS_ETCD_KEY
@@ -187,6 +187,6 @@ kind: ExtensionServiceConfig
 name: nut-client
 configFiles:
   - content: |-
-      MONITOR 172.16.0.3 1 slaveuser "op://Kubernetes/nut/NUT_PASSWORD" slave
+      MONITOR 10.0.10.3 1 slaveuser "op://Kubernetes/nut/NUT_PASSWORD" slave
       SHUTDOWNCMD "/sbin/poweroff"
     mountPath: /usr/local/etc/nut/upsmon.conf
