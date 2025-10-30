@@ -108,6 +108,8 @@ spec:
       repo:
         name: repo2
         s3: *s3
+      options:
+        - --set=20251026-023002F_20251029-023002I
   proxy:
     pgBouncer:
       port: 5432
