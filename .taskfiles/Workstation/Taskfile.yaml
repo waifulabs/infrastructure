@@ -26,3 +26,12 @@ tasks:
     preconditions:
       - kubectl krew version
       - which kubectl
+
+  helm:
+    desc: Set up Helm plugins
+    deps: [brew]
+    cmds:
+      - helm plugin install https://github.com/databus23/helm-diff
+    preconditions:
+      - helm version
+      - which helm
