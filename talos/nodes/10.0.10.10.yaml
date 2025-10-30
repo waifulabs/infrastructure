@@ -20,8 +20,6 @@ machine:
           xmitHashPolicy: layer3+4
         dhcp: true
         mtu: 9000
-        vip:
-          ip: 10.0.10.2
         vlans:
           - # IOT
             vlanId: 30
