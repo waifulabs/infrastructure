@@ -1,21 +1,28 @@
 ---
 # yaml-language-server: $schema=https://json.schemastore.org/helmfile
 helmDefaults:
-  force: true
-  timeout: 600
+  cleanupOnFail: true
   wait: true
   waitForJobs: true
-
-repositories:
-  - name: cilium
-    url: https://helm.cilium.io
 
 releases:
   - name: cilium
     namespace: kube-system
-    chart: cilium/cilium
+    chart: oci://ghcr.io/home-operations/charts-mirror/cilium
     version: 1.18.3
     values: ["../kubernetes/apps/kube-system/cilium/app/helm-values.yaml"]
+    hooks:
+      - # Advertise Kubernetes VIP
+        events: ['postsync']
+        command: kubectl
+        args:
+          - apply
+          - --server-side
+          - --namespace=kube-system
+          - --field-manager=kustomize-controller
+          - --kustomize
+          - ../../kubernetes/apps/kube-system/cilium/config
+        showlogs: true
 
   - name: coredns
     namespace: kube-system
@@ -32,10 +39,16 @@ releases:
       ["../kubernetes/apps/cert-manager/cert-manager/app/helm/values.yaml"]
     needs: ["kube-system/coredns"]
 
+  - name: envoy-gateway
+    namespace: networking
+    chart: oci://mirror.gcr.io/envoyproxy/gateway-helm
+    version: v1.5.4
+    needs: ["cert-manager/cert-manager"]
+
   - name: flux-operator
     namespace: flux-system
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
-    version: 0.32.0
+    version: 0.33.0
     values:
       ["../kubernetes/apps/flux-system/flux-operator/app/helm-values.yaml"]
     needs: ["kube-system/coredns"]
@@ -43,7 +56,7 @@ releases:
   - name: flux-instance
     namespace: flux-system
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
-    version: 0.32.0
+    version: 0.33.0
     values:
       ["../kubernetes/apps/flux-system/flux-instance/app/helm-values.yaml"]
     needs: ["flux-system/flux-operator"]
