@@ -27,15 +27,15 @@ spec:
               repository: ghcr.io/home-operations/sabnzbd
               tag: 4.5.5@sha256:da57e01cdebc547852b6df85c8df8c0e4d87792742c7608c5590dc653b184e8c
             env:
-              CROSS_SEED_HOST: cross-seed.default.svc.cluster.local
+              CROSS_SEED_HOST: cross-seed.entertainment.svc.cluster.local
               TZ: America/Los_Angeles
               SABNZBD__PORT: &port 80
               SABNZBD__HOST_WHITELIST_ENTRIES: >-
                 sabnzbd,
-                sabnzbd.default,
-                sabnzbd.default.svc,
-                sabnzbd.default.svc.cluster,
-                sabnzbd.default.svc.cluster.local,
+                sabnzbd.entertainment,
+                sabnzbd.entertainment.svc,
+                sabnzbd.entertainment.svc.cluster,
+                sabnzbd.entertainment.svc.cluster.local,
                 sab.ok8.sh,
                 sabnzbd.ok8.sh
             envFrom:
