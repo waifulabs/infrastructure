@@ -1,8 +1,8 @@
 ---
 autoDirectNodeRoutes: true
 bandwidthManager:
-  enabled: false
-#  bbr: true
+  enabled: true
+  bbr: true
 bgpControlPlane:
   enabled: true
 bpf:
