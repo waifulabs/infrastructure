@@ -12,12 +12,10 @@ machine:
       - interface: bond0
         bond:
           deviceSelectors:
-            - hardwareAddr: 58:47:ca:*
+            - hardwareAddr: 58:47:ca:7b:ec:*
               driver: i40e
-          lacpRate: fast
-          miimon: 1000
-          mode: 802.3ad
-          xmitHashPolicy: layer3+4
+              physical: true
+          mode: active-backup
         dhcp: true
         mtu: 9000
         vip:
