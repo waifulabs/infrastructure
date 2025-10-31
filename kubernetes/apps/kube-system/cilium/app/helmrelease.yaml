@@ -1,35 +1,14 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/source.toolkit.fluxcd.io/helmrepository_v1beta2.json
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: HelmRepository
-metadata:
-  name: cilium
-spec:
-  interval: 1h
-  url: https://helm.cilium.io
----
 # yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: cilium
 spec:
+  chartRef:
+    kind: OCIRepository
+    name: cilium
   interval: 1h
-  chart:
-    spec:
-      chart: cilium
-      version: 1.18.3
-      sourceRef:
-        kind: HelmRepository
-        name: cilium
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
   valuesFrom:
     - kind: ConfigMap
       name: cilium-helm-values
