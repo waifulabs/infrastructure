@@ -20,7 +20,7 @@ cni:
 cluster:
   id: 1
   name: main
-devices: bond0
+devices: bond+
 enableIPv4BIGTCP: true
 endpointRoutes:
   enabled: true
@@ -35,8 +35,6 @@ k8sServiceHost: 127.0.0.1
 k8sServicePort: 7445
 kubeProxyReplacement: true
 kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
-l2announcements:
-  enabled: false
 loadBalancer:
   algorithm: maglev
   mode: dsr
@@ -44,6 +42,8 @@ localRedirectPolicy: true
 operator:
   replicas: 1
   rollOutPods: true
+pmtuDiscovery:
+  enabled: true
 rollOutCiliumPods: true
 routingMode: native
 securityContext:
