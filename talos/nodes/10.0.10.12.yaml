@@ -12,7 +12,7 @@ machine:
       - interface: bond0
         bond:
           deviceSelectors:
-            - hardwareAddr: 58:47:ca:7b:ec:*
+            - hardwareAddr: 58:47:ca:7b:ec:1e
               driver: i40e
               physical: true
           mode: active-backup
