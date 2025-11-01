@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: ghcr.io/wez/govee2mqtt
-              tag: latest@sha256:62df5d7fc3efaadb42df9a69dcd2afcd2e40f384087b7b9d65dfef5dfd7a6426
+              tag: latest@sha256:fe5da030c7dbf3b1107f654bf13e16e5e869d03048e977272c208755a5a21d6c
             env:
               TZ: America/Los_Angeles
               GOVEE_MQTT_HOST: mosquitto.default.svc.cluster.local
