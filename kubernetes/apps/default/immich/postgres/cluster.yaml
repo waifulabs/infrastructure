@@ -96,7 +96,7 @@ spec:
             full: "30 2 * * 0" # Sunday at 02:30
             incremental: "30 2 * * 1-6/2" # Mon-Sat at 02:30, every 2nd day
       restore:
-        enabled: true
+        enabled: false
         repoName: repo2
         options:
           - --type=full
@@ -108,8 +108,8 @@ spec:
       repo:
         name: repo2
         s3: *s3
-      options:
-        - --set=20251026-023002F_20251029-023002I
+      options: []
+        # - --set=20251026-023002F_20251029-023002I
   proxy:
     pgBouncer:
       port: 5432
