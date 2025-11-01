@@ -143,8 +143,10 @@ spec:
         endpoints:
           - port: metrics-api
             scheme: http
+            path: /metrics
           - port: metrics-ms
             scheme: http
+            path: /metrics
     route:
       immich:
         hostnames: ["photos.ok8.sh"]
