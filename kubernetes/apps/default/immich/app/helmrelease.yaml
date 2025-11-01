@@ -31,6 +31,7 @@ spec:
                     name: immich-pguser-immich
                     key: pgbouncer-uri
               REDIS_HOSTNAME: &redisHostname "immich-valkey.default.svc.cluster.local"
+              IMMICH_TELEMETRY_INCLUDE: "all"
             resources:
               requests:
                 cpu: 100m
