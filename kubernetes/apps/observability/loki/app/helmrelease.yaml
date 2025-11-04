@@ -54,6 +54,8 @@ spec:
         chunk_encoding: snappy
       storage:
         type: filesystem
+        bucketNames: # Workaround for https://github.com/grafana/loki/issues/19655
+          chunks: fnord
       schemaConfig:
         configs:
           - from: "2024-04-01" # quote
