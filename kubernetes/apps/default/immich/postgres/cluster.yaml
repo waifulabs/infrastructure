@@ -36,7 +36,6 @@ spec:
         labels:
           app.kubernetes.io/name: *name
       replicas: &replicas 3
-      podSecurityContext: 
       dataVolumeClaimSpec:
         storageClassName: openebs-hostpath
         accessModes: ["ReadWriteOnce"]
