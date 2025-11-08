@@ -232,7 +232,7 @@ spec:
           vdsloutput:
             port: 15555
     route:
-      app:
+      acars-hub:
         hostnames: ["{{ .Release.Name }}.ok8.sh"]
         parentRefs:
           - name: internal
