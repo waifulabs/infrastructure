@@ -25,12 +25,12 @@ machine:
             vlanId: 30
             dhcp: false
             mtu: 9000
-      - deviceSelector: { busPath: 0-1.0 } # Fenrys
+      - deviceSelector: { busPath: 1-1.0 } # Fenrys
         dhcp: false
         mtu: 65520
         addresses: [169.254.254.12/32]
         routes: [{ network: 169.254.254.10/32, metric: 2048 }]
-      - deviceSelector: { busPath: 1-1.0 } # Maomao
+      - deviceSelector: { busPath: 0-1.0 } # Maomao
         dhcp: false
         mtu: 65520
         addresses: [169.254.254.12/32]
