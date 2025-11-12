@@ -74,7 +74,7 @@ spec:
               - action: labeldrop
                 regex: (pod)
             params:
-              server: [fran.outsideour.casa]
+              server: [ups.outsideour.casa]
             selector:
               matchLabels:
                 app.kubernetes.io/instance: nut-exporter
