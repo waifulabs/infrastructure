@@ -16,7 +16,8 @@ resources:
   - ./loki/ks.yaml
   - ./minecraft-exporter/ks.yaml
   #- ./nut-exporter/ks.yaml
-  - ./promtail/ks.yaml
   - ./silence-operator/ks.yaml
+  - ./promtail/ks.yaml
   - ./smartctl-exporter/ks.yaml
+  - ./snmp-exporter/ks.yaml
   - ./unpoller/ks.yaml

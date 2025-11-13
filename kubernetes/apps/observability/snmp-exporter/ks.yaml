@@ -1,0 +1,16 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: snmp-exporter
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/observability/snmp-exporter/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: home-assistant
+    namespace: flux-system
+  targetNamespace: observability
+  wait: false

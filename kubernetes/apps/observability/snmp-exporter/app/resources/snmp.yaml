@@ -1,0 +1,1008 @@
+---
+auths:
+  public_v1:
+    community: public
+    security_level: noAuthNoPriv
+    auth_protocol: MD5
+    priv_protocol: DES
+    version: 1
+
+modules:
+  rfc1628_ups:
+    retries: 5
+    timeout: 60s
+    walk:
+      - 1.3.6.1.2.1.2
+      - 1.3.6.1.2.1.33.1.1
+      - 1.3.6.1.2.1.33.1.2
+      - 1.3.6.1.2.1.33.1.3
+      - 1.3.6.1.2.1.33.1.4
+      - 1.3.6.1.2.1.33.1.5
+      - 1.3.6.1.2.1.33.1.6
+      - 1.3.6.1.2.1.33.1.7
+      - 1.3.6.1.2.1.33.1.8
+      - 1.3.6.1.2.1.33.1.9
+    get:
+      - 1.3.6.1.2.1.1.3.0
+    metrics:
+      - name: sysUpTime
+        oid: 1.3.6.1.2.1.1.3
+        type: gauge
+        help: The time (in hundredths of a second) since the network management portion
+          of the system was last re-initialized. - 1.3.6.1.2.1.1.3
+      - name: ifNumber
+        oid: 1.3.6.1.2.1.2.1
+        type: gauge
+        help: The number of network interfaces (regardless of their current state) present
+          on this system. - 1.3.6.1.2.1.2.1
+      - name: ifIndex
+        oid: 1.3.6.1.2.1.2.2.1.1
+        type: gauge
+        help: A unique value, greater than zero, for each interface - 1.3.6.1.2.1.2.2.1.1
+        indexes:
+          - labelname: ifIndex
+            type: gauge
+        lookups:
+          - labels:
+              - ifIndex
+            labelname: ifDescr
+            oid: 1.3.6.1.2.1.2.2.1.2
+            type: DisplayString
+          - labels: []
+            labelname: ifIndex
+      - name: ifDescr
+        oid: 1.3.6.1.2.1.2.2.1.2
+        type: DisplayString
+        help: A textual string containing information about the interface - 1.3.6.1.2.1.2.2.1.2
+        indexes:
+          - labelname: ifIndex
+            type: gauge
+        lookups:
+          - labels:
+              - ifIndex
+            labelname: ifDescr
+            oid: 1.3.6.1.2.1.2.2.1.2
+            type: DisplayString
+          - labels: []
+            labelname: ifIndex
+      - name: ifType
+        oid: 1.3.6.1.2.1.2.2.1.3
+        type: EnumAsInfo
+        help: The type of interface - 1.3.6.1.2.1.2.2.1.3
+        indexes:
+          - labelname: ifIndex
+            type: gauge
+        lookups:
+          - labels:
+              - ifIndex
+            labelname: ifDescr
+            oid: 1.3.6.1.2.1.2.2.1.2
+            type: DisplayString
+          - labels: []
+            labelname: ifIndex
+        enum_values:
+          1: other
+          2: regular1822
+          3: hdh1822
+          4: ddnX25
+          5: rfc877x25
+          6: ethernetCsmacd
+          7: iso88023Csmacd
+          8: iso88024TokenBus
+          9: iso88025TokenRing
+          10: iso88026Man
+          11: starLan
+          12: proteon10Mbit
+          13: proteon80Mbit
+          14: hyperchannel
+          15: fddi
+          16: lapb
+          17: sdlc
+          18: ds1
+          19: e1
+          20: basicISDN
+          21: primaryISDN
+          22: propPointToPointSerial
+          23: ppp
+          24: softwareLoopback
+          25: eon
+          26: ethernet3Mbit
+          27: nsip
+          28: slip
+          29: ultra
+          30: ds3
+          31: sip
+          32: frameRelay
+          33: rs232
+          34: para
+          35: arcnet
+          36: arcnetPlus
+          37: atm
+          38: miox25
+          39: sonet
+          40: x25ple
+          41: iso88022llc
+          42: localTalk
+          43: smdsDxi
+          44: frameRelayService
+          45: v35
+          46: hssi
+          47: hippi
+          48: modem
+          49: aal5
+          50: sonetPath
+          51: sonetVT
+          52: smdsIcip
+          53: propVirtual
+          54: propMultiplexor
+          55: ieee80212
+          56: fibreChannel
+          57: hippiInterface
+          58: frameRelayInterconnect
+          59: aflane8023
+          60: aflane8025
+          61: cctEmul
+          62: fastEther
+          63: isdn
+          64: v11
+          65: v36
+          66: g703at64k
+          67: g703at2mb
+          68: qllc
+          69: fastEtherFX
+          70: channel
+          71: ieee80211
+          72: ibm370parChan
+          73: escon
+          74: dlsw
+          75: isdns
+          76: isdnu
+          77: lapd
+          78: ipSwitch
+          79: rsrb
+          80: atmLogical
+          81: ds0
+          82: ds0Bundle
+          83: bsc
+          84: async
+          85: cnr
+          86: iso88025Dtr
+          87: eplrs
+          88: arap
+          89: propCnls
+          90: hostPad
+          91: termPad
+          92: frameRelayMPI
+          93: x213
+          94: adsl
+          95: radsl
+          96: sdsl
+          97: vdsl
+          98: iso88025CRFPInt
+          99: myrinet
+          100: voiceEM
+          101: voiceFXO
+          102: voiceFXS
+          103: voiceEncap
+          104: voiceOverIp
+          105: atmDxi
+          106: atmFuni
+          107: atmIma
+          108: pppMultilinkBundle
+          109: ipOverCdlc
+          110: ipOverClaw
+          111: stackToStack
+          112: virtualIpAddress
+          113: mpc
+          114: ipOverAtm
+          115: iso88025Fiber
+          116: tdlc
+          117: gigabitEthernet
+          118: hdlc
+          119: lapf
+          120: v37
+          121: x25mlp
+          122: x25huntGroup
+          123: transpHdlc
+          124: interleave
+          125: fast
+          126: ip
+          127: docsCableMaclayer
+          128: docsCableDownstream
+          129: docsCableUpstream
+          130: a12MppSwitch
+          131: tunnel
+          132: coffee
+          133: ces
+          134: atmSubInterface
+          135: l2vlan
+          136: l3ipvlan
+          137: l3ipxvlan
+          138: digitalPowerline
+          139: mediaMailOverIp
+          140: dtm
+          141: dcn
+          142: ipForward
+          143: msdsl
+          144: ieee1394
+          145: if-gsn
+          146: dvbRccMacLayer
+          147: dvbRccDownstream
+          148: dvbRccUpstream
+          149: atmVirtual
+          150: mplsTunnel
+          151: srp
+          152: voiceOverAtm
+          153: voiceOverFrameRelay
+          154: idsl
+          155: compositeLink
+          156: ss7SigLink
+          157: propWirelessP2P
+          158: frForward
+          159: rfc1483
+          160: usb
+          161: ieee8023adLag
+          162: bgppolicyaccounting
+          163: frf16MfrBundle
+          164: h323Gatekeeper
+          165: h323Proxy
+          166: mpls
+          167: mfSigLink
+          168: hdsl2
+          169: shdsl
+          170: ds1FDL
+          171: pos
+          172: dvbAsiIn
+          173: dvbAsiOut
+          174: plc
+          175: nfas
+          176: tr008
+          177: gr303RDT
+          178: gr303IDT
+          179: isup
+          180: propDocsWirelessMaclayer
+          181: propDocsWirelessDownstream
+          182: propDocsWirelessUpstream
+          183: hiperlan2
+          184: propBWAp2Mp
+          185: sonetOverheadChannel
+          186: digitalWrapperOverheadChannel
+          187: aal2
+          188: radioMAC
+          189: atmRadio
+          190: imt
+          191: mvl
+          192: reachDSL
+          193: frDlciEndPt
+          194: atmVciEndPt
+          195: opticalChannel
+          196: opticalTransport
+          197: propAtm
+          198: voiceOverCable
+          199: infiniband
+          200: teLink
+          201: q2931
+          202: virtualTg
+          203: sipTg
+          204: sipSig
+          205: docsCableUpstreamChannel
+          206: econet
+          207: pon155
+          208: pon622
+          209: bridge
+          210: linegroup
+          211: voiceEMFGD
+          212: voiceFGDEANA
+          213: voiceDID
+          214: mpegTransport
+          215: sixToFour
+          216: gtp
+          217: pdnEtherLoop1
+          218: pdnEtherLoop2
+          219: opticalChannelGroup
+          220: homepna
+          221: gfp
+          222: ciscoISLvlan
+          223: actelisMetaLOOP
+          224: fcipLink
+          225: rpr
+          226: qam
+          227: lmp
+          228: cblVectaStar
+          229: docsCableMCmtsDownstream
+          230: adsl2
+          231: macSecControlledIF
+          232: macSecUncontrolledIF
+          233: aviciOpticalEther
+          234: atmbond
+          235: voiceFGDOS
+          236: mocaVersion1
+          237: ieee80216WMAN
+          238: adsl2plus
+          239: dvbRcsMacLayer
+          240: dvbTdm
+          241: dvbRcsTdma
+          242: x86Laps
+          243: wwanPP
+          244: wwanPP2
+          245: voiceEBS
+          246: ifPwType
+          247: ilan
+          248: pip
+          249: aluELP
+          250: gpon
+          251: vdsl2
+          252: capwapDot11Profile
+          253: capwapDot11Bss
+          254: capwapWtpVirtualRadio
+          255: bits
+          256: docsCableUpstreamRfPort
+          257: cableDownstreamRfPort
+          258: vmwareVirtualNic
+          259: ieee802154
+          260: otnOdu
+          261: otnOtu
+          262: ifVfiType
+          263: g9981
+          264: g9982
+          265: g9983
+          266: aluEpon
+          267: aluEponOnu
+          268: aluEponPhysicalUni
+          269: aluEponLogicalLink
+          270: aluGponOnu
+          271: aluGponPhysicalUni
+          272: vmwareNicTeam
+          277: docsOfdmDownstream
+          278: docsOfdmaUpstream
+          279: gfast
+          280: sdci
+          281: xboxWireless
+          282: fastdsl
+          283: docsCableScte55d1FwdOob
+          284: docsCableScte55d1RetOob
+          285: docsCableScte55d2DsOob
+          286: docsCableScte55d2UsOob
+          287: docsCableNdf
+          288: docsCableNdr
+          289: ptm
+          290: ghn
+          291: otnOtsi
+          292: otnOtuc
+          293: otnOduc
+          294: otnOtsig
+          295: microwaveCarrierTermination
+          296: microwaveRadioLinkTerminal
+      - name: ifMtu
+        oid: 1.3.6.1.2.1.2.2.1.4
+        type: gauge
+        help: The size of the largest packet which can be sent/received on the interface,
+          specified in octets - 1.3.6.1.2.1.2.2.1.4
+        indexes:
+          - labelname: ifIndex
+            type: gauge
+        lookups:
+          - labels:
+              - ifIndex
+            labelname: ifDescr
+            oid: 1.3.6.1.2.1.2.2.1.2
+            type: DisplayString
+          - labels: []
+            labelname: ifIndex
+      - name: ifSpeed
+        oid: 1.3.6.1.2.1.2.2.1.5
+        type: gauge
+        help: An estimate of the interface's current bandwidth in bits per second - 1.3.6.1.2.1.2.2.1.5
+        indexes:
+          - labelname: ifIndex
+            type: gauge
+        lookups:
+          - labels:
+              - ifIndex
+            labelname: ifDescr
+            oid: 1.3.6.1.2.1.2.2.1.2
+            type: DisplayString
+          - labels: []
+            labelname: ifIndex
+      - name: ifPhysAddress
+        oid: 1.3.6.1.2.1.2.2.1.6
+        type: PhysAddress48
+        help: The interface's address at its protocol sub-layer - 1.3.6.1.2.1.2.2.1.6
+        indexes:
+          - labelname: ifIndex
+            type: gauge
+        lookups:
+          - labels:
+              - ifIndex
+            labelname: ifDescr
+            oid: 1.3.6.1.2.1.2.2.1.2
+            type: DisplayString
+          - labels: []
+            labelname: ifIndex
+      - name: ifAdminStatus
+        oid: 1.3.6.1.2.1.2.2.1.7
+        type: gauge
+        help: The desired state of the interface - 1.3.6.1.2.1.2.2.1.7
+        indexes:
+          - labelname: ifIndex
+            type: gauge
+        lookups:
+          - labels:
+              - ifIndex
+            labelname: ifDescr
+            oid: 1.3.6.1.2.1.2.2.1.2
+            type: DisplayString
+          - labels: []
+            labelname: ifIndex
+        enum_values:
+          1: up
+          2: down
+          3: testing
+      - name: ifOperStatus
+        oid: 1.3.6.1.2.1.2.2.1.8
+        type: gauge
+        help: The current operational state of the interface - 1.3.6.1.2.1.2.2.1.8
+        indexes:
+          - labelname: ifIndex
+            type: gauge
+        lookups:
+          - labels:
+              - ifIndex
+            labelname: ifDescr
+            oid: 1.3.6.1.2.1.2.2.1.2
+            type: DisplayString
+          - labels: []
+            labelname: ifIndex
+        enum_values:
+          1: up
+          2: down
+          3: testing
+          4: unknown
+          5: dormant
+          6: notPresent
+          7: lowerLayerDown
+      - name: ifLastChange
+        oid: 1.3.6.1.2.1.2.2.1.9
+        type: gauge
+        help: The value of sysUpTime at the time the interface entered its current operational
+          state - 1.3.6.1.2.1.2.2.1.9
+        indexes:
+          - labelname: ifIndex
+            type: gauge
+        lookups:
+          - labels:
+              - ifIndex
+            labelname: ifDescr
+            oid: 1.3.6.1.2.1.2.2.1.2
+            type: DisplayString
+          - labels: []
+            labelname: ifIndex
+      - name: ifInOctets
+        oid: 1.3.6.1.2.1.2.2.1.10
+        type: counter
+        help: The total number of octets received on the interface, including framing
+          characters - 1.3.6.1.2.1.2.2.1.10
+        indexes:
+          - labelname: ifIndex
+            type: gauge
+        lookups:
+          - labels:
+              - ifIndex
+            labelname: ifDescr
+            oid: 1.3.6.1.2.1.2.2.1.2
+            type: DisplayString
+          - labels: []
+            labelname: ifIndex
+      - name: ifInUcastPkts
+        oid: 1.3.6.1.2.1.2.2.1.11
+        type: counter
+        help: The number of packets, delivered by this sub-layer to a higher (sub-)layer,
+          which were not addressed to a multicast or broadcast address at this sub-layer
+          - 1.3.6.1.2.1.2.2.1.11
+        indexes:
+          - labelname: ifIndex
+            type: gauge
+        lookups:
+          - labels:
+              - ifIndex
+            labelname: ifDescr
+            oid: 1.3.6.1.2.1.2.2.1.2
+            type: DisplayString
+          - labels: []
+            labelname: ifIndex
+      - name: ifInNUcastPkts
+        oid: 1.3.6.1.2.1.2.2.1.12
+        type: counter
+        help: The number of packets, delivered by this sub-layer to a higher (sub-)layer,
+          which were addressed to a multicast or broadcast address at this sub-layer -
+          1.3.6.1.2.1.2.2.1.12
+        indexes:
+          - labelname: ifIndex
+            type: gauge
+        lookups:
+          - labels:
+              - ifIndex
+            labelname: ifDescr
+            oid: 1.3.6.1.2.1.2.2.1.2
+            type: DisplayString
+          - labels: []
+            labelname: ifIndex
+      - name: ifInDiscards
+        oid: 1.3.6.1.2.1.2.2.1.13
+        type: counter
+        help: The number of inbound packets which were chosen to be discarded even though
+          no errors had been detected to prevent their being deliverable to a higher-layer
+          protocol - 1.3.6.1.2.1.2.2.1.13
+        indexes:
+          - labelname: ifIndex
+            type: gauge
+        lookups:
+          - labels:
+              - ifIndex
+            labelname: ifDescr
+            oid: 1.3.6.1.2.1.2.2.1.2
+            type: DisplayString
+          - labels: []
+            labelname: ifIndex
+      - name: ifInErrors
+        oid: 1.3.6.1.2.1.2.2.1.14
+        type: counter
+        help: For packet-oriented interfaces, the number of inbound packets that contained
+          errors preventing them from being deliverable to a higher-layer protocol - 1.3.6.1.2.1.2.2.1.14
+        indexes:
+          - labelname: ifIndex
+            type: gauge
+        lookups:
+          - labels:
+              - ifIndex
+            labelname: ifDescr
+            oid: 1.3.6.1.2.1.2.2.1.2
+            type: DisplayString
+          - labels: []
+            labelname: ifIndex
+      - name: ifInUnknownProtos
+        oid: 1.3.6.1.2.1.2.2.1.15
+        type: counter
+        help: For packet-oriented interfaces, the number of packets received via the interface
+          which were discarded because of an unknown or unsupported protocol - 1.3.6.1.2.1.2.2.1.15
+        indexes:
+          - labelname: ifIndex
+            type: gauge
+        lookups:
+          - labels:
+              - ifIndex
+            labelname: ifDescr
+            oid: 1.3.6.1.2.1.2.2.1.2
+            type: DisplayString
+          - labels: []
+            labelname: ifIndex
+      - name: ifOutOctets
+        oid: 1.3.6.1.2.1.2.2.1.16
+        type: counter
+        help: The total number of octets transmitted out of the interface, including framing
+          characters - 1.3.6.1.2.1.2.2.1.16
+        indexes:
+          - labelname: ifIndex
+            type: gauge
+        lookups:
+          - labels:
+              - ifIndex
+            labelname: ifDescr
+            oid: 1.3.6.1.2.1.2.2.1.2
+            type: DisplayString
+          - labels: []
+            labelname: ifIndex
+      - name: ifOutUcastPkts
+        oid: 1.3.6.1.2.1.2.2.1.17
+        type: counter
+        help: The total number of packets that higher-level protocols requested be transmitted,
+          and which were not addressed to a multicast or broadcast address at this sub-layer,
+          including those that were discarded or not sent - 1.3.6.1.2.1.2.2.1.17
+        indexes:
+          - labelname: ifIndex
+            type: gauge
+        lookups:
+          - labels:
+              - ifIndex
+            labelname: ifDescr
+            oid: 1.3.6.1.2.1.2.2.1.2
+            type: DisplayString
+          - labels: []
+            labelname: ifIndex
+      - name: ifOutNUcastPkts
+        oid: 1.3.6.1.2.1.2.2.1.18
+        type: counter
+        help: The total number of packets that higher-level protocols requested be transmitted,
+          and which were addressed to a multicast or broadcast address at this sub-layer,
+          including those that were discarded or not sent - 1.3.6.1.2.1.2.2.1.18
+        indexes:
+          - labelname: ifIndex
+            type: gauge
+        lookups:
+          - labels:
+              - ifIndex
+            labelname: ifDescr
+            oid: 1.3.6.1.2.1.2.2.1.2
+            type: DisplayString
+          - labels: []
+            labelname: ifIndex
+      - name: ifOutDiscards
+        oid: 1.3.6.1.2.1.2.2.1.19
+        type: counter
+        help: The number of outbound packets which were chosen to be discarded even though
+          no errors had been detected to prevent their being transmitted - 1.3.6.1.2.1.2.2.1.19
+        indexes:
+          - labelname: ifIndex
+            type: gauge
+        lookups:
+          - labels:
+              - ifIndex
+            labelname: ifDescr
+            oid: 1.3.6.1.2.1.2.2.1.2
+            type: DisplayString
+          - labels: []
+            labelname: ifIndex
+      - name: ifOutErrors
+        oid: 1.3.6.1.2.1.2.2.1.20
+        type: counter
+        help: For packet-oriented interfaces, the number of outbound packets that could
+          not be transmitted because of errors - 1.3.6.1.2.1.2.2.1.20
+        indexes:
+          - labelname: ifIndex
+            type: gauge
+        lookups:
+          - labels:
+              - ifIndex
+            labelname: ifDescr
+            oid: 1.3.6.1.2.1.2.2.1.2
+            type: DisplayString
+          - labels: []
+            labelname: ifIndex
+      - name: ifOutQLen
+        oid: 1.3.6.1.2.1.2.2.1.21
+        type: gauge
+        help: The length of the output packet queue (in packets). - 1.3.6.1.2.1.2.2.1.21
+        indexes:
+          - labelname: ifIndex
+            type: gauge
+        lookups:
+          - labels:
+              - ifIndex
+            labelname: ifDescr
+            oid: 1.3.6.1.2.1.2.2.1.2
+            type: DisplayString
+          - labels: []
+            labelname: ifIndex
+      - name: upsIdentManufacturer
+        oid: 1.3.6.1.2.1.33.1.1.1
+        type: DisplayString
+        help: The name of the UPS manufacturer. - 1.3.6.1.2.1.33.1.1.1
+      - name: upsIdentModel
+        oid: 1.3.6.1.2.1.33.1.1.2
+        type: DisplayString
+        help: The UPS Model designation. - 1.3.6.1.2.1.33.1.1.2
+      - name: upsIdentUPSSoftwareVersion
+        oid: 1.3.6.1.2.1.33.1.1.3
+        type: DisplayString
+        help: The UPS firmware/software version(s) - 1.3.6.1.2.1.33.1.1.3
+      - name: upsIdentAgentSoftwareVersion
+        oid: 1.3.6.1.2.1.33.1.1.4
+        type: DisplayString
+        help: The UPS agent software version - 1.3.6.1.2.1.33.1.1.4
+      - name: upsIdentName
+        oid: 1.3.6.1.2.1.33.1.1.5
+        type: DisplayString
+        help: A string identifying the UPS - 1.3.6.1.2.1.33.1.1.5
+      - name: upsIdentAttachedDevices
+        oid: 1.3.6.1.2.1.33.1.1.6
+        type: DisplayString
+        help: A string identifying the devices attached to the output(s) of the UPS -
+          1.3.6.1.2.1.33.1.1.6
+      - name: upsBatteryStatus
+        oid: 1.3.6.1.2.1.33.1.2.1
+        type: EnumAsStateSet
+        help: The indication of the capacity remaining in the UPS system's batteries -
+          1.3.6.1.2.1.33.1.2.1
+        enum_values:
+          1: unknown
+          2: batteryNormal
+          3: batteryLow
+          4: batteryDepleted
+      - name: upsSecondsOnBattery
+        oid: 1.3.6.1.2.1.33.1.2.2
+        type: gauge
+        help: If the unit is on battery power, the elapsed time since the UPS last switched
+          to battery power, or the time since the network management subsystem was last
+          restarted, whichever is less - 1.3.6.1.2.1.33.1.2.2
+      - name: upsEstimatedMinutesRemaining
+        oid: 1.3.6.1.2.1.33.1.2.3
+        type: gauge
+        help: An estimate of the time to battery charge depletion under the present load
+          conditions if the utility power is off and remains off, or if it were to be
+          lost and remain off. - 1.3.6.1.2.1.33.1.2.3
+      - name: upsEstimatedChargeRemaining
+        oid: 1.3.6.1.2.1.33.1.2.4
+        type: gauge
+        help: An estimate of the battery charge remaining expressed as a percent of full
+          charge. - 1.3.6.1.2.1.33.1.2.4
+      - name: upsBatteryVoltage
+        oid: 1.3.6.1.2.1.33.1.2.5
+        type: gauge
+        help: The magnitude of the present battery voltage. - 1.3.6.1.2.1.33.1.2.5
+      - name: upsBatteryCurrent
+        oid: 1.3.6.1.2.1.33.1.2.6
+        type: gauge
+        help: The present battery current. - 1.3.6.1.2.1.33.1.2.6
+      - name: upsBatteryTemperature
+        oid: 1.3.6.1.2.1.33.1.2.7
+        type: gauge
+        help: The ambient temperature at or near the UPS Battery casing. - 1.3.6.1.2.1.33.1.2.7
+      - name: upsInputLineBads
+        oid: 1.3.6.1.2.1.33.1.3.1
+        type: counter
+        help: A count of the number of times the input entered an out-of-tolerance condition
+          as defined by the manufacturer - 1.3.6.1.2.1.33.1.3.1
+      - name: upsInputNumLines
+        oid: 1.3.6.1.2.1.33.1.3.2
+        type: gauge
+        help: The number of input lines utilized in this device - 1.3.6.1.2.1.33.1.3.2
+      - name: upsInputLineIndex
+        oid: 1.3.6.1.2.1.33.1.3.3.1.1
+        type: gauge
+        help: The input line identifier. - 1.3.6.1.2.1.33.1.3.3.1.1
+        indexes:
+          - labelname: upsInputLineIndex
+            type: gauge
+      - name: upsInputFrequency
+        oid: 1.3.6.1.2.1.33.1.3.3.1.2
+        type: gauge
+        help: The present input frequency. - 1.3.6.1.2.1.33.1.3.3.1.2
+        indexes:
+          - labelname: upsInputLineIndex
+            type: gauge
+      - name: upsInputVoltage
+        oid: 1.3.6.1.2.1.33.1.3.3.1.3
+        type: gauge
+        help: The magnitude of the present input voltage. - 1.3.6.1.2.1.33.1.3.3.1.3
+        indexes:
+          - labelname: upsInputLineIndex
+            type: gauge
+      - name: upsInputCurrent
+        oid: 1.3.6.1.2.1.33.1.3.3.1.4
+        type: gauge
+        help: The magnitude of the present input current. - 1.3.6.1.2.1.33.1.3.3.1.4
+        indexes:
+          - labelname: upsInputLineIndex
+            type: gauge
+      - name: upsInputTruePower
+        oid: 1.3.6.1.2.1.33.1.3.3.1.5
+        type: gauge
+        help: The magnitude of the present input true power. - 1.3.6.1.2.1.33.1.3.3.1.5
+        indexes:
+          - labelname: upsInputLineIndex
+            type: gauge
+      - name: upsOutputSource
+        oid: 1.3.6.1.2.1.33.1.4.1
+        type: EnumAsStateSet
+        help: The present source of output power - 1.3.6.1.2.1.33.1.4.1
+        enum_values:
+          1: other
+          2: none
+          3: normal
+          4: bypass
+          5: battery
+          6: booster
+          7: reducer
+      - name: upsOutputFrequency
+        oid: 1.3.6.1.2.1.33.1.4.2
+        type: gauge
+        help: The present output frequency. - 1.3.6.1.2.1.33.1.4.2
+      - name: upsOutputNumLines
+        oid: 1.3.6.1.2.1.33.1.4.3
+        type: gauge
+        help: The number of output lines utilized in this device - 1.3.6.1.2.1.33.1.4.3
+      - name: upsOutputLineIndex
+        oid: 1.3.6.1.2.1.33.1.4.4.1.1
+        type: gauge
+        help: The output line identifier. - 1.3.6.1.2.1.33.1.4.4.1.1
+        indexes:
+          - labelname: upsOutputLineIndex
+            type: gauge
+      - name: upsOutputVoltage
+        oid: 1.3.6.1.2.1.33.1.4.4.1.2
+        type: gauge
+        help: The present output voltage. - 1.3.6.1.2.1.33.1.4.4.1.2
+        indexes:
+          - labelname: upsOutputLineIndex
+            type: gauge
+      - name: upsOutputCurrent
+        oid: 1.3.6.1.2.1.33.1.4.4.1.3
+        type: gauge
+        help: The present output current. - 1.3.6.1.2.1.33.1.4.4.1.3
+        indexes:
+          - labelname: upsOutputLineIndex
+            type: gauge
+      - name: upsOutputPower
+        oid: 1.3.6.1.2.1.33.1.4.4.1.4
+        type: gauge
+        help: The present output true power. - 1.3.6.1.2.1.33.1.4.4.1.4
+        indexes:
+          - labelname: upsOutputLineIndex
+            type: gauge
+      - name: upsOutputPercentLoad
+        oid: 1.3.6.1.2.1.33.1.4.4.1.5
+        type: gauge
+        help: The percentage of the UPS power capacity presently being used on this output
+          line, i.e., the greater of the percent load of true power capacity and the percent
+          load of VA. - 1.3.6.1.2.1.33.1.4.4.1.5
+        indexes:
+          - labelname: upsOutputLineIndex
+            type: gauge
+      - name: upsBypassFrequency
+        oid: 1.3.6.1.2.1.33.1.5.1
+        type: gauge
+        help: The present bypass frequency. - 1.3.6.1.2.1.33.1.5.1
+      - name: upsBypassNumLines
+        oid: 1.3.6.1.2.1.33.1.5.2
+        type: gauge
+        help: The number of bypass lines utilized in this device - 1.3.6.1.2.1.33.1.5.2
+      - name: upsBypassLineIndex
+        oid: 1.3.6.1.2.1.33.1.5.3.1.1
+        type: gauge
+        help: The bypass line identifier. - 1.3.6.1.2.1.33.1.5.3.1.1
+        indexes:
+          - labelname: upsBypassLineIndex
+            type: gauge
+      - name: upsBypassVoltage
+        oid: 1.3.6.1.2.1.33.1.5.3.1.2
+        type: gauge
+        help: The present bypass voltage. - 1.3.6.1.2.1.33.1.5.3.1.2
+        indexes:
+          - labelname: upsBypassLineIndex
+            type: gauge
+      - name: upsBypassCurrent
+        oid: 1.3.6.1.2.1.33.1.5.3.1.3
+        type: gauge
+        help: The present bypass current. - 1.3.6.1.2.1.33.1.5.3.1.3
+        indexes:
+          - labelname: upsBypassLineIndex
+            type: gauge
+      - name: upsBypassPower
+        oid: 1.3.6.1.2.1.33.1.5.3.1.4
+        type: gauge
+        help: The present true power conveyed by the bypass. - 1.3.6.1.2.1.33.1.5.3.1.4
+        indexes:
+          - labelname: upsBypassLineIndex
+            type: gauge
+      - name: upsAlarmsPresent
+        oid: 1.3.6.1.2.1.33.1.6.1
+        type: gauge
+        help: The present number of active alarm conditions. - 1.3.6.1.2.1.33.1.6.1
+      - name: upsAlarmId
+        oid: 1.3.6.1.2.1.33.1.6.2.1.1
+        type: gauge
+        help: A unique identifier for an alarm condition - 1.3.6.1.2.1.33.1.6.2.1.1
+        indexes:
+          - labelname: upsAlarmId
+            type: gauge
+      - name: upsAlarmTime
+        oid: 1.3.6.1.2.1.33.1.6.2.1.3
+        type: gauge
+        help: The value of sysUpTime when the alarm condition was detected - 1.3.6.1.2.1.33.1.6.2.1.3
+        indexes:
+          - labelname: upsAlarmId
+            type: gauge
+      - name: upsTestSpinLock
+        oid: 1.3.6.1.2.1.33.1.7.2
+        type: gauge
+        help: A spin lock on the test subsystem - 1.3.6.1.2.1.33.1.7.2
+      - name: upsTestResultsSummary
+        oid: 1.3.6.1.2.1.33.1.7.3
+        type: EnumAsStateSet
+        help: The results of the current or last UPS diagnostics test performed - 1.3.6.1.2.1.33.1.7.3
+        enum_values:
+          1: donePass
+          2: doneWarning
+          3: doneError
+          4: aborted
+          5: inProgress
+          6: noTestsInitiated
+      - name: upsTestResultsDetail
+        oid: 1.3.6.1.2.1.33.1.7.4
+        type: DisplayString
+        help: Additional information about upsTestResultsSummary - 1.3.6.1.2.1.33.1.7.4
+      - name: upsTestStartTime
+        oid: 1.3.6.1.2.1.33.1.7.5
+        type: gauge
+        help: The value of sysUpTime at the time the test in progress was initiated, or,
+          if no test is in progress, the time the previous test was initiated - 1.3.6.1.2.1.33.1.7.5
+      - name: upsTestElapsedTime
+        oid: 1.3.6.1.2.1.33.1.7.6
+        type: gauge
+        help: The amount of time, in TimeTicks, since the test in progress was initiated,
+          or, if no test is in progress, the previous test took to complete - 1.3.6.1.2.1.33.1.7.6
+      - name: upsShutdownType
+        oid: 1.3.6.1.2.1.33.1.8.1
+        type: EnumAsStateSet
+        help: This object determines the nature of the action to be taken at the time
+          when the countdown of the upsShutdownAfterDelay and upsRebootWithDuration objects
+          reaches zero - 1.3.6.1.2.1.33.1.8.1
+        enum_values:
+          1: output
+          2: system
+      - name: upsShutdownAfterDelay
+        oid: 1.3.6.1.2.1.33.1.8.2
+        type: gauge
+        help: Setting this object will shutdown (i.e., turn off) either the UPS output
+          or the UPS system (as determined by the value of upsShutdownType at the time
+          of shutdown) after the indicated number of seconds, or less if the UPS batteries
+          become depleted - 1.3.6.1.2.1.33.1.8.2
+      - name: upsStartupAfterDelay
+        oid: 1.3.6.1.2.1.33.1.8.3
+        type: gauge
+        help: Setting this object will start the output after the indicated number of
+          seconds, including starting the UPS, if necessary - 1.3.6.1.2.1.33.1.8.3
+      - name: upsRebootWithDuration
+        oid: 1.3.6.1.2.1.33.1.8.4
+        type: gauge
+        help: Setting this object will immediately shutdown (i.e., turn off) either the
+          UPS output or the UPS system (as determined by the value of upsShutdownType
+          at the time of shutdown) for a period equal to the indicated number of seconds,
+          after which time the output will be started, including starting the UPS, if
+          necessary - 1.3.6.1.2.1.33.1.8.4
+      - name: upsAutoRestart
+        oid: 1.3.6.1.2.1.33.1.8.5
+        type: EnumAsStateSet
+        help: Setting this object to 'on' will cause the UPS system to restart after a
+          shutdown if the shutdown occurred during a power loss as a result of either
+          a upsShutdownAfterDelay or an internal battery depleted condition - 1.3.6.1.2.1.33.1.8.5
+        enum_values:
+          1: "on"
+          2: "off"
+      - name: upsConfigInputVoltage
+        oid: 1.3.6.1.2.1.33.1.9.1
+        type: gauge
+        help: The magnitude of the nominal input voltage - 1.3.6.1.2.1.33.1.9.1
+      - name: upsConfigInputFreq
+        oid: 1.3.6.1.2.1.33.1.9.2
+        type: gauge
+        help: The nominal input frequency - 1.3.6.1.2.1.33.1.9.2
+      - name: upsConfigOutputVoltage
+        oid: 1.3.6.1.2.1.33.1.9.3
+        type: gauge
+        help: The magnitude of the nominal output voltage - 1.3.6.1.2.1.33.1.9.3
+      - name: upsConfigOutputFreq
+        oid: 1.3.6.1.2.1.33.1.9.4
+        type: gauge
+        help: The nominal output frequency - 1.3.6.1.2.1.33.1.9.4
+      - name: upsConfigOutputVA
+        oid: 1.3.6.1.2.1.33.1.9.5
+        type: gauge
+        help: The magnitude of the nominal Volt-Amp rating. - 1.3.6.1.2.1.33.1.9.5
+      - name: upsConfigOutputPower
+        oid: 1.3.6.1.2.1.33.1.9.6
+        type: gauge
+        help: The magnitude of the nominal true power rating. - 1.3.6.1.2.1.33.1.9.6
+      - name: upsConfigLowBattTime
+        oid: 1.3.6.1.2.1.33.1.9.7
+        type: gauge
+        help: The value of upsEstimatedMinutesRemaining at which a lowBattery condition
+          is declared - 1.3.6.1.2.1.33.1.9.7
+      - name: upsConfigAudibleStatus
+        oid: 1.3.6.1.2.1.33.1.9.8
+        type: EnumAsStateSet
+        help: The requested state of the audible alarm - 1.3.6.1.2.1.33.1.9.8
+        enum_values:
+          1: disabled
+          2: enabled
+          3: muted
+      - name: upsConfigLowVoltageTransferPoint
+        oid: 1.3.6.1.2.1.33.1.9.9
+        type: gauge
+        help: The minimum input line voltage allowed before the UPS system transfers to
+          battery backup. - 1.3.6.1.2.1.33.1.9.9
+      - name: upsConfigHighVoltageTransferPoint
+        oid: 1.3.6.1.2.1.33.1.9.10
+        type: gauge
+        help: The maximum line voltage allowed before the UPS system transfers to battery
+          backup. - 1.3.6.1.2.1.33.1.9.10
