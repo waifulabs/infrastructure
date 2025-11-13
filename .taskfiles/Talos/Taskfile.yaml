@@ -12,7 +12,7 @@ tasks:
         | talosctl --nodes {{.NODE}} apply-config \
           --mode {{.MODE}} \
           --config-patch @{{.TALOS_DIR}}/nodes/{{.NODE}}.yaml \
-          --file /dev/stdin {{if .INSECURE}}--insecure{{end}}
+          --file /dev/stdin {{if .INSECURE}}--insecure{{end}}--dry-run
     vars:
       MODE: '{{.MODE | default "auto"}}'
       INSECURE:

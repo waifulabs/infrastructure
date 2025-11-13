@@ -56,12 +56,12 @@ machine:
         source: /var/mnt/extra
         options: ["bind", "rshared", "rw"]
     nodeIP:
-      validSubnets: ["10.0.10.0/24"]
+      validSubnets: [{{ '"169.254.254.0/24",' if ENV.MACHINE_TYPE == 'controlplane' }} "10.0.10.0/24"]
   network:
     nameservers: ["10.0.10.1"]
     disableSearchDomain: true
   nodeLabels:
-    topology.kubernetes.io/zone: {{ 'm' if ENV.MACHINE_TYPE == 'controlplane' else 'w' }}
+    topology.kubernetes.io/zone: {{ 'controller' if ENV.MACHINE_TYPE == 'controlplane' else 'worker' }}
   sysctls:
     fs.inotify.max_user_watches: 1048576 # Watchdog
     fs.inotify.max_user_instances: 8192 # Watchdog
@@ -158,7 +158,7 @@ cluster:
     extraArgs:
       bind-address: 0.0.0.0
   etcd:
-    advertisedSubnets: ["10.0.10.0/24"]
+    advertisedSubnets: ["169.254.254.0/24", "10.0.10.0/24"]
     ca:
       crt: op://Kubernetes/talos/CERTS_ETCD_CRT
       key: op://Kubernetes/talos/CERTS_ETCD_KEY
@@ -174,17 +174,3 @@ cluster:
   serviceAccount:
     key: op://Kubernetes/talos/CERTS_KUBERNETES_SERVICEACCOUNT_KEY
   {% endif %}
----
-apiVersion: v1alpha1
-kind: EthernetConfig
-name: enp2s0f0np0
-rings:
-  rx: 8160
-  tx: 8160
----
-apiVersion: v1alpha1
-kind: EthernetConfig
-name: enp2s0f1np1
-rings:
-  rx: 8160
-  tx: 8160
