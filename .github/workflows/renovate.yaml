@@ -27,8 +27,8 @@ on:
   push:
     branches: ["main"]
     paths:
-      - .github/renovate.json5
-      - .github/renovate/**.json5
+      - .renovaterc.json5
+      - .renovate/**.json5
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
@@ -57,7 +57,7 @@ jobs:
       - name: Renovate
         uses: renovatebot/github-action@v44.0.2
         with:
-          configurationFile: .github/renovate.json5
+          configurationFile: .renovaterc.json5
           token: "${{ steps.app-token.outputs.token }}"
           renovate-version: "${{ inputs.version || 'latest' }}"
         env:
