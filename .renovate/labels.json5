@@ -32,10 +32,6 @@
     {
       matchManagers: ["github-actions"],
       addLabels: ["renovate/github-action"],
-    },
-    {
-      matchDatasources: ["grafana-dashboards", "custom.grafana-dashboards"],
-      addLabels: ["renovate/grafana-dashboard"],
-    },
-  ],
+    }
+  ]
 }

@@ -4,6 +4,10 @@ machine:
   install:
     diskSelector:
       serial: 2318E6D1EDC2
+  kernel:
+    modules:
+      - name: thunderbolt
+      - name: thunderbolt_net
   network:
     hostname: shylily
     interfaces:

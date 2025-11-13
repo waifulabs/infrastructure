@@ -20,7 +20,6 @@ includes:
   bootstrap: .taskfiles/Bootstrap/Taskfile.yaml
   flux: .taskfiles/Flux/Taskfile.yaml
   kubernetes: .taskfiles/Kubernetes/Taskfile.yaml
-  rook: .taskfiles/Rook/Taskfile.yaml
   talos: .taskfiles/Talos/Taskfile.yaml
   volsync: .taskfiles/VolSync/Taskfile.yaml
   workstation: .taskfiles/Workstation/Taskfile.yaml

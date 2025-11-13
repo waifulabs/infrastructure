@@ -5,45 +5,47 @@ persist: true
 machine:
   ca:
     crt: op://Kubernetes/talos/CERTS_OS_CRT
+    {% if ENV.MACHINE_TYPE == 'controlplane' %}
     key: op://Kubernetes/talos/CERTS_OS_KEY
+    {% endif %}
   features:
     apidCheckExtKeyUsage: true
     diskQuotaSupport: true
-    stableHostname: true
-    rbac: true
-    kubePrism:
-      enabled: true
-      port: 7445
     hostDNS:
       enabled: true
       resolveMemberNames: true
       forwardKubeDNSToHost: false
+    kubePrism:
+      enabled: true
+      port: 7445
+    {% if ENV.MACHINE_TYPE == 'controlplane' %}
     kubernetesTalosAPIAccess:
       enabled: true
       allowedRoles: ["os:admin"]
       allowedKubernetesNamespaces: ["actions-runner-system", "system-upgrade"]
+    {% endif %}
+    stableHostname: true
+    rbac: true
   files:
-    - content: |-
+    - op: create
+      path: /etc/cri/conf.d/20-customization.part
+      content: |-
         [plugins."io.containerd.cri.v1.images"]
           discard_unpacked_layers = false
-      path: /etc/cri/conf.d/20-customization.part
-      op: create
-    - content: |-
+    - op: overwrite
+      permissions: 0o644
+      path: /etc/nfsmount.conf
+      content: |-
         [ NFSMount_Global_Options ]
         nfsvers=4.2
         hard=True
         nconnect=16
         noatime=True
-      permissions: 0o644
-      path: /etc/nfsmount.conf
-      op: overwrite
   install:
     image: factory.talos.dev/metal-installer/f5b4219136c4be042f25ee55c87d3b45d639e671e58c4c95a227204883e2114b:{{ ENV.TALOS_VERSION }}
   kernel:
     modules:
       - name: nbd
-      - name: thunderbolt
-      - name: thunderbolt_net
   kubelet:
     defaultRuntimeSeccompProfileEnabled: true
     disableManifestsDirectory: true
@@ -58,7 +60,8 @@ machine:
   network:
     nameservers: ["10.0.10.1"]
     disableSearchDomain: true
-  token: op://Kubernetes/talos/TRUSTDINFO_TOKEN
+  nodeLabels:
+    topology.kubernetes.io/zone: {{ 'm' if ENV.MACHINE_TYPE == 'controlplane' else 'w' }}
   sysctls:
     fs.inotify.max_user_watches: 1048576 # Watchdog
     fs.inotify.max_user_instances: 8192 # Watchdog
@@ -94,16 +97,47 @@ machine:
     devices.system.cpu.cpu17.cpufreq.energy_performance_preference: balance_performance
     devices.system.cpu.cpu18.cpufreq.energy_performance_preference: balance_performance
     devices.system.cpu.cpu19.cpufreq.energy_performance_preference: balance_performance
+  token: op://Kubernetes/talos/TRUSTDINFO_TOKEN
+  type: {{ ENV.MACHINE_TYPE }}
   udev:
     rules:
       - ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{authorized}=="0", ATTR{authorized}="1" # Thunderbolt
       - SUBSYSTEM=="drm", KERNEL=="renderD*", GROUP="44", MODE="0660" # Intel GPU
-      #- SUBSYSTEM=="usb", ATTR{idVendor}=="0bda", ATTR{idProduct}=="2838", OWNER="1001", GROUP="1001" # RTL-SDR
 cluster:
-  allowSchedulingOnControlPlanes: true
+  ca:
+    crt: op://Kubernetes/talos/CERTS_K8S_CRT
+    {% if ENV.MACHINE_TYPE == 'controlplane' %}
+    key: op://Kubernetes/talos/CERTS_K8S_KEY
+    {% endif %}
+  clusterName: main
+  controlPlane:
+    endpoint: https://k8s.internal:6443
+  discovery:
+    enabled: true
+    registries:
+      kubernetes:
+        disabled: true
+      service:
+        disabled: false
+  extraManifests:
+    - # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
+      https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.0/experimental-install.yaml
+    - # renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
+      https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.86.2/stripped-down-crds.yaml
+  id: op://Kubernetes/talos/CLUSTER_ID
+  network:
+    cni:
+      name: none
+    dnsDomain: cluster.local
+    podSubnets: ["172.30.0.0/16"]
+    serviceSubnets: ["172.31.0.0/16"]
+  secret: op://Kubernetes/talos/CLUSTER_SECRET
+  token: op://Kubernetes/talos/SECRETS_BOOTSTRAPTOKEN
+  {% if ENV.MACHINE_TYPE == 'controlplane' %}
   aggregatorCA:
     crt: op://Kubernetes/talos/CERTS_K8SAGGREGATOR_CRT
     key: op://Kubernetes/talos/CERTS_K8SAGGREGATOR_KEY
+  allowSchedulingOnControlPlanes: true
   apiServer:
     image: registry.k8s.io/kube-apiserver:{{ ENV.KUBERNETES_VERSION }}
     certSANs: ["k8s.internal"]
@@ -117,25 +151,12 @@ cluster:
       kind: Policy
       rules:
         - level: Metadata
-  ca:
-    crt: op://Kubernetes/talos/CERTS_K8S_CRT
-    key: op://Kubernetes/talos/CERTS_K8S_KEY
-  controlPlane:
-    endpoint: https://k8s.internal:6443
-  discovery:
-    enabled: true
-    registries:
-      kubernetes:
-        disabled: true
-      service:
-        disabled: false
+  coreDNS:
+    disabled: true
   controllerManager:
     image: registry.k8s.io/kube-controller-manager:{{ ENV.KUBERNETES_VERSION }}
     extraArgs:
       bind-address: 0.0.0.0
-  coreDNS:
-    disabled: true
-  clusterName: main
   etcd:
     advertisedSubnets: ["10.0.10.0/24"]
     ca:
@@ -143,29 +164,16 @@ cluster:
       key: op://Kubernetes/talos/CERTS_ETCD_KEY
     extraArgs:
       listen-metrics-urls: http://0.0.0.0:2381
-  extraManifests:
-    - # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
-      https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.0/experimental-install.yaml
-    - # renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
-      https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.86.2/stripped-down-crds.yaml
-  id: op://Kubernetes/talos/CLUSTER_ID
-  network:
-    cni:
-      name: none
-    dnsDomain: cluster.local
-    podSubnets: ["172.30.0.0/16"]
-    serviceSubnets: ["172.31.0.0/16"]
   proxy:
     disabled: true
+  secretboxEncryptionSecret: op://Kubernetes/talos/SECRETS_ENCRYPTIONSECRET
   scheduler:
     image: registry.k8s.io/kube-scheduler:{{ ENV.KUBERNETES_VERSION }}
     extraArgs:
       bind-address: 0.0.0.0
-  secret: op://Kubernetes/talos/CLUSTER_SECRET
-  secretboxEncryptionSecret: op://Kubernetes/talos/SECRETS_ENCRYPTIONSECRET
   serviceAccount:
     key: op://Kubernetes/talos/CERTS_KUBERNETES_SERVICEACCOUNT_KEY
-  token: op://Kubernetes/talos/SECRETS_BOOTSTRAPTOKEN
+  {% endif %}
 ---
 apiVersion: v1alpha1
 kind: EthernetConfig
@@ -180,12 +188,3 @@ name: enp2s0f1np1
 rings:
   rx: 8160
   tx: 8160
----
-apiVersion: v1alpha1
-kind: ExtensionServiceConfig
-name: nut-client
-configFiles:
-  - content: |-
-      MONITOR 10.0.10.3 1 slaveuser "op://Kubernetes/nut/NUT_PASSWORD" slave
-      SHUTDOWNCMD "/sbin/poweroff"
-    mountPath: /usr/local/etc/nut/upsmon.conf

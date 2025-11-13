@@ -31,73 +31,18 @@ tasks:
 
   delete-failed-pods:
     desc: Deletes pods with a fucked status
-    summary: |
-      Args:
-        cluster: Cluster to run command against (required)
     cmds:
       - for: ["Evicted", "Failed", "Succeeded"]
-        cmd: kubectl --context {{.cluster}} delete pods --field-selector status.phase={{.ITEM}} -A --ignore-not-found=true
-    requires:
-      vars: ["cluster"]
-
-  iperf2:
-    desc: Start a iperf2 server on one node, and iperf2 client on another node, to benchmark network performance.
-    dir: "/{{.ROOT_DIR}}/.taskfiles/Kubernetes/template/iperf"
-    vars: &iperf2-vars
-      SERVER_NAME: &iperf2-server-name "iperf2-server-{{- .TIMENOW -}}"
-      SERVER_NS: &iperf2-server-ns '{{ .SERVER_NS | default "default" }}'
-      CLIENT_NAME: &iperf2-client-name "iperf2-client-{{- .TIMENOW -}}"
-      CLIENT_NS: &iperf2-client-ns '{{ .CLIENT_NS | default "default" }}'
-      CLUSTER_DOMAIN: '{{ .CLUSTER_DOMAIN | default "cluster.local" }}'
-      SERVER_PORT: '{{ .SERVER_PORT | default "5001" }}'
-      SERVER_NODE: '{{ or .SERVER_NODE (fail "Missing `SERVER_NODE` environment variable!") }}'
-      CLIENT_NODE: '{{ or .CLIENT_NODE (fail "Missing `CLIENT_NODE` environment variable!") }}'
-      SERVER_ARGS: '{{ .SERVER_ARGS | default "" }}'
-      CLIENT_ARGS: '{{ .CLIENT_ARGS | default "" }}'
-    env: *iperf2-vars
-    cmds:
-      - cat ./server.yaml | envsubst | kubectl apply -f -
-      - defer: cat ./server.yaml | envsubst | kubectl delete -f -
-      - task: wait-pod-ready
-        vars:
-          NAME: "-l job-name={{.SERVER_NAME}}"
-          NS: "{{.SERVER_NS}}"
-      - cat ./client.yaml | envsubst | kubectl apply -f -
-      - defer: cat ./client.yaml | envsubst | kubectl delete -f -
-      - task: wait-finish
-        vars:
-          NAME: "{{.CLIENT_NAME}}"
-          NS: "{{.CLIENT_NS}}"
-
-  wait-pod-ready:
-    internal: true
-    desc: Wait for a pod to be ready
-    vars:
-      NAME: '{{ or .NAME (fail "Missing `NAME` environment variable!") }}'
-      NS: '{{ or .NS (fail "Missing `NS` environment variable!") }}'
-    cmds:
-      - until kubectl wait pod -n {{.NS}} {{.NAME}} --for=condition=Ready --timeout=1h; do sleep 1; done
-
-  wait-finish:
-    internal: true
-    desc: Wait for a job's pod to change its status to pending
-    vars:
-      NAME: '{{ or .NAME (fail "Missing `NAME` environment variable!") }}'
-      NS: '{{ or .NS (fail "Missing `NS` environment variable!") }}'
-      TYPE: '{{ .TYPE | default "job" }}'
-      # WAIT_ARGS: '{{.WAIT_ARGS | default "echo \"{{.NAME}} is still running, logs:\" && kubectl -n {{.NS}} logs {{.NAME}} --since 2s -f;"}}'
-    cmds:
-      - |-
-        until kubectl -n {{.NS}} wait {{.TYPE}}/{{.NAME}} --for condition=complete --timeout=2s; do
-          echo "{{.NAME}} is still running, logs:" && kubectl -n {{.NS}} logs {{.TYPE}}/{{.NAME}} --since 2s -f || true;
-        done
+        cmd: kubectl delete pods --field-selector status.phase={{.ITEM}} -A --ignore-not-found=true
 
   privileged:
     desc: Run a privileged pod
     cmd: |
-      kubectl run privileged-{{.node}} -i --rm --image=null \
+      kubectl run privileged-{{.NODE}} -i --rm --image=null \
         --overrides="$(yq {{.ROOT_DIR}}/.taskfiles/Kubernetes/template/privileged-pod.tmpl.yaml -o=json | envsubst)"
+    requires:
+      vars: ["NODE"]
     env:
-      node: "{{.node}}"
+      NODE: "{{.NODE}}"
     preconditions:
       - test -f {{.ROOT_DIR}}/.taskfiles/Kubernetes/template/privileged-pod.tmpl.yaml

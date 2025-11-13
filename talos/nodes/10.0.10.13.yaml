@@ -1,0 +1,27 @@
+---
+machine:
+  type: worker
+  install:
+    diskSelector:
+      serial: 2318E6D1E249
+  network:
+    hostname: unknown
+    interfaces:
+      #- deviceSelector: { busPath: 0000:59:00.0 } # Intel IPMI
+      #  ignore: true
+      - interface: bond0
+        bond:
+          deviceSelectors:
+            - hardwareAddr: 58:47:ca:76:19:1b
+              driver: i40e
+              physical: true
+          mode: active-backup
+        dhcp: true
+        mtu: 9000
+        vip:
+          ip: 10.0.10.2
+        vlans:
+          - # IOT
+            vlanId: 30
+            dhcp: false
+            mtu: 9000

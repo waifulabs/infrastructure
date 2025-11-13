@@ -2,36 +2,7 @@
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: "3"
 
-vars:
-  # renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
-  PROMETHEUS_OPERATOR_VERSION: v0.86.2
-
 tasks:
-  apply:
-    desc: Apply a Flux Kustomization resource for a cluster
-    summary: |
-      Args:
-        cluster: Cluster to run command against (required)
-        path: Path to the Flux Kustomization resource (required)
-        ns: Namespace the Flux Kustomization exists in (default: flux-system)
-    cmd: |
-      flux --context {{.cluster}} build ks $(basename {{.path}}) \
-          --namespace {{.ns}} \
-          --kustomization-file {{.KUBERNETES_DIR}}/{{.cluster}}/apps/{{.path}}/ks.yaml \
-          --path {{.KUBERNETES_DIR}}/{{.cluster}}/apps/{{.path}} \
-          {{- if contains "not found" .ks }}--dry-run \{{ end }}
-      | \
-      kubectl --context {{.cluster}} apply --server-side \
-          --field-manager=kustomize-controller -f -
-    requires:
-      vars: ["cluster", "path"]
-    vars:
-      ns: '{{.ns | default "flux-system"}}'
-      ks:
-        sh: flux --context {{.cluster}} --namespace {{.ns}} get kustomizations $(basename {{.path}}) 2>&1
-    preconditions:
-      - test -f {{.KUBERNETES_DIR}}/{{.cluster}}/apps/{{.path}}/ks.yaml
-
   reconcile:
     desc: Force update Flux to pull in changes from your Git repository
     requires:

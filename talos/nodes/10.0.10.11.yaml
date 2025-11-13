@@ -4,6 +4,10 @@ machine:
   install:
     diskSelector:
       serial: 2318E6D1804C
+  kernel:
+    modules:
+      - name: thunderbolt
+      - name: thunderbolt_net
   network:
     hostname: maomao
     interfaces:

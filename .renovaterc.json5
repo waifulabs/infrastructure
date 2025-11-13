@@ -1,0 +1,38 @@
+{
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:recommended',
+    'docker:enableMajor',
+    'helpers:pinGitHubActionDigests',
+    "github>waifulabs/infrastructure//.renovate/autoMerge.json5",
+    "github>waifulabs/infrastructure//.renovate/changelogs.json5",
+    "github>waifulabs/infrastructure//.renovate/customManagers.json5",
+    "github>waifulabs/infrastructure//.renovate/grafanaDashboards.json5",
+    "github>waifulabs/infrastructure//.renovate/groups.json5",
+    "github>waifulabs/infrastructure//.renovate/labels.json5",
+    "github>waifulabs/infrastructure//.renovate/overrides.json5",
+    "github>waifulabs/infrastructure//.renovate/semanticCommits.json5",
+    ':automergeBranch',
+    ':disableRateLimiting',
+    ':dependencyDashboard',
+    ':semanticCommits',
+    ':timezone(America/Los_Angeles)'
+  ],
+  dependencyDashboardTitle: 'Renovate Dashboard 🗡️',
+  suppressNotifications: [
+    'prEditedNotification',
+    'prIgnoreNotification',
+  ],
+  ignorePaths: [
+    '**/resources/**',
+  ],
+  flux: {
+    managerFilePatterns: ["/\\.yaml(?:\\.j2)?$/"],
+  },
+  'helm-values': {
+    managerFilePatterns: ["/\\.yaml(?:\\.j2)?$/"],
+  },
+  kubernetes: {
+    managerFilePatterns: ["/\\.yaml(?:\\.j2)?$/"],
+  },
+}
