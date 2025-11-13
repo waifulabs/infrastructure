@@ -26,3 +26,4 @@ machine:
             vlanId: 30
             dhcp: false
             mtu: 9000
+  nodeTaints: ["kubernetes.io/arch=arm64:NoSchedule"]
