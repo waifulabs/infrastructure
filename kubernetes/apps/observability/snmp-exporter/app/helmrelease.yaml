@@ -17,7 +17,7 @@ spec:
         - name: rackups
           target: ups.outsideour.casa
           module: [rfc1628_ups]
-          auth: [public_v2]
+          auth: [public_v1]
       path: /snmp
       scrapeTimeout: 10s
       relabelings:
