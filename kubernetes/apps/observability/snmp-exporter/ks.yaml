@@ -10,7 +10,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-assistant
+    name: home-kubernetes
     namespace: flux-system
   targetNamespace: observability
   wait: false
