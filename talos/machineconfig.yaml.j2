@@ -56,7 +56,7 @@ machine:
         source: /var/mnt/extra
         options: ["bind", "rshared", "rw"]
     nodeIP:
-      validSubnets: [{{ '"169.254.254.0/24",' if ENV.MACHINE_TYPE == 'controlplane' }} "10.0.10.0/24"]
+      validSubnets: ["10.0.10.0/24"]
   network:
     nameservers: ["10.0.10.1"]
     disableSearchDomain: true
@@ -158,7 +158,7 @@ cluster:
     extraArgs:
       bind-address: 0.0.0.0
   etcd:
-    advertisedSubnets: ["169.254.254.0/24", "10.0.10.0/24"]
+    advertisedSubnets: ["10.0.10.0/24"]
     ca:
       crt: op://Kubernetes/talos/CERTS_ETCD_CRT
       key: op://Kubernetes/talos/CERTS_ETCD_KEY
