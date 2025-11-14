@@ -8,4 +8,4 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
-  - ./actions-runner-controller
+  - ./actions-runner-controller/ks.yaml
