@@ -11,6 +11,15 @@ spec:
   interval: 1h
   values:
     fullnameOverride: *app
+    extraArgs:
+      - "--config.file=/config/snmp.yaml"
+    extraConfigmapMounts:
+      - name: &name rfc1628-ups-configmap
+        mountPath: /config/snmp.yaml
+        subPath: snmp.yaml
+        configMap: *name
+        readOnly: true
+        defaultMode: 420
     serviceMonitor:
       enabled: true
       params:
