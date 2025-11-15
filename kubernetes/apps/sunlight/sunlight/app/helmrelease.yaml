@@ -19,7 +19,7 @@ spec:
           app:
             image:
               repository: ghcr.io/waifulabs/sunlight
-              tag: main@sha256:e33ab86eb8f380fc6d809811bad8c17ec276b4f60e955825430832c60bac524a
+              tag: main@sha256:174a7ad15b8a0001b23188a68faccabb5e50b5de1c3a34d9fe8df602461dd80e
             envFrom:
               - secretRef:
                   name: sunlight-secret
