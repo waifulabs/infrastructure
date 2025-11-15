@@ -6,10 +6,8 @@ machine:
       serial: 2318E6D1E249
     image: factory.talos.dev/metal-installer/5daa51a8cc1c853d7b79875b7f874bf0076a896348dcf1cf7518c763766b8087:v1.11.5
   network:
-    hostname: unknown
+    hostname: nyanners
     interfaces:
-      #- deviceSelector: { busPath: 0000:59:00.0 } # Intel IPMI
-      #  ignore: true
       - interface: bond0
         bond:
           deviceSelectors:

@@ -61,7 +61,7 @@ machine:
     nameservers: ["10.0.10.1"]
     disableSearchDomain: true
   nodeLabels:
-    topology.kubernetes.io/zone: {{ 'controller' if ENV.MACHINE_TYPE == 'controlplane' else 'worker' }}
+    topology.kubernetes.io/zone: {{ ENV.MACHINE_TYPE }}
   sysctls:
     fs.inotify.max_user_watches: 1048576 # Watchdog
     fs.inotify.max_user_instances: 8192 # Watchdog
