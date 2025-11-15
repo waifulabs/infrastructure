@@ -18,7 +18,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/kashalls/sunlight
+              repository: ghcr.io/waifulabs/sunlight
               tag: main@sha256:e33ab86eb8f380fc6d809811bad8c17ec276b4f60e955825430832c60bac524a
             envFrom:
               - secretRef:

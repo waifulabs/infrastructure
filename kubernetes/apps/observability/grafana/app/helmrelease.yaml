@@ -100,7 +100,7 @@ spec:
     dashboards:
       default:
         cert-manager:
-          url: https://raw.githubusercontent.com/kashalls/home-cluster/refs/heads/main/kubernetes/apps/observability/grafana/app/dashboards/cert-manager.json
+          url: https://raw.githubusercontent.com/waifulabs/infrastructure/refs/heads/main/kubernetes/apps/observability/grafana/app/dashboards/cert-manager.json
           datasource: Prometheus
         ceph-cluster:
           # renovate: depName="Ceph Cluster"
@@ -186,7 +186,7 @@ spec:
           datasource: Prometheus
         # itzg
         minecraft-monitor:
-          url: https://raw.githubusercontent.com/kashalls/home-cluster/refs/heads/main/kubernetes/apps/observability/grafana/app/dashboards/minecraft-exporter.json
+          url: https://raw.githubusercontent.com/waifulabs/infrastructure/refs/heads/main/kubernetes/apps/observability/grafana/app/dashboards/minecraft-exporter.json
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
         node-exporter-full:
@@ -233,7 +233,7 @@ spec:
           revision: 9
           datasource: Prometheus
         unifi-pdu:
-          url: https://raw.githubusercontent.com/kashalls/home-cluster/refs/heads/main/kubernetes/apps/observability/grafana/app/dashboards/unifi-pdu-test.json
+          url: https://raw.githubusercontent.com/waifulabs/infrastructure/refs/heads/main/kubernetes/apps/observability/grafana/app/dashboards/unifi-pdu-test.json
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
         unifiedmetrics:

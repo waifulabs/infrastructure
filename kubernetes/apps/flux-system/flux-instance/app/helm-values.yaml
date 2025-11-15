@@ -14,7 +14,7 @@ instance:
   sync:
     kind: GitRepository
     name: home-kubernetes
-    url: https://github.com/kashalls/home-cluster
+    url: https://github.com/waifulabs/infrastructure
     ref: refs/heads/main
     path: kubernetes/flux/cluster
     interval: 1h
