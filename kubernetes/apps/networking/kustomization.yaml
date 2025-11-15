@@ -10,7 +10,7 @@ replacements:
 resources:
   - ./cloudflare-dns/ks.yaml
   - ./cloudflare-tunnel/ks.yaml
-  - ./echo/ks.yaml
+  #- ./echo/ks.yaml
   - ./envoy-gateway/ks.yaml
   - ./multus/ks.yaml
   - ./unifi-dns/ks.yaml
