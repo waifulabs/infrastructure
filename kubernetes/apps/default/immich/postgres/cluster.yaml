@@ -8,7 +8,7 @@ metadata:
     postgres-operator.crunchydata.com/autoCreateUserSchema: true
 spec:
   # https://docs.immich.app/administration/postgres-standalone/#updating-vectorchord
-  image: ghcr.io/waifulabs/crunchydata-vectorchord:ubi9-17.6-2542@sha256:6f6be78fe986a53565b68485daa231aced8b1976aaab856126f30f5a7fd0e3d3
+  image: ghcr.io/waifulabs/crunchydata-vectorchord:ubi9-17.6-2542@sha256:b8355912ae6f4891744288565f58ac19530517d5c1876b4f5cc252796dc5d790
   postgresVersion: 17
   databaseInitSQL:
     name: immich-postgres-init
