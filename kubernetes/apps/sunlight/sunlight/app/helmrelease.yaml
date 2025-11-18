@@ -18,8 +18,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/waifulabs/sunlight
-              tag: main@sha256:174a7ad15b8a0001b23188a68faccabb5e50b5de1c3a34d9fe8df602461dd80e
+              repository: ghcr.io/waifulabs/sunlight-dashboard
+              tag: main@sha256:39d1b35cba17e6f43a20d4b3667cfb44dd117c9e0765857606d34ee4c737c4d1
             envFrom:
               - secretRef:
                   name: sunlight-secret
