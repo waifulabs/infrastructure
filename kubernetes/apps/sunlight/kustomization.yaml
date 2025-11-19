@@ -9,4 +9,4 @@ replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
   - ./nats/ks.yaml
-  - ./sunlight/ks.yaml
+  - ./dashboard/ks.yaml
