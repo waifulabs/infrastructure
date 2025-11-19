@@ -3,8 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app sunlight
-  namespace: &namespace sunlight
+  name: &app dashboard
 spec:
   commonMetadata:
     labels:
@@ -12,13 +11,12 @@ spec:
   dependsOn:
     - name: onepassword
       namespace: external-secrets
-  path: ./kubernetes/apps/sunlight/sunlight/app
+  path: ./kubernetes/apps/sunlight/dashboard/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
     namespace: flux-system
-  targetNamespace: *namespace
   wait: false
   interval: 30m
   retryInterval: 1m

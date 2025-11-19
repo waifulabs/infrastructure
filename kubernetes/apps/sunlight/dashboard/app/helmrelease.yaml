@@ -3,18 +3,18 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app sunlight
+  name: &app dashboard
 spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
-    name: sunlight
+    name: dashboard
   values:
     defaultPodOptions:
       imagePullSecrets:
         - name: ghcr-io-secret
     controllers:
-      sunlight:
+      dashboard:
         containers:
           app:
             image:
@@ -22,7 +22,7 @@ spec:
               tag: main@sha256:defb6ccac92f76ab161662183e622e1aaeca4292603a0ee111ce7c6bca1b8f75
             envFrom:
               - secretRef:
-                  name: sunlight-secret
+                  name: dashboard-secret
             probes:
               liveness: &probes
                 enabled: true
@@ -45,7 +45,7 @@ spec:
             port: &port 3000
     route:
       app:
-        hostnames: ["{{ .Release.Name }}.ok8.sh"]
+        hostnames: ["{{ .Release.Name }}.ok8.sh", "sunlight.ok8.sh"]
         parentRefs:
           - name: internal
             namespace: networking
