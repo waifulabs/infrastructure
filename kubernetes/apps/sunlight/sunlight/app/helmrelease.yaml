@@ -40,13 +40,9 @@ spec:
                 enabled: false
     service:
       app:
-        controller: sunlight
-        type: LoadBalancer
-        annotations:
-          external-dns.alpha.kubernetes.io/hostname: sapi.ok8.sh
         ports:
           http:
-            port: &port 8080
+            port: &port 3000
     route:
       app:
         hostnames: ["{{ .Release.Name }}.ok8.sh"]
@@ -54,18 +50,3 @@ spec:
           - name: internal
             namespace: networking
             sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
-      hijack:
-        enabled: true
-        kind: TCPRoute
-        parentRefs:
-          - name: internal
-            namespace: networking
-            sectionName: tcp
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
