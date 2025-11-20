@@ -8,5 +8,6 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
+  - ./dragonfly/ks.yaml
   - ./mongodb/ks.yaml
   - ./postgres/ks.yaml
