@@ -37,4 +37,4 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: dragonfly-operator
-    namespace: dbms
+    namespace: database
