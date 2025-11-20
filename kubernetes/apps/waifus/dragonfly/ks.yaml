@@ -10,6 +10,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: dragonfly
+      namespace: database
   path: ./kubernetes/apps/waifus/dragonfly/app
   prune: true
   sourceRef:
