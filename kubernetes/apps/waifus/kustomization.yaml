@@ -7,4 +7,5 @@ components:
   - ../../components/namespace
 replacements:
   - path: ../../components/replacements/ks.yaml
-resources: []
+resources:
+  - ./dragonfly/ks.yaml
