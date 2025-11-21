@@ -68,4 +68,4 @@ jobs:
           RENOVATE_INTERNAL_CHECKS_FILTER: strict
           RENOVATE_PLATFORM: github
           RENOVATE_PLATFORM_COMMIT: true
-          RENOVATE_HOST_RULES: "[{\"matchHost\": \"ghcr.io\",\"username\": \"${{ github.actor }}\",\"password\": \"${{ secrets.GITHUB_TOKEN }}\", \"hostType\": \"docker\"}]"
+          RENOVATE_HOST_RULES: "[{\"matchHost\": \"ghcr.io\",\"username\": \"${{ github.repository_owner }}\",\"password\": \"${{ secrets.GITHUB_TOKEN }}\", \"hostType\": \"docker\"}]"
