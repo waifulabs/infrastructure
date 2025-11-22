@@ -27,6 +27,7 @@ machine:
     stableHostname: true
     rbac: true
   files:
+    # Required for Spegel: https://spegel.dev/docs/getting-started/#talos
     - op: create
       path: /etc/cri/conf.d/20-customization.part
       content: |-

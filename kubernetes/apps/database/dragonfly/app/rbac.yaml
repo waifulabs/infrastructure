@@ -25,6 +25,9 @@ rules:
   - apiGroups: ["dragonflydb.io"]
     resources: ["dragonflies/status"]
     verbs: ["get", "patch", "update"]
+  - apiGroups: ["policy"]
+    resources: ["poddisruptionbudgets"]
+    verbs: ["create", "delete", "get", "list", "patch", "update", "watch"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding

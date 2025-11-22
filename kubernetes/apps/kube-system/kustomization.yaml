@@ -8,7 +8,6 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
-
   - ./cilium/ks.yaml
   - ./coredns/ks.yaml
   - ./csi-driver-nfs/ks.yaml
