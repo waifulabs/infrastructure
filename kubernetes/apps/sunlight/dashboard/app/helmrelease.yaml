@@ -19,7 +19,7 @@ spec:
           app:
             image:
               repository: ghcr.io/waifulabs/sunlight-dashboard
-              tag: main@sha256:defb6ccac92f76ab161662183e622e1aaeca4292603a0ee111ce7c6bca1b8f75
+              tag: main@sha256:46180030647af4f590e29aa439d524b15af51803bf9e11f3de50de56e55bb2f2
             envFrom:
               - secretRef:
                   name: dashboard-secret
