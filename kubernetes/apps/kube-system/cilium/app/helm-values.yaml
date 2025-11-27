@@ -38,7 +38,8 @@ kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 loadBalancer:
   algorithm: maglev
   mode: dsr
-localRedirectPolicy: true
+localRedirectPolicies:
+  enabled: true
 operator:
   replicas: 1
   rollOutPods: true
