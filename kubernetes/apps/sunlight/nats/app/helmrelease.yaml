@@ -52,7 +52,7 @@ spec:
       merge:
         metadata:
           annotations:
-            external-dns.alpha.kubernetes.io/target: nats-direct.ok8.sh
+            external-dns.alpha.kubernetes.io/hostname: nats-direct.ok8.sh
         spec:
           type: LoadBalancer
     extraResources:
