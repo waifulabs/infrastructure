@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   - ./backendtrafficpolicy.yaml
   - ./clienttrafficpolicy.yaml
+  - ./robots.yaml
