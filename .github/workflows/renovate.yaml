@@ -63,7 +63,7 @@ jobs:
         env:
           LOG_LEVEL: "${{ inputs.logLevel || 'debug' }}"
           RENOVATE_AUTODISCOVER: true
-          RENOVATE_AUTODISCOVER_FILTER: "${{ github.repository_owner }}"
+          RENOVATE_AUTODISCOVER_FILTER: "${{ github.repository_owner }}/*"
           RENOVATE_DRY_RUN: "${{ inputs.dryRun == true }}"
           RENOVATE_INTERNAL_CHECKS_FILTER: strict
           RENOVATE_PLATFORM: github
