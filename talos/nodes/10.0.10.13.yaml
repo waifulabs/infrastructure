@@ -2,9 +2,9 @@
 machine:
   type: worker
   install:
+    image: factory.talos.dev/metal-installer/f0ab113d5eae93534973ccd6d9b9f51cf28bb043d0ad2a34b66a5cd534f24188:{{ ENV.TALOS_VERSION }}
     diskSelector:
       serial: 2318E6D1E249
-    image: factory.talos.dev/metal-installer/5daa51a8cc1c853d7b79875b7f874bf0076a896348dcf1cf7518c763766b8087:v1.11.5
   network:
     hostname: nyanners
     interfaces:
