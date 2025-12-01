@@ -161,7 +161,7 @@ spec:
           acars-router:
             image:
               repository: ghcr.io/sdr-enthusiasts/acars_router
-              tag: 1.3.1_linux_amd64
+              tag: 1.3.1_linux_arm64
             env:
               TZ: Etc/UTC
               AR_SEND_UDP_ACARS: acars-acars-hub.default.svc.cluster.local:5550;feedthe.acarsdrama.com:5550 #;feed.acars.io:5550
