@@ -38,7 +38,7 @@ spec:
     fullnameOverride: *app
     image:
       repository: ghcr.io/joryirving/smartctl_exporter
-      tag: 0.14.0@sha256:7cb7ef67ff212bbc9e6a2eb60d3893eeb7b0b7fc3ca6cf5940ea1a808ec7c4a4
+      tag: 0.14.0@sha256:adf7b1779a41da3c90ee514da757756e99603065e05e2ca5cbd236b33adb0eed
     config:
       devices:
         - /dev/nvme0n1
