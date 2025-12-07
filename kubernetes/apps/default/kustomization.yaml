@@ -16,7 +16,7 @@ resources:
   - ./immich/ks.yaml
   - ./mosquitto/ks.yaml
   - ./music-assistant/ks.yaml
-  - ./opencloud/ks.yaml
+  #- ./opencloud/ks.yaml
   - ./openspeedtest/ks.yaml
   #- ./rtlamr2mqtt/ks.yaml
   - ./zigbee2mqtt/ks.yaml
