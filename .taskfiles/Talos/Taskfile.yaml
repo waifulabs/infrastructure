@@ -7,12 +7,15 @@ tasks:
     desc: Apply Talos config to a node [NODE=required]
     dotenv: ["{{.TALOS_DIR}}/talos.env"]
     cmd: |-
-      minijinja-cli {{.TALOS_DIR}}/machineconfig.yaml.j2 \
-        | op inject \
-        | talosctl --nodes {{.NODE}} apply-config \
-          --mode {{.MODE}} \
-          --config-patch @{{.TALOS_DIR}}/nodes/{{.NODE}}.yaml \
-          --file /dev/stdin {{if .INSECURE}}--insecure{{end}}--dry-run
+      minijinja-cli "{{.TALOS_DIR}}/machineconfig.yaml.j2" \
+      | op inject \
+      | talosctl --nodes "{{.NODE}}" apply-config \
+          --mode "{{.MODE}}" \
+          --config-patch @<(minijinja-cli "{{.TALOS_DIR}}/nodes/{{.NODE}}.yaml") \
+          --config-patch @"{{.TALOS_DIR}}/patches/logging.yaml" \
+          --file /dev/stdin \
+          {{if .INSECURE}}--insecure{{end}}
+
     vars:
       MODE: '{{.MODE | default "auto"}}'
       INSECURE:

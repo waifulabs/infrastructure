@@ -2,26 +2,18 @@
 machine:
   type: worker
   install:
-    image: factory.talos.dev/metal-installer/f0ab113d5eae93534973ccd6d9b9f51cf28bb043d0ad2a34b66a5cd534f24188:{{ ENV.TALOS_VERSION }}
+    image: factory.talos.dev/metal-installer/523a9681bdc9722734e5ea7c44f8bf35e250376ef71b14114c59572fffa2dddd:{{ ENV.TALOS_VERSION }}
     diskSelector:
-      serial: 2318E6D1E249
+      serial: 50026B7382F40A20
   network:
     hostname: nyanners
     interfaces:
-      - interface: bond0
-        bond:
-          deviceSelectors:
-            - hardwareAddr: 58:47:ca:76:19:1b
-              driver: i40e
-              physical: true
-          mode: active-backup
+      - deviceSelector:
+          hardwareAddr: 38:05:25:34:16:06
+          physical: true
+          driver: r8127
         dhcp: true
-        mtu: 9000
-        vip:
-          ip: 10.0.10.2
-        vlans:
-          - # IOT
-            vlanId: 30
-            dhcp: false
-            mtu: 9000
-  nodeTaints: ["kubernetes.io/arch=arm64:NoSchedule"]
+  sysctls:
+    kernel.kexec_load_disabled: "1"
+  nodeTaints:
+    kubernetes.io/arch: "arm64:NoSchedule"
