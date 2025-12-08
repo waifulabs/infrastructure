@@ -27,7 +27,7 @@ spec:
           app:
             image:
               repository: intel/intel-gpu-plugin
-              tag: 0.34.0
+              tag: 0.34.1
             env:
               NODE_NAME:
                 valueFrom:
