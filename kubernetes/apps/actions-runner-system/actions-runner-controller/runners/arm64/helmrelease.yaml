@@ -49,11 +49,14 @@ spec:
                 readOnly: true
         nodeSelector:
           kubernetes.io/arch: arm64
-        tolerations:
-          - key: "kubernetes.io/arch"
-            operator: "Equal"
-            value: "arm64"
-            effect: "NoExecute"
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: kubernetes.io/arch
+                      operator: In
+                      values: [arm64]
         serviceAccountName: *name
         volumes:
           - name: talos
