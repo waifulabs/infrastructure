@@ -53,7 +53,7 @@ spec:
           - key: "kubernetes.io/arch"
             operator: "Equal"
             value: "arm64"
-            effect: "NoSchedule"
+            effect: "NoExecute"
         serviceAccountName: *name
         volumes:
           - name: talos
