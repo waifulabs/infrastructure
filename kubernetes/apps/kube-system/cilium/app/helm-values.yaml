@@ -20,7 +20,6 @@ cni:
 cluster:
   id: 1
   name: main
-devices: bond+
 enableIPv4BIGTCP: true
 endpointRoutes:
   enabled: true

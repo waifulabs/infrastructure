@@ -183,8 +183,3 @@ configFiles:
       MONITOR 10.0.10.3 1 slaveuser "op://Kubernetes/nut/NUT_PASSWORD" slave
       SHUTDOWNCMD "/sbin/poweroff"
     mountPath: /usr/local/etc/nut/upsmon.conf
----
-apiVersion: v1alpha1
-kind: KmsgLogConfig
-name: remote-log
-url: tcp://10.0.10.10:5140

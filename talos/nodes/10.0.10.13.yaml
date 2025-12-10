@@ -2,18 +2,15 @@
 machine:
   type: worker
   install:
-    image: factory.talos.dev/metal-installer/523a9681bdc9722734e5ea7c44f8bf35e250376ef71b14114c59572fffa2dddd:{{ ENV.TALOS_VERSION }}
+    image: factory.talos.dev/metal-installer/523a9681bdc9722734e5ea7c44f8bf35e250376ef71b14114c59572fffa2dddd:v1.12.0-rc.0
     diskSelector:
       serial: 50026B7382F40A20
   network:
     hostname: nyanners
     interfaces:
       - deviceSelector:
-          hardwareAddr: 38:05:25:34:16:06
+          hardwareAddr: 38:05:25:34:16:05
           physical: true
-          driver: r8127
         dhcp: true
   sysctls:
     kernel.kexec_load_disabled: "1"
-  nodeTaints:
-    kubernetes.io/arch: "arm64:NoSchedule"
