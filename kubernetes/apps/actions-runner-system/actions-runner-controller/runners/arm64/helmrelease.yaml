@@ -43,10 +43,6 @@ spec:
                 valueFrom:
                   fieldRef:
                     fieldPath: status.hostIP
-            volumeMounts:
-              - mountPath: /var/run/secrets/talos.dev
-                name: talos
-                readOnly: true
         nodeSelector:
           kubernetes.io/arch: arm64
         tolerations:
