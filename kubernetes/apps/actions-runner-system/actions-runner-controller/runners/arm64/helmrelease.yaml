@@ -55,7 +55,3 @@ spec:
             value: "arm64"
             effect: "NoSchedule"
         serviceAccountName: *name
-        volumes:
-          - name: talos
-            secret:
-              secretName: *name
