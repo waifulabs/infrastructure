@@ -40,7 +40,7 @@ loadBalancer:
 localRedirectPolicies:
   enabled: true
 operator:
-  replicas: 1
+  replicas: 2
   rollOutPods: true
 pmtuDiscovery:
   enabled: true
