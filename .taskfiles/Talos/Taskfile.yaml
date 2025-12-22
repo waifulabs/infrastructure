@@ -13,7 +13,7 @@ tasks:
           --mode "{{.MODE}}" \
           --config-patch @<(minijinja-cli "{{.TALOS_DIR}}/nodes/{{.NODE}}.yaml") \
           --file /dev/stdin \
-          {{if .INSECURE}}--insecure{{end}} --dry-run
+          {{if .INSECURE}}--insecure{{end}}
 
     vars:
       MODE: '{{.MODE | default "auto"}}'
