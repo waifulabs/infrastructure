@@ -21,7 +21,3 @@ selector:
 apiVersion: v1alpha1
 kind: DHCPv4Config
 name: net0
----
-apiVersion: v1alpha1
-kind: DHCPv6Config
-name: net0
