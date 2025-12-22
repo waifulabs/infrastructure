@@ -1,5 +1,0 @@
----
-apiVersion: v1alpha1
-kind: KmsgLogConfig
-name: remote-log
-url: tcp://10.0.10.56:5140

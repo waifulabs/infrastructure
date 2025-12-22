@@ -12,9 +12,8 @@ tasks:
       | talosctl --nodes "{{.NODE}}" apply-config \
           --mode "{{.MODE}}" \
           --config-patch @<(minijinja-cli "{{.TALOS_DIR}}/nodes/{{.NODE}}.yaml") \
-          --config-patch @"{{.TALOS_DIR}}/patches/logging.yaml" \
           --file /dev/stdin \
-          {{if .INSECURE}}--insecure{{end}}
+          {{if .INSECURE}}--insecure{{end}} --dry-run
 
     vars:
       MODE: '{{.MODE | default "auto"}}'

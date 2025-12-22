@@ -5,12 +5,23 @@ machine:
     image: factory.talos.dev/metal-installer/523a9681bdc9722734e5ea7c44f8bf35e250376ef71b14114c59572fffa2dddd:v1.12.0-rc.0
     diskSelector:
       serial: 50026B7382F40A20
-  network:
-    hostname: nyanners
-    interfaces:
-      - deviceSelector:
-          hardwareAddr: 38:05:25:34:16:05
-          physical: true
-        dhcp: true
   sysctls:
     kernel.kexec_load_disabled: "1"
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: nyanners
+---
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: net0
+selector:
+  match: mac(link.permanent_addr) == "38:05:25:34:16:05"
+---
+apiVersion: v1alpha1
+kind: DHCPv4Config
+name: net0
+---
+apiVersion: v1alpha1
+kind: DHCPv6Config
+name: net0

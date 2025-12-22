@@ -23,7 +23,6 @@ machine:
       allowedRoles: ["os:admin"]
       allowedKubernetesNamespaces: ["actions-runner-system", "system-upgrade"]
     {% endif %}
-    stableHostname: true
   files:
     # Required for Spegel: https://spegel.dev/docs/getting-started/#talos
     - op: create
@@ -53,9 +52,6 @@ machine:
         options: ["bind", "rshared", "rw"]
     nodeIP:
       validSubnets: ["10.0.10.0/24"]
-  network:
-    nameservers: ["10.0.10.1"]
-    disableSearchDomain: true
   nodeLabels:
     topology.kubernetes.io/zone: {{ ENV.MACHINE_TYPE }}
   {% if ENV.MACHINE_TYPE == 'controlplane' %}
@@ -171,6 +167,20 @@ cluster:
   serviceAccount:
     key: op://Kubernetes/talos/CERTS_KUBERNETES_SERVICEACCOUNT_KEY
   {% endif %}
+---
+apiVersion: v1alpha1
+kind: ResolverConfig
+nameservers:
+  - address: 10.0.10.1
+searchDomains:
+  disableDefault: true
+---
+apiVersion: v1alpha1
+kind: TimeSyncConfig
+ntp:
+  servers:
+    - pool.ntp.org
+    - time.cloudflare.com
 ---
 apiVersion: v1alpha1
 kind: ExtensionServiceConfig
