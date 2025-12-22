@@ -64,8 +64,8 @@ kind: LinkConfig
 name: shylily
 up: true
 mtu: 65520
-addresses: [{ address: 169.254.254.10/32, routePriority: 2048}]
-routes: [{ destination: 169.254.254.12/32 }]
+addresses: [{ address: 169.254.254.10/32 }]
+routes: [{ destination: 169.254.254.12/32, metric: 2048 }]
 ---
 apiVersion: v1alpha1
 kind: LinkAliasConfig
@@ -78,8 +78,8 @@ kind: LinkConfig
 name: maomao
 up: true
 mtu: 65520
-addresses: [{ address: 169.254.254.10/32, routePriority: 2048}]
-routes: [{ destination: 169.254.254.11/32 }]
+addresses: [{ address: 169.254.254.10/32 }]
+routes: [{ destination: 169.254.254.11/32, metric: 2048 }]
 ---
 apiVersion: v1alpha1
 kind: Layer2VIPConfig
