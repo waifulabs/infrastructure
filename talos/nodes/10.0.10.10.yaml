@@ -23,7 +23,7 @@ selector:
 ---
 apiVersion: v1alpha1
 kind: EthernetConfig
-name: net0
+name: enp2s0f0np0
 rings:
   rx: 8160
   tx: 8160
@@ -44,10 +44,6 @@ up: true
 ---
 apiVersion: v1alpha1
 kind: DHCPv4Config
-name: bond0
----
-apiVersion: v1alpha1
-kind: DHCPv6Config
 name: bond0
 ---
 apiVersion: v1alpha1
@@ -84,3 +80,8 @@ up: true
 mtu: 65520
 addresses: [{ address: 169.254.254.10/32, routePriority: 2048}]
 routes: [{ destination: 169.254.254.11/32 }]
+---
+apiVersion: v1alpha1
+kind: Layer2VIPConfig
+name: 10.0.20.2
+link: net0
