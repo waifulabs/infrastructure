@@ -9,7 +9,6 @@ machine:
     key: op://Kubernetes/talos/CERTS_OS_KEY
     {% endif %}
   features:
-    apidCheckExtKeyUsage: true
     diskQuotaSupport: true
     hostDNS:
       enabled: true
@@ -25,7 +24,6 @@ machine:
       allowedKubernetesNamespaces: ["actions-runner-system", "system-upgrade"]
     {% endif %}
     stableHostname: true
-    rbac: true
   files:
     # Required for Spegel: https://spegel.dev/docs/getting-started/#talos
     - op: create
@@ -145,7 +143,6 @@ cluster:
       enable-aggregator-routing: true
       feature-gates: MutatingAdmissionPolicy=true
       runtime-config: admissionregistration.k8s.io/v1beta1=true
-    disablePodSecurityPolicy: true
     auditPolicy:
       apiVersion: audit.k8s.io/v1
       kind: Policy
