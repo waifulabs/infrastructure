@@ -8,7 +8,7 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
-  - ./acars/ks.yaml
+  #- ./acars/ks.yaml
   - ./bitfocus/ks.yaml
   - ./glance/ks.yaml
   - ./govee2mqtt/ks.yaml
