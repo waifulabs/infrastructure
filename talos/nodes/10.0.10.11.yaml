@@ -80,8 +80,3 @@ up: true
 mtu: 65520
 addresses: [{ address: 169.254.254.11/32 }]
 routes: [{ destination: 169.254.254.10/32, metric: 2048  }]
----
-apiVersion: v1alpha1
-kind: Layer2VIPConfig
-name: 10.0.20.2
-link: net0
