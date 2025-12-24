@@ -6,7 +6,6 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ./prometheusrule.yaml
-  - ./ingress.yaml
   - ./httproute.yaml
   - ./receiver.yaml
   - ./podmonitor.yaml
