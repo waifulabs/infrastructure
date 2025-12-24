@@ -9,6 +9,7 @@ resources:
   - ./ingress.yaml
   - ./httproute.yaml
   - ./receiver.yaml
+  - ./podmonitor.yaml
 configMapGenerator:
   - name: flux-instance-helm-values
     files:
