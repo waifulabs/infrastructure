@@ -41,7 +41,11 @@ apiVersion: v1alpha1
 kind: LinkConfig
 name: ipmi
 up: true
-addresses: []
+---
+apiVersion: v1alpha1
+kind: DHCPv4Config
+name: ipmi
+routeMetric: 4096
 ---
 apiVersion: v1alpha1
 kind: BondConfig
