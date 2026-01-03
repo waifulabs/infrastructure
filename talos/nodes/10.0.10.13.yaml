@@ -2,7 +2,7 @@
 machine:
   type: worker
   install:
-    image: factory.talos.dev/metal-installer/523a9681bdc9722734e5ea7c44f8bf35e250376ef71b14114c59572fffa2dddd:v1.12.0-rc.0
+    image: factory.talos.dev/metal-installer/523a9681bdc9722734e5ea7c44f8bf35e250376ef71b14114c59572fffa2dddd:{{ ENV.TALOS_VERSION }}
     diskSelector:
       serial: 50026B7382F40A20
   sysctls:
