@@ -14,9 +14,17 @@ hostname: nyanners
 ---
 apiVersion: v1alpha1
 kind: LinkAliasConfig
-name: bond0 # This machine doesn't support bonding interfaces quite yet.
+name: net0 # This machine doesn't support bonding interfaces quite yet.
 selector:
   match: mac(link.permanent_addr) == "38:05:25:34:16:05"
+---
+apiVersion: v1alpha1
+kind: BondConfig
+name: bond0
+links: [net0]
+bondMode: active-backup
+mtu: 9000
+up: true
 ---
 apiVersion: v1alpha1
 kind: DHCPv4Config
