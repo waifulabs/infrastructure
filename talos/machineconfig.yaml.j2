@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.12/website/content/v1.12/schemas/v1alpha1_config.schema.json
 version: v1alpha1
 debug: false
 persist: true
@@ -168,6 +169,7 @@ cluster:
     key: op://Kubernetes/talos/CERTS_KUBERNETES_SERVICEACCOUNT_KEY
   {% endif %}
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.12/website/content/v1.12/schemas/config.schema.json
 apiVersion: v1alpha1
 kind: ResolverConfig
 nameservers:
@@ -175,6 +177,7 @@ nameservers:
 searchDomains:
   disableDefault: true
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.12/website/content/v1.12/schemas/config.schema.json
 apiVersion: v1alpha1
 kind: TimeSyncConfig
 ntp:
@@ -182,6 +185,7 @@ ntp:
     - pool.ntp.org
     - time.cloudflare.com
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.12/website/content/v1.12/schemas/config.schema.json
 apiVersion: v1alpha1
 kind: ExtensionServiceConfig
 name: nut-client
