@@ -1,0 +1,51 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: android-13
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: android-13
+  values:
+    controllers:
+      android-13:
+        replicas: 0
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: redroid/redroid
+              tag: 13.0.0-latest
+            env:
+              TZ: America/Los_Angeles
+            securityContext:
+              privileged: true
+            resources:
+              requests:
+                cpu: 500m
+                memory: 2Gi
+              limits:
+                memory: 4Gi
+    defaultPodOptions:
+      nodeSelector:
+        kubernetes.io/arch: arm64
+      tolerations:
+        - key: "kubernetes.io/arch"
+          operator: "Equal"
+          value: "arm64"
+          effect: "NoSchedule"
+    service:
+      app:
+        controller: android-13
+        annotations:
+          tailscale.com/expose: "true"
+          tailscale.com/hostname: redroid-android-13
+        type: ClusterIP
+        ports:
+          adb:
+            port: 5555
+            protocol: TCP
