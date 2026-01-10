@@ -7,4 +7,6 @@ components:
   - ../../components/namespace
 replacements:
   - path: ../../components/replacements/ks.yaml
-resources: []
+resources:
+  - ./android-11/ks.yaml
+  - ./android-13/ks.yaml
