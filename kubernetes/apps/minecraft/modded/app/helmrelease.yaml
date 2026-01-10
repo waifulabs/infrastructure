@@ -39,6 +39,7 @@ spec:
               MAX_PLAYERS: 40
               KEEP_INVENTORY: true
               ENABLE_ROLLING_LOGS: true
+              GENERATE_LOG4J2_CONFIG: "true"
               ALLOW_FLIGHT: true
               INIT_MEMORY: 1G
               MAX_MEMORY: &max-memory 12G

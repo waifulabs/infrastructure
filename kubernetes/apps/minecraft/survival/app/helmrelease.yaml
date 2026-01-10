@@ -28,6 +28,7 @@ spec:
       MAX_MEMORY: *memory-limit
       SEED: "8485994731059868771"
       DISABLE_HEALTHCHECK: "true"
+      GENERATE_LOG4J2_CONFIG: "true"
     minecraftServer:
       eula: true
       version: 1.21.8
