@@ -41,7 +41,10 @@ spec:
     service:
       app:
         controller: android-13
-        type: LoadBalancer
+        annotations:
+          tailscale.com/expose: "true"
+          tailscale.com/hostname: redroid-android-13
+        type: ClusterIP
         ports:
           adb:
             port: 5555
