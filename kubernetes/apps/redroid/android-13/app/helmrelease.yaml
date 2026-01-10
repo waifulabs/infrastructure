@@ -19,7 +19,7 @@ spec:
           app:
             image:
               repository: redroid/redroid
-              tag: 13.0.0-latest
+              tag: 16.0.0-latest
             env:
               TZ: America/Los_Angeles
             securityContext:
