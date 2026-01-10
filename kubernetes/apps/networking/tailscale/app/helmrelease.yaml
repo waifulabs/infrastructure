@@ -29,8 +29,12 @@ spec:
     operatorConfig:
       hostname: "tailscale-operator"
       nodeSelector:
-        kubernetes.io/os: linux
         kubernetes.io/arch: arm64
+      tolerations:
+        - key: "kubernetes.io/arch"
+          operator: "Equal"
+          value: "arm64"
+          effect: "NoSchedule"
     apiServerProxyConfig:
       mode: "true"
     ingressClass:
