@@ -129,7 +129,7 @@ spec:
                   value: /.well-known/matrix/
     persistence:
       data:
-        existingClaim: continuwuity-data
+        existingClaim: continuwuity
         globalMounts:
           - path: *data
       extra:
