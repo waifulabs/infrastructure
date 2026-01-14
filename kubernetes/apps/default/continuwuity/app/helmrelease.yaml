@@ -135,9 +135,9 @@ spec:
       extra:
         type: nfs
         server: fran.outsideour.casa
-        path: /mnt/loki/kubernetes/matrix
+        path: /mnt/loki/kubernetes
         globalMounts:
           - path: /data/media
-            subPath: media
+            subPath: matrix/media
           - path: *backup
-            subPath: backups
+            subPath: matrix/backups
