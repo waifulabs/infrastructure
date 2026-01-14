@@ -64,7 +64,7 @@ spec:
                     name: continuwuity-secret
                     key: CONDUWUIT_EMERGENCY_PASSWORD
               # tinfoil & personal preferences
-              CONDUWUIT_PROXY__GLOBAL__URL: socks5h://10.124.0.102:1080
+              #CONDUWUIT_PROXY__GLOBAL__URL: socks5h://10.124.0.102:1080
               CONDUWUIT_ALLOW_OUTGOING_READ_RECEIPTS: false
               CONDUWUIT_ALLOW_ANNOUNCEMENTS_CHECK: false
               CONDUWUIT_SUSPEND_ON_REGISTER: true
