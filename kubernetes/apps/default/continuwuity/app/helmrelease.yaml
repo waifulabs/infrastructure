@@ -123,7 +123,10 @@ spec:
         hostnames: ["ok8.sh"]
         parentRefs: *envoyParents
         rules:
-          - matches:
+          - backendRefs:
+             - name: *app
+               port: *http
+            matches:
               - path:
                   type: PathPrefix
                   value: /.well-known/matrix/
