@@ -52,12 +52,12 @@ spec:
               CONDUWUIT_REGISTRATION_TOKEN:
                 valueFrom:
                   secretKeyRef:
-                    name: continuwuity-secrets
+                    name: continuwuity-secret
                     key: CONDUWUIT_REGISTRATION_TOKEN
               CONDUWUIT_EMERGENCY_PASSWORD:
                 valueFrom:
                   secretKeyRef:
-                    name: continuwuity-secrets
+                    name: continuwuity-secret
                     key: CONDUWUIT_EMERGENCY_PASSWORD
               # tinfoil & personal preferences
               CONDUWUIT_PROXY__GLOBAL__URL: socks5h://10.124.0.102:1080
@@ -80,7 +80,7 @@ spec:
                 ["matrix.org"]
             envFrom:
               - secretRef:
-                  name: continuwuity-secrets
+                  name: continuwuity-secret
             securityContext:
               readOnlyRootFilesystem: true
               allowPrivilegeEscalation: false
