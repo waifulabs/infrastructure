@@ -1,0 +1,14 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/externaldns.k8s.io/dnsendpoint_v1alpha1.json
+apiVersion: externaldns.k8s.io/v1alpha1
+kind: DNSEndpoint
+metadata:
+  name: coturn
+spec:
+  endpoints:
+    - dnsName: turn.ok8.sh
+      recordType: CNAME
+      targets: ["ipv4.ok8.sh"]
+      providerSpecific:
+        - name: external-dns.alpha.kubernetes.io/cloudflare-proxied
+          value: 'false'
