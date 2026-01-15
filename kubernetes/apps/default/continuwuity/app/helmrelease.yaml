@@ -20,7 +20,7 @@ spec:
             value: "1"
       securityContext:
         runAsNonRoot: true
-        runAsUser: &uid 65534
+        runAsUser: &uid 1000
         runAsGroup: *uid
         fsGroup: *uid
         fsGroupChangePolicy: Always
