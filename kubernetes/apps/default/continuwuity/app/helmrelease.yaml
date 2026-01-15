@@ -58,11 +58,11 @@ spec:
                   secretKeyRef:
                     name: continuwuity-secret
                     key: CONDUWUIT_REGISTRATION_TOKEN
-              CONDUWUIT_EMERGENCY_PASSWORD:
-                valueFrom:
-                  secretKeyRef:
-                    name: continuwuity-secret
-                    key: CONDUWUIT_EMERGENCY_PASSWORD
+              #CONDUWUIT_EMERGENCY_PASSWORD:
+              #  valueFrom:
+              #    secretKeyRef:
+              #      name: continuwuity-secret
+              #      key: CONDUWUIT_EMERGENCY_PASSWORD
               # tinfoil & personal preferences
               #CONDUWUIT_PROXY__GLOBAL__URL: socks5h://10.124.0.102:1080
               #CONDUWUIT_ALLOW_OUTGOING_READ_RECEIPTS: false
@@ -82,13 +82,13 @@ spec:
                 ["matrix.org"]
               CONDUWUIT_URL_PREVIEW_DOMAIN_EXPLICIT_DENYLIST: |
                 ["matrix.org"]
-              CONDUWUIT_TURN_SECRET:
-                valueFrom:
-                  secretKeyRef:
-                    name: continuwuity-secret
-                    key: CONDUWUIT_TURN_SECRET
-              CONDUWUIT_TURN_URIS: |
-                ["turns:turn.ok8.sh:5349?transport=tcp","turn:turn.ok8.sh:3478?transport=udp","turn:turn.ok8.sh:3478?transport=tcp"]
+              #CONDUWUIT_TURN_SECRET:
+              #  valueFrom:
+              #    secretKeyRef:
+              #      name: continuwuity-secret
+              #      key: CONDUWUIT_TURN_SECRET
+              #CONDUWUIT_TURN_URIS: |
+              #  ["turns:turn.ok8.sh:5349?transport=tcp","turn:turn.ok8.sh:3478?transport=udp","turn:turn.ok8.sh:3478?transport=tcp"]
             envFrom:
               - secretRef:
                   name: continuwuity-secret
