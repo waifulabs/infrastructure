@@ -8,6 +8,6 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
-  - ./modded/ks.yaml
+  - ./hytale/ks.yaml
   - ./router/ks.yaml
   - ./survival/ks.yaml

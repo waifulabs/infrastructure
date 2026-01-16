@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app modded
+  name: &app hytale
   namespace: &namespace minecraft
 spec:
   targetNamespace: *namespace
@@ -17,7 +17,7 @@ spec:
       namespace: external-secrets
     - name: rook-ceph-cluster
       namespace: rook-ceph
-  path: ./kubernetes/apps/minecraft/modded/app
+  path: ./kubernetes/apps/minecraft/hytale/app
   postBuild:
     substitute:
       APP: *app

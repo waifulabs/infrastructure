@@ -1,0 +1,78 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app hytale
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: hytale
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      minecraft:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          hytale:
+            image:
+              repository: indifferentbroccoli/hytale-server-docker
+              tag: 2026.1.1-java21
+            env:
+              PUID: &puid 568
+              PGID: &pgid 568
+              DEFAULT_PORT: &port 5520
+              SERVER_NAME: "Hytale - ok8sh"
+              MAX_PLAYERS: 20
+              VIEW_DISTANCE: 12
+              AUTH_MODE: authenticated
+              ENABLE_BACKUPS: "false"
+              BACKUP_FREQUENCY: 60
+              BACKUP_DIR: &backup-dir /backups
+              DISABLE_SENTRY: "true"
+              USE_AOT_CACHE: "true"
+              ACCEPT_EARLY_PLUGINS: "false"
+              MIN_MEMORY: 4G
+              MAX_MEMORY: &max-memory 8G
+              JVM_ARGS: ""
+              DOWNLOAD_ON_START: "true"
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 2
+                memory: *max-memory
+        pod:
+          securityContext:
+            runAsUser: *puid
+            runAsGroup: *pgid
+            runAsNonRoot: true
+            fsGroup: *pgid
+            fsGroupChangePolicy: OnRootMismatch
+    service:
+      hytale:
+        controller: minecraft
+        annotations:
+          mc-router.itzg.me/externalServerName: "hytale.ok8.sh"
+        ports:
+          game:
+           protocol: UDP
+           port: *port
+    persistence:
+      tmp:
+        type: emptyDir
+      data:
+        existingClaim: *app
+        globalMounts:
+          - path: /home/hytale/server-files
