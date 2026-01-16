@@ -75,4 +75,4 @@ spec:
       data:
         existingClaim: *app
         globalMounts:
-          - path: /home/hytale/server-files
+          - path: /home/hytale
