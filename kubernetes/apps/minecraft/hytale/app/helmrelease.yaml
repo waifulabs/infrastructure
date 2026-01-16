@@ -46,7 +46,7 @@ spec:
               JVM_ARGS: ""
               DOWNLOAD_ON_START: "true"
             securityContext:
-              allowPrivilegeEscalation: false
+              allowPrivilegeEscalation: true
               readOnlyRootFilesystem: false
               capabilities: { drop: ["ALL"] }
             resources:
