@@ -57,7 +57,7 @@ spec:
           securityContext:
             runAsUser: *puid
             runAsGroup: *pgid
-            runAsNonRoot: true
+            runAsNonRoot: false
             fsGroup: *pgid
             fsGroupChangePolicy: OnRootMismatch
     service:
