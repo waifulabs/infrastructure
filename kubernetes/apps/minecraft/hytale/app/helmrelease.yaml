@@ -26,7 +26,7 @@ spec:
           hytale:
             image:
               repository: indifferentbroccoli/hytale-server-docker
-              tag: 2026.1.1-java21
+              tag: v1.0.4@sha256:b42e4858f512714c84ebd6bf6812fcf2f65b17d2bc8877b1f239a7953e1bc2f6
             env:
               PUID: &puid 568
               PGID: &pgid 568
