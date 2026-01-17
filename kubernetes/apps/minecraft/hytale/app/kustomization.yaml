@@ -5,3 +5,10 @@ kind: Kustomization
 resources:
   - ./ocirepository.yaml
   - ./helmrelease.yaml
+configMapGenerator:
+  - name: hytale-configmap
+    files:
+      - ./resources/bans.json
+      - ./resources/machine-id
+generatorOptions:
+  disableNameSuffixHash: true

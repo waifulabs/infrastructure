@@ -54,7 +54,7 @@ spec:
               capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 4
+                cpu: 2
                 memory: 8Gi
               limits:
                 memory: 12Gi
@@ -71,7 +71,7 @@ spec:
     persistence:
       bans-json:
         type: configMap
-        name: "{{ .Release.Name }}-server-configs"
+        name: "{{ .Release.Name }}-configmap"
         advancedMounts:
           hytale:
             app:
@@ -80,7 +80,7 @@ spec:
                 readOnly: true
       machine-id:
         type: configMap
-        name: "{{ .Release.Name }}-server-configs"
+        name: "{{ .Release.Name }}-configmap"
         advancedMounts:
           hytale:
             app:
