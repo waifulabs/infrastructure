@@ -48,10 +48,6 @@ spec:
                 -XX:InitiatingHeapOccupancyPercent=15 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem
                 -XX:MaxTenuringThreshold=1 -XX:+UseCompactObjectHeaders -Djava.net.preferIPv4Stack=true
                 -Dfile.encoding=UTF-8
-            securityContext:
-              allowPrivilegeEscalation: true
-              readOnlyRootFilesystem: false
-              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 2
