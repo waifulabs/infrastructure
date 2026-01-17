@@ -63,7 +63,7 @@ spec:
         controller: hytale
         type: LoadBalancer
         annotations:
-          mc-router.itzg.me/externalServerName: "hytale.ok8.sh"
+           external-dns.alpha.kubernetes.io/hostname: hytale.ok8.sh
         ports:
           game:
            protocol: UDP
