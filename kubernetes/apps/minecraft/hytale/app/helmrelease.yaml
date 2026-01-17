@@ -21,9 +21,9 @@ spec:
       hytale:
         annotations:
           reloader.stakater.com/auto: "true"
-          type: statefulset
-          replicas: 1
-          strategy: RollingUpdate
+        type: statefulset
+        replicas: 1
+        strategy: RollingUpdate
         containers:
           hytale:
             stdin: true
