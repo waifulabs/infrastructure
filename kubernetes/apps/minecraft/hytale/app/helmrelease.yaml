@@ -78,7 +78,7 @@ spec:
         name: "{{ .Release.Name }}-configmap"
         advancedMounts:
           hytale:
-            app:
+            hytale:
               - path: /home/container/bans.json
                 subPath: bans.json
                 readOnly: true
@@ -87,7 +87,7 @@ spec:
         name: "{{ .Release.Name }}-configmap"
         advancedMounts:
           hytale:
-            app:
+            hytale:
               - path: /etc/machine-id
                 subPath: machine-id
                 readOnly: true
