@@ -8,3 +8,6 @@ spec:
     - dnsName: "hytale.ok8.sh"
       recordType: CNAME
       targets: ["ipv4.ok8.sh"]
+      providerSpecific:
+        - name: external-dns.alpha.kubernetes.io/cloudflare-proxied
+          value: "false"
