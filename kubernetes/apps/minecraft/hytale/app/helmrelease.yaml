@@ -69,6 +69,10 @@ spec:
            protocol: UDP
            port: *udpPort
     persistence:
+      data:
+        existingClaim: "{{ .Release.Name }}"
+        globalMounts:
+          - path: /home/container
       bans-json:
         type: configMap
         name: "{{ .Release.Name }}-configmap"
@@ -87,7 +91,3 @@ spec:
               - path: /etc/machine-id
                 subPath: machine-id
                 readOnly: true
-      data:
-        existingClaim: "{{ .Release.Name }}"
-        globalMounts:
-          - path: /home/container
