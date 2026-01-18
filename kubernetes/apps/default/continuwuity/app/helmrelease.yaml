@@ -54,6 +54,9 @@ spec:
               CONDUWUIT_ALLOW_FEDERATION: true
               CONDUWUIT_CONFIG_RELOAD_SIGNAL: true
               CONDUWUIT_ALLOW_REGISTRATION: true
+              # CoreDNS Settings
+              CONDUWUIT_QUERY_OVER_TCP_ONLY: true
+              CONDUWUIT_IP_LOOKUP_STRATEGY: "1"
               # JJ's personal settings
               #CONDUWUIT_ALLOW_OUTGOING_READ_RECEIPTS: false
               CONDUWUIT_ALLOW_ANNOUNCEMENTS_CHECK: false
@@ -65,7 +68,6 @@ spec:
               CONDUWUIT_LOCKDOWN_PUBLIC_ROOM_DIRECTORY: true
               CONDUWUIT_QUERY_TRUSTED_KEY_SERVERS_FIRST: false
               CONDUWUIT_QUERY_TRUSTED_KEY_SERVERS_FIRST_ON_JOIN: false
-              CONDUWUIT_QUERY_OVER_TCP_ONLY: true
               CONDUWUIT_ALLOW_LEGACY_MEDIA: false # unauthenticated
               CONDUWUIT_FORBIDDEN_REMOTE_SERVER_NAMES: |
                 ["matrix.org"]
