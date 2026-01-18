@@ -49,6 +49,7 @@ spec:
               CONDUWUIT_NEW_USER_DISPLAYNAME_SUFFIX: ""
               CONDUWUIT_WELL_KNOWN__CLIENT: "https://matrix.ok8.sh"
               CONDUWUIT_WELL_KNOWN__SERVER: "federation.ok8.sh:443"
+              CONDUWUIT_WELL_KNOWN__SUPPORT_EMAIL: "uwu@svcs.ok8.sh"
               CONDUWUIT_ALLOW_ENCRYPTION: true
               CONDUWUIT_ALLOW_FEDERATION: true
               CONDUWUIT_CONFIG_RELOAD_SIGNAL: true
@@ -72,7 +73,6 @@ spec:
                 ["matrix.org"]
               CONDUWUIT_URL_PREVIEW_DOMAIN_EXPLICIT_DENYLIST: |
                 ["matrix.org"]
-              CONDUWUIT_SUPPORT_EMAIL: "uwu@svcs.ok8.sh"
               #CONDUWUIT_TURN_URIS: |
               #  ["turns:turn.ok8.sh:5349?transport=tcp","turn:turn.ok8.sh:3478?transport=udp","turn:turn.ok8.sh:3478?transport=tcp"]
             envFrom:
