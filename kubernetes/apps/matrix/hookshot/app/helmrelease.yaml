@@ -79,9 +79,7 @@ spec:
       tmp:
         type: emptyDir
       data:
-        existingClaim: continuwuity
-        globalMounts:
-          - path: *data
+        existingClaim: "{{ .Release.Name }}"
       config:
         type: secret
         name: "{{ .Release.Name }}-secret"
