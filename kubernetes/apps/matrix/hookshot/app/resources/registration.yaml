@@ -1,0 +1,26 @@
+---
+id: hookshot
+url: http://hookshot.matrix.svc.cluster.local:9993
+as_token: {{ .hookshot_as_token }}
+hs_token: {{ .hookshot_hs_token }}
+sender_localpart: hookshot
+rate_limited: false
+namespaces:
+  rooms: []
+  users:
+    - regex: "@_github_.*:ok8.sh"
+      exclusive: true
+    - regex: "@_gitlab_.*:ok8.sh"
+      exclusive: true
+    - regex: "@_jira_.*:ok8.sh"
+      exclusive: true
+    - regex: "@_webhooks_.*:ok8.sh" # Where _webhooks_ is set by userIdPrefix in config.yml
+      exclusive: true
+    - regex: "@feeds:ok8.sh" # Matches the localpart of all serviceBots in config.yml
+      exclusive: true
+  aliases:
+    - regex: "#github_.+:ok8.sh"
+      exclusive: true
+de.sorunome.msc2409.push_ephemeral: true
+push_ephemeral: true
+org.matrix.msc3202: true
