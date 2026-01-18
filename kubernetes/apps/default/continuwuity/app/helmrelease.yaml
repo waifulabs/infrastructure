@@ -72,6 +72,7 @@ spec:
                 ["matrix.org"]
               CONDUWUIT_URL_PREVIEW_DOMAIN_EXPLICIT_DENYLIST: |
                 ["matrix.org"]
+              CONDUWUIT_SUPPORT_EMAIL: "uwu@svcs.ok8.sh"
               #CONDUWUIT_TURN_URIS: |
               #  ["turns:turn.ok8.sh:5349?transport=tcp","turn:turn.ok8.sh:3478?transport=udp","turn:turn.ok8.sh:3478?transport=tcp"]
             envFrom:
