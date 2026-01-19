@@ -152,6 +152,8 @@ metrics:
   # (Optional) Prometheus metrics support
   enabled: true
 
+cache:
+  redisUri: redis://dragonfly.matrix.svc.cluster.local:6379
 encryption:
   storagePath: /encryption
 
