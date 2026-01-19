@@ -8,4 +8,5 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
+  - ./dragonfly/ks.yaml
   - ./hookshot/ks.yaml
