@@ -2,7 +2,8 @@
 bridge:
   # Basic homeserver configuration
   domain: ok8.sh
-  url: https://matrix.ok8.sh
+  url: https://continuwuity.default.svc.cluster.local:8080
+  mediaUrl: https://matrix.ok8.sh
   port: 9993
   bindAddress: 0.0.0.0
 logging:
@@ -32,18 +33,6 @@ listeners:
     bindAddress: 0.0.0.0
     resources:
       - widgets
-
-#cache:
-#  # (Optional) Cache options for large scale deployments.
-#  #    For encryption to work, this must be configured.
-#  redisUri: redis://localhost:6379
-
-#encryption:
-#  # (Optional) Configuration for encryption support in the bridge.
-#  # If omitted, encryption support will be disabled.
-#  storagePath:
-#    # Path to the directory used to store encryption files. These files must be persist between restarts of the service.
-#    ./cryptostore
 
 permissions:
   # Allow this specific user to do any action
@@ -150,11 +139,6 @@ bot:
 metrics:
   # (Optional) Prometheus metrics support
   enabled: true
-
-cache:
-  redisUri: redis://dragonfly.matrix.svc.cluster.local:6379
-encryption:
-  storagePath: /encryption
 
 #sentry:
 #  # (Optional) Configure Sentry error reporting
