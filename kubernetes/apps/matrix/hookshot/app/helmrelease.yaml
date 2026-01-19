@@ -87,8 +87,8 @@ spec:
           - path: /data/config.yml
             subPath: config.yaml
           - path: /data/github-key.pem
-            subPath: GITHUB_KEY
+            subPath: github-key.pem
           - path: /data/passkey.pem
-            subPath: PASSKEY
+            subPath: passkey.pem
           - path: /data/registration.yml
             subPath: registration.yaml
