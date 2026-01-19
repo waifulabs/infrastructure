@@ -2,7 +2,7 @@
 bridge:
   # Basic homeserver configuration
   domain: ok8.sh
-  url: https://continuwuity.default.svc.cluster.local:8080
+  url: http://continuwuity.default.svc.cluster.local:8080
   mediaUrl: https://matrix.ok8.sh
   port: 9993
   bindAddress: 0.0.0.0
@@ -139,6 +139,11 @@ bot:
 metrics:
   # (Optional) Prometheus metrics support
   enabled: true
+
+cache:
+  redisUri: redis://dragonfly.matrix.svc.cluster.local:6379
+encryption:
+  storagePath: /encryption
 
 #sentry:
 #  # (Optional) Configure Sentry error reporting
