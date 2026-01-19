@@ -12,10 +12,9 @@ logging:
   colorize: true
   json: true
   timestampFormat: HH:mm:ss:SSS
-passFile:
+passFile: /data/passkey.pem
   # A passkey used to encrypt tokens stored inside the bridge.
   # Run openssl genpkey -out passkey.pem -outform PEM -algorithm RSA -pkeyopt rsa_keygen_bits:4096 to generate
-  /data/passkey.pem
 listeners:
   # HTTP Listener configuration.
   # Bind resource endpoints to ports and addresses.
