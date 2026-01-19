@@ -12,7 +12,7 @@ spec:
       valueFrom:
         resourceFieldRef:
           resource: limits.memory
-          divisor: 256Mi
+          divisor: 256M
   args:
     - --maxmemory=$(MAX_MEMORY)Mi
     - --proactor_threads=2
