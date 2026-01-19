@@ -12,7 +12,7 @@ logging:
   colorize: true
   json: true
   timestampFormat: HH:mm:ss:SSS
-passFile: /data/passkey.pem
+passFile: /secrets/passkey.pem
   # A passkey used to encrypt tokens stored inside the bridge.
   # Run openssl genpkey -out passkey.pem -outform PEM -algorithm RSA -pkeyopt rsa_keygen_bits:4096 to generate
 listeners:
@@ -72,7 +72,7 @@ github:
   auth:
     # Authentication for the GitHub App.
     id: {{ .GITHUB_APP_ID }}
-    privateKeyFile: /data/github-key.pem
+    privateKeyFile: /secrets/github-key.pem
   webhook:
     # Webhook settings for the GitHub app.
     secret: {{ .GITHUB_WEBHOOK_SECRET }}
