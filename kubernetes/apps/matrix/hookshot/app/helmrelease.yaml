@@ -86,7 +86,7 @@ spec:
         globalMounts:
           - path: /data/config.yml
             subPath: config.yaml
-          - path: /data/github.pem
+          - path: /data/github-key.pem
             subPath: GITHUB_KEY
           - path: /data/passkey.pem
             subPath: PASSKEY
