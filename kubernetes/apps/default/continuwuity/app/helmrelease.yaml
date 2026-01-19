@@ -69,12 +69,12 @@ spec:
               CONDUWUIT_QUERY_TRUSTED_KEY_SERVERS_FIRST: false
               CONDUWUIT_QUERY_TRUSTED_KEY_SERVERS_FIRST_ON_JOIN: false
               CONDUWUIT_ALLOW_LEGACY_MEDIA: false # unauthenticated
-              CONDUWUIT_FORBIDDEN_REMOTE_SERVER_NAMES: |
-                ["matrix.org"]
-              CONDUWUIT_FORBIDDEN_REMOTE_ROOM_DIRECTORY_SERVER_NAMES: |
-                ["matrix.org"]
-              CONDUWUIT_URL_PREVIEW_DOMAIN_EXPLICIT_DENYLIST: |
-                ["matrix.org"]
+              #CONDUWUIT_FORBIDDEN_REMOTE_SERVER_NAMES: |
+              #  ["matrix.org"]
+              #CONDUWUIT_FORBIDDEN_REMOTE_ROOM_DIRECTORY_SERVER_NAMES: |
+              #  ["matrix.org"]
+              #CONDUWUIT_URL_PREVIEW_DOMAIN_EXPLICIT_DENYLIST: |
+              #  ["matrix.org"]
               #CONDUWUIT_TURN_URIS: |
               #  ["turns:turn.ok8.sh:5349?transport=tcp","turn:turn.ok8.sh:3478?transport=udp","turn:turn.ok8.sh:3478?transport=tcp"]
             envFrom:
