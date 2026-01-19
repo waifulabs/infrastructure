@@ -80,6 +80,11 @@ spec:
         type: emptyDir
       data:
         existingClaim: "{{ .Release.Name }}"
+        globalMounts:
+          - path: /data
+            subPath: data
+          - path: /encryption
+            subPath: encryption
       config:
         type: secret
         name: "{{ .Release.Name }}-secret"

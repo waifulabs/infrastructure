@@ -8,7 +8,7 @@ bridge:
   bindAddress: 0.0.0.0
 logging:
   # Logging settings. You can have a severity debug,info,warn,error
-  level: info
+  level: debug
   colorize: true
   json: true
   timestampFormat: HH:mm:ss:SSS
@@ -151,6 +151,9 @@ bot:
 metrics:
   # (Optional) Prometheus metrics support
   enabled: true
+
+encryption:
+  storagePath: /encryption
 
 #sentry:
 #  # (Optional) Configure Sentry error reporting
