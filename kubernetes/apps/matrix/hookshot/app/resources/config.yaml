@@ -78,34 +78,34 @@ github:
     # (Optional) Prefix used when creating ghost users for GitHub accounts.
     _github_
 
-#generic:
-#  # (Optional) Support for generic webhook events.
-#  #'allowJsTransformationFunctions' will allow users to write short transformation snippets in code, and thus is unsafe in untrusted environments
+generic:
+  # (Optional) Support for generic webhook events.
+  #'allowJsTransformationFunctions' will allow users to write short transformation snippets in code, and thus is unsafe in untrusted environments
 
-#  enabled: false
-#  outbound: false
-#  urlPrefix: https://example.com/webhook/
-#  userIdPrefix: _webhooks_
-#  allowJsTransformationFunctions: false
-#  waitForComplete: false
-#  enableHttpGet: false
-#  sendExpiryNotice: false
-#  requireExpiryTime: false
-#  maxExpiryTime: 30d
-#  includeHookBody: true
+  enabled: true
+  outbound: false
+  urlPrefix: https://hookshot.ok8.sh
+  userIdPrefix: _webhooks_
+  allowJsTransformationFunctions: false
+  waitForComplete: false
+  enableHttpGet: false
+  sendExpiryNotice: false
+  requireExpiryTime: false
+  maxExpiryTime: 30d
+  includeHookBody: true
 
 bot:
   # (Optional) Define profile information for the bot user
   displayname: Hookshot Bot
   avatar: mxc://half-shot.uk/2876e89ccade4cb615e210c458e2a7a6883fe17d
 
-#serviceBots:
-#  # (Optional) Define additional bot users for specific services
-#  - localpart: feeds
-#    displayname: Feeds
-#    avatar: ./assets/feeds_avatar.png
-#    prefix: "!feeds"
-#    service: feeds
+serviceBots:
+  # (Optional) Define additional bot users for specific services
+  - localpart: feeds
+    displayname: Feeds
+    avatar: ./assets/feeds_avatar.png
+    prefix: "!feeds"
+    service: feeds
 
 #widgets:
 #  # (Optional) EXPERIMENTAL support for complimentary widgets
