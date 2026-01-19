@@ -63,6 +63,8 @@ spec:
             port: 9001
           widgets:
             port: 9002
+          homeserver:
+            port: 9993
     route:
       app:
         annotations:
