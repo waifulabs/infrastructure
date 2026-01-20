@@ -56,6 +56,10 @@ spec:
         existingClaim: "{{ .Release.Name }}"
         globalMounts:
           - path: /app/data
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /app/logs
       config:
         type: secret
         name: "{{ .Release.Name }}-secret"
