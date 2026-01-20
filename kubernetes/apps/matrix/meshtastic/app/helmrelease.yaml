@@ -56,6 +56,9 @@ spec:
         existingClaim: "{{ .Release.Name }}"
         globalMounts:
           - path: /app/data
+            subPath: data
+          - path: /app/store
+            subPath: store
       logs:
         type: emptyDir
         globalMounts:
@@ -66,5 +69,5 @@ spec:
         globalMounts:
           - path: /app/config.yaml
             subPath: config.yaml
-          - path: /app/credentials.json
+          - path: /app/data/credentials.json
             subPath: credentials.json
