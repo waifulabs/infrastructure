@@ -2,7 +2,7 @@ matrix:
   homeserver: https://matrix.ok8.sh
   # Modern authentication using password (recommended)
   # MMRelay will automatically create secure credentials.json on startup
-  password: your_matrix_password_here  # Set your Matrix account password
+  # password: your_matrix_password_here  # Set your Matrix account password
   # Security: After first successful start, remove this password from the file.
   #           Linux/macOS: chmod 600 ~/.mmrelay/config.yaml
   #           Windows: restrict file access to your user (e.g., via file Properties → Security)
