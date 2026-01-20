@@ -30,13 +30,13 @@ matrix:
   #prefix_format: "[{long}/{mesh}]: " # Default format. Variables: {long1-20}, {long}, {short}, {mesh1-20}, {mesh}
 
 matrix_rooms: # Needs at least 1 room & channel, but supports all Meshtastic channels
-  - id: "#meshtastic:ok8.sh" # Matrix room aliases & IDs supported
+  - id: "#signals:ok8.sh" # Matrix room aliases & IDs supported
     meshtastic_channel: 0
 
 meshtastic:
   connection_type: tcp # Choose either "tcp", "serial", or "ble"
   host: meshtastic.outsideour.casa # Only used when connection is "tcp"
-  meshnet_name: Your Meshnet Name # This is displayed in full on Matrix, but is truncated when sent to a Meshnet
+  meshnet_name: ok8sh # This is displayed in full on Matrix, but is truncated when sent to a Meshnet
   message_interactions: # Configure reactions and replies (both require message storage in database)
     reactions: false # Enable reaction relaying between platforms
     replies: false   # Enable reply relaying between platforms
