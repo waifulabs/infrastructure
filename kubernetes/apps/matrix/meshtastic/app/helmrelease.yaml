@@ -54,6 +54,8 @@ spec:
         type: emptyDir
       data:
         existingClaim: "{{ .Release.Name }}"
+        globalMounts:
+          - path: /app/data
       config:
         type: secret
         name: "{{ .Release.Name }}-secret"
