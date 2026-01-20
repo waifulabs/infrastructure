@@ -1,0 +1,64 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/app-template-4.4.0/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: meshtastic
+spec:
+  interval: 5m
+  chartRef:
+    kind: OCIRepository
+    name: meshtastic
+  values:
+    defaultPodOptions:
+      automountServiceAccountToken: false
+      enableServiceLinks: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: &uid 1000
+        runAsGroup: *uid
+        fsGroup: *uid
+        fsGroupChangePolicy: Always
+        seccompProfile: { type: "RuntimeDefault" }
+    controllers:
+      meshtastic:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        type: statefulset
+        replicas: 1
+        containers:
+          app:
+            image:
+              repository: ghcr.io/jeremiah-k/mmrelay
+              tag: 1.2.8
+            env:
+              TZ: "America/Los_Angeles"
+            securityContext:
+              readOnlyRootFilesystem: true
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: ["ALL"]
+            resources:
+              requests:
+                cpu: "10m"
+              limits:
+                cpu: "500m"
+                memory: "512Mi"
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+    persistence:
+      tmp:
+        type: emptyDir
+      data:
+        existingClaim: "{{ .Release.Name }}"
+      config:
+        type: secret
+        name: "{{ .Release.Name }}-secret"
+        globalMounts:
+          - path: /app/config.yaml
+            subPath: config.yaml
+          - path: /app/credentials.json
+            subPath: credentials.json
