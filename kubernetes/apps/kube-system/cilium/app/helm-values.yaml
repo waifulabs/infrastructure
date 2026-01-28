@@ -25,7 +25,7 @@ endpointRoutes:
   enabled: true
 envoy:
   enabled: false
-devices: bond0
+devices: bond+
 gatewayAPI:
   enabled: false
 ipam:
