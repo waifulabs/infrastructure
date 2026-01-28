@@ -87,10 +87,10 @@ spec:
                 drop: ["ALL"]
             resources:
               requests:
-                cpu: "10m"
+                cpu: "200m"
               limits:
-                cpu: "1"
-                memory: "512Mi"
+                cpu: "1.5"
+                memory: "1Gi"
             probes:
               liveness:
                 enabled: true
