@@ -8,22 +8,9 @@ matrix:
   #           Windows: restrict file access to your user (e.g., via file Properties → Security)
   #           Never commit this file with a password to version control.
   bot_user_id: "@meshtastic:ok8.sh"
-
-  # End-to-End Encryption (E2EE) configuration
-  # E2EE is automatically enabled when using password-based authentication AND E2EE dependencies are installed (Linux/macOS only)
-  # NOTE: E2EE is not available on Windows due to dependency limitations
-  #
-  # SETUP INSTRUCTIONS:
-  # 1. Install E2EE dependencies: pipx install 'mmrelay[e2e]' (Linux/macOS only)
-  # 2. Set your password above and run MMRelay
-  # 3. MMRelay will automatically create credentials.json with E2EE support
-  # 4. For interactive setup, use: mmrelay auth login
-  #
   e2ee:
-  #  # Optional: When credentials.json is present, MMRelay auto-enables E2EE.
-  #  # Configure this section only if you want to override defaults (e.g., store_path).
-    enabled: true                        # Explicit toggle if you need to force-enable/disable (usually not needed)
-    store_path: /app/store     # Optional path for encryption keys storage
+    enabled: true
+    store_path: /app/store
 
   # Message prefix customization (Meshtastic → Matrix direction)
   #prefix_enabled: true # Enable prefixes on messages from mesh (e.g., "[Alice/MyMesh]: message")
@@ -41,14 +28,10 @@ meshtastic:
     reactions: false # Enable reaction relaying between platforms
     replies: false   # Enable reply relaying between platforms
 
-  # Connection health monitoring configuration
-  #health_check:
-  #  enabled: true                    # Enable/disable periodic health checks (default: true)
-  #  heartbeat_interval: 60           # Interval in seconds between health checks (default: 60)
-  #                                   # Note: BLE connections use real-time disconnection detection and skip periodic checks
-  #                                   # Legacy: heartbeat_interval at meshtastic level still supported but deprecated
+  health_check:
+    enabled: true
+    heartbeat_interval: 60
 
-  # Additional configuration options (commented out with defaults)
   broadcast_enabled: false # Must be set to true to enable Matrix to Meshtastic messages
   #detection_sensor: true # Must be set to true to forward messages of Meshtastic's detection sensor module
   #message_delay: 2.2 # Delay in seconds between messages sent to mesh (minimum: 2.0 due to firmware)
@@ -70,8 +53,8 @@ logging:
   # Component-specific debug logging (useful for troubleshooting)
   # When disabled (false or omitted), external library logs are completely suppressed
   # When enabled, you can use: true (DEBUG level) or specify level: "debug", "info", "warning", "error"
-  #debug:
-  #  matrix_nio: false                         # Disable matrix-nio logging (default: completely suppressed)
+  debug:
+    matrix_nio: true                         # Disable matrix-nio logging (default: completely suppressed)
   #  #matrix_nio: true                         # Enable matrix-nio debug logging
   #  #matrix_nio: "warning"                    # Enable matrix-nio warning+ logging
   #  bleak: false                              # Disable BLE (bleak) logging (default: completely suppressed)
@@ -106,19 +89,3 @@ plugins:
     active: true
     #require_bot_mention: true  # Override global setting for this plugin only
     # Does not need to specify channels, as it's a Matrix-only plugin
-
-#community-plugins:
-#  sample_plugin:
-#    active: true
-#    repository: https://github.com/username/sample_plugin.git
-#    tag: master
-#  advanced_plugin:
-#    active: false
-#    repository: https://github.com/username/advanced_plugin.git
-#    tag: v1.2.0
-
-#custom-plugins:
-#  my_custom_plugin:
-#    active: true
-#  another_custom_plugin:
-#    active: false
