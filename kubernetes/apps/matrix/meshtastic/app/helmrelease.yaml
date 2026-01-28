@@ -64,6 +64,10 @@ spec:
     persistence:
       tmp:
         type: emptyDir
+      mmrelay:
+        type: emptyDir
+        globalMounts:
+          - path: /home/mmrelay/.mmrelay
       data:
         existingClaim: "{{ .Release.Name }}"
         globalMounts:
