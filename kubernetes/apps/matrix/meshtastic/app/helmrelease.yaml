@@ -63,6 +63,7 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /app/logs
+          - path: /home/mmrelay/.mmrelay
       config:
         type: secret
         name: "{{ .Release.Name }}-secret"
