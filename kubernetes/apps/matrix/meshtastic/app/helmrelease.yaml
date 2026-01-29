@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: ghcr.io/jeremiah-k/mmrelay
-              tag: 1.2.9
+              tag: 1.2.9-dev-k8s-fix-1-e7c5972
             command: ["mmrelay"]
             args:
               [
