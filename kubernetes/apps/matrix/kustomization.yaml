@@ -8,6 +8,7 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
+  - ./continuwuity/ks.yaml
   - ./dragonfly/ks.yaml
   - ./hookshot/ks.yaml
   - ./meshtastic/ks.yaml
