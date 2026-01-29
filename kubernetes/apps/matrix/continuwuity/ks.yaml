@@ -4,7 +4,7 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app continuwuity
-  namespace: &namespace default
+  namespace: &namespace matrix
 spec:
   targetNamespace: *namespace
   commonMetadata:
@@ -15,7 +15,7 @@ spec:
   dependsOn:
     - name: onepassword
       namespace: external-secrets
-  path: ./kubernetes/apps/default/continuwuity/app
+  path: ./kubernetes/apps/matrix/continuwuity/app
   postBuild:
     substitute:
       APP: *app
