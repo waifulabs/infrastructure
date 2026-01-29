@@ -4,8 +4,8 @@ matrix:
     store_path: /app/store
 
   # Message prefix customization (Meshtastic → Matrix direction)
-  #prefix_enabled: true # Enable prefixes on messages from mesh (e.g., "[Alice/MyMesh]: message")
-  #prefix_format: "[{long}/{mesh}]: " # Default format. Variables: {long1-20}, {long}, {short}, {mesh1-20}, {mesh}
+  prefix_enabled: true # Enable prefixes on messages from mesh (e.g., "[Alice/MyMesh]: message")
+  prefix_format: "[{long2}/{mesh}]: " # Default format. Variables: {long1-20}, {long}, {short}, {mesh1-20}, {mesh}
 
 matrix_rooms: # Needs at least 1 room & channel, but supports all Meshtastic channels
   - id: "#signals:ok8.sh" # Matrix room aliases & IDs supported
@@ -16,8 +16,8 @@ meshtastic:
   host: meshtastic.outsideour.casa # Only used when connection is "tcp"
   meshnet_name: ok8sh # This is displayed in full on Matrix, but is truncated when sent to a Meshnet
   message_interactions: # Configure reactions and replies (both require message storage in database)
-    reactions: false # Enable reaction relaying between platforms
-    replies: false   # Enable reply relaying between platforms
+    reactions: true # Enable reaction relaying between platforms
+    replies: true   # Enable reply relaying between platforms
 
   health_check:
     enabled: true
@@ -29,8 +29,8 @@ meshtastic:
   #timeout: 30 # Timeout in seconds for Meshtastic operations (default: 30, library default: 300)
 
   # Message prefix customization (Matrix → Meshtastic direction)
-  #prefix_enabled: true # Enable username prefixes on messages sent to mesh (e.g., "Alice[M]: message")
-  #prefix_format: "{display5}[M]: " # Default format. See ADVANCED_CONFIGURATION.md for all variables.
+  prefix_enabled: true # Enable username prefixes on messages sent to mesh (e.g., "Alice[M]: message")
+  prefix_format: "{display5}[M]: " # Default format. See ADVANCED_CONFIGURATION.md for all variables.
 
 logging:
   level: info
@@ -45,7 +45,7 @@ logging:
   # When disabled (false or omitted), external library logs are completely suppressed
   # When enabled, you can use: true (DEBUG level) or specify level: "debug", "info", "warning", "error"
   debug:
-    matrix_nio: true                         # Disable matrix-nio logging (default: completely suppressed)
+    matrix_nio: false                         # Disable matrix-nio logging (default: completely suppressed)
   #  #matrix_nio: true                         # Enable matrix-nio debug logging
   #  #matrix_nio: "warning"                    # Enable matrix-nio warning+ logging
   #  bleak: false                              # Disable BLE (bleak) logging (default: completely suppressed)
