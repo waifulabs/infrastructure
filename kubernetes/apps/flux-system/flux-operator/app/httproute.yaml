@@ -8,8 +8,8 @@ spec:
   hostnames:
     - flux-operator.ok8.sh
   parentRefs:
-    - name: envoy-internal
-      namespace: network
+    - name: internal
+      namespace: networking
   rules:
     - backendRefs:
         - name: flux-operator
