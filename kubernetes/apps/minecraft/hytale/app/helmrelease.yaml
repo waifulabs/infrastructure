@@ -29,8 +29,8 @@ spec:
             stdin: true
             tty: true
             image:
-              repository: deinfreu/hytale-server
-              tag: experimental-0.1.3
+              repository: ghcr.io/deinfreu/hytale-server
+              tag: 0.2.0@sha256:d515ae9f7fb4ac83a0127755bafd825bd04b4a5d7741fc0c32b446864fdc6404
             ports:
               - containerPort: &udpPort 5520
                 protocol: UDP
