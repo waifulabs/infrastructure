@@ -30,6 +30,11 @@ spec:
             env:
               PORT: &port 8080
               STORE_PATH: /data
+              DATABASE_URL_CRUNCHYDATA:
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-pguser-postgres
+                    key: uri
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
