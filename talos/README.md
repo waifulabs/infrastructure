@@ -14,6 +14,7 @@ customization:
         - mitigations=off
         - security=none
         - talos.auditd.disabled=1
+        - talos.dashboard.disabled=1
     systemExtensions:
         officialExtensions:
             - siderolabs/i915

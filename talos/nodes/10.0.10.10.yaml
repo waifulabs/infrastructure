@@ -3,7 +3,7 @@
 machine:
   type: controlplane
   install:
-    image: factory.talos.dev/metal-installer/f5b4219136c4be042f25ee55c87d3b45d639e671e58c4c95a227204883e2114b:{{ ENV.TALOS_VERSION }}
+    image: factory.talos.dev/metal-installer/7fe953aa80ac882abc707dad04f849b09b00d4834e50d7368a332e1ce3608a4e:{{ ENV.TALOS_VERSION }}
     diskSelector:
       serial: 2318E6D1E1A3
   kernel:

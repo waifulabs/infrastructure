@@ -40,8 +40,6 @@ machine:
         hard=True
         nconnect=16
         noatime=True
-  install:
-    image: factory.talos.dev/metal-installer/f5b4219136c4be042f25ee55c87d3b45d639e671e58c4c95a227204883e2114b:{{ ENV.TALOS_VERSION }}
   kubelet:
     defaultRuntimeSeccompProfileEnabled: true
     disableManifestsDirectory: true
