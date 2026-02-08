@@ -273,7 +273,7 @@ spec:
     route:
       main:
         enabled: true
-        hostnames: ["{{ .Release.Name }}.ok8.sh"]
+        hostnames: ["{{ .Release.Name }}-old.ok8.sh"]
         parentRefs:
           - name: internal
             namespace: networking
