@@ -35,14 +35,26 @@ spec:
       replicas: 1
     storageClass:
       create: true
-      name: nfs-slow
-      parameters:
-        server: fran.outsideour.casa
-        share: /mnt/loki/kubernetes
-      mountOptions:
-        - nfsvers=4.2
-        - nconnect=16
-        - hard
-        - noatime
-      reclaimPolicy: Delete
-      volumeBindingMode: Immediate
+    storageClasses:
+      - name: nfs-slow
+        parameters:
+          server: fran.outsideour.casa
+          share: /mnt/loki/kubernetes
+        mountOptions:
+          - nfsvers=4.2
+          - nconnect=16
+          - hard
+          - noatime
+        reclaimPolicy: Delete
+        volumeBindingMode: Immediate
+      - name: nfs-unifi
+        parameters:
+          server: 10.0.10.153
+          share: /var/nfs/shared/Nyana
+        mountOptions:
+          - nfsvers=4.2
+          - nconnect=16
+          - hard
+          - noatime
+        reclaimPolicy: Delete
+        volumeBindingMode: Immediate
