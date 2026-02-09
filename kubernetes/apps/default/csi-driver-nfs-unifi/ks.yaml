@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/default/csier-nfs-unifi/app
+  path: ./kubernetes/apps/default/csi-driver-nfs-unifi/app
   prune: true
   sourceRef:
     kind: GitRepository
