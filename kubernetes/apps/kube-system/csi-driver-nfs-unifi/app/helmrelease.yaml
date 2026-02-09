@@ -51,7 +51,7 @@ spec:
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: csi-driver-nfs
+  name: csi-driver-nfs-unifi
 spec:
   interval: 1h
   chart:
@@ -74,10 +74,10 @@ spec:
       replicas: 1
     storageClass:
       create: true
-      name: nfs-slow
+      name: nfs-unifi
       parameters:
-        server: fran.outsideour.casa
-        share: /mnt/loki/kubernetes
+        server: 10.0.10.153
+        share: /var/nfs/shared/Nyana
       mountOptions:
         - nfsvers=4.2
         - nconnect=16
