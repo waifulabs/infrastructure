@@ -12,45 +12,6 @@ spec:
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: csi-driver-nfs
-spec:
-  interval: 1h
-  chart:
-    spec:
-      chart: csi-driver-nfs
-      version: 4.12.1
-      sourceRef:
-        kind: HelmRepository
-        name: csi-driver-nfs
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
-  values:
-    controller:
-      replicas: 1
-    storageClass:
-      create: true
-      name: nfs-slow
-      parameters:
-        server: fran.outsideour.casa
-        share: /mnt/loki/kubernetes
-      mountOptions:
-        - nfsvers=4.2
-        - nconnect=16
-        - hard
-        - noatime
-      reclaimPolicy: Delete
-      volumeBindingMode: Immediate
----
-# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/helm.toolkit.fluxcd.io/helmrelease_v2.json
-apiVersion: helm.toolkit.fluxcd.io/v2
-kind: HelmRelease
-metadata:
   name: csi-driver-nfs-unifi
 spec:
   interval: 1h

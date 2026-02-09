@@ -4,13 +4,13 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app csi-driver-nfs-unifi
-  namespace: &namespace kube-system
+  namespace: &namespace default
 spec:
   targetNamespace: *namespace
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/kube-system/csi-driver-nfs-unifi/app
+  path: ./kubernetes/apps/default/csier-nfs-unifi/app
   prune: true
   sourceRef:
     kind: GitRepository
