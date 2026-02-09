@@ -48,7 +48,7 @@ spec:
       - name: nfs-unifi
         parameters:
           server: 10.0.10.153
-          share: /var/nfs/shared/Nyana
+          share: /volume/fefecc64-a47b-4b4a-b25a-c90b935de77c/.srv/.unifi-drive/Nyana/.data
         mountOptions:
           - nfsvers=4.2
           - nconnect=16
