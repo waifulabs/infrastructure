@@ -51,5 +51,6 @@ spec:
           share: /volume/fefecc64-a47b-4b4a-b25a-c90b935de77c/.srv/.unifi-drive/Nyana/.data
         mountOptions:
           - nfsvers=3
+          - nolock
         reclaimPolicy: Delete
         volumeBindingMode: Immediate
