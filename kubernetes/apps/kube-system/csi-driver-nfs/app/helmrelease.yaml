@@ -33,8 +33,6 @@ spec:
   values:
     controller:
       replicas: 1
-    storageClass:
-      create: true
     storageClasses:
       - name: nfs-slow
         parameters:
