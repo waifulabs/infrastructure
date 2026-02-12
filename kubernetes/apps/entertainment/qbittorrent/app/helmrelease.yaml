@@ -105,8 +105,7 @@ spec:
         server: fran.outsideour.casa
         path: /mnt/loki/Multimedia
         globalMounts:
-          - path: /media/Downloads/qbittorrent
-            subPath: Downloads/qbittorrent
+          - path: /media
       scripts:
         type: configMap
         name: qbittorrent-scripts
