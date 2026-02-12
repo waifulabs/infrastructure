@@ -31,13 +31,6 @@ spec:
               TZ: America/Los_Angeles
               QBT_WEBUI_PORT: &port 80
               QBT_TORRENTING_PORT: &torrentPort 50413
-              CROSS_SEED_ENABLED: true
-              CROSS_SEED_HOST: cross-seed.entertainment.svc.cluster.local
-              CROSS_SEED_PORT: 80
-              CROSS_SEED_SLEEP_INTERVAL: 0
-            envFrom:
-              - secretRef:
-                  name: qbittorrent-secret
             probes:
               liveness: &probes
                 enabled: true
@@ -106,13 +99,5 @@ spec:
         path: /mnt/loki/Multimedia
         globalMounts:
           - path: /media
-      scripts:
-        type: configMap
-        name: qbittorrent-scripts
-        defaultMode: 0775
-        advancedMounts:
-          qbittorrent:
-            app:
-              - path: /config/script
       tmp:
         type: emptyDir
