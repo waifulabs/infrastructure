@@ -9,3 +9,4 @@ replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
   - ./dragonfly/ks.yaml
+  - ./landing/ks.yaml
