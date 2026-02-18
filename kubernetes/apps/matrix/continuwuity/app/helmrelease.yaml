@@ -122,8 +122,7 @@ spec:
       well-known:
         annotations:
           external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
-          gatus.home-operations.com/endpoint: |-
-            conditions: ["[STATUS] == 404"]
+          gatus.home-operations.com/enabled: "false"
         hostnames: ["ok8.sh"]
         parentRefs: *envoyParents
         rules:
