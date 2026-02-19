@@ -50,7 +50,7 @@ spec:
         controller: ok8-sh
         ports:
           http:
-            port: 8123
+            port: 3000
     route:
       app:
         annotations:
