@@ -61,3 +61,8 @@ spec:
           - name: external
             namespace: networking
             sectionName: https
+    persistence:
+      cache:
+        type: emptyDir
+        globalMounts:
+          - path: /app/.next/cache
