@@ -11,17 +11,35 @@ endpoints:
     interval: 1m
     conditions:
       - "[CONNECTED] == true"
-
   - name: Google
     group: connectivity
     url: icmp://8.8.8.8
     interval: 1m
     conditions:
       - "[CONNECTED] == true"
-
   - name: Quad9
     group: connectivity
     url: icmp://9.9.9.9
+    interval: 1m
+    conditions:
+      - "[CONNECTED] == true"
+
+  # Infrastructure
+  - name: Gateway
+    group: infrastructure
+    url: "icmp://10.0.20.1"
+    interval: 1m
+    conditions:
+      - "[CONNECTED] == true"
+  - name: Fran (NAS-1)
+    group: infrastructure
+    url: "icmp://fran.outsideour.casa"
+    interval: 1m
+    conditions:
+      - "[CONNECTED] == true"
+  - name: NAS-2
+    group: infrastructure
+    url: "icmp://nas.outsideour.casa"
     interval: 1m
     conditions:
       - "[CONNECTED] == true"
@@ -38,6 +56,11 @@ ui:
       link: https://github.com/kashalls
     - name: Homelab
       link: https://github.com/waifulabs/infrastructure
+
+storage:
+  type: sqlite
+  caching: true
+  path: ${GATUS_CONFIG_PATH}/gatus.db
 
 web:
   port: ${GATUS_WEB_PORT}
