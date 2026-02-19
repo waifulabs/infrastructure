@@ -57,10 +57,5 @@ ui:
     - name: Homelab
       link: https://github.com/waifulabs/infrastructure
 
-storage:
-  type: sqlite
-  caching: true
-  path: ${GATUS_CONFIG_PATH}/gatus.db
-
 web:
   port: ${GATUS_WEB_PORT}
