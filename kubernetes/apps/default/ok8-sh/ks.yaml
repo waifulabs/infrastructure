@@ -3,8 +3,8 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app landing
-  namespace: &namespace waifus
+  name: &app ok8-sh
+  namespace: &namespace default
 spec:
   targetNamespace: *namespace
   commonMetadata:
@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: onepassword
       namespace: external-secrets
-  path: ./kubernetes/apps/waifus/landing/app
+  path: ./kubernetes/apps/default/ok8-sh/app
   prune: false
   sourceRef:
     kind: GitRepository
