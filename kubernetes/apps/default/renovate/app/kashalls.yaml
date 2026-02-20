@@ -1,0 +1,69 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/generators.external-secrets.io/githubaccesstoken_v1alpha1.json
+apiVersion: generators.external-secrets.io/v1alpha1
+kind: GithubAccessToken
+metadata:
+  name: waifulabs-github-token
+spec:
+  appID: "1790271"
+  installID: "81194784"
+  auth:
+    privateKey:
+      secretRef:
+        name: waifuz-bot
+        key: PRIVATE_KEY
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/external-secrets.io/externalsecret_v1.json
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: waifulabs-github-token
+spec:
+  refreshInterval: "30m0s"
+  target:
+    name: renovate-waifulabs-github-token
+    template:
+      type: Opaque
+      engineVersion: v2
+      data:
+        GITHUB_COM_TOKEN: "{{ .token }}"
+        GITHUB_COM_USER: d2FpZnVsYWJzCg==
+        RENOVATE_TOKEN: "{{ .token }}"
+  dataFrom:
+    - sourceRef:
+        generatorRef:
+          apiVersion: generators.external-secrets.io/v1alpha1
+          kind: GithubAccessToken
+          name: waifulabs-github-token
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/renovate-operator.mogenius.com/renovatejob_v1alpha1.json
+apiVersion: renovate-operator.mogenius.com/v1alpha1
+kind: RenovateJob
+metadata:
+  name: waifulabs
+  namespace: default
+spec:
+  discoveryFilter: waifulabs/*
+  extraEnv:
+    - name: LOG_LEVEL
+      value: debug
+    - name: RENOVATE_ALLOWED_COMMANDS
+      value: '["pnpm run bundle"]'
+    - name: RENOVATE_ENDPOINT
+      value: https://api.github.com/
+    - name: RENOVATE_PLATFORM
+      value: github
+    - name: RENOVATE_PLATFORM_COMMIT
+      value: "true"
+  image: ghcr.io/renovatebot/renovate:43.0.2
+  parallelism: 5
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  schedule: 0 * * * *
+  secretRef: renovate-waifulabs-github-token
+  webhook:
+    enabled: true
+    authentication:
+      enabled: false
