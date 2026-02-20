@@ -1,49 +1,72 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/external-secrets.io/externalsecret_v1beta1.json
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: waifulabs-app-private-key
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: onepassword
+  target:
+    name: waifulabs-app-private-key
+    template:
+      data:
+        # github_token: "{{ .RUNNER_TOKEN }}"
+        github_app_id: "{{ .APP_ID }}"
+        github_app_installation_id: "{{ .INSTALLATION_ID }}"
+        github_app_private_key: "{{ .PRIVATE_KEY }}"
+  dataFrom:
+    - extract:
+        key: waifuz-bot
+
+---
 # yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/generators.external-secrets.io/githubaccesstoken_v1alpha1.json
 apiVersion: generators.external-secrets.io/v1alpha1
 kind: GithubAccessToken
 metadata:
-  name: layla-github-token
+  name: waifulabs-github-token
 spec:
-  appID: "356911"
-  installID: "111237872"
+  appID: "1790271"
+  installID: "81194784"
   auth:
     privateKey:
       secretRef:
-        name: github
-        key: PRIVATE_KEY
+        name: waifulabs-app-private-key
+        key: github_app_private_key
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/external-secrets.io/externalsecret_v1.json
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
-  name: layla-github-token
+  name: renovate-waifulabs-github-token
 spec:
   refreshInterval: "30m0s"
   target:
-    name: renovate-kashalls-github-token
+    name: renovate-waifulabs-github-token
     template:
       type: Opaque
       engineVersion: v2
       data:
-        GITHUB_COM_TOKEN: "{{ .token }}"
         GITHUB_COM_USER: d2FpZnVsYWJzCg==
+        GITHUB_COM_TOKEN: "{{ .token }}"
         RENOVATE_TOKEN: "{{ .token }}"
+        GITHUB_APP_KEY: "{{ .PRIVATE_KEY }}"
   dataFrom:
     - sourceRef:
         generatorRef:
           apiVersion: generators.external-secrets.io/v1alpha1
           kind: GithubAccessToken
-          name: kashalls-github-token
+          name: waifulabs-github-token
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/renovate-operator.mogenius.com/renovatejob_v1alpha1.json
 apiVersion: renovate-operator.mogenius.com/v1alpha1
 kind: RenovateJob
 metadata:
-  name: kashalls
+  name: waifulabs
   namespace: default
 spec:
-  discoveryFilter: kashalls/*
+  discoveryFilter: waifulabs/*
   extraEnv:
     - name: LOG_LEVEL
       value: debug
@@ -62,7 +85,7 @@ spec:
       cpu: 100m
       memory: 128Mi
   schedule: 0 * * * *
-  secretRef: renovate-kashalls-github-token
+  secretRef: waifulabs-github-token
   webhook:
     enabled: true
     authentication:
