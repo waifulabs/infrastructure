@@ -25,7 +25,7 @@ spec:
 apiVersion: generators.external-secrets.io/v1alpha1
 kind: GithubAccessToken
 metadata:
-  name: waifulabs-github-token
+  name: renovate-waifulabs-github-token
 spec:
   appID: "1790271"
   installID: "81194784"
@@ -51,13 +51,12 @@ spec:
         GITHUB_COM_USER: d2FpZnVsYWJzCg==
         GITHUB_COM_TOKEN: "{{ .token }}"
         RENOVATE_TOKEN: "{{ .token }}"
-        GITHUB_APP_KEY: "{{ .PRIVATE_KEY }}"
   dataFrom:
     - sourceRef:
         generatorRef:
           apiVersion: generators.external-secrets.io/v1alpha1
           kind: GithubAccessToken
-          name: waifulabs-github-token
+          name: renovate-waifulabs-github-token
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/renovate-operator.mogenius.com/renovatejob_v1alpha1.json
 apiVersion: renovate-operator.mogenius.com/v1alpha1
@@ -85,7 +84,7 @@ spec:
       cpu: 100m
       memory: 128Mi
   schedule: 0 * * * *
-  secretRef: waifulabs-github-token
+  secretRef: renovate-waifulabs-github-token
   webhook:
     enabled: true
     authentication:
