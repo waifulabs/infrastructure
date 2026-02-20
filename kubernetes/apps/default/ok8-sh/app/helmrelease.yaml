@@ -27,6 +27,9 @@ spec:
             image:
               repository: ghcr.io/kashalls/ok8.sh
               tag: latest
+            env:
+              GATEWAY_CONTACT_EMAIL: "noc@ok8.sh"
+              KROMGO_BASE_URL: "http://kromgo.observability.svc.cluster.local"
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -61,6 +64,25 @@ spec:
           - name: external
             namespace: networking
             sectionName: https
+      fallback:
+        parentRefs:
+          - name: external
+            namespace: networking
+            sectionName: https
+          - name: internal
+            namespace: networking
+            sectionName: https
+        rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: /
+            filters:
+              - type: URLRewrite
+                urlRewrite:
+                  path:
+                    type: ReplaceFullPath
+                    replaceFullPath: /gateway
     persistence:
       cache:
         type: emptyDir
