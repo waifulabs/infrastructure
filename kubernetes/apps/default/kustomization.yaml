@@ -19,5 +19,6 @@ resources:
   - ./ok8-sh/ks.yaml
   #- ./opencloud/ks.yaml
   - ./openspeedtest/ks.yaml
+  - ./renovate/ks.yaml
   #- ./rtlamr2mqtt/ks.yaml
   - ./zigbee2mqtt/ks.yaml
