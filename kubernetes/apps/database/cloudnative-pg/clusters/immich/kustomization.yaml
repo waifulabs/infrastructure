@@ -8,3 +8,4 @@ resources:
   - ./scheduledbackup.yaml
   - ./service.yaml
   - ./prometheusrule.yaml
+  - ./pushsecret.yaml
