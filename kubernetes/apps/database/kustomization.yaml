@@ -8,6 +8,7 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
+  - ./cloudnative-pg/ks.yaml
   - ./dragonfly/ks.yaml
   - ./drizzle-gateway/ks.yaml
   - ./mongodb/ks.yaml
