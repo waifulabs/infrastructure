@@ -1,0 +1,92 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.nerdz.cloud/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: immich
+  annotations:
+    # required for seamless bootstrap: https://github.com/cloudnative-pg/cloudnative-pg/issues/5778#issuecomment-2783417464
+    cnpg.io/skipEmptyWalArchiveCheck: "enabled"
+spec:
+  # 1 replica is very difficult to drain the node where postgres is running
+  # 3 replicas increases write amplication issues when leveraging replicated storage like Rook Ceph.
+  instances: 2
+  # Immich v2.3.1 requires VectorChord >=0.3 <0.6
+  # renovate: datasource=docker depName=ghcr.io/tensorchord/cloudnative-vectorchord versioning=loose enabled=false
+  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:18.0-0.5.3@sha256:267f6cbb32af6e109e138a143c7e9dd5d44d68433ec2303f0c30e745c788d1a9
+  primaryUpdateStrategy: unsupervised
+
+  storage:
+    size: 15Gi
+    storageClass: ceph-block
+
+  enableSuperuserAccess: true
+  superuserSecret:
+    name: cloudnative-pg-secret
+
+  postgresql:
+    shared_preload_libraries: ["vchord.so"]
+    parameters:
+      max_connections: "500"
+      shared_buffers: 512MB
+      pg_stat_statements.max: "10000"
+      pg_stat_statements.track: all
+
+  affinity:
+    enablePodAntiAffinity: true
+    topologyKey: kubernetes.io/hostname
+    podAntiAffinityType: required
+
+  # https://github.com/cloudnative-pg/cloudnative-pg/issues/2570
+  enablePDB: false
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "4Gi"
+
+  monitoring:
+    enablePodMonitor: true
+
+  # pgBackRest Plugin for backups (B2 + R2 dual destination)
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: immich
+        serverName: immich
+
+  bootstrap:
+    initdb:
+      database: immich
+      owner: immich
+      postInitApplicationSQL:
+        - CREATE EXTENSION IF NOT EXISTS vchord CASCADE
+        - CREATE EXTENSION IF NOT EXISTS vector CASCADE
+        - CREATE EXTENSION IF NOT EXISTS earthdistance CASCADE
+
+  # ============================================================================
+  # RESTORE FROM BACKUP (commented out - use instead of initdb above)
+  # ============================================================================
+  # To restore from backup:
+  # 1. Comment out the 'initdb' block above
+  # 2. Uncomment the 'recovery' block and 'externalClusters' below
+  # 3. Optionally add recoveryTarget for point-in-time recovery
+  # ============================================================================
+  # bootstrap:
+  #   recovery:
+  #     source: pgbackrest-backup
+  #     # Optional: Point-in-time recovery
+  #     # recoveryTarget:
+  #     #   targetTime: "2025-01-15 10:30:00"  # Restore to specific time
+  #     #   # OR use: targetLSN, targetXID, targetImmediate
+  #
+  # externalClusters:
+  #   - name: pgbackrest-backup
+  #     plugin:
+  #       name: pgbackrest.dalibo.com
+  #       parameters:
+  #         repositoryRef: immich-repository
+  #         # Optional: Select which repo to restore from (1=B2, 2=R2)
+  #         # selectedRepository: "1"
