@@ -61,32 +61,24 @@ spec:
     initdb:
       database: immich
       owner: immich
+      import:
+        type: microservice
+        databases:
+          - immich
+        source:
+          externalCluster: immich-source
       postInitApplicationSQL:
         - CREATE EXTENSION IF NOT EXISTS vchord CASCADE
         - CREATE EXTENSION IF NOT EXISTS vector CASCADE
         - CREATE EXTENSION IF NOT EXISTS earthdistance CASCADE
 
-  # ============================================================================
-  # RESTORE FROM BACKUP (commented out - use instead of initdb above)
-  # ============================================================================
-  # To restore from backup:
-  # 1. Comment out the 'initdb' block above
-  # 2. Uncomment the 'recovery' block and 'externalClusters' below
-  # 3. Optionally add recoveryTarget for point-in-time recovery
-  # ============================================================================
-  # bootstrap:
-  #   recovery:
-  #     source: pgbackrest-backup
-  #     # Optional: Point-in-time recovery
-  #     # recoveryTarget:
-  #     #   targetTime: "2025-01-15 10:30:00"  # Restore to specific time
-  #     #   # OR use: targetLSN, targetXID, targetImmediate
-  #
-  # externalClusters:
-  #   - name: pgbackrest-backup
-  #     plugin:
-  #       name: pgbackrest.dalibo.com
-  #       parameters:
-  #         repositoryRef: immich-repository
-  #         # Optional: Select which repo to restore from (1=B2, 2=R2)
-  #         # selectedRepository: "1"
+  externalClusters:
+    - name: immich-source
+      connectionParameters:
+        host: immich-primary.default.svc
+        port: "5432"
+        user: immich
+        dbname: immich
+      password:
+        name: immich-source-secret
+        key: password
