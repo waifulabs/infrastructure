@@ -6,6 +6,6 @@ metadata:
 spec:
   chartRef:
     kind: OCIRepository
-    name: cnpg-barman-cloud
+    name: barman-cloud
   interval: 1h
   # No values here :(
