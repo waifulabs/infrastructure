@@ -55,30 +55,45 @@ spec:
       isWALArchiver: true
       parameters:
         barmanObjectName: immich
-        serverName: immich
+        serverName: &currentServer immich
 
-  bootstrap:
-    initdb:
-      database: immich
-      owner: immich
-      import:
-        type: microservice
-        databases:
-          - immich
-        source:
-          externalCluster: immich-source
-      postInitApplicationSQL:
-        - CREATE EXTENSION IF NOT EXISTS vchord CASCADE
-        - CREATE EXTENSION IF NOT EXISTS vector CASCADE
-        - CREATE EXTENSION IF NOT EXISTS earthdistance CASCADE
+  # To restore cluster from backup:
+  # bootstrap:
+  #   # initdb: {}
+  #   recovery:
+  #     source: &recoveryServer immich-2
+  # externalClusters:
+  #   - name: *recoveryServer
+  #     plugin:
+  #       name: barman-cloud.cloudnative-pg.io
+  #       parameters:
+  #         barmanObjectName: immich
+  #         serverName: *recoveryServer
 
-  externalClusters:
-    - name: immich-source
-      connectionParameters:
-        host: immich-primary.default.svc
-        port: "5432"
-        user: immich
-        dbname: immich
-      password:
-        name: immich-source-secret
-        key: password
+
+  # Importing from CrunchyData
+  # bootstrap:
+  #   initdb:
+  #     database: immich
+  #     owner: immich
+  #     import:
+  #       type: microservice
+  #       databases:
+  #         - immich
+  #       source:
+  #         externalCluster: immich-source
+  #     postInitApplicationSQL:
+  #       - CREATE EXTENSION IF NOT EXISTS vchord CASCADE
+  #       - CREATE EXTENSION IF NOT EXISTS vector CASCADE
+  #       - CREATE EXTENSION IF NOT EXISTS earthdistance CASCADE
+
+  # externalClusters:
+  #   - name: immich-source
+  #     connectionParameters:
+  #       host: immich-primary.default.svc
+  #       port: "5432"
+  #       user: immich
+  #       dbname: immich
+  #     password:
+  #       name: immich-source-secret
+  #       key: password
