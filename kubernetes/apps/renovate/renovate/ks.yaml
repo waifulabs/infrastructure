@@ -4,13 +4,13 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app renovate-operator
-  namespace: &namespace default
+  namespace: &namespace renovate
 spec:
   targetNamespace: *namespace
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/default/renovate/operator
+  path: ./kubernetes/apps/renovate/renovate/operator
   prune: true
   sourceRef:
     kind: GitRepository
@@ -26,7 +26,7 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app renovate-jobs
-  namespace: &namespace default
+  namespace: &namespace renovate
 spec:
   targetNamespace: *namespace
   commonMetadata:
@@ -34,7 +34,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: renovate-operator
-  path: ./kubernetes/apps/default/renovate/app
+  path: ./kubernetes/apps/renovate/renovate/app
   prune: true
   sourceRef:
     kind: GitRepository
