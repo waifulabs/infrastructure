@@ -4,6 +4,7 @@ kind: HelmRelease
 metadata:
   name: &app zot
 spec:
+  interval: 1h
   chartRef:
     kind: OCIRepository
     name: zot
