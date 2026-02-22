@@ -1,9 +1,9 @@
-# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/monitoring.coreos.com/probe_v1.json
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/monitoring.coreos.com/probe_v1.json
 kind: Probe
 apiVersion: monitoring.coreos.com/v1
 metadata:
-  name: devices
+  name: devices-icmp
 spec:
   module: icmp
   prober:
@@ -14,4 +14,27 @@ spec:
         - airgradient.outsideour.casa
         - fran.outsideour.casa
         #- jetkvm.outsideour.casa
+        - ups.outsideour.casa
         - zigbee-controller.outsideour.casa
+  metricRelabelings:
+    - targetLabel: service
+      replacement: blackbox-exporter-devices
+      action: replace
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/probe_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: devices-tcp
+spec:
+  module: tcp_connect
+  prober:
+    url: blackbox-exporter-lan.observability.svc.cluster.local:9115
+  targets:
+    staticConfig:
+      static:
+        - fran.outsideour.casa:2049
+  metricRelabelings:
+    - targetLabel: service
+      replacement: blackbox-exporter-devices
+      action: replace
