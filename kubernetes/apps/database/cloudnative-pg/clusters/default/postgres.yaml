@@ -1,0 +1,96 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.nerdz.cloud/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: default
+  annotations:
+    # required for seamless bootstrap: https://github.com/cloudnative-pg/cloudnative-pg/issues/5778#issuecomment-2783417464
+    cnpg.io/skipEmptyWalArchiveCheck: "enabled"
+spec:
+  # 1 replica is very difficult to drain the node where postgres is running
+  # 3 replicas increases write amplication issues when leveraging replicated storage like Rook Ceph.
+  instances: 2
+  primaryUpdateStrategy: unsupervised
+
+  storage:
+    size: 15Gi
+    storageClass: ceph-block
+
+  enableSuperuserAccess: true
+  superuserSecret:
+    name: cloudnative-pg-secret
+
+  postgresql:
+    shared_preload_libraries: ["vchord.so"]
+    parameters:
+      max_connections: "500"
+      shared_buffers: 512MB
+      pg_stat_statements.max: "10000"
+      pg_stat_statements.track: all
+
+  affinity:
+    enablePodAntiAffinity: true
+    topologyKey: kubernetes.io/hostname
+    podAntiAffinityType: required
+
+  # https://github.com/cloudnative-pg/cloudnative-pg/issues/2570
+  enablePDB: false
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "250m"
+    limits:
+      memory: "4Gi"
+
+  monitoring:
+    enablePodMonitor: true
+
+  # pgBackRest Plugin for backups (B2 + R2 dual destination)
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: default
+        serverName: &currentServer default
+
+  # To restore cluster from backup:
+  # bootstrap:
+  #   # initdb: {}
+  #   recovery:
+  #     source: &recoveryServer default-2
+  # externalClusters:
+  #   - name: *recoveryServer
+  #     plugin:
+  #       name: barman-cloud.cloudnative-pg.io
+  #       parameters:
+  #         barmanObjectName: immich
+  #         serverName: *recoveryServer
+
+
+  # Importing from CrunchyData
+  # bootstrap:
+  #   initdb:
+  #     database: immich
+  #     owner: immich
+  #     import:
+  #       type: microservice
+  #       databases:
+  #         - immich
+  #       source:
+  #         externalCluster: immich-source
+  #     postInitApplicationSQL:
+  #       - CREATE EXTENSION IF NOT EXISTS vchord CASCADE
+  #       - CREATE EXTENSION IF NOT EXISTS vector CASCADE
+  #       - CREATE EXTENSION IF NOT EXISTS earthdistance CASCADE
+
+  # externalClusters:
+  #   - name: immich-source
+  #     connectionParameters:
+  #       host: immich-primary.default.svc
+  #       port: "5432"
+  #       user: immich
+  #       dbname: immich
+  #     password:
+  #       name: immich-source-secret
+  #       key: password
