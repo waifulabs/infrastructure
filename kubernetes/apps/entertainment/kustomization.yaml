@@ -10,7 +10,6 @@ replacements:
 resources:
   - ./autobrr/ks.yaml
   - ./bazarr/ks.yaml
-  - ./cross-seed/ks.yaml
   - ./jellyseerr/ks.yaml
   - ./pinchflat/ks.yaml
   - ./prowlarr/ks.yaml
