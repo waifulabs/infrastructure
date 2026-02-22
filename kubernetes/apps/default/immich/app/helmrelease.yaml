@@ -31,7 +31,7 @@ spec:
                   secretKeyRef:
                     name: immich-pg-credentials
                     key: uri
-              REDIS_HOSTNAME: &redisHostname "immich-valkey.default.svc.cluster.local"
+              REDIS_HOSTNAME: &redisHostname "immich-dragonfly.default.svc.cluster.local"
               IMMICH_TELEMETRY_INCLUDE: "all"
             resources:
               requests:
