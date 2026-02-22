@@ -29,8 +29,8 @@ spec:
               DB_URL:
                 valueFrom:
                   secretKeyRef:
-                    name: immich-pguser-immich
-                    key: pgbouncer-uri
+                    name: immich-pg-credentials
+                    key: uri
               REDIS_HOSTNAME: &redisHostname "immich-valkey.default.svc.cluster.local"
               IMMICH_TELEMETRY_INCLUDE: "all"
             resources:
