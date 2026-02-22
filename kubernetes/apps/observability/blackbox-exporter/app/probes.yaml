@@ -14,7 +14,6 @@ spec:
         - airgradient.outsideour.casa
         - fran.outsideour.casa
         #- jetkvm.outsideour.casa
-        - ups.outsideour.casa
         - zigbee-controller.outsideour.casa
   metricRelabelings:
     - targetLabel: service
