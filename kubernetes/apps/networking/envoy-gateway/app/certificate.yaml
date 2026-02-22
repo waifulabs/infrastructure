@@ -14,6 +14,21 @@ spec:
     - ok8.sh
     - "*.ok8.sh"
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/cert-manager.io/certificate_v1.json
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: salmon-cafe
+spec:
+  secretName: salmon-cafe-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: salmon.cafe
+  dnsNames:
+    - salmon.cafe
+    - "*.salmon.cafe"
+---
 # yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/external-secrets.io/pushsecret_v1alpha1.json
 apiVersion: external-secrets.io/v1alpha1
 kind: PushSecret

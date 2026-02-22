@@ -42,3 +42,5 @@ spec:
         certificateRefs:
           - kind: Secret
             name: ok8-sh-tls
+          - kind: Secret
+            name: salmon-cafe-tls
