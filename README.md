@@ -72,14 +72,28 @@ While most of my infrastructure and workloads are self-hosted I do rely upon the
 
 ```mermaid
 flowchart LR
-    A[["#quot;The Internet#quot;"]] -- 2Gbps ↓ 350Mbps  ↑ --> B("UXG Max");
-    B -- 2.5Gbps ↕ --> C("USW Flex 2.5G 8 PoE")
-    C -- 2.5Gbps ↕ --> D["U6 LR (Home Network)"]
-    C -- 10Gbps ↕ --> E("USW Aggregation")
-    E -- 10Gbps ↕ --> F["UDM Pro SE (Lab Network)"]
-    F -- 10Gbps ↕ --> G("USW Pro Max 16")
-    E -- 10Gbps ↕ --> H["3x MS-01 (Talos)"]
-    E -- 10Gbps ↕ --> I["1x Storage (TrueNAS)"]
+    classDef gateway fill:#163a1e,stroke:#27ae60,color:#fff
+    classDef switch fill:#1e2a4a,stroke:#3498db,color:#fff
+    classDef compute fill:#4a1e3a,stroke:#e74c3c,color:#fff
+    classDef storage fill:#3a2a1e,stroke:#f39c12,color:#fff
+    classDef ap fill:#1e3a2a,stroke:#2ecc71,color:#fff
+
+    Internet(["The Internet\n2 Gbps ↓ / 350 Mbps ↑"])
+
+    Internet --> UCG["UCG Fiber"]:::gateway
+    UCG -- 2.5G --> FLEX["USW Flex 2.5G 8 PoE"]:::switch
+    UCG -- 10G --> AGG["USW Pro Aggregation"]:::switch
+
+    FLEX -- 2.5G --> U7XG(["U7 Pro XG (Office)"]):::ap
+    FLEX -- 1G --> UAPAC(["UAP-AC-Pro (  Room)"]):::ap
+
+    AGG -- 10G --> MAX["USW Pro Max 16"]:::switch
+    AGG -- 20G LACP --> MS01["3x MS-01 (Talos)"]:::compute
+    AGG -- 10G --> MSR1["MS-R1 (Talos)"]:::compute
+    AGG -- 20G LACP --> TN["TrueNAS"]:::storage
+
+    MAX -- 1G --> U6LR(["U6-LR (Garage)"]):::ap
+    MAX -- 1G --> U7PRO(["U7-Pro (Lab)"]):::ap
 ```
 
 ### Networks & Vlans
