@@ -78,14 +78,14 @@ flowchart LR
     classDef storage fill:#3a2a1e,stroke:#f39c12,color:#fff
     classDef ap fill:#1e3a2a,stroke:#2ecc71,color:#fff
 
-    Internet(["The Internet\n2 Gbps ↓ / 350 Mbps ↑"])
+    Internet(["The Internet"])
 
-    Internet --> UCG["UCG Fiber"]:::gateway
+    Internet -- "2 Gbps ↓ / 350 Mbps ↑" --> UCG["UCG Fiber"]:::gateway
     UCG -- 2.5G --> FLEX["USW Flex 2.5G 8 PoE"]:::switch
     UCG -- 10G --> AGG["USW Pro Aggregation"]:::switch
 
     FLEX -- 2.5G --> U7XG(["U7 Pro XG (Office)"]):::ap
-    FLEX -- 1G --> UAPAC(["UAP-AC-Pro (  Room)"]):::ap
+    FLEX -- 1G --> UAPAC(["UAP-AC-Pro (Dining Room)"]):::ap
 
     AGG -- 10G --> MAX["USW Pro Max 16"]:::switch
     AGG -- 20G LACP --> MS01["3x MS-01 (Talos)"]:::compute
