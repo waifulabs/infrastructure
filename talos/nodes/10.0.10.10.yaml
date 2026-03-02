@@ -6,11 +6,6 @@ machine:
     image: factory.talos.dev/metal-installer/7fe953aa80ac882abc707dad04f849b09b00d4834e50d7368a332e1ce3608a4e:{{ ENV.TALOS_VERSION }}
     diskSelector:
       serial: 2318E6D1E1A3
-  kernel:
-    modules:
-      - name: nbd
-      - name: thunderbolt
-      - name: thunderbolt_net
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.12/website/content/v1.12/schemas/config.schema.json
 apiVersion: v1alpha1

@@ -40,6 +40,9 @@ machine:
         hard=True
         nconnect=16
         noatime=True
+  kernel:
+    modules:
+      - name: nbd
   kubelet:
     defaultRuntimeSeccompProfileEnabled: true
     disableManifestsDirectory: true
@@ -192,3 +195,8 @@ configFiles:
       MONITOR 10.0.10.3 1 slaveuser "op://Kubernetes/nut/NUT_PASSWORD" slave
       SHUTDOWNCMD "/sbin/poweroff"
     mountPath: /usr/local/etc/nut/upsmon.conf
+---
+apiVersion: v1alpha1
+kind: WatchdogTimerConfig
+device: /dev/watchdog0
+timeout: 10m
