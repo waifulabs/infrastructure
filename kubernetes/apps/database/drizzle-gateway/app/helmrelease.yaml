@@ -35,11 +35,6 @@ spec:
                   secretKeyRef:
                     name: immich-app
                     key: uri
-              DATABASE_URL_CRUNCHYDATA:
-                valueFrom:
-                  secretKeyRef:
-                    name: postgres-pguser-postgres
-                    key: uri
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true

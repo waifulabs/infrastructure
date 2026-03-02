@@ -13,4 +13,3 @@ resources:
   - ./dragonfly/ks.yaml
   - ./drizzle-gateway/ks.yaml
   - ./mongodb/ks.yaml
-  - ./postgres/ks.yaml
