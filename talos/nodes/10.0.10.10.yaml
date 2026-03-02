@@ -29,27 +29,6 @@ rings:
   tx: 8160
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.12/website/content/v1.12/schemas/config.schema.json
-# Intel vPRO Interface
-# We don't want talos to control this interface, just have it up for IPMI access. Intel will manage it's IP.
-apiVersion: v1alpha1
-kind: LinkAliasConfig
-name: ipmi
-selector:
-  match: link.bus_path == "0000:59:00.0"
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.12/website/content/v1.12/schemas/config.schema.json
-apiVersion: v1alpha1
-kind: LinkConfig
-name: ipmi
-up: true
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.12/website/content/v1.12/schemas/config.schema.json
-apiVersion: v1alpha1
-kind: DHCPv4Config
-name: ipmi
-routeMetric: 4096
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.12/website/content/v1.12/schemas/config.schema.json
 apiVersion: v1alpha1
 kind: BondConfig
 name: bond0
