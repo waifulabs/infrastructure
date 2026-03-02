@@ -11,6 +11,7 @@ customization:
         - intel_idle.max_cstate=0
         - intel_iommu=on
         - iommu=pt
+        - pcie_aspm=off 
         - mitigations=off
         - security=none
         - talos.auditd.disabled=1
@@ -21,6 +22,5 @@ customization:
             - siderolabs/intel-ucode
             - siderolabs/mei
             - siderolabs/nut-client
-            - siderolabs/thunderbolt
             - siderolabs/util-linux-tools
 ```
