@@ -76,7 +76,7 @@ metrics:
       - { color: "red", min: 11, max: 9999 }
 
   - name: cluster_age
-    query: "floor((time() - k8s_cluster_created_timestamp) / 86400)"
+    query: "floor((time() - kube_node_created) / 86400)"
     valueTemplate: "clusterAge"
 
   - name: node_memory_used
