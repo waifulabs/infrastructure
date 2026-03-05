@@ -74,3 +74,14 @@ metrics:
       - { color: "green", min: 0, max: 1 }
       - { color: "orange", min: 2, max: 10 }
       - { color: "red", min: 11, max: 9999 }
+
+  - name: cluster_age
+    query: "floor((time() - k8s_cluster_created_timestamp) / 86400)"
+    valueTemplate: "clusterAge"
+
+  - name: node_memory_used
+    query: "node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes"
+    valueTemplate: "{{ . | humanBytes }}"
+
+templates:
+  clusterAge: "{{ . | simplifyDays }}"   # 1159 → "3y64d"
