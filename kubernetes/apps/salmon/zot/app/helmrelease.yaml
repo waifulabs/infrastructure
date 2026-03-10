@@ -15,7 +15,7 @@ spec:
           app:
             image:
               repository: ghcr.io/project-zot/zot
-              tag: v2.1.14
+              tag: v2.1.15
             env:
               TZ: America/Los_Angeles
             probes:
