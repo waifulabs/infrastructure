@@ -248,6 +248,9 @@ spec:
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
             - { name: VAR_REPLICATIONDESTNAME, value: .*-dst }
+        zfs:
+          datasource: [{ name: DS_PROMETHEUS, value: Prometheus }]
+          url: https://grafana.com/api/dashboards/24987/revisions/1/download
     sidecar:
       dashboards:
         enabled: true
