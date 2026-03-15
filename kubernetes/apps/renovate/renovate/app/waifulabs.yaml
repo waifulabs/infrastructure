@@ -78,6 +78,8 @@ spec:
       value: "true"
   image: ghcr.io/renovatebot/renovate:43.73.2
   parallelism: 5
+  provider:
+    name: github
   resources:
     requests:
       cpu: 100m
