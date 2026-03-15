@@ -36,7 +36,7 @@
     {
       description: "Auto-merge trusted GitHub Actions",
       matchManagers: ["github-actions"],
-      matchPackageNames: ["/^actions//", "/^renovatebot//"],
+      matchPackageNames: ["/^actions\//", "/^renovatebot\//"],
       automerge: true,
       automergeType: "branch",
       matchUpdateTypes: ["minor", "patch", "digest"],
@@ -51,6 +51,15 @@
       matchUpdateTypes: ["minor", "patch"],
       matchPackageNames: ["/external-dns/", "/gateway-api/", "/prometheus-operator/"],
       ignoreTests: true,
+    },
+    {
+      description: "Auto-merge Containers",
+      matchDatasources: ["docker"],
+      automerge: true,
+      automergeType: "pr",
+      matchUpdateTypes: ["minor", "patch"],
+      matchPackageNames: ["/renovate/"],
+      ignoreTests: false,
     },
   ],
 }
