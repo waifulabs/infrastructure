@@ -10,6 +10,8 @@ spec:
     name: renovate-operator
   interval: 30m
   values:
+    config:
+      jobTTLSecondsAfterFinished: 300
     fullnameOverride: renovate-operator
     route:
       enabled: true
