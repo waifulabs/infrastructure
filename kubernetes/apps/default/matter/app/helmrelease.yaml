@@ -1,0 +1,81 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: matter
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: matter
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      matter:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/home-assistant-libs/python-matter-server
+              tag: 8.1.0@sha256:170aa093ce91c76cde4cc390918307590f0f5558fcec93f913af3cb019e6562a
+            env:
+              TZ: ${TIMEZONE}
+              MATTER_SERVER__INSTANCE_NAME: "{{ .Release.Name }}"
+              MATTER_SERVER__PORT: &port 5580
+              MATTER_SERVER__APPLICATION_URL: &host "{{ .Release.Name }}.ok8.sh"
+              MATTER_SERVER__LOG_LEVEL: info
+            args:
+              - --storage-path=/data
+              - --primary-interface=net1
+              - --log-level=debug
+              - --log-level-sdk=info
+            resources:
+              limits:
+                memory: 256Mi
+    defaultPodOptions:
+      annotations:
+        k8s.v1.cni.cncf.io/networks: |
+          [{
+            "name": "iot",
+            "namespace": "networking",
+            "ips": ["10.0.30.23/24"]
+          }]
+      hostUsers: false
+      securityContext:
+        runAsNonRoot: false # Must be run as root user
+        runAsUser: 0 # Must be run as root user
+        runAsGroup: 0
+        fsGroup: 0
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups:
+          - 34
+    service:
+      app:
+        ports:
+          http:
+            port: *port
+    route:
+      app:
+        hostnames:
+          - *host
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - name: "{{ .Release.Name }}"
+                port: *port
+    persistence:
+      data:
+        existingClaim: "{{ .Release.Name }}"
+      tmp:
+        type: emptyDir

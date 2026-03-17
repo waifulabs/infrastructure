@@ -18,7 +18,6 @@ kind: HostnameConfig
 hostname: fenrys
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.12/website/content/v1.12/schemas/config.schema.json
-# Primary Interface
 apiVersion: v1alpha1
 kind: LinkAliasConfig
 name: net0
@@ -27,8 +26,23 @@ selector:
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.12/website/content/v1.12/schemas/config.schema.json
 apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: net1
+selector:
+  match: mac(link.permanent_addr) == "58:47:ca:76:19:1c"
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.12/website/content/v1.12/schemas/config.schema.json
+apiVersion: v1alpha1
 kind: EthernetConfig
 name: enp2s0f0np0
+rings:
+  rx: 8160
+  tx: 8160
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.12/website/content/v1.12/schemas/config.schema.json
+apiVersion: v1alpha1
+kind: EthernetConfig
+name: enp2s0f1np1
 rings:
   rx: 8160
   tx: 8160
@@ -58,7 +72,7 @@ routeMetric: 4096
 apiVersion: v1alpha1
 kind: BondConfig
 name: bond0
-links: [net0]
+links: [net0, net1]
 bondMode: active-backup
 mtu: 9000
 up: true

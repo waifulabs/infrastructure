@@ -15,7 +15,6 @@ apiVersion: v1alpha1
 kind: HostnameConfig
 hostname: shylily
 ---
-# Primary Interface
 apiVersion: v1alpha1
 kind: LinkAliasConfig
 name: net0
@@ -23,8 +22,21 @@ selector:
   match: mac(link.permanent_addr) == "58:47:ca:7b:ec:1e"
 ---
 apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: net1
+selector:
+  match: mac(link.permanent_addr) == "58:47:ca:7b:ec:1f"
+---
+apiVersion: v1alpha1
 kind: EthernetConfig
 name: enp2s0f0np0
+rings:
+  rx: 8160
+  tx: 8160
+---
+apiVersion: v1alpha1
+kind: EthernetConfig
+name: enp2s0f1np1
 rings:
   rx: 8160
   tx: 8160
@@ -50,7 +62,7 @@ routeMetric: 4096
 apiVersion: v1alpha1
 kind: BondConfig
 name: bond0
-links: [net0]
+links: [net0, net1]
 bondMode: active-backup
 mtu: 9000
 up: true
