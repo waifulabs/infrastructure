@@ -12,9 +12,6 @@ spec:
       app.kubernetes.io/name: *app
   components:
     - ../../../../components/volsync
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
   path: ./kubernetes/apps/default/matter/app
   postBuild:
     substitute:
