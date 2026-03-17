@@ -63,7 +63,7 @@ spec:
       hostnames:
         - grafana.ok8.sh
       parentRefs:
-        - name: envoy-internal
+        - name: internal
           namespace: networking
       rules:
         - backendRefs:
