@@ -6,4 +6,5 @@ resources:
   - ./externalsecret.yaml
   - ./alertmanagerconfig.yaml
   - ./helmrelease.yaml
+  - ./grafanadashboard.yaml
   - ./scrapeconfig.yaml

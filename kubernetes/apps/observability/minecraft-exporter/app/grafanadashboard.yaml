@@ -3,7 +3,7 @@
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: grafana-operator
+  name: minecraft-exporter
 spec:
   allowCrossNamespaceImport: true
   instanceSelector:
@@ -13,5 +13,5 @@ spec:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
   configMapRef:
-    name: grafana-operator-dashboard
-    key: grafana-operator.json
+    name: minecraft-exporter-dashboard
+    key: minecraft-exporter.json
