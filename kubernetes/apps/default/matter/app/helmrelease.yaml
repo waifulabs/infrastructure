@@ -25,7 +25,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/matter-js/python-matter-server:8.1.2
+              repository: ghcr.io/matter-js/python-matter-server
               tag: 8.1.2@sha256:6827e352011e2d8c2bde771e446fcf72acc49150ef66bad978816bac1762aad3
             env:
               TZ: America/Los_Angeles
