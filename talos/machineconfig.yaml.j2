@@ -60,13 +60,20 @@ machine:
     net.core.default_qdisc: fq # 10Gb/s
     net.core.rmem_max: 67108864 # 10Gb/s | Cloudflared / QUIC
     net.core.wmem_max: 67108864 # 10Gb/s | Cloudflared / QUIC
+    net.ipv4.neigh.default.gc_thresh1: "4096"
+    net.ipv4.neigh.default.gc_thresh2: "8192"
+    net.ipv4.neigh.default.gc_thresh3: "16384"
+    net.ipv4.ping_group_range: 0 2147483647
     net.ipv4.tcp_congestion_control: bbr # 10Gb/s
     net.ipv4.tcp_fastopen: 3 # Send and accept data in the opening SYN packet
     net.ipv4.tcp_mtu_probing: 1 # 10Gb/s | Jumbo frames
     net.ipv4.tcp_rmem: 4096 87380 33554432 # 10Gb/s
     net.ipv4.tcp_wmem: 4096 65536 33554432 # 10Gb/s
     net.ipv4.tcp_window_scaling: 1 # 10Gb/s
-    vm.nr_hugepages: 1024 # PostgreSQL
+    sunrpc.tcp_max_slot_table_entries: "128"
+    sunrpc.tcp_slot_table_entries: "128"
+    user.max_user_namespaces: "11255"
+    vm.nr_hugepages: "1024"
   sysfs:
     devices.system.cpu.intel_pstate.hwp_dynamic_boost: 1
     devices.system.cpu.cpu0.cpufreq.energy_performance_preference: balance_performance
