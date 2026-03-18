@@ -1,17 +1,28 @@
-kind: PersistentVolumeClaim
 apiVersion: v1
+kind: PersistentVolumeClaim
 metadata:
-  name: kbench-pvc
+  name: kbench-pvc-1
 spec:
-  #volumeMode: Filesystem
   volumeMode: Block
-  #storageClassName: longhorn  # replace with your storage class
   storageClassName: ceph-block
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 33Gi
+      storage: 31Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kbench-pvc-2
+spec:
+  volumeMode: Block
+  storageClassName: ceph-block-uncompressed
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 31Gi
 ---
 apiVersion: batch/v1
 kind: Job
@@ -56,21 +67,30 @@ spec:
 #          value: "sequential-write-latency"
         - name: MODE
           value: "full" # run all tests
-        - name: FILE_NAME
-          value: "/volume/test"
+        - name: FIRST_VOL_NAME
+          value: ceph-block-compressed
+        - name: FIRST_VOL_FILE
+          value: "/dev/vol1"
+        - name: SECOND_VOL_NAME
+          value: ceph-block-uncompressed
+        - name: SECOND_VOL_FILE
+          value: "/dev/vol2"
         - name: SIZE
-          value: "30G" # must be 10% smaller than the PVC size due to filesystem also took space
+          value: "30G"
         - name: CPU_IDLE_PROF
           value: "disabled" # must be "enabled" or "disabled"
-        #volumeMounts:
-        #- name: vol
-        #  mountPath: /volume/
         volumeDevices:
-        - name: vol
-          devicePath: /volume/test
+        - name: vol1
+          devicePath: /dev/vol1
+        - name: vol2
+          devicePath: /dev/vol2
+        command: ["bash", "/fio/cmp_run.sh"]
       restartPolicy: Never
       volumes:
-      - name: vol
+      - name: vol1
         persistentVolumeClaim:
-          claimName: kbench-pvc
+          claimName: kbench-pvc-1
+      - name: vol2
+        persistentVolumeClaim:
+          claimName: kbench-pvc-2
   backoffLimit: 0
