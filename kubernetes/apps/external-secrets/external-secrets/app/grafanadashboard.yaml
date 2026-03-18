@@ -3,7 +3,7 @@
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: grafana-operator
+  name: external-secrets
 spec:
   allowCrossNamespaceImport: true
   instanceSelector:
@@ -12,6 +12,4 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  configMapRef:
-    name: grafana-operator-dashboard
-    key: grafana-operator.json
+  url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json

@@ -3,7 +3,7 @@
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDashboard
 metadata:
-  name: grafana-operator
+  name: unifiedmetrics
 spec:
   allowCrossNamespaceImport: true
   instanceSelector:
@@ -12,6 +12,6 @@ spec:
   datasources:
     - datasourceName: prometheus
       inputName: DS_PROMETHEUS
-  configMapRef:
-    name: grafana-operator-dashboard
-    key: grafana-operator.json
+  grafanaCom:
+    id: 14756
+    revision: 11

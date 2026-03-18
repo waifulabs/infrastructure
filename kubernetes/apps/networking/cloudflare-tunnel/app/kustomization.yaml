@@ -6,4 +6,5 @@ resources:
   - ./externalsecret.yaml
   - ./dnsendpoint.yaml
   - ./helmrelease.yaml
+  - ./grafanadashboard.yaml
   - ./ocirepository.yaml

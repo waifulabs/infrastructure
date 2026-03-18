@@ -6,3 +6,10 @@ resources:
   - ./ocirepository.yaml
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+  - ./grafanadashboard.yaml
+generatorOptions:
+  disableNameSuffixHash: true
+configMapGenerator:
+  - name: minecraft-exporter-dashboard
+    files:
+      - dashboards/minecraft-exporter.json
