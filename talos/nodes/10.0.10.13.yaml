@@ -7,6 +7,8 @@ machine:
       serial: 50026B7382F40A20
   sysctls:
     kernel.kexec_load_disabled: "1"
+  nodeTaints:
+    kubernetes.io/arch: arm64:NoSchedule
 ---
 apiVersion: v1alpha1
 kind: HostnameConfig

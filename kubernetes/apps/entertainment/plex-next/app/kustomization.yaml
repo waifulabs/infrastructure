@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./ocirepository.yaml
+  - ./helmrelease.yaml
+  - ./pvc.yaml
+configMapGenerator:
+  - name: plex-next-loki-rules
+    files:
+      - plex-next.yaml=./lokirule.yaml
+    options:
+      labels:
+        loki_rule: "true"
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled

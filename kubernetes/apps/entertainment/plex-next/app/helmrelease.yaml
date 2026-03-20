@@ -1,0 +1,132 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app plex-next
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: plex-next
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      plex-next:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/home-operations/plex-next
+              tag: rolling
+            env:
+              TZ: America/Los_Angeles
+              PLEX_ADVERTISE_URL: https://plex-next.ok8.sh:443,http://10.0.20.50:32400
+              PLEX_NO_AUTH_NETWORKS: 10.0.20.0/24
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /identity
+                    port: &port 32400
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                gpu.intel.com/i915: 1
+                memory: 8Gi
+    defaultPodOptions:
+      nodeSelector:
+        kubernetes.io/hostname: nyanners
+      tolerations:
+        - key: kubernetes.io/arch
+          operator: Equal
+          value: arm64
+          effect: NoSchedule
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        controller: plex-next
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: 10.0.20.50
+        ports:
+          http:
+            port: 32400
+    route:
+      app:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            conditions: ["[STATUS] == 401"]
+        hostnames:
+          - "plex-next.ok8.sh"
+        parentRefs:
+          - name: external
+            namespace: networking
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+            filters:
+              - type: RequestHeaderModifier
+                requestHeaderModifier:
+                  remove: ["Range"]
+            matches:
+              - path:
+                  type: PathPrefix
+                  value: /library/streams
+          - backendRefs:
+              - name: *app
+                port: *port
+    persistence:
+      config:
+        existingClaim: plex-next
+      config-cache:
+        type: emptyDir
+        globalMounts:
+          - path: /config/Library/Application Support/Plex Media Server/Cache
+      config-logs:
+        type: emptyDir
+        globalMounts:
+          - path: /config/Library/Application Support/Plex Media Server/Logs
+      transcode:
+        type: emptyDir
+      media:
+        type: nfs
+        server: fran.outsideour.casa
+        path: /mnt/loki/Multimedia
+        globalMounts:
+          - path: /media
+            readOnly: true
+      tmp:
+        type: emptyDir
