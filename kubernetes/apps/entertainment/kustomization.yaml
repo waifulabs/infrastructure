@@ -14,7 +14,7 @@ resources:
   - ./pinchflat/ks.yaml
   - ./prowlarr/ks.yaml
   - ./plex/ks.yaml
-  - ./plex-next/ks.yaml
+  #- ./plex-next/ks.yaml
   - ./qbittorrent/ks.yaml
   - ./qui/ks.yaml
   - ./radarr/ks.yaml
