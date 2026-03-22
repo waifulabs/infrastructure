@@ -76,7 +76,7 @@ spec:
       value: github
     - name: RENOVATE_PLATFORM_COMMIT
       value: "true"
-  image: ghcr.io/renovatebot/renovate:43.85.0
+  image: ghcr.io/renovatebot/renovate:43.86.0
   parallelism: 3
   provider:
     name: github
