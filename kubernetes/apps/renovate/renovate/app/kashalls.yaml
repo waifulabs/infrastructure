@@ -68,6 +68,8 @@ spec:
   extraEnv:
     - name: LOG_LEVEL
       value: debug
+    - name: RENOVATE_REDIS_URL
+      value: redis://renovate-dragonfly.renovate.svc.cluster.local:6379
     - name: RENOVATE_ALLOWED_COMMANDS
       value: '["pnpm run bundle"]'
     - name: RENOVATE_ENDPOINT

@@ -1,0 +1,23 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/dragonflydb.io/dragonfly_v1alpha1.json
+apiVersion: dragonflydb.io/v1alpha1
+kind: Dragonfly
+metadata:
+  name: renovate-dragonfly
+spec:
+  image: ghcr.io/dragonflydb/dragonfly:v1.37.0@sha256:84b1009aee0b68327758bce8e99ed514f782d713353acc46caf5738feaa481d6
+  replicas: 1
+  env:
+    - name: MAX_MEMORY
+      valueFrom:
+        resourceFieldRef:
+          resource: limits.memory
+          divisor: 1Mi
+  args:
+    - --maxmemory=$(MAX_MEMORY)Mi
+    - --proactor_threads=2
+  resources:
+    requests:
+      cpu: 100m
+    limits:
+      memory: 512Mi
