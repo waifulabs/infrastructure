@@ -163,6 +163,9 @@ cluster:
       key: op://Kubernetes/talos/CERTS_ETCD_KEY
     extraArgs:
       listen-metrics-urls: http://0.0.0.0:2381
+      # Prevent database bloat with auto-compaction
+      auto-compaction-mode: periodic
+      auto-compaction-retention: "1h"
   proxy:
     disabled: true
   secretboxEncryptionSecret: op://Kubernetes/talos/SECRETS_ENCRYPTIONSECRET
@@ -170,6 +173,23 @@ cluster:
     image: registry.k8s.io/kube-scheduler:{{ ENV.KUBERNETES_VERSION }}
     extraArgs:
       bind-address: 0.0.0.0
+    config:
+      apiVersion: kubescheduler.config.k8s.io/v1
+      kind: KubeSchedulerConfiguration
+      profiles:
+        - schedulerName: default-scheduler
+          plugins:
+            score:
+              disabled:
+                - name: ImageLocality
+          pluginConfig:
+            - name: PodTopologySpread
+              args:
+                defaultingType: List
+                defaultConstraints:
+                  - maxSkew: 1
+                    topologyKey: kubernetes.io/hostname
+                    whenUnsatisfiable: ScheduleAnyway
   serviceAccount:
     key: op://Kubernetes/talos/CERTS_KUBERNETES_SERVICEACCOUNT_KEY
   {% endif %}

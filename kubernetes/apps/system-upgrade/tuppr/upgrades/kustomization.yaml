@@ -5,3 +5,4 @@ kind: Kustomization
 resources:
   - ./kubernetes.yaml
   - ./talos.yaml
+  - ./prometheusrule.yaml
