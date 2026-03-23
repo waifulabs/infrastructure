@@ -74,8 +74,6 @@ spec:
       value: enabled
     - name: RENOVATE_CACHE_DIR
       value: /cache/renovate
-    - name: RENOVATE_ALLOWED_COMMANDS
-      value: '["pnpm run bundle"]'
     - name: RENOVATE_ENDPOINT
       value: https://api.github.com/
     - name: RENOVATE_PLATFORM

@@ -76,12 +76,12 @@ spec:
       value: /cache/renovate
     - name: RENOVATE_ENDPOINT
       value: https://api.github.com/
+    - name: RENOVATE_INTERNAL_CHECKS_FILTER
+      value: strict
     - name: RENOVATE_PLATFORM
       value: github
     - name: RENOVATE_PLATFORM_COMMIT
       value: "true"
-    - name: RENOVATE_ALLOWED_COMMANDS
-      value: '["pnpm run bundle"]'
   extraVolumeMounts:
     - name: cache
       mountPath: /cache
