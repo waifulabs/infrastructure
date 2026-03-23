@@ -118,28 +118,6 @@ spec:
             csi.storage.k8s.io/controller-expand-secret-namespace: "{{ .Release.Namespace }}"
             csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
             csi.storage.k8s.io/node-stage-secret-namespace: "{{ .Release.Namespace }}"
-      - name: ceph-blockpool-unreplicated
-        spec:
-          failureDomain: osd
-          replicated:
-            size: 1
-            requireSafeReplicaSize: false
-        storageClass:
-          enabled: true
-          name: ceph-block-unreplicated
-          isDefault: false
-          reclaimPolicy: Delete
-          allowVolumeExpansion: true
-          volumeBindingMode: Immediate
-          parameters:
-            imageFormat: "2"
-            imageFeatures: layering
-            csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
-            csi.storage.k8s.io/provisioner-secret-namespace: "{{ .Release.Namespace }}"
-            csi.storage.k8s.io/controller-expand-secret-name: rook-csi-rbd-provisioner
-            csi.storage.k8s.io/controller-expand-secret-namespace: "{{ .Release.Namespace }}"
-            csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
-            csi.storage.k8s.io/node-stage-secret-namespace: "{{ .Release.Namespace }}"
     cephBlockPoolsVolumeSnapshotClass:
       enabled: true
       name: csi-ceph-blockpool
