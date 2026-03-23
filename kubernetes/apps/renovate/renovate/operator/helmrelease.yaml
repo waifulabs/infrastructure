@@ -13,6 +13,10 @@ spec:
     config:
       jobTTLSecondsAfterFinished: 300
     fullnameOverride: renovate-operator
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
     route:
       enabled: true
       hostnames: ["renovate.ok8.sh"]
