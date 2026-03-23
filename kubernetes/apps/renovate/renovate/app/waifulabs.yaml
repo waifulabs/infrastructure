@@ -70,24 +70,38 @@ spec:
       value: debug
     - name: RENOVATE_REDIS_URL
       value: redis://renovate-dragonfly.renovate.svc.cluster.local:6379
-    - name: RENOVATE_ALLOWED_COMMANDS
-      value: '["pnpm run bundle"]'
+    - name: RENOVATE_REPOSITORY_CACHE
+      value: enabled
+    - name: RENOVATE_CACHE_DIR
+      value: /cache/renovate
     - name: RENOVATE_ENDPOINT
       value: https://api.github.com/
     - name: RENOVATE_PLATFORM
       value: github
     - name: RENOVATE_PLATFORM_COMMIT
       value: "true"
+    - name: RENOVATE_ALLOWED_COMMANDS
+      value: '["pnpm run bundle"]'
+  extraVolumeMounts:
+    - name: cache
+      mountPath: /cache
+  extraVolumes:
+    - name: cache
+      persistentVolumeClaim:
+        claimName: renovate-cache
   image: ghcr.io/renovatebot/renovate:43.86.0
   parallelism: 5
   provider:
     name: github
   resources:
+    limits:
+      memory: 1Gi
     requests:
       cpu: 100m
       memory: 128Mi
   schedule: 0 * * * *
   secretRef: renovate-waifulabs-github-token
+  skipForks: true
   webhook:
     enabled: true
     authentication:
