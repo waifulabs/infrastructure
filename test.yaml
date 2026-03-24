@@ -4,7 +4,7 @@ metadata:
   name: kbench-pvc-1
 spec:
   volumeMode: Block
-  storageClassName: ceph-block-unreplicated
+  storageClassName: ceph-block
   accessModes:
     - ReadWriteOnce
   resources:
@@ -68,7 +68,7 @@ spec:
         - name: MODE
           value: "full" # run all tests
         - name: FIRST_VOL_NAME
-          value: ceph-block-unreplicated
+          value: ceph-block
         - name: FIRST_VOL_FILE
           value: "/dev/vol1"
         - name: SECOND_VOL_NAME
