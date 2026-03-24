@@ -70,10 +70,6 @@ spec:
       value: debug
     - name: RENOVATE_REDIS_URL
       value: redis://renovate-dragonfly.renovate.svc.cluster.local:6379
-    - name: RENOVATE_REPOSITORY_CACHE
-      value: enabled
-    - name: RENOVATE_CACHE_DIR
-      value: /cache/renovate
     - name: RENOVATE_CONFIG
       value: '{"extends":["config:recommended","docker:enableMajor","helpers:pinGitHubActionDigests",":automergeBranch",":disableRateLimiting",":dependencyDashboard",":semanticCommits",":timezone(America/Los_Angeles)"],"dependencyDashboardTitle":"Renovate Dashboard 🗡️","suppressNotifications":["prEditedNotification","prIgnoreNotification"]}'
     - name: RENOVATE_ENDPOINT

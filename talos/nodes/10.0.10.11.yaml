@@ -16,18 +16,6 @@ kind: HostnameConfig
 hostname: maomao
 ---
 apiVersion: v1alpha1
-kind: LinkAliasConfig
-name: net0
-selector:
-  match: mac(link.permanent_addr) == "58:47:ca:7b:ed:f6"
----
-apiVersion: v1alpha1
-kind: LinkAliasConfig
-name: net1
-selector:
-  match: mac(link.permanent_addr) == "58:47:ca:7b:ed:f7"
----
-apiVersion: v1alpha1
 kind: EthernetConfig
 name: enp2s0f0np0
 rings:
@@ -62,7 +50,7 @@ routeMetric: 4096
 apiVersion: v1alpha1
 kind: BondConfig
 name: bond0
-links: [net0, net1]
+links: [enp2s0f0np0, enp2s0f1np1]
 bondMode: active-backup
 mtu: 9000
 up: true
