@@ -5,6 +5,9 @@ machine:
     image: factory.talos.dev/metal-installer/7fe953aa80ac882abc707dad04f849b09b00d4834e50d7368a332e1ce3608a4e:{{ ENV.TALOS_VERSION }}
     diskSelector:
       serial: 2318E6D1EDC2
+  kubelet:
+    extraArgs:
+      node-ip: "10.0.10.12,192.168.254.12"
   kernel:
     modules:
       - name: nbd
