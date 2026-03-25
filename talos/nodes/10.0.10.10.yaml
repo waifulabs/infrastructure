@@ -90,8 +90,8 @@ kind: LinkConfig
 name: shylily
 up: true
 mtu: 65520
-addresses: [{ address: 169.254.254.10/32 }]
-routes: [{ destination: 169.254.254.12/32, metric: 2048 }]
+addresses: [{ address: 192.168.254.10/32 }]
+routes: [{ destination: 192.168.254.12/32, metric: 2048 }]
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.12/website/content/v1.12/schemas/config.schema.json
 apiVersion: v1alpha1
@@ -106,5 +106,5 @@ kind: LinkConfig
 name: maomao
 up: true
 mtu: 65520
-addresses: [{ address: 169.254.254.10/32 }]
-routes: [{ destination: 169.254.254.11/32, metric: 2048 }]
+addresses: [{ address: 192.168.254.10/32 }]
+routes: [{ destination: 192.168.254.11/32, metric: 2048 }]

@@ -50,7 +50,7 @@ machine:
         source: /var/mnt/extra
         options: ["bind", "rshared", "rw"]
     nodeIP:
-      validSubnets: ["10.0.10.0/24", "169.254.254.0/24"]
+      validSubnets: ["10.0.10.0/24", "192.168.254.0/24"]
   nodeLabels:
     topology.kubernetes.io/zone: {{ ENV.MACHINE_TYPE }}
   {% if ENV.MACHINE_TYPE == 'controlplane' %}

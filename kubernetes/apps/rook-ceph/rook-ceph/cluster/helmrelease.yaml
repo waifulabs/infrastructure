@@ -79,8 +79,8 @@ spec:
       network:
         provider: host
         addressRanges:
-          public: ["169.254.254.0/24"]
-          cluster: ["169.254.254.0/24"]
+          public: ["192.168.254.0/24"]
+          cluster: ["192.168.254.0/24"]
         connections:
           requireMsgr2: true
       resources:
