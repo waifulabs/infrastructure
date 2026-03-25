@@ -121,31 +121,23 @@ UniFi released a new feature update with UniFi routers that allow you to create 
   <img src="https://owo.whats-th.is/2drDDRN.jpg" align="center" width="200px" alt="rack"/>
 </details>
 
-### Office Rack
-
-| Device                  | Count | OS Disk Size | Data Disk Size       | Ram  | Operating System | Purpose           |
-|-------------------------|-------|--------------|----------------------|------|------------------|-------------------|
-| UXG Max                 | 1     | -            | -                    | -    | UniFi OS         | Router            |
-| UCK G2 Plus             | 1     | -            | -                    | -    | UniFi OS         | Controller        |
-| USW Flex 2.5G 8 PoE     | 1     | -            | -                    | -    | UniFi OS         | Office Switch
-| U6-LR                   | 1     | -            | -                    | -    | -                | Office AP         |
-| Airgradient             | 1     | -            | -                    | -    | -                | Dining Room AP    |
-
-### Server Rack
-
-| Device                  | Count | OS Disk Size | Data Disk Size       | Ram  | Operating System | Purpose            | Network
-|-------------------------|-------|--------------|----------------------|------|------------------|--------------------|----------|
-| UDM Pro                 | 1     | -            | -                    | -    | UniFi OS         | Router             | Lab      |
-| USW 16 Pro Max          | 1     | -            | -                    | -    | UniFi OS         | Switching          | Lab      |
-| USW Aggregation         | 1     | -            | -                    | -    | UniFi OS         | Office Aggregation | Office   |
-| U7-Pro                  | 1     | -            | -                    | -    | -                | Lab AP             | Lab      |
-| UAP-AC-Pro              | 1     | -            | -                    | -    | -                | Dining Room AP     | Lab      |
-| USP-PDU-Pro             | 1     | -            | -                    | -    | -                | Rack PDU           | Lab      |
-| MS-01                   | 3     | 1TB NVMe     | 2TB PM9A3 U.2        | 96GB | Talos            | Main Cluster       | Office
-| Fran                    | 1     | 2x1TB SSD    | 5x8TB (raidz2)       | 64GB | Debian           | Storage            | Office
-| JetKVM                  | 1     | 16GB (Flash) | -                    | -    | JetKVM           | Network KVM        | Lab
-| APC Back-Ups 1500       | 1     | -            | -                    | -    | -                | UPS                | -
-| Meshtastic MQTT GW      | 1     | -            | -                    | -    | -                | MQTT GW            | Lab
+| Device              | Count | OS Disk Size | Data Disk Size | Ram  | Operating System | Purpose          |
+|---------------------|-------|--------------|----------------|------|------------------|------------------|
+| UCG Fiber           | 1     | -            | 1TiB NVMe      | -    | UniFi OS         | Router           |
+| USW Flex 2.5G 8 PoE | 1     | -            | -              | -    | UniFi OS         | Switching        |
+| USW Pro Max 16 PoE  | 1     | -            | -              | -    | UniFi OS         | Switching        |
+| USW Pro Aggregation | 1     | -            | -              | -    | UniFi OS         | Aggregation      |
+| U7 Pro XG           | 1     | -            | -              | -    | -                | Office AP        |
+| U6 LR               | 1     | -            | -              | -    | -                | Garage AP        |
+| UDB Switch          | 1     | -            | -              | -    | UniFi OS         | Garage Workbench |
+| USP-PDU-Pro         | 1     | -            | -              | -    | -                | Rack PDU         |
+| MS-01               | 3     | 1TB NVMe     | 2TB PM9A3 U.2  | 96GB | Talos            | Control Plane    |
+| MS R1               | 1     | 1TB NVMe     | 1TB NVMe       | 64GB | Talos            | Worker           |
+| Fran                | 1     | 2x1TB SSD    | 5x8TB (raidz2) | 64GB | Debian           | Storage          |
+| JetKVM              | 1     | 16GB (Flash) | -              | -    | JetKVM           | Network KVM      |
+| Eaton 5PX1500RT     | 1     | -            | -              | -    | -                | UPS              |
+| Meshtastic MQTT GW  | 1     | -            | -              | -    | -                | MQTT GW          |
+| SMLIGHT SLZB-06M    | 1     | -            | -              | -    | -                | Matter Gateway   |
 
 ---
 
