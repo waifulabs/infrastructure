@@ -79,7 +79,7 @@ spec:
       network:
         provider: host
         addressRanges:
-          public: ["10.0.10.0/24", "169.254.254.0/24"]
+          public: ["169.254.254.0/24"]
           cluster: ["169.254.254.0/24"]
         connections:
           requireMsgr2: true
