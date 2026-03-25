@@ -1,0 +1,35 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/discord.ok8.sh/discordsharder_v1alpha1.json
+apiVersion: discord.ok8.sh/v1alpha1
+kind: DiscordSharder
+metadata:
+  name: gateway
+spec:
+  syncInterval: 12h
+  tokenSecretRef:
+    name: gateway-secret
+    key: DISCORD_TOKEN
+  sharding:
+    minShards: 1
+    stepSize: 1
+    updateStrategy: RollingUpdate
+    changeStrategy: Immediate
+  template:
+    spec:
+      containers:
+        - name: gateway
+          image: ghcr.io/waifulabs/gateway:latest
+          env:
+            - name: DISCORD_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: gateway-secret
+                  key: DISCORD_TOKEN
+            - name: REDIS_URL
+              value: redis://dragonfly.discord.svc.cluster.local:6379
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              memory: 512Mi

@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ingest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ingest
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ingest
+    spec:
+      containers:
+        - name: ingest
+          image: ghcr.io/waifulabs/ingest:latest
+          env:
+            - name: REDIS_URL
+              value: redis://dragonfly.discord.svc.cluster.local:6379
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              memory: 256Mi

@@ -1,0 +1,13 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: discord
+components:
+  - ../../components/namespace
+replacements:
+  - path: ../../components/replacements/ks.yaml
+resources:
+  - ./dragonfly/ks.yaml
+  - ./gateway/ks.yaml
+  #- ./ingest/ks.yaml

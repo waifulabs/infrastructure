@@ -1,0 +1,20 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/keda.sh/scaledobject_v1alpha1.json
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: ingest
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: ingest
+  minReplicaCount: 1
+  maxReplicaCount: 16
+  triggers:
+    - type: redis-streams
+      metadata:
+        address: dragonfly.discord.svc.cluster.local:6379
+        stream: discord:events
+        consumerGroup: ingest
+        pendingEntriesCount: "100"
