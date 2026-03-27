@@ -50,7 +50,7 @@ sonarr:
 
   anime:
     base_url: http://sonarr-anime.entertainment.svc.cluster.local
-    api_key: !env_var SONARR_ANIME_API_KEY
+    api_key: !env_var SONARR_API_KEY
     delete_old_custom_formats: true
     media_management:
       propers_and_repacks: do_not_prefer
@@ -129,7 +129,7 @@ radarr:
 
   anime:
     base_url: http://radarr-anime.entertainment.svc.cluster.local
-    api_key: !env_var RADARR_ANIME_API_KEY
+    api_key: !env_var RADARR_API_KEY
     delete_old_custom_formats: true
     media_management:
       propers_and_repacks: do_not_prefer
