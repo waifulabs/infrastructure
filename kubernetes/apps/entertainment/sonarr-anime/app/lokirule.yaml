@@ -1,0 +1,23 @@
+---
+groups:
+  - name: sonarr-anime
+    rules:
+      - alert: SonarrAnimeDatabaseIsLocked
+        expr: |
+          sum by (app) (count_over_time({app=~"sonarr-anime"} |~ "(?i)database is locked"[5m])) > 0
+        for: 5m
+        annotations:
+          summary: >-
+            {{ $labels.app }} is experiencing database issues
+        labels:
+          severity: critical
+
+      - alert: SonarrAnimeDatabaseIsMalformed
+        expr: |
+          sum by (app) (count_over_time({app=~"sonarr-anime"} |~ "(?i)database disk image is malformed"[5m])) > 0
+        for: 5m
+        annotations:
+          summary: >-
+            {{ $labels.app }} is experiencing database issues
+        labels:
+          severity: critical

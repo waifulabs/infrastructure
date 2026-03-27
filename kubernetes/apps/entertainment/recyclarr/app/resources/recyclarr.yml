@@ -9,7 +9,6 @@ sonarr:
       propers_and_repacks: do_not_prefer
     media_naming:
       episodes:
-        anime: default
         daily: default
         rename: true
         standard: default
@@ -49,6 +48,54 @@ sonarr:
           - name: WEB-2160p
           - name: WEB-2160p (Combined)
 
+  anime:
+    base_url: http://sonarr-anime.entertainment.svc.cluster.local
+    api_key: !env_var SONARR_ANIME_API_KEY
+    delete_old_custom_formats: true
+    media_management:
+      propers_and_repacks: do_not_prefer
+    media_naming:
+      episodes:
+        anime: default
+        rename: true
+      season: default
+      series: plex-imdb
+    quality_definition:
+      type: anime
+    quality_profiles:
+      - name: "[Anime] Remux-1080p"
+        reset_unmatched_scores:
+          enabled: true
+    custom_formats:
+      - # Anime BD Tiers
+        trash_ids:
+          - 949c16fe0a8147f50ba82cc2df9411c9 # Anime BD Tier 01
+          - ed7f1e315e000aef424a58517fa48727 # Anime BD Tier 02
+          - 096e406c92baa713da4a72d88030b815 # Anime BD Tier 03
+          - 30feba9da3030c5ed1e0f7d610bcadc4 # Anime BD Tier 04
+          - 545a76b14ddc349b8b185a6344e28b04 # Anime BD Tier 05
+          - 25d2afecab632b1582eaf03b63055f72 # Anime BD Tier 06
+          - 0329044e3d9137b08502a9f84a7e58db # Anime BD Tier 07
+          - c81bbfb47fed3d5a3ad027d077f889de # Anime BD Tier 08
+        assign_scores_to:
+          - name: "[Anime] Remux-1080p"
+      - # Anime Web Tiers
+        trash_ids:
+          - e0014372773c8f0e1bef8824f00c7dc4 # Anime Web Tier 01
+          - 19180499de5ef2b84b6ec59aae444696 # Anime Web Tier 02
+          - c27f2ae6a4e82373b0f1da094e2489ad # Anime Web Tier 03
+          - 4fd5528a3a8024e6b49f9c67053ea5f3 # Anime Web Tier 04
+          - 29c2a13d091144f63307e4a8ce963a39 # Anime Web Tier 05
+          - dc262f88d74c651b12e9d90b39f6c753 # Anime Web Tier 06
+        assign_scores_to:
+          - name: "[Anime] Remux-1080p"
+      - # Unwanted
+        trash_ids:
+          - b4a1b3d705159cdca36d71e57ca86871 # Anime Raws
+          - e3515e519f3b1360cbfc17651944354c # Anime LQ Groups
+        assign_scores_to:
+          - name: "[Anime] Remux-1080p"
+
 radarr:
   movies:
     base_url: http://radarr.entertainment.svc.cluster.local
@@ -79,3 +126,50 @@ radarr:
           - f537cf427b64c38c8e36298f657e4828 # Scene
         assign_scores_to:
           - name: SQP-1 (2160p)
+
+  anime:
+    base_url: http://radarr-anime.entertainment.svc.cluster.local
+    api_key: !env_var RADARR_ANIME_API_KEY
+    delete_old_custom_formats: true
+    media_management:
+      propers_and_repacks: do_not_prefer
+    media_naming:
+      folder: plex-imdb
+      movie:
+        rename: true
+        standard: plex-imdb
+    quality_definition:
+      type: movie
+    quality_profiles:
+      - name: "[Anime] Remux-1080p"
+        reset_unmatched_scores:
+          enabled: true
+    custom_formats:
+      - # Anime BD Tiers
+        trash_ids:
+          - fb3ccc5d5cc8f77c9055d4cb4561dded # Anime BD Tier 01
+          - 66926c8fa9312bc74ab71bf69aae4f4a # Anime BD Tier 02
+          - fa857662bad28d5ff21a6e611869a0ff # Anime BD Tier 03
+          - f262f1299d99b1a2263375e8fa2ddbb3 # Anime BD Tier 04
+          - ca864ed93c7b431150cc6748dc34875d # Anime BD Tier 05
+          - 9dce189b960fddf47891b7484ee886ca # Anime BD Tier 06
+          - 1ef101b3a82646b40e0cab7fc92cd896 # Anime BD Tier 07
+          - 6115ccd6640b978234cc47f2c1f2cadc # Anime BD Tier 08
+        assign_scores_to:
+          - name: "[Anime] Remux-1080p"
+      - # Anime Web Tiers
+        trash_ids:
+          - 8167cffba4febfb9a6988ef24f274e7e # Anime Web Tier 01
+          - 8526c54e36b4962d340fce52ef030e76 # Anime Web Tier 02
+          - de41e72708d2c856fa261094c85e965d # Anime Web Tier 03
+          - 9edaeee9ea3bcd585da9b7c0ac3fc54f # Anime Web Tier 04
+          - 22d953bbe897857b517928f3652b8dd3 # Anime Web Tier 05
+          - a786fbc0eae05afe3bb51aee3c83a9d4 # Anime Web Tier 06
+        assign_scores_to:
+          - name: "[Anime] Remux-1080p"
+      - # Unwanted
+        trash_ids:
+          - 06b6542a47037d1e33b15aa3677c2365 # Anime Raws
+          - b23eae459cc960816f2d6ba84af45055 # Dubs Only
+        assign_scores_to:
+          - name: "[Anime] Remux-1080p"
