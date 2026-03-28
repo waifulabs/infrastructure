@@ -1,10 +1,10 @@
 ---
 groups:
-  - name: sonarr-anime
+  - name: sonarr-standard
     rules:
-      - alert: SonarrAnimeDatabaseIsLocked
+      - alert: SonarrStandardDatabaseIsLocked
         expr: |
-          sum by (app) (count_over_time({app=~"sonarr-anime"} |~ "(?i)database is locked"[5m])) > 0
+          sum by (app) (count_over_time({app=~"sonarr-standard"} |~ "(?i)database is locked"[5m])) > 0
         for: 5m
         annotations:
           summary: >-
@@ -12,9 +12,9 @@ groups:
         labels:
           severity: critical
 
-      - alert: SonarrAnimeDatabaseIsMalformed
+      - alert: SonarrStandardDatabaseIsMalformed
         expr: |
-          sum by (app) (count_over_time({app=~"sonarr-anime"} |~ "(?i)database disk image is malformed"[5m])) > 0
+          sum by (app) (count_over_time({app=~"sonarr-standard"} |~ "(?i)database disk image is malformed"[5m])) > 0
         for: 5m
         annotations:
           summary: >-

@@ -1,10 +1,10 @@
 ---
 groups:
-  - name: radarr-anime
+  - name: radarr-standard
     rules:
-      - alert: RadarrAnimeDatabaseIsLocked
+      - alert: RadarrStandardDatabaseIsLocked
         expr: |
-          sum by (app) (count_over_time({app=~"radarr-anime"} |~ "(?i)database is locked"[5m])) > 0
+          sum by (app) (count_over_time({app=~"radarr-standard"} |~ "(?i)database is locked"[5m])) > 0
         for: 5m
         annotations:
           summary: >-
@@ -12,9 +12,9 @@ groups:
         labels:
           severity: critical
 
-      - alert: RadarrAnimeDatabaseIsMalformed
+      - alert: RadarrStandardDatabaseIsMalformed
         expr: |
-          sum by (app) (count_over_time({app=~"radarr-anime"} |~ "(?i)database disk image is malformed"[5m])) > 0
+          sum by (app) (count_over_time({app=~"radarr-standard"} |~ "(?i)database disk image is malformed"[5m])) > 0
         for: 5m
         annotations:
           summary: >-

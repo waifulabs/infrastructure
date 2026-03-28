@@ -3,12 +3,12 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: sonarr-anime
+  name: sonarr-standard
 spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
-    name: sonarr-anime
+    name: sonarr
   install:
     remediation:
       retries: -1
@@ -18,7 +18,7 @@ spec:
       retries: 3
   values:
     controllers:
-      sonarr-anime:
+      sonarr-standard:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
@@ -27,7 +27,7 @@ spec:
               repository: ghcr.io/home-operations/sonarr
               tag: 4.0.17.2953@sha256:83607d2b741ec9469db09489e88c473ae6fdf7d85f3b55d4fa809b43e25a2a6c
             env:
-              SONARR__APP__INSTANCENAME: Sonarr (Anime)
+              SONARR__APP__INSTANCENAME: Sonarr
               SONARR__APP__THEME: dark
               SONARR__AUTH__METHOD: External
               SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
@@ -38,7 +38,7 @@ spec:
               TZ: America/Los_Angeles
             envFrom:
               - secretRef:
-                  name: sonarr-anime-secret
+                  name: sonarr-standard-secret
             probes:
               liveness: &probes
                 enabled: true
@@ -70,7 +70,7 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        controller: sonarr-anime
+        controller: sonarr-standard
         ports:
           http:
             port: *port
@@ -87,9 +87,9 @@ spec:
                 port: *port
     persistence:
       config:
-        existingClaim: sonarr-anime
+        existingClaim: sonarr-standard
       config-cache:
-        existingClaim: sonarr-anime-cache
+        existingClaim: sonarr-standard-cache
         globalMounts:
           - path: /config/MediaCover
       media:

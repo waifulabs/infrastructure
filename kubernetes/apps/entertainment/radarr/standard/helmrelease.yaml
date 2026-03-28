@@ -3,12 +3,12 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: radarr-anime
+  name: radarr-standard
 spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
-    name: radarr-anime
+    name: radarr
   install:
     remediation:
       retries: -1
@@ -18,7 +18,7 @@ spec:
       retries: 3
   values:
     controllers:
-      radarr-anime:
+      radarr-standard:
         annotations:
           reloader.stakater.com/auto: "true"
         initContainers:
@@ -39,7 +39,7 @@ spec:
               repository: ghcr.io/home-operations/radarr
               tag: 6.1.2.10359@sha256:9967e56263a3c67eeaede5824103ee4c1c1f1511abd5965ac1e294bfd9b76dbb
             env:
-              RADARR__APP__INSTANCENAME: Radarr (Anime)
+              RADARR__APP__INSTANCENAME: Radarr
               RADARR__APP__THEME: dark
               RADARR__AUTH__METHOD: External
               RADARR__AUTH__REQUIRED: DisabledForLocalAddresses
@@ -50,7 +50,7 @@ spec:
               TZ: America/Los_Angeles
             envFrom:
               - secretRef:
-                  name: radarr-anime-secret
+                  name: radarr-standard-secret
             probes:
               liveness: &probes
                 enabled: true
@@ -82,7 +82,7 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        controller: radarr-anime
+        controller: radarr-standard
         ports:
           http:
             port: *port
@@ -99,9 +99,9 @@ spec:
                 port: *port
     persistence:
       config:
-        existingClaim: radarr-anime
+        existingClaim: radarr-standard
       config-cache:
-        existingClaim: radarr-anime-cache
+        existingClaim: radarr-standard-cache
         globalMounts:
           - path: /config/MediaCover
       media:

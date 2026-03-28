@@ -3,14 +3,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./ocirepository.yaml
   - ./externalsecret.yaml
   - ./pvc.yaml
   - ./helmrelease.yaml
 configMapGenerator:
-  - name: radarr-anime-loki-rules
+  - name: radarr-standard-loki-rules
     files:
-      - radarr-anime.yaml=./lokirule.yaml
+      - radarr-standard.yaml=./lokirule.yaml
     options:
       labels:
         loki_rule: "true"

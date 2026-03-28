@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: sonarr-anime-cache
+  name: radarr-standard-cache
 spec:
   accessModes: ["ReadWriteOnce"]
   resources:
