@@ -11,7 +11,6 @@ resources:
   - ./autobrr/ks.yaml
   - ./bazarr/ks.yaml
   - ./brrpolice/ks.yaml
-  - ./jellyseerr/ks.yaml
   - ./pinchflat/ks.yaml
   - ./prowlarr/ks.yaml
   - ./plex/ks.yaml
@@ -21,6 +20,7 @@ resources:
   - ./radarr/ks.yaml
   - ./recyclarr/ks.yaml
   - ./sabnzbd/ks.yaml
+  - ./seerr/ks.yaml
   - ./sonarr/ks.yaml
   - ./tautulli/ks.yaml
   - ./thelounge/ks.yaml
