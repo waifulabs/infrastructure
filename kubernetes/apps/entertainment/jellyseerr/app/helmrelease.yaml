@@ -3,12 +3,12 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: jellyseerr
+  name: seerr
 spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
-    name: jellyseerr
+    name: seerr
   install:
     remediation:
       retries: -1
@@ -18,21 +18,21 @@ spec:
       retries: 3
   values:
     controllers:
-      jellyseerr:
+      seerr:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
-              repository: ghcr.io/fallenbagel/jellyseerr
-              tag: 2.7.3@sha256:9cc9e9ee6cd5cf5a23feb45c37742ba34cfd6314d81d259cddb373a97ac92cdd
+              repository: ghcr.io/seerr-team/seerr
+              tag: v3.1.0@sha256:b35ba0461c4a1033d117ac1e5968fd4cbe777899e4cbfbdeaf3d10a42a0eb7e9
             env:
               TZ: America/Los_Angeles
               LOG_LEVEL: "info"
               PORT: &port 80
             envFrom:
               - secretRef:
-                  name: jellyseerr-secret
+                  name: "{{ .Release.Name }}-secret"
             probes:
               liveness: &probes
                 enabled: true
@@ -43,7 +43,7 @@ spec:
                     port: *port
                   initialDelaySeconds: 0
                   periodSeconds: 10
-                  timeoutSeconds: 1
+                  timeoutSeconds: 5
                   failureThreshold: 3
               readiness: *probes
             securityContext:
@@ -64,12 +64,15 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        controller: jellyseerr
+        controller: seerr
         ports:
           http:
             port: *port
     route:
       app:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            url: https://{{ .Release.Name }}.ok8.sh/api/v1/status
         hostnames:
           - "{{ .Release.Name }}.ok8.sh"
           - requests.ok8.sh
@@ -77,22 +80,21 @@ spec:
           - name: external
             namespace: networking
             sectionName: https
-        rules:
-          - backendRefs:
-              - identifier: app
-                port: *port
     persistence:
       config:
-        existingClaim: jellyseerr
+        existingClaim: "jellyseerr"
         globalMounts:
           - path: /app/config
       config-cache:
-        existingClaim: jellyseerr-cache
+        existingClaim: "{{ .Release.Name }}-cache"
         globalMounts:
           - path: /app/config/cache
-      config-logs:
+      tmpfs:
         type: emptyDir
-        globalMounts:
-          - path: /app/config/logs
-      tmp:
-        type: emptyDir
+        advancedMounts:
+          seerr:
+            app:
+              - path: /app/config/logs
+                subPath: logs
+              - path: /tmp
+                subPath: tmp
