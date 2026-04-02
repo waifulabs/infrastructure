@@ -87,7 +87,7 @@ spec:
     - name: cache
       persistentVolumeClaim:
         claimName: renovate-cache
-  image: ghcr.io/renovatebot/renovate:43.102.8
+  image: ghcr.io/renovatebot/renovate:43.102.10
   parallelism: 5
   provider:
     name: github
