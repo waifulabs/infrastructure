@@ -10,6 +10,7 @@ bpf:
   masquerade: true
   preallocateMaps: true
   tproxy: true
+  vlanBypass: [30]
 bpfClockProbe: true
 cgroup:
   automount:
