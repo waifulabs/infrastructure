@@ -5,4 +5,5 @@ kind: Kustomization
 resources:
   - ./dragonfly.yaml
   - ./kashalls.yaml
+  - ./pvc.yaml
   - ./waifulabs.yaml
