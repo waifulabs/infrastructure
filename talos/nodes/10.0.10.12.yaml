@@ -77,31 +77,3 @@ name: bond0.30
 parent: bond0
 vlanID: 30
 mtu: 9000
----
-apiVersion: v1alpha1
-kind: LinkAliasConfig
-name: fenrys
-selector:
-  match:  link.bus_path == "0-1.0"
----
-apiVersion: v1alpha1
-kind: LinkConfig
-name: fenrys
-up: true
-mtu: 65520
-addresses: [{ address: 192.168.254.12/32 }]
-routes: [{ destination: 192.168.254.10/32, metric: 2048  }]
----
-apiVersion: v1alpha1
-kind: LinkAliasConfig
-name: maomao
-selector:
-  match: link.bus_path == "1-1.0"
----
-apiVersion: v1alpha1
-kind: LinkConfig
-name: maomao
-up: true
-mtu: 65520
-addresses: [{ address: 192.168.254.12/32 }]
-routes: [{ destination: 192.168.254.11/32, metric: 2048 }]

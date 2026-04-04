@@ -31,22 +31,9 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    monitoring:
-      enabled: true
-      createPrometheusRules: true
-    toolbox:
-      enabled: true
-    route:
-      dashboard:
-        host:
-          name: rook.ok8.sh
-          path: /
-          pathType: PathPrefix
-        parentRefs:
-          - name: internal
-            namespace: networking
-            sectionName: https
     cephClusterSpec:
+      cleanupPolicy:
+        wipeDevicesFromOtherClusters: true
       cephConfig:
         global:
           bdev_enable_discard: "true" # quote
@@ -56,7 +43,6 @@ spec:
           device_failure_prediction_mode: local # requires mgr module
           bluestore_prefer_deferred_size: "0" # disable HDD-optimised deferred writes on NVMe
           osd_memory_target: "12884901888" # 12Gi - allow BlueStore cache to grow (limit is 16Gi)
-          ms_async_op_threads: "5" # increase messenger threads for TB4 bandwidth
           osd_recovery_max_active_ssd: "16" # faster recovery on NVMe (default 10)
       crashCollector:
         disable: false
@@ -82,10 +68,6 @@ spec:
           - name: rook
             enabled: true
       network:
-        provider: host
-        addressRanges:
-          public: ["192.168.254.0/24"]
-          cluster: ["192.168.254.0/24"]
         connections:
           requireMsgr2: true
       resources:
@@ -93,11 +75,24 @@ spec:
           limits:
             memory: 16Gi
       storage:
+        devicePathFilter: /dev/disk/by-id/nvme-SAMSUNG_.*
         useAllNodes: true
         useAllDevices: false
-        devicePathFilter: /dev/disk/by-id/nvme-SAMSUNG_.*
-        config:
-          osdsPerDevice: "1"
+    monitoring:
+      enabled: true
+      createPrometheusRules: true
+    toolbox:
+      enabled: true
+    route:
+      dashboard:
+        host:
+          name: rook.ok8.sh
+          path: /
+          pathType: PathPrefix
+        parentRefs:
+          - name: internal
+            namespace: networking
+            sectionName: https
     cephBlockPools:
       - name: ceph-blockpool
         spec:
@@ -109,12 +104,8 @@ spec:
           name: ceph-block
           isDefault: true
           reclaimPolicy: Delete
-          allowVolumeExpansion: true
-          volumeBindingMode: Immediate
           mountOptions: ["discard"]
           parameters:
-            compression_algorithm: zstd
-            compression_mode: aggressive
             imageFormat: "2"
             imageFeatures: layering,fast-diff,object-map,deep-flatten,exclusive-lock
             csi.storage.k8s.io/provisioner-secret-name: rook-csi-rbd-provisioner
@@ -123,6 +114,8 @@ spec:
             csi.storage.k8s.io/controller-expand-secret-namespace: "{{ .Release.Namespace }}"
             csi.storage.k8s.io/node-stage-secret-name: rook-csi-rbd-node
             csi.storage.k8s.io/node-stage-secret-namespace: "{{ .Release.Namespace }}"
+          allowVolumeExpansion: true
+          volumeBindingMode: Immediate
     cephBlockPoolsVolumeSnapshotClass:
       enabled: true
       name: csi-ceph-blockpool
