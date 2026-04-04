@@ -11,6 +11,10 @@ spec:
     name: blackbox-exporter
   values:
     fullnameOverride: blackbox-exporter
+    securityContext:
+      capabilities:
+        add:
+          - NET_RAW
     config:
       modules:
         http_2xx:
