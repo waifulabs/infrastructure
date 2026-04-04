@@ -9,19 +9,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: zigbee2mqtt
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
-  dependsOn:
-    - name: mosquitto
-      namespace: default
-    - name: openebs
-      namespace: openebs-system
   values:
     controllers:
       zigbee2mqtt:
@@ -79,17 +66,16 @@ spec:
               requests:
                 cpu: 10m
               limits:
-                memory: 256Mi
-        pod:
-          securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            runAsNonRoot: true
-            fsGroup: 568
-            fsGroupChangePolicy: OnRootMismatch
+                memory: 1Gi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        controller: zigbee2mqtt
         ports:
           http:
             port: *port
@@ -99,11 +85,6 @@ spec:
         parentRefs:
           - name: internal
             namespace: networking
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
     persistence:
       data:
         existingClaim: *app
