@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.12/website/content/v1.12/schemas/v1alpha1_config.schema.json
 version: v1alpha1
 debug: false
 persist: true
@@ -13,8 +12,8 @@ machine:
     diskQuotaSupport: true
     hostDNS:
       enabled: true
-      resolveMemberNames: true
       forwardKubeDNSToHost: true # Requires Cilium socketLB features
+      resolveMemberNames: true
     kubePrism:
       enabled: true
       port: 7445
@@ -31,6 +30,9 @@ machine:
       content: |-
         [plugins."io.containerd.cri.v1.images"]
           discard_unpacked_layers = false
+        [plugins."io.containerd.cri.v1.runtime"]
+          cdi_spec_dirs = ["/var/cdi/static", "/var/cdi/dynamic"]
+          device_ownership_from_security_context = true
     - op: overwrite
       permissions: 0o644
       path: /etc/nfsmount.conf
@@ -40,10 +42,17 @@ machine:
         hard=True
         nconnect=16
         noatime=True
+        rsize=1048576
+        wsize=1048576
+  install:
+    image: factory.talos.dev/metal-installer/7fe953aa80ac882abc707dad04f849b09b00d4834e50d7368a332e1ce3608a4e:v1.12.6
+  kernel:
+    modules:
+      - name: nbd
   kubelet:
     defaultRuntimeSeccompProfileEnabled: true
     disableManifestsDirectory: true
-    image: ghcr.io/siderolabs/kubelet:{{ ENV.KUBERNETES_VERSION }}
+    image: ghcr.io/siderolabs/kubelet:v1.35.3
     extraMounts:
       - destination: /var/mnt/extra
         type: bind
@@ -53,16 +62,12 @@ machine:
       validSubnets: ["10.0.10.0/24"]
   nodeLabels:
     topology.kubernetes.io/zone: {{ ENV.MACHINE_TYPE }}
-  {% if ENV.MACHINE_TYPE == 'controlplane' %}
   sysctls:
     fs.inotify.max_user_watches: 1048576 # Watchdog
     fs.inotify.max_user_instances: 8192 # Watchdog
     net.core.default_qdisc: fq # 10Gb/s
     net.core.rmem_max: 67108864 # 10Gb/s | Cloudflared / QUIC
     net.core.wmem_max: 67108864 # 10Gb/s | Cloudflared / QUIC
-    net.ipv4.neigh.default.gc_thresh1: "4096"
-    net.ipv4.neigh.default.gc_thresh2: "8192"
-    net.ipv4.neigh.default.gc_thresh3: "16384"
     net.ipv4.ping_group_range: 0 2147483647
     net.ipv4.tcp_congestion_control: bbr # 10Gb/s
     net.ipv4.tcp_fastopen: 3 # Send and accept data in the opening SYN packet
@@ -74,34 +79,10 @@ machine:
     sunrpc.tcp_slot_table_entries: "128"
     user.max_user_namespaces: "11255"
     vm.nr_hugepages: "1024"
-  sysfs:
-    devices.system.cpu.intel_pstate.hwp_dynamic_boost: 1
-    devices.system.cpu.cpu0.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu1.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu2.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu3.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu4.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu5.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu6.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu7.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu8.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu9.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu10.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu11.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu12.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu13.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu14.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu15.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu16.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu17.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu18.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu19.cpufreq.energy_performance_preference: balance_performance
-  {% endif %}
   token: op://Kubernetes/talos/TRUSTDINFO_TOKEN
   type: {{ ENV.MACHINE_TYPE }}
   udev:
     rules:
-      - ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{authorized}=="0", ATTR{authorized}="1" # Thunderbolt
       - SUBSYSTEM=="drm", KERNEL=="renderD*", GROUP="44", MODE="0660" # Intel GPU
 cluster:
   ca:
@@ -139,7 +120,7 @@ cluster:
     key: op://Kubernetes/talos/CERTS_K8SAGGREGATOR_KEY
   allowSchedulingOnControlPlanes: true
   apiServer:
-    image: registry.k8s.io/kube-apiserver:{{ ENV.KUBERNETES_VERSION }}
+    image: registry.k8s.io/kube-apiserver:v1.35.3
     certSANs: ["k8s.internal"]
     extraArgs:
       enable-aggregator-routing: true
@@ -153,7 +134,7 @@ cluster:
   coreDNS:
     disabled: true
   controllerManager:
-    image: registry.k8s.io/kube-controller-manager:{{ ENV.KUBERNETES_VERSION }}
+    image: registry.k8s.io/kube-controller-manager:v1.35.3
     extraArgs:
       bind-address: 0.0.0.0
   etcd:
@@ -170,7 +151,7 @@ cluster:
     disabled: true
   secretboxEncryptionSecret: op://Kubernetes/talos/SECRETS_ENCRYPTIONSECRET
   scheduler:
-    image: registry.k8s.io/kube-scheduler:{{ ENV.KUBERNETES_VERSION }}
+    image: registry.k8s.io/kube-scheduler:v1.35.3
     extraArgs:
       bind-address: 0.0.0.0
     config:
@@ -219,3 +200,8 @@ configFiles:
       MONITOR 10.0.10.3 1 slaveuser "op://Kubernetes/nut/NUT_PASSWORD" slave
       SHUTDOWNCMD "/sbin/poweroff"
     mountPath: /usr/local/etc/nut/upsmon.conf
+---
+apiVersion: v1alpha1
+kind: WatchdogTimerConfig
+device: /dev/watchdog0
+timeout: 10m

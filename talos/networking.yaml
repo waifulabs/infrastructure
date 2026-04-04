@@ -1,0 +1,58 @@
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: fenrys
+---
+apiVersion: v1alpha1
+kind: EthernetConfig
+name: enp2s0f0np0
+rings:
+  rx: 8160
+  tx: 8160
+---
+apiVersion: v1alpha1
+kind: EthernetConfig
+name: enp2s0f1np1
+rings:
+  rx: 8160
+  tx: 8160
+---
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: ipmi
+selector:
+  match: link.bus_path == "0000:59:00.0"
+---
+apiVersion: v1alpha1
+kind: LinkConfig
+name: ipmi
+up: true
+---
+apiVersion: v1alpha1
+kind: DHCPv4Config
+name: ipmi
+routeMetric: 4096
+---
+apiVersion: v1alpha1
+kind: BondConfig
+name: bond0
+links: [enp2s0f0np0, enp2s0f1np1]
+bondMode: 802.3ad
+miimon: 100
+updelay: 200
+downdelay: 200
+xmitHashPolicy: layer3+4
+lacpRate: fast
+mtu: 9000
+---
+apiVersion: v1alpha1
+kind: DHCPv4Config
+name: bond0
+clientIdentifier: mac
+---
+apiVersion: v1alpha1
+kind: VLANConfig
+name: bond0.30
+parent: bond0
+vlanID: 30
+mtu: 9000

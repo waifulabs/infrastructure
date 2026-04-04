@@ -1,67 +1,9 @@
 ---
 machine:
-  type: controlplane
   install:
-    image: factory.talos.dev/metal-installer/7fe953aa80ac882abc707dad04f849b09b00d4834e50d7368a332e1ce3608a4e:{{ ENV.TALOS_VERSION }}
     diskSelector:
       serial: 2318E6D1804C
-  kernel:
-    modules:
-      - name: nbd
-      - name: thunderbolt
-      - name: thunderbolt_net
 ---
 apiVersion: v1alpha1
 kind: HostnameConfig
 hostname: maomao
----
-apiVersion: v1alpha1
-kind: EthernetConfig
-name: enp2s0f0np0
-rings:
-  rx: 8160
-  tx: 8160
----
-apiVersion: v1alpha1
-kind: EthernetConfig
-name: enp2s0f1np1
-rings:
-  rx: 8160
-  tx: 8160
----
-# Intel vPRO Interface
-# We don't want talos to control this interface, just have it up for IPMI access. Intel will manage it's IP.
-apiVersion: v1alpha1
-kind: LinkAliasConfig
-name: ipmi
-selector:
-  match: link.bus_path == "0000:59:00.0"
----
-apiVersion: v1alpha1
-kind: LinkConfig
-name: ipmi
-up: true
----
-apiVersion: v1alpha1
-kind: DHCPv4Config
-name: ipmi
-routeMetric: 4096
----
-apiVersion: v1alpha1
-kind: BondConfig
-name: bond0
-links: [enp2s0f0np0, enp2s0f1np1]
-bondMode: active-backup
-mtu: 9000
-up: true
----
-apiVersion: v1alpha1
-kind: DHCPv4Config
-name: bond0
----
-apiVersion: v1alpha1
-kind: VLANConfig
-name: bond0.30
-parent: bond0
-vlanID: 30
-mtu: 9000
