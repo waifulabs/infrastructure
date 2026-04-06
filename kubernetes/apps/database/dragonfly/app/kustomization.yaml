@@ -8,3 +8,4 @@ resources:
   - ./ocirepository.yaml
   - ./helmrelease.yaml
   - ./rbac.yaml
+  - ./grafanadashboard.yaml
