@@ -7,3 +7,4 @@ resources:
   - ./cluster.yaml
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+  - ./podmonitor.yaml
