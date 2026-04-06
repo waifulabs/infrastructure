@@ -8,7 +8,7 @@ spec:
   backupOwnerReference: self
   cluster:
     name: immich
-  schedule: "0 3 * * *"
+  schedule: "0 0 3 * * *"
   immediate: true
   method: plugin
   pluginConfiguration:
