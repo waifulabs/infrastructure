@@ -1,0 +1,39 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/infra.contrib.fluxcd.io/terraform_v1alpha2.json
+apiVersion: infra.contrib.fluxcd.io/v1alpha2
+kind: Terraform
+metadata:
+  name: immichframe
+spec:
+  interval: 1h
+  approvePlan: auto
+  path: ./kubernetes/apps/default/immichframe/app/terraform
+  sourceRef:
+    kind: GitRepository
+    name: home-kubernetes
+    namespace: flux-system
+  vars:
+    - name: frame_host
+      value: "frame.outsideour.casa" # TODO: set your Pi's IP
+    - name: frame_user
+      value: "kashall"
+    - name: immich_server_url
+      value: "https://photos.ok8.sh"
+  varsFrom:
+    - kind: Secret
+      name: immichframe-secret
+      varsKeys:
+        - immich_api_key
+  runnerPodTemplate:
+    spec:
+      volumes:
+        - name: ssh-key
+          secret:
+            secretName: immichframe-secret
+            defaultMode: 0400
+      containers:
+        - name: runner
+          volumeMounts:
+            - name: ssh-key
+              mountPath: /root/.ssh/id_rsa
+              subPath: ssh_private_key
