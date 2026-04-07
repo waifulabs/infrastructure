@@ -24,16 +24,4 @@ spec:
       name: immichframe-secret
       varsKeys:
         - immich_api_key
-  runnerPodTemplate:
-    spec:
-      volumes:
-        - name: ssh-key
-          secret:
-            secretName: immichframe-secret
-            defaultMode: 0400
-      containers:
-        - name: runner
-          volumeMounts:
-            - name: ssh-key
-              mountPath: /root/.ssh/id_rsa
-              subPath: ssh_private_key
+        - ssh_private_key

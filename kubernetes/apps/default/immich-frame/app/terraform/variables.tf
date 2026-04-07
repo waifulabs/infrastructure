@@ -19,3 +19,9 @@ variable "immich_api_key" {
   type        = string
   sensitive   = true
 }
+
+variable "ssh_private_key" {
+  description = "SSH private key for connecting to the Pi"
+  type        = string
+  sensitive   = true
+}
