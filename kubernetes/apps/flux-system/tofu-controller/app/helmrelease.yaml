@@ -1,17 +1,12 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/source.toolkit.fluxcd.io/ocirepository_v1.json
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/source.toolkit.fluxcd.io/helmrepository_v1.json
 apiVersion: source.toolkit.fluxcd.io/v1
-kind: OCIRepository
+kind: HelmRepository
 metadata:
   name: tofu-controller
 spec:
-  interval: 10m
-  layerSelector:
-    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
-    operation: copy
-  ref:
-    tag: v0.16.2
-  url: oci://ghcr.io/flux-iac/helm-charts/tofu-controller
+  interval: 1h
+  url: https://flux-iac.github.io/tofu-controller
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
@@ -20,9 +15,15 @@ metadata:
   name: &name tofu-controller
 spec:
   interval: 1h
-  chartRef:
-    kind: OCIRepository
-    name: *name
+  releaseName: *name
+  targetNamespace: flux-system
+  chart:
+    spec:
+      chart: tofu-controller
+      version: ">=0.16.2"
+      sourceRef:
+        kind: HelmRepository
+        name: tofu-controller
   install:
     crds: CreateReplace
     remediation:
@@ -41,3 +42,8 @@ spec:
       requests:
         cpu: 50m
         memory: 128Mi
+    image:
+      tag: v0.16.2
+    runner:
+      image:
+        tag: v0.16.2

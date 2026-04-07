@@ -7,7 +7,7 @@ metadata:
 spec:
   interval: 1h
   approvePlan: auto
-  path: ./kubernetes/apps/default/immichframe/app/terraform
+  path: ./kubernetes/apps/default/immich-frame/app/terraform
   sourceRef:
     kind: GitRepository
     name: home-kubernetes

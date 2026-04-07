@@ -13,12 +13,12 @@ spec:
     - name: tofu-controller
       namespace: flux-system
   interval: 1h
-  path: ./kubernetes/apps/entertainment/immichframe/app
+  path: ./kubernetes/apps/default/immich-frame/app
   prune: true
   retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
     namespace: flux-system
-  targetNamespace: entertainment
+  targetNamespace: default
   timeout: 10m
