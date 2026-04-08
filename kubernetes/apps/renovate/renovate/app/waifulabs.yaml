@@ -64,7 +64,7 @@ kind: RenovateJob
 metadata:
   name: waifulabs
 spec:
-  discoveryFilter: waifulabs/*
+  discoveryFilters: ["waifulabs/*"]
   extraEnv:
     - name: LOG_LEVEL
       value: debug

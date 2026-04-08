@@ -64,7 +64,7 @@ kind: RenovateJob
 metadata:
   name: kashalls
 spec:
-  discoveryFilter: kashalls/*
+  discoveryFilters: ["kashalls/*"]
   extraEnv:
     - name: LOG_LEVEL
       value: debug
