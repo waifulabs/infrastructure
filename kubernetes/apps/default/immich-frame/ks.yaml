@@ -3,22 +3,19 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app immichframe
-  namespace: flux-system
+  name: &app immich-frame
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: tofu-controller
-      namespace: flux-system
-  interval: 1h
+    - name: immich
   path: ./kubernetes/apps/default/immich-frame/app
   prune: true
-  retryInterval: 2m
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
     namespace: flux-system
-  targetNamespace: flux-system
-  timeout: 10m
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m
