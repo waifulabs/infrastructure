@@ -63,7 +63,7 @@ spec:
         hostnames:
           - "immich-frame.ok8.sh"
         parentRefs:
-          - name: external
+          - name: internal
             namespace: networking
             sectionName: https
         rules:
