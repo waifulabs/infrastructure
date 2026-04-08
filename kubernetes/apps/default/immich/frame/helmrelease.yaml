@@ -30,6 +30,11 @@ spec:
             env:
               TZ: America/Los_Angeles
               ImmichServerUrl: http://immich.default.svc.cluster.local:2283
+              PrimaryColor: "#5B3E7D"
+              SecondaryColor: "#F5C04C"
+              Albums: "6c98b6bd-6bad-4e9e-b78e-2ff83eb58d88"
+              People: "adbd18d9-759f-4f36-9094-3b5c21d42adb,62fc8c95-aa84-46de-9aad-66ebb2b90c56"
+              PhotoDateFormat: "MM-dd-yyyy"
             envFrom:
               - secretRef:
                   name: immich-frame-secret
@@ -66,7 +71,3 @@ spec:
           - name: internal
             namespace: networking
             sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
