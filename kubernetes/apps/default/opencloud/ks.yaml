@@ -20,6 +20,7 @@ spec:
       APP: *app
       VOLSYNC_CLAIM: opencloud
       VOLSYNC_CAPACITY: 15Gi
+      VOLSYNC_SCHEDULE: "5 * * * *"
   prune: true
   sourceRef:
     kind: GitRepository

@@ -21,6 +21,7 @@ spec:
     substitute:
       APP: jellyseerr
       VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_SCHEDULE: "26 * * * *"
   prune: true
   retryInterval: 2m
   sourceRef:

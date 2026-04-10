@@ -17,6 +17,7 @@ spec:
     substitute:
       APP: qui
       VOLSYNC_CAPACITY: 2Gi
+      VOLSYNC_SCHEDULE: "16 * * * *"
   prune: true
   sourceRef:
     kind: GitRepository
