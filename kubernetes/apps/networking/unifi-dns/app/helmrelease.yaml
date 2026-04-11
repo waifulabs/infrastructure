@@ -38,7 +38,7 @@ spec:
       webhook:
         image:
           repository: ghcr.io/kashalls/external-dns-unifi-webhook
-          tag: main@sha256:25ccf9f75deca7aa9f58c44439633a3e587e0db16125c1e54db0a4c419c1ea76
+          tag: main@sha256:85cbff1c9e39a5c946aa5260a49c66fc340aba4d4245bd65fdaed7d750ced13a
         env:
           - name: LOG_LEVEL
             value: *logLevel
