@@ -42,7 +42,7 @@ spec:
           k8s-extension:
             image:
               repository: ghcr.io/lukasdietrich/glance-k8s/glance-k8s
-              tag: v0.4.7@sha256:4ff785aa8d33d9bd065f1f66cb1c9d4eedd7c0793af07f2bebfb22889f0b07ee
+              tag: v0.4.8@sha256:69b0cead3daaff5c2dc37ff3c1da392462821718a65f8205aea6db1d5846ca40
             env:
               TZ: America/Los_Angeles
             securityContext:
