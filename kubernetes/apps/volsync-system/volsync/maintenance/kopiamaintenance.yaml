@@ -1,0 +1,17 @@
+---
+apiVersion: volsync.backube/v1alpha1
+kind: KopiaMaintenance
+metadata:
+  name: daily
+spec:
+  enabled: true
+  moverVolumes:
+    - mountPath: repository
+      volumeSource:
+        nfs:
+          path: /mnt/loki/kubernetes/kopia
+          server: fran.outsideour.casas
+  repository:
+    repository: volsync-maintenance-secret
+  trigger:
+    schedule: 30 3,15 * * *

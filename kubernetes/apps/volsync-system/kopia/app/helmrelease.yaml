@@ -13,6 +13,30 @@ spec:
       kopia:
         annotations:
           reloader.stakater.com/auto: "true"
+        initContainers:
+          init-repository:
+            image:
+              repository: ghcr.io/home-operations/kopia
+              tag: 0.22.3@sha256:17ab64542280197a5368247deaefadc3e3bbe15714ab666c2455a06824e86efd
+            command:
+              - /bin/sh
+              - -c
+              - |
+                kopia --config-file=/tmp/kopia.config repository create filesystem \
+                  --path=/repository \
+                  --description="volsync" \
+                  --hostname=volsync.volsync-system.svc.cluster.local \
+                  --username=volsync 2>/dev/null || \
+                kopia --config-file=/tmp/kopia.config repository connect filesystem \
+                  --path=/repository \
+                  --hostname=volsync.volsync-system.svc.cluster.local \
+                  --username=volsync
+            envFrom:
+              - secretRef:
+                  name: kopia-secret
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
         containers:
           app:
             image:
@@ -67,10 +91,15 @@ spec:
         type: nfs
         server: fran.outsideour.casa
         path: /mnt/loki/kubernetes/kopia
+        globalMounts:
+          - path: /repository
       tmpfs:
         type: emptyDir
         advancedMounts:
           kopia:
+            init-repository:
+              - path: /tmp
+                subPath: tmp
             app:
               - path: /config/cache
                 subPath: cache
