@@ -93,6 +93,8 @@ spec:
         advancedMounts:
           kopia:
             init-repository:
+              - path: /config/cache
+                subPath: cache
               - path: /config/logs
                 subPath: logs
               - path: /tmp
