@@ -27,7 +27,7 @@ spec:
         volumeSource:
           nfs:
             path: /mnt/loki/kubernetes/kopia
-            server: fran.outsideour.casas
+            server: fran.outsideour.casa
     repository: ${APP}-volsync-secret
     sourceIdentity:
       sourceName: ${APP}

@@ -10,7 +10,7 @@ spec:
       volumeSource:
         nfs:
           path: /mnt/loki/kubernetes/kopia
-          server: fran.outsideour.casas
+          server: fran.outsideour.casa
   repository:
     repository: volsync-maintenance-secret
   trigger:
