@@ -22,10 +22,12 @@ spec:
               - /bin/sh
               - -c
               - |
-                kopia --config-file=/config/repository.config repository create filesystem \
+                kopia --config-file=/tmp/kopia.config repository create filesystem \
                   --path=/repository 2>/dev/null || \
-                kopia --config-file=/config/repository.config repository connect filesystem \
+                kopia --config-file=/tmp/kopia.config repository connect filesystem \
                   --path=/repository
+            env:
+              USER: kopia
             envFrom:
               - secretRef:
                   name: kopia-secret
