@@ -1,0 +1,31 @@
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: ${APP}
+spec:
+  sourcePVC: ${APP}
+  trigger:
+    schedule: 0 * * * *
+  kopia:
+    accessModes:
+      - ${VOLSYNC_SNAP_ACCESSMODES:=ReadWriteOnce}
+    compression: zstd-fastest
+    copyMethod: Snapshot
+    moverSecurityContext:
+      runAsUser: ${VOLSYNC_PUID:=1000}
+      runAsGroup: ${VOLSYNC_PGID:=1000}
+      fsGroup: ${VOLSYNC_PGID:=1000}
+    moverVolumes:
+      - mountPath: repository
+        volumeSource:
+          nfs:
+            path: /mnt/loki/kubernetes/kopia
+            server: fran.outsideour.casas
+    parallelism: 2
+    repository: ${APP}-volsync-secret
+    retain:
+      hourly: 24
+      daily: 7
+    storageClassName: ${VOLSYNC_STORAGECLASS:=ceph-block}
+    volumeSnapshotClassName: ${VOLSYNC_SNAPSHOTCLASS:=csi-ceph-block}
