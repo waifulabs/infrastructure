@@ -21,7 +21,7 @@ metadata:
   name: &name node-exporter
 spec:
   staticConfigs:
-    - targets: ["fran.outsideour.casa:9100"]
+    - targets: ["puddle.outsideour.casa:9100"]
   metricsPath: /metrics
   relabelings:
     - action: replace
@@ -35,7 +35,7 @@ metadata:
   name: &name smartctl-exporter
 spec:
   staticConfigs:
-    - targets: ["fran.outsideour.casa:9633"]
+    - targets: ["puddle.outsideour.casa:9633"]
   metricsPath: /metrics
   relabelings:
     - action: replace

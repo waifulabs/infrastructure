@@ -122,8 +122,8 @@ spec:
         type: emptyDir
       media:
         type: nfs
-        server: fran.outsideour.casa
-        path: /mnt/loki/Multimedia
+        server: puddle.outsideour.casa
+        path: /mnt/puddle/media
         globalMounts:
           - path: /media
             readOnly: true

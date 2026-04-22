@@ -21,18 +21,6 @@ spec:
       radarr-standard:
         annotations:
           reloader.stakater.com/auto: "true"
-        initContainers:
-          nfs-probe:
-            image:
-              repository: public.ecr.aws/docker/library/busybox
-              tag: 1.37.0@sha256:1487d0af5f52b4ba31c7e465126ee2123fe3f2305d638e7827681e7cf6c83d5e
-            args:
-              [
-                "/bin/sh",
-                "-c",
-                "while true; do nc -z fran.outsideour.casa 2049; sleep 10; done",
-              ]
-            restartPolicy: Always
         containers:
           app:
             image:
@@ -106,8 +94,8 @@ spec:
           - path: /config/MediaCover
       media:
         type: nfs
-        server: fran.outsideour.casa
-        path: /mnt/loki/Multimedia
+        server: puddle.outsideour.casa
+        path: /mnt/puddle/media
         globalMounts:
           - path: /media
       tmp:

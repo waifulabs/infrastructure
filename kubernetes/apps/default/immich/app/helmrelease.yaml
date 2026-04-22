@@ -168,8 +168,8 @@ spec:
               - path: /config/matplotlib
       library:
         type: nfs
-        server: fran.outsideour.casa
-        path: /mnt/loki/immich
+        server: puddle.outsideour.casa
+        path: /mnt/puddle/kubernetes/immich
         globalMounts:
           - path: *mediaLocation
       cache:

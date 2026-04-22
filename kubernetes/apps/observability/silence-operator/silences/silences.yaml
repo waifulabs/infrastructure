@@ -53,7 +53,7 @@ spec:
       value: NodeMemoryHighUtilization
       isRegex: false
     - name: instance
-      value: fran.outsideour.casa:9100
+      value: puddle.outsideour.casa:9100
       isRegex: false
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/monitoring.giantswarm.io/silence_v1alpha1.json

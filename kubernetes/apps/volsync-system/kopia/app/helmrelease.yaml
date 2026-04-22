@@ -81,8 +81,8 @@ spec:
             subPath: repository.config
       repository:
         type: nfs
-        server: fran.outsideour.casa
-        path: /mnt/loki/kubernetes/kopia
+        server: puddle.outsideour.casa
+        path: /mnt/puddle/kubernetes/kopia
       tmpfs:
         type: emptyDir
         advancedMounts:

@@ -64,8 +64,8 @@ spec:
     persistence:
       data:
         type: nfs
-        server: fran.outsideour.casa
-        path: /mnt/loki/registry
+        server: puddle.outsideour.casa
+        path: /mnt/puddle/kubernetes/registry
         globalMounts:
           - path: /var/lib/registry
       config:

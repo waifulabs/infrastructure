@@ -33,7 +33,7 @@ endpoints:
       - "[CONNECTED] == true"
   - name: Fran (NAS-1)
     group: infrastructure
-    url: "icmp://fran.outsideour.casa"
+    url: "icmp://puddle.outsideour.casa"
     interval: 1m
     conditions:
       - "[CONNECTED] == true"

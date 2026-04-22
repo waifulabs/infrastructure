@@ -27,8 +27,8 @@ spec:
     storageClasses:
       - name: nfs-slow
         parameters:
-          server: fran.outsideour.casa
-          share: /mnt/loki/kubernetes
+          server: puddle.outsideour.casa
+          share: /mnt/puddle/kubernetes/csi
         mountOptions:
           - nfsvers=4.2
           - nconnect=16

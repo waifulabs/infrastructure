@@ -26,8 +26,8 @@ spec:
       - mountPath: repository
         volumeSource:
           nfs:
-            path: /mnt/loki/kubernetes/kopia
-            server: fran.outsideour.casa
+            path: /mnt/puddle/kubernetes/kopia
+            server: puddle.outsideour.casa
     repository: ${APP}-volsync-secret
     sourceIdentity:
       sourceName: ${APP}

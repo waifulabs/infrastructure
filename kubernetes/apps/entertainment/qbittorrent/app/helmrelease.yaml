@@ -95,8 +95,8 @@ spec:
         existingClaim: qbittorrent
       media:
         type: nfs
-        server: fran.outsideour.casa
-        path: /mnt/loki/Multimedia
+        server: puddle.outsideour.casa
+        path: /mnt/puddle/media
         globalMounts:
           - path: /media
       tmp:

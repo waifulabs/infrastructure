@@ -12,7 +12,7 @@ spec:
     staticConfig:
       static:
         - airgradient.outsideour.casa
-        - fran.outsideour.casa
+        - puddle.outsideour.casa
         #- jetkvm.outsideour.casa
         - zigbee-controller.outsideour.casa
   metricRelabelings:
@@ -32,7 +32,7 @@ spec:
   targets:
     staticConfig:
       static:
-        - fran.outsideour.casa:2049
+        - puddle.outsideour.casa:2049
   metricRelabelings:
     - targetLabel: service
       replacement: blackbox-exporter-devices
