@@ -144,6 +144,6 @@ spec:
         path: /mnt/puddle/kubernetes/continuwuity
         globalMounts:
           - path: /data/media
-            subPath: matrix/media
+            subPath: media
           - path: *backup
-            subPath: matrix/backups
+            subPath: backups
