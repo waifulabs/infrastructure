@@ -28,4 +28,4 @@ spec:
       hourly: 24
       daily: 7
     storageClassName: ${VOLSYNC_STORAGECLASS:=ceph-block}
-    volumeSnapshotClassName: ${VOLSYNC_SNAPSHOTCLASS:=csi-ceph-block}
+    volumeSnapshotClassName: ${VOLSYNC_SNAPSHOTCLASS:=csi-ceph-blockpool}

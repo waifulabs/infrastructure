@@ -24,6 +24,7 @@ spec:
               KOPIA_WEB_ENABLED: true
               KOPIA_WEB_PORT: &port 80
               TZ: America/Los_Angeles
+              UMASK: "0022"
             envFrom:
               - secretRef:
                   name: kopia-secret
