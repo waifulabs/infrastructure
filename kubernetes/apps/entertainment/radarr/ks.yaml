@@ -16,45 +16,12 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   interval: 1h
-  path: ./kubernetes/apps/entertainment/radarr/anime
+  path: ./kubernetes/apps/entertainment/radarr/app
   postBuild:
     substitute:
       APP: *app
       VOLSYNC_CAPACITY: 5Gi
       VOLSYNC_SCHEDULE: "18 * * * *"
-  prune: true
-  retryInterval: 2m
-  sourceRef:
-    kind: GitRepository
-    name: home-kubernetes
-    namespace: flux-system
-  targetNamespace: *namespace
-  timeout: 5m
-  wait: false
----
-# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/kustomize.toolkit.fluxcd.io/kustomization_v1.json
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: &app radarr-standard
-  namespace: &namespace entertainment
-spec:
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
-  components:
-    - ../../../../components/nfs-scaler
-    - ../../../../components/volsync
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
-  interval: 1h
-  path: ./kubernetes/apps/entertainment/radarr/standard
-  postBuild:
-    substitute:
-      APP: *app
-      VOLSYNC_CAPACITY: 5Gi
-      VOLSYNC_SCHEDULE: "20 * * * *"
   prune: true
   retryInterval: 2m
   sourceRef:
