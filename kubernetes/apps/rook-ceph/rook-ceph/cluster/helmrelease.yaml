@@ -76,9 +76,15 @@ spec:
           limits:
             memory: 16Gi
       storage:
-        devicePathFilter: /dev/disk/by-id/nvme-SAMSUNG_.*
-        useAllNodes: true
+        useAllNodes: false
         useAllDevices: false
+        nodes:
+          - name: fenrys
+            devicePathFilter: /dev/disk/by-id/nvme-SAMSUNG_.*
+          - name: maomao
+            devicePathFilter: /dev/disk/by-id/nvme-SAMSUNG_.*
+          - name: shylily
+            devicePathFilter: /dev/disk/by-id/nvme-SAMSUNG_.*
     monitoring:
       enabled: true
       createPrometheusRules: true
