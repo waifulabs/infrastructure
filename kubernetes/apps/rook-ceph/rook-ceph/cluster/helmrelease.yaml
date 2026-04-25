@@ -80,7 +80,7 @@ spec:
         useAllDevices: false
         nodes:
           - name: fenrys
-            devicePathFilter: /dev/disk/by-id/nvme-SAMSUNG_.*
+            devicePathFilter: /dev/disk/by-id/nvme-CT1000P1SSD8_20362A55C4AE
           - name: maomao
             devicePathFilter: /dev/disk/by-id/nvme-CT1000P3SSD8_2318E6D1E249
           - name: shylily
