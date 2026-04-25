@@ -1,7 +1,7 @@
 ---
 machine:
   install:
-    image: factory.talos.dev/metal-installer/523a9681bdc9722734e5ea7c44f8bf35e250376ef71b14114c59572fffa2dddd:v1.12.6
+    image: factory.talos.dev/metal-installer/523a9681bdc9722734e5ea7c44f8bf35e250376ef71b14114c59572fffa2dddd:v1.12.7
     diskSelector:
       serial: 50026B7382F40A20
   sysctls:
