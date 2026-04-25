@@ -30,6 +30,7 @@ spec:
               tag: v2.7.5@sha256:c15bff75068effb03f4355997d03dc7e0fc58720c2b54ad6f7f10d1bc57efaa5
             env:
               TZ: "America/Los_Angeles"
+              IMMICH_HOST: "::"
               IMMICH_TRUSTED_PROXIES: "172.31.0.0/16"
               IMMICH_MEDIA_LOCATION: &mediaLocation /library
               IMMICH_ALLOW_SETUP: "false"

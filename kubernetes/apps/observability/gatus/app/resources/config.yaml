@@ -37,12 +37,6 @@ endpoints:
     interval: 1m
     conditions:
       - "[CONNECTED] == true"
-  - name: NAS-2
-    group: infrastructure
-    url: "icmp://nas.outsideour.casa"
-    interval: 1m
-    conditions:
-      - "[CONNECTED] == true"
 
 metrics: true
 
