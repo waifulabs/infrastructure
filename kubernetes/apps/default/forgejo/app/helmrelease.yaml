@@ -1,0 +1,76 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app forgejo
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: forgejo
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    forgejo:
+      admin:
+        username: admin
+        existingSecret: forgejo-secret
+        secretKeys:
+          adminPasswordKey: adminPassword
+          adminEmailKey: adminEmail
+      config:
+        server:
+          DOMAIN: git.ok8.sh
+          ROOT_URL: https://git.ok8.sh
+          SSH_DOMAIN: git.ok8.sh
+          SSH_PORT: 22
+        database:
+          DB_TYPE: postgres
+          HOST: forgejo-rw.database.svc.cluster.local:5432
+          NAME: app
+          USER: app
+        cache:
+          ADAPTER: memory
+        queue:
+          TYPE: level
+        session:
+          PROVIDER: db
+        indexer:
+          ISSUE_INDEXER_TYPE: db
+      additionalConfigFromEnvs:
+        - name: FORGEJO__database__PASSWD
+          valueFrom:
+            secretKeyRef:
+              name: forgejo-pg-credentials
+              key: password
+
+    service:
+      http:
+        type: ClusterIP
+        port: 3000
+      ssh:
+        type: LoadBalancer
+        port: 22
+        annotations:
+          lbipam.cilium.io/ips: "10.0.20.36"
+
+    persistence:
+      enabled: true
+      storageClass: openebs-hostpath
+      size: 10Gi
+
+    postgresql-ha:
+      enabled: false
+
+    postgresql:
+      enabled: false
+
+    redis-cluster:
+      enabled: false
