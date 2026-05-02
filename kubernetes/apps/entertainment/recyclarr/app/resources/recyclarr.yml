@@ -19,6 +19,9 @@ sonarr:
       - name: "[Anime] Remux-1080p"
         reset_unmatched_scores:
           enabled: true
+        upgrade:
+          allowed: true
+          until_quality: Bluray-1080p Remux
         qualities:
           - name: Bluray-1080p Remux
             qualities:
@@ -82,6 +85,9 @@ radarr:
       - name: "[Anime] Remux-1080p"
         reset_unmatched_scores:
           enabled: true
+        upgrade:
+          allowed: true
+          until_quality: Remux-1080p
         qualities:
           - name: Remux-1080p
             qualities:
