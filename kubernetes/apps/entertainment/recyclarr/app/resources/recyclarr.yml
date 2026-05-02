@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/recyclarr/recyclarr/refs/tags/v8.0.0/schemas/config-schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/recyclarr/recyclarr/refs/tags/v8.6.0/schemas/config-schema.json
 sonarr:
   series:
     base_url: http://sonarr.entertainment.svc.cluster.local
@@ -19,6 +19,21 @@ sonarr:
       - name: "[Anime] Remux-1080p"
         reset_unmatched_scores:
           enabled: true
+        qualities:
+          - name: Bluray-1080p Remux
+            qualities:
+              - Bluray-1080p Remux
+              - Bluray-1080p
+          - name: WEB 1080p
+            qualities:
+              - HDTV-1080p
+              - WEBDL-1080p
+              - WEBRip-1080p
+          - name: WEB 720p
+            qualities:
+              - HDTV-720p
+              - WEBDL-720p
+              - WEBRip-720p
     custom_formats:
       - # Anime BD Tiers
         trash_ids:
@@ -67,6 +82,21 @@ radarr:
       - name: "[Anime] Remux-1080p"
         reset_unmatched_scores:
           enabled: true
+        qualities:
+          - name: Remux-1080p
+            qualities:
+              - Remux-1080p
+              - Bluray-1080p
+          - name: WEB 1080p
+            qualities:
+              - HDTV-1080p
+              - WEBDL-1080p
+              - WEBRip-1080p
+          - name: WEB 720p
+            qualities:
+              - HDTV-720p
+              - WEBDL-720p
+              - WEBRip-720p
     custom_formats:
       - # Anime BD Tiers
         trash_ids:
