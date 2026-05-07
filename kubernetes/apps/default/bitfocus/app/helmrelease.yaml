@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: ghcr.io/bitfocus/companion/companion
-              tag: v4.3.1@sha256:b6b701b1d763d8f841c9878602419214dce14a77d324f77a2a50f13b29bd6771
+              tag: v4.3.2@sha256:c6bf725328a9fc15410f1134b1df47546de222abbe65b3bc0229fdfe03e5280e
             env:
               TZ: America/Los_Angeles
             securityContext:
