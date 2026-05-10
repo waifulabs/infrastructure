@@ -1,0 +1,99 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: syncthing
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: syncthing
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      syncthing:
+        containers:
+          app:
+            image:
+              repository: docker.io/syncthing/syncthing
+              tag: 1.27.12
+            env:
+              PUID: 1000
+              PGID: 1000
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /rest/noauth/health
+                    port: &port 8384
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 15m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        controller: syncthing
+        ports:
+          http:
+            port: *port
+      listen:
+        controller: syncthing
+        type: LoadBalancer
+        ports:
+          listen:
+            port: 22000
+            protocol: TCP
+          discovery:
+            port: 21027
+            protocol: UDP
+    route:
+      app:
+        hostnames: ["{{ .Release.Name }}.ok8.sh"]
+        parentRefs:
+          - name: internal
+            namespace: networking
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *port
+    persistence:
+      config:
+        existingClaim: syncthing
+        globalMounts:
+          - path: /var/syncthing/config
+      data:
+        type: nfs
+        server: puddle.outsideour.casa
+        path: /mnt/puddle/kubernetes/syncthing
+        globalMounts:
+          - path: /var/syncthing
+      tmp:
+        type: emptyDir
