@@ -5,15 +5,3 @@ kind: Kustomization
 resources:
   - ./ocirepository.yaml
   - ./helmrelease.yaml
-patches:
-  - patch: |
-      apiVersion: v1
-      kind: PersistentVolumeClaim
-      metadata:
-        name: syncthing
-      spec:
-        dataSourceRef:
-          name: syncthing
-    target:
-      kind: PersistentVolumeClaim
-      name: syncthing
