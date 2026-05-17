@@ -14,7 +14,7 @@ instance:
     name: home-kubernetes
     url: https://github.com/waifulabs/infrastructure
     ref: refs/heads/main
-    path: kubernetes/flux/cluster
+    path: kubernetes/sable
     interval: 1h
   commonMetadata:
     labels:
