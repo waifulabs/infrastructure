@@ -29,7 +29,7 @@ gatewayAPI:
   enabled: false
 ipam:
   mode: kubernetes
-ipv4NativeRoutingCIDR: 172.30.0.0/16
+ipv4NativeRoutingCIDR: 172.28.0.0/14
 k8sServiceHost: 127.0.0.1
 k8sServicePort: 7445
 kubeProxyReplacement: true

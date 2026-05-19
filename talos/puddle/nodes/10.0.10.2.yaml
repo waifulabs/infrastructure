@@ -1,0 +1,9 @@
+---
+machine:
+  install:
+    diskSelector:
+      serial: CHANGEME
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: puddle
