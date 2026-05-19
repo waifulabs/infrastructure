@@ -4,8 +4,8 @@ kind: Service
 metadata:
   name: kube-vip
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: k8s.ok8.sh
-    lbipam.cilium.io/ips: 10.0.20.2
+    external-dns.alpha.kubernetes.io/hostname: k8s.sable.ok8.sh
+    lbipam.cilium.io/ips: 10.0.20.130
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local

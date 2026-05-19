@@ -58,4 +58,4 @@ spec:
   allowFirstLastIPs: "No"
   blocks:
     - start: 10.0.20.2
-      stop: 10.0.20.254
+      stop: 10.0.20.127

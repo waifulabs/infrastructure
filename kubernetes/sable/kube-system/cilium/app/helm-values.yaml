@@ -17,8 +17,8 @@ cgroup:
 cni:
   exclusive: false
 cluster:
-  id: 1
-  name: main
+  id: 3
+  name: sable
 devices: bond+
 enableIPv4BIGTCP: true
 endpointRoutes:

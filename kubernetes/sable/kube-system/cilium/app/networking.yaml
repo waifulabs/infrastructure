@@ -41,7 +41,7 @@ spec:
       kubernetes.io/os: linux
   bgpInstances:
     - name: cilium
-      localASN: 64514
+      localASN: 64515
       peers:
         - name: unifi
           peerASN: 64513
@@ -57,5 +57,5 @@ metadata:
 spec:
   allowFirstLastIPs: "No"
   blocks:
-    - start: 10.0.20.2
+    - start: 10.0.20.130
       stop: 10.0.20.254
