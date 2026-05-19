@@ -10,12 +10,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/apps/renovate/renovate/operator
+  path: ./kubernetes/sable/renovate/renovate/operator
   prune: true
-  sourceRef:
-    kind: GitRepository
-    name: home-kubernetes
-    namespace: flux-system
   wait: false
   interval: 30m
   retryInterval: 1m
@@ -34,12 +30,8 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: renovate-operator
-  path: ./kubernetes/apps/renovate/renovate/app
+  path: ./kubernetes/sable/renovate/renovate/app
   prune: true
-  sourceRef:
-    kind: GitRepository
-    name: home-kubernetes
-    namespace: flux-system
   wait: false
   interval: 30m
   retryInterval: 1m

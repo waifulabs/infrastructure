@@ -11,11 +11,7 @@ spec:
   interval: 30m
   dependsOn:
     - name: external-secrets
-  path: ./kubernetes/apps/external-secrets/onepassword/app
+  path: ./kubernetes/puddle/external-secrets/onepassword/app
   prune: true
-  sourceRef:
-    kind: GitRepository
-    name: home-kubernetes
-    namespace: flux-system
   timeout: 5m
   wait: true

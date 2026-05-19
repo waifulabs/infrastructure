@@ -15,14 +15,10 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   interval: 1h
-  path: ./kubernetes/apps/entertainment/brrpolice/app
+  path: ./kubernetes/puddle/entertainment/brrpolice/app
   postBuild:
     substitute:
       APP: *app
       VOLSYNC_SCHEDULE: "4 * * * *"
   prune: true
-  sourceRef:
-    kind: GitRepository
-    name: home-kubernetes
-    namespace: flux-system
   targetNamespace: entertainment

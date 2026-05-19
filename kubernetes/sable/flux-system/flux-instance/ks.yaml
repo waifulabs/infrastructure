@@ -13,13 +13,9 @@ spec:
     - name: flux-operator
       namespace: *namespace
   interval: 1h
-  path: ./kubernetes/apps/flux-system/flux-instance/app
+  path: ./kubernetes/sable/flux-system/flux-instance/app
   prune: true
   retryInterval: 2m
-  sourceRef:
-    kind: GitRepository
-    name: home-kubernetes
-    namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
   wait: false

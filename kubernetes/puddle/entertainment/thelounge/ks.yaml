@@ -11,16 +11,12 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   interval: 1h
-  path: ./kubernetes/apps/entertainment/thelounge/app
+  path: ./kubernetes/puddle/entertainment/thelounge/app
   postBuild:
     substitute:
       APP: thelounge
       VOLSYNC_CAPACITY: 5Gi
       VOLSYNC_SCHEDULE: "34 * * * *"
   prune: true
-  sourceRef:
-    kind: GitRepository
-    name: home-kubernetes
-    namespace: flux-system
   targetNamespace: entertainment
   wait: false

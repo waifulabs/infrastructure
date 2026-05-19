@@ -18,7 +18,7 @@ spec:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   interval: 1h
-  path: ./kubernetes/apps/entertainment/plex-next/app
+  path: ./kubernetes/puddle/entertainment/plex-next/app
   postBuild:
     substitute:
       APP: *app
@@ -28,10 +28,6 @@ spec:
       VOLSYNC_SCHEDULE: "10 * * * *"
   prune: true
   retryInterval: 2m
-  sourceRef:
-    kind: GitRepository
-    name: home-kubernetes
-    namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
   wait: false

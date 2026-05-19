@@ -5,3 +5,14 @@ kind: Component
 resources:
   - ./namespace.yaml
   - ./alerts
+patches:
+  - patch: |
+      - op: add
+        path: /spec/sourceRef
+        value:
+          kind: GitRepository
+          name: home-kubernetes
+          namespace: flux-system
+    target:
+      group: kustomize.toolkit.fluxcd.io
+      kind: Kustomization

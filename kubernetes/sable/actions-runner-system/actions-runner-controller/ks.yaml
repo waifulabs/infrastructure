@@ -15,12 +15,8 @@ spec:
       name: *app
       namespace: *namespace
   interval: 30m
-  path: ./kubernetes/apps/actions-runner-system/actions-runner-controller/app
+  path: ./kubernetes/sable/actions-runner-system/actions-runner-controller/app
   prune: true
-  sourceRef:
-    kind: GitRepository
-    name: home-kubernetes
-    namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
   wait: true
@@ -43,12 +39,8 @@ spec:
     - name: openebs
       namespace: openebs-system
   interval: 30m
-  path: ./kubernetes/apps/actions-runner-system/actions-runner-controller/runners/amd64
+  path: ./kubernetes/sable/actions-runner-system/actions-runner-controller/runners/amd64
   prune: true
-  sourceRef:
-    kind: GitRepository
-    name: home-kubernetes
-    namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
   wait: false
@@ -71,12 +63,8 @@ spec:
     - name: openebs
       namespace: openebs-system
   interval: 30m
-  path: ./kubernetes/apps/actions-runner-system/actions-runner-controller/runners/arm64
+  path: ./kubernetes/sable/actions-runner-system/actions-runner-controller/runners/arm64
   prune: true
-  sourceRef:
-    kind: GitRepository
-    name: home-kubernetes
-    namespace: flux-system
   targetNamespace: *namespace
   timeout: 5m
   wait: false
