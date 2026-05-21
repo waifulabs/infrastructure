@@ -1,0 +1,21 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./externalsecret.yaml
+  - ./helmrelease.yaml
+  - ./grafanadashboard.yaml
+  - ./prometheusrule.yaml
+  - ./clusterissuer.yaml
+configMapGenerator:
+  - name: cert-manager-values
+    files:
+      - values.yaml=./helm/values.yaml
+  - name: cert-manager-dashboard
+    files:
+      - dashboards/cert-manager.json
+    options:
+      disableNameSuffixHash: true
+configurations:
+  - ./helm/kustomizeconfig.yaml

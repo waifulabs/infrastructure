@@ -1,0 +1,71 @@
+---
+autoDirectNodeRoutes: true
+bandwidthManager:
+  enabled: true
+  bbr: true
+bgpControlPlane:
+  enabled: true
+bpf:
+  datapathMode: netkit
+  masquerade: true
+  preallocateMaps: true
+bpfClockProbe: true
+cgroup:
+  automount:
+    enabled: false
+  hostRoot: /sys/fs/cgroup
+cni:
+  exclusive: false
+cluster:
+  id: 3
+  name: sable
+devices: bond+
+enableIPv4BIGTCP: true
+endpointRoutes:
+  enabled: true
+envoy:
+  enabled: false
+gatewayAPI:
+  enabled: false
+ipam:
+  mode: kubernetes
+ipv4NativeRoutingCIDR: 172.28.0.0/14
+k8sServiceHost: 127.0.0.1
+k8sServicePort: 7445
+kubeProxyReplacement: true
+kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
+loadBalancer:
+  algorithm: maglev
+  mode: dsr
+localRedirectPolicies:
+  enabled: true
+operator:
+  replicas: 1
+  rollOutPods: true
+pmtuDiscovery:
+  enabled: true
+rollOutCiliumPods: true
+routingMode: native
+securityContext:
+  capabilities:
+    ciliumAgent:
+      - CHOWN
+      - KILL
+      - NET_ADMIN
+      - NET_RAW
+      - IPC_LOCK
+      - SYS_ADMIN
+      - SYS_RESOURCE
+      - PERFMON
+      - BPF
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+    cleanCiliumState:
+      - NET_ADMIN
+      - SYS_ADMIN
+      - SYS_RESOURCE
+socketLB:
+  enabled: true
+  hostNamespaceOnly: true

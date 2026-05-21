@@ -10,25 +10,24 @@ releases:
     namespace: kube-system
     chart: oci://ghcr.io/home-operations/charts-mirror/cilium
     version: 1.18.6
-    values: ["../kubernetes/apps/kube-system/cilium/app/helm-values.yaml"]
+    values: ["../kubernetes/puddle/kube-system/cilium/app/helm-values.yaml"]
     hooks:
-      - # Advertise Kubernetes VIP
+      - # Advertise Kubernetes VIP and BGP config
         events: ['postsync']
         command: kubectl
         args:
           - apply
           - --server-side
-          - --namespace=kube-system
           - --field-manager=kustomize-controller
-          - --kustomize
-          - ../../kubernetes/apps/kube-system/cilium/config
+          - --filename=../kubernetes/puddle/kube-system/cilium/app/networking.yaml
+          - --filename=../kubernetes/puddle/kube-system/cilium/app/vip.yaml
         showlogs: true
 
   - name: coredns
     namespace: kube-system
     chart: oci://ghcr.io/coredns/charts/coredns
     version: 1.45.2
-    values: ["../kubernetes/apps/kube-system/coredns/app/helm-values.yaml"]
+    values: ["../kubernetes/puddle/kube-system/coredns/app/helm-values.yaml"]
     needs: ["kube-system/cilium"]
 
   - name: cert-manager
@@ -36,7 +35,7 @@ releases:
     chart: oci://quay.io/jetstack/charts/cert-manager
     version: v1.20.2
     values:
-      ["../kubernetes/apps/cert-manager/cert-manager/app/helm/values.yaml"]
+      ["../kubernetes/puddle/cert-manager/cert-manager/app/helm/values.yaml"]
     needs: ["kube-system/coredns"]
 
   - name: envoy-gateway
@@ -50,7 +49,7 @@ releases:
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
     version: 0.49.0
     values:
-      ["../kubernetes/apps/flux-system/flux-operator/app/helm-values.yaml"]
+      ["../kubernetes/puddle/flux-system/flux-operator/app/helm-values.yaml"]
     needs: ["kube-system/coredns"]
 
   - name: flux-instance
@@ -58,5 +57,5 @@ releases:
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
     version: 0.49.0
     values:
-      ["../kubernetes/apps/flux-system/flux-instance/app/helm-values.yaml"]
+      ["../kubernetes/puddle/flux-system/flux-instance/app/helm-values.yaml"]
     needs: ["flux-system/flux-operator"]

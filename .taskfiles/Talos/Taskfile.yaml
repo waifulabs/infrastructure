@@ -4,17 +4,16 @@ version: "3"
 
 tasks:
   apply-node:
-    desc: Apply Talos config to a node [NODE=required]
+    desc: Apply Talos config to a node [CLUSTER=puddle] [NODE=required]
     dotenv: ["{{.TALOS_DIR}}/talos.env"]
     cmd: |-
       minijinja-cli "{{.TALOS_DIR}}/machineconfig.yaml.j2" \
       | op inject \
       | talosctl --nodes "{{.NODE}}" apply-config \
           --mode "{{.MODE}}" \
-          --config-patch @<(minijinja-cli "{{.TALOS_DIR}}/nodes/{{.NODE}}.yaml") \
-          {{if eq .MACHINE_TYPE "controlplane"}}--config-patch @<(cat "{{.TALOS_DIR}}/networking.yaml") \{{end}}
-          --file /dev/stdin \
-          {{if .INSECURE}}--insecure{{end}}
+          --config-patch @<(minijinja-cli "{{.TALOS_DIR}}/nodes/{{.NODE}}.yaml") \{{if .NETWORKING_FILE}}
+          --config-patch @<(cat "{{.NETWORKING_FILE}}") \{{end}}
+          --file /dev/stdin
 
     vars:
       MODE: '{{.MODE | default "auto"}}'
@@ -23,7 +22,9 @@ tasks:
       MACHINE_TYPE:
         sh: |-
           talosctl --nodes {{.NODE}} get machinetypes --output=jsonpath='{.spec}' 2> /dev/null \
-            || yq '.machine.type // "worker"' "{{.TALOS_DIR}}/nodes/{{.NODE}}.yaml"
+            || yq 'select(di == 0) | .machine.type // "worker"' "{{.TALOS_DIR}}/nodes/{{.NODE}}.yaml"
+      NETWORKING_FILE:
+        sh: test -f "{{.TALOS_DIR}}/networking.yaml" && echo "{{.TALOS_DIR}}/networking.yaml" || echo ""
     env:
       MACHINE_TYPE: '{{.MACHINE_TYPE}}'
     requires:
@@ -38,7 +39,7 @@ tasks:
       - which minijinja-cli talosctl yq
 
   upgrade-node:
-    desc: Upgrade Talos on a single node [NODE=required]
+    desc: Upgrade Talos on a single node [CLUSTER=puddle] [NODE=required]
     cmd: talosctl --nodes {{.NODE}} upgrade --force --image={{.TALOS_IMAGE}}
     vars:
       MACHINE_TYPE:
@@ -55,7 +56,7 @@ tasks:
       - which minijinja-cli talosctl yq
 
   upgrade-k8s:
-    desc: Upgrade Kubernetes across the whole cluster [VERSION=required]
+    desc: Upgrade Kubernetes across the whole cluster [CLUSTER=puddle] [VERSION=required]
     dotenv: ["{{.TALOS_DIR}}/talos.env"]
     cmds:
       - talosctl --nodes {{.TALOS_CONTROLLER}} upgrade-k8s --to $KUBERNETES_VERSION
@@ -71,7 +72,7 @@ tasks:
       - which jq talosctl
 
   reset-node:
-    desc: Reset Talos on a single node [NODE=required]
+    desc: Reset Talos on a single node [CLUSTER=puddle] [NODE=required]
     prompt: Reset Talos node '{{.NODE}}' ... continue?
     cmd: talosctl reset --nodes {{.NODE}} --graceful=false
     requires:
@@ -82,7 +83,7 @@ tasks:
       - which talosctl
 
   reset-cluster:
-    desc: Reset Talos across the whole cluster
+    desc: Reset Talos across the whole cluster [CLUSTER=puddle]
     prompt: Reset Talos  ... continue?
     cmd: talosctl reset --nodes {{.NODE_ADDRS}} --graceful=false
     vars:
@@ -94,7 +95,7 @@ tasks:
       - which jq talosctl
 
   apply-cluster:
-    desc: Apply Talos config across the whole cluster [MODE=default]
+    desc: Apply Talos config across the whole cluster [CLUSTER=puddle] [MODE=default]
     cmds:
       - for: { var: NODE_ADDRS }
         task: apply-node
@@ -136,7 +137,7 @@ tasks:
       - which jq talosctl
 
   generate-kubeconfig:
-    desc: Generate the kubeconfig for a Talos cluster
+    desc: Generate the kubeconfig for a Talos cluster [CLUSTER=puddle]
     cmd: talosctl kubeconfig --nodes {{.RANDOM_CONTROLLER}} --force {{.KUBERNETES_DIR}}
     vars:
       RANDOM_CONTROLLER:

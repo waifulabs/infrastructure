@@ -3,7 +3,7 @@ version: "3"
 
 tasks:
   talos:
-    desc: Bootstrap Talos
+    desc: Bootstrap Talos [CLUSTER=puddle]
     prompt: Bootstrap Talos ...?
     cmds:
       - until talosctl --nodes {{.RANDOM_CONTROLLER}} bootstrap; do sleep 5; done
@@ -17,23 +17,15 @@ tasks:
       - which jq talosctl
 
   apps:
-    desc: Bootstrap Kubernetes Apps [ROOK_DISK=required]
+    desc: Bootstrap Kubernetes Apps [CLUSTER=puddle]
     prompt: Bootstrap Kubernetes Apps ...?
     cmds:
-      - kubectl config set-cluster {{.CONTEXT}} --server https://{{.RANDOM_CONTROLLER}}:6443
-      - defer: talosctl kubeconfig --nodes {{.RANDOM_CONTROLLER}} --force {{.KUBERNETES_DIR}}
-      - until kubectl wait nodes --for=condition=Ready=False --all --timeout=10m; do sleep 5; done
-      - op inject --in-file {{.BOOTSTRAP_DIR}}/secrets.yaml.tpl | kubectl apply --server-side --filename -
-      - helmfile --file {{.BOOTSTRAP_DIR}}/helmfile.yaml apply --skip-diff-on-install --suppress-diff
-    vars:
-      CONTEXT:
-        sh: talosctl config info --output json | jq --raw-output '.context'
-      RANDOM_CONTROLLER:
-        sh: talosctl config info --output json | jq --raw-output '.endpoints[]' | shuf -n 1
+      #- until kubectl --kubeconfig {{.KUBERNETES_DIR}}/kubeconfig wait nodes --for=condition=Ready=False --all --timeout=10m; do sleep 5; done
+      - op inject --in-file {{.BOOTSTRAP_DIR}}/secrets.yaml.tpl | kubectl --kubeconfig {{.KUBERNETES_DIR}}/kubeconfig apply --server-side --filename -
+      - KUBECONFIG={{.KUBERNETES_DIR}}/kubeconfig helmfile --file {{.BOOTSTRAP_DIR}}/helmfile.yaml apply --skip-diff-on-install --suppress-diff
     preconditions:
       - op user get --me
-      - talosctl config info
-      - talosctl --nodes {{.RANDOM_CONTROLLER}} get machineconfig
+      - test -f {{.KUBERNETES_DIR}}/kubeconfig
       - test -f {{.BOOTSTRAP_DIR}}/helmfile.yaml
       - test -f {{.BOOTSTRAP_DIR}}/secrets.yaml.tpl
-      - which helmfile jq kubectl op talosctl
+      - which helmfile kubectl op

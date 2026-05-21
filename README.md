@@ -27,25 +27,35 @@ Thanks to [onedr0p](https://github.com/onedr0p), there is the [cluster template]
 
 If you're interested, you can also join the community [Home Operations](https://discord.gg/home-operations). Several people are involved daily and it makes for some interesting conversations.
 
+### Clusters
+
+This repository manages three independent Kubernetes clusters, each with its own Flux stack.
+
+| Cluster | Nodes | Purpose |
+|---------|-------|---------|
+| **Main** (MS-01 × 3) | fenrys, maomao, shylily | Primary workloads |
+| **Puddle** | 1 node | NAS — ZFS storage, home automation, media |
+| **Sable** (MS-R1, ARM64) | nyanners | CI runners, automation |
+
 ### Directory Helper
 
 This repository uses the following layout for [Kubernetes](./kubernetes/).
 
 ```sh
 📁 bootstrap
-├── 📝 helmfile.yaml # Helmreleases required to run bootstrap flux.
-└── 📝 secrets.yaml.tpl # Secrets required to bootstrap flux.
+├── 📝 helmfile.yaml         # Helmreleases required to bootstrap Flux.
+└── 📝 secrets.yaml.tpl      # Secrets required to bootstrap Flux.
 📁 kubernetes
-├── 📁 apps # Per-cluster application-specific configurations.
-├── 📁 components # Flux & Talos configurations for setting up the cluster.
-└── 📁 flux # Flux configuration, application repositories and more.
+├── 📁 apps                  # Main cluster application configurations.
+├── 📁 components            # Shared Kustomize components used across all clusters.
+├── 📁 flux                  # Main cluster Flux entrypoint.
+├── 📁 puddle                # Puddle (NAS) cluster application configurations.
+└── 📁 sable                 # Sable (runner) cluster application configurations.
 📁 talos
-├── 📁 nodes # Override configurations for each individual node.
-├── 📝 machineconfig.yaml.j2 # Base configuration for all nodes.
-└── 📝 talos.env # Kubernetes and Talos Version Variables
-📁 unifi # Configuration files for UniFi
-📝 kubeconfig
-📝 talosconfig
+├── 📁 nodes                 # Per-node override configurations.
+├── 📝 machineconfig.yaml.j2 # Base Talos configuration for all nodes.
+└── 📝 talos.env             # Kubernetes and Talos version variables.
+📁 unifi                     # Configuration files for UniFi
 ```
 
 ## ☁️ Cloud Dependencies
@@ -88,9 +98,9 @@ flowchart LR
     FLEX -- 1G --> UAPAC(["UAP-AC-Pro (Dining Room)"]):::ap
 
     AGG -- 10G --> MAX["USW Pro Max 16"]:::switch
-    AGG -- 20G LACP --> MS01["3x MS-01 (Talos)"]:::compute
-    AGG -- 10G --> MSR1["MS-R1 (Talos)"]:::compute
-    AGG -- 20G LACP --> TN["TrueNAS"]:::storage
+    AGG -- 20G LACP --> MS01["3x MS-01 (Main)"]:::compute
+    AGG -- 10G --> MSR1["MS-R1 (Sable)"]:::compute
+    AGG -- 10G --> PUDDLE["Puddle (NAS)"]:::storage
 
     MAX -- 1G --> U6LR(["U6-LR (Garage)"]):::ap
     MAX -- 1G --> U7PRO(["U7-Pro (Lab)"]):::ap
@@ -131,9 +141,9 @@ UniFi released a new feature update with UniFi routers that allow you to create 
 | U6 LR               | 1     | -            | -              | -    | -                | Garage AP        |
 | UDB Switch          | 1     | -            | -              | -    | UniFi OS         | Garage Workbench |
 | USP-PDU-Pro         | 1     | -            | -              | -    | -                | Rack PDU         |
-| MS-01               | 3     | 1TB NVMe     | 2TB PM9A3 U.2  | 96GB | Talos            | Control Plane    |
-| MS R1               | 1     | 1TB NVMe     | 1TB NVMe       | 64GB | Talos            | Worker           |
-| Fran                | 1     | 2x1TB SSD    | 5x8TB (raidz2) | 64GB | Debian           | Storage          |
+| MS-01               | 3     | 1TB NVMe     | 2TB PM9A3 U.2  | 96GB | Talos            | Main Cluster     |
+| MS-R1               | 1     | 1TB NVMe     | 1TB NVMe       | 64GB | Talos            | Sable (Runners)  |
+| Puddle              | 1     | -            | -              | 256GB| Talos            | NAS Cluster      |
 | JetKVM              | 1     | 16GB (Flash) | -              | -    | JetKVM           | Network KVM      |
 | Eaton 5PX1500RT     | 1     | -            | -              | -    | -                | UPS              |
 | Meshtastic MQTT GW  | 1     | -            | -              | -    | -                | MQTT GW          |

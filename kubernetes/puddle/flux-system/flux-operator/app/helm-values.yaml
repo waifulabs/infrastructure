@@ -1,0 +1,7 @@
+---
+installCRDs: true
+serviceMonitor:
+  create: true
+web:
+  networkPolicy:
+    enabled: false
