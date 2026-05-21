@@ -59,3 +59,9 @@ releases:
     values:
       ["../kubernetes/puddle/flux-system/flux-instance/app/helm-values.yaml"]
     needs: ["flux-system/flux-operator"]
+
+  - name: external-secrets
+    namespace: external-secrets
+    chart: oci://ghcr.io/external-secrets/charts/external-secrets
+    version: 2.5.0
+    needs: ["flux-system/flux-instance"]

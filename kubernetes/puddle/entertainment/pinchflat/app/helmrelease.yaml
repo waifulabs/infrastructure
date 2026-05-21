@@ -86,9 +86,8 @@ spec:
         globalMounts:
           - path: /etc/yt-dlp
       media:
-        type: nfs
-        server: puddle.outsideour.casa
-        path: /mnt/puddle/media
+        type: hostPath
+        hostPath: /var/mnt/puddle/media
         advancedMounts:
           pinchflat:
             app:
