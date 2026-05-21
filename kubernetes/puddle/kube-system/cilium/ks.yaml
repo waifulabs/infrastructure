@@ -10,6 +10,9 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: grafana-operator
+      namespace: observability
   path: ./kubernetes/puddle/kube-system/cilium/app
   prune: false
   wait: true

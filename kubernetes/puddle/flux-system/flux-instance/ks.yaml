@@ -12,6 +12,8 @@ spec:
   dependsOn:
     - name: flux-operator
       namespace: *namespace
+    - name: grafana-operator
+      namespace: observability
   interval: 1h
   path: ./kubernetes/puddle/flux-system/flux-instance/app
   prune: true

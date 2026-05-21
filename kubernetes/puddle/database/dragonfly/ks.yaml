@@ -8,6 +8,9 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: grafana-operator
+      namespace: observability
   path: ./kubernetes/puddle/database/dragonfly/app
   prune: true
   wait: true

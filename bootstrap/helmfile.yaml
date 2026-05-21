@@ -51,6 +51,7 @@ releases:
     values:
       ["../kubernetes/puddle/flux-system/flux-operator/app/helm-values.yaml"]
     needs: ["kube-system/coredns"]
+    force: true
 
   - name: flux-instance
     namespace: flux-system
@@ -65,3 +66,20 @@ releases:
     chart: oci://ghcr.io/external-secrets/charts/external-secrets
     version: 2.5.0
     needs: ["flux-system/flux-instance"]
+
+  - name: onepassword
+    namespace: external-secrets
+    chart: oci://ghcr.io/bjw-s-labs/helm/app-template
+    version: 4.6.2
+    values:
+      ["../kubernetes/puddle/external-secrets/onepassword/app/helm-values.yaml"]
+    needs: ["external-secrets/external-secrets"]
+    hooks:
+      - events: ['postsync']
+        command: kubectl
+        args:
+          - apply
+          - --server-side
+          - --field-manager=kustomize-controller
+          - --filename=../kubernetes/puddle/external-secrets/onepassword/app/clustersecretstore.yaml
+        showlogs: true
