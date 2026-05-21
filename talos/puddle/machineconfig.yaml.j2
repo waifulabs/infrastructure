@@ -71,7 +71,7 @@ cluster:
     {% endif %}
   clusterName: puddle
   controlPlane:
-    endpoint: https://k8s.puddle.ok8.sh:6443
+    endpoint: https://puddle.ok8.sh:6443
   discovery:
     enabled: true
     registries:
@@ -98,7 +98,7 @@ cluster:
   allowSchedulingOnControlPlanes: true
   apiServer:
     image: registry.k8s.io/kube-apiserver:{{ ENV.KUBERNETES_VERSION }}
-    certSANs: ["k8s.puddle.ok8.sh"]
+    certSANs: ["puddle.ok8.sh"]
     extraArgs:
       enable-aggregator-routing: true
       feature-gates: MutatingAdmissionPolicy=true
@@ -149,13 +149,3 @@ ntp:
   servers:
     - pool.ntp.org
     - time.cloudflare.com
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.13/website/content/v1.13/schemas/config.schema.json
-apiVersion: v1alpha1
-kind: ExtensionServiceConfig
-name: nut-client
-configFiles:
-  - content: |-
-      MONITOR ups.outsideour.casa 1 slaveuser "op://Kubernetes/nut/NUT_PASSWORD" slave
-      SHUTDOWNCMD "/sbin/poweroff"
-    mountPath: /usr/local/etc/nut/upsmon.conf
