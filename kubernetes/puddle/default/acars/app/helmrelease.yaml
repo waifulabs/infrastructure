@@ -245,7 +245,7 @@ spec:
     persistence:
       acars-hub:
         type: persistentVolumeClaim
-        storageClass: ceph-block
+        storageClass: openebs-hostpath
         size: 2G
         accessMode: ReadWriteOnce
         advancedMounts: { acars-hub: { acars-hub: [path: /run/acars] } }

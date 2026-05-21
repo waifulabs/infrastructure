@@ -45,7 +45,7 @@ spec:
             name: data-volume
           spec: # when using volsync, this gets created by volsync, so it doesn't matter
             accessModes: ["ReadWriteOnce"]
-            storageClassName: ${MONGO_PVC_STORAGE_CLASS:=ceph-block}
+            storageClassName: ${MONGO_PVC_STORAGE_CLASS:=openebs-hostpath}
             resources:
               requests:
                 storage: ${MONGO_PVC_SIZE:=5Gi}
@@ -53,7 +53,7 @@ spec:
             name: logs-volume
           spec:
             accessModes: ["ReadWriteOnce"]
-            storageClassName: ${MONGO_PVC_STORAGE_CLASS:=ceph-block}
+            storageClassName: ${MONGO_PVC_STORAGE_CLASS:=openebs-hostpath}
             resources:
               requests:
                 storage: ${MONGO_PVC_LOG_SIZE:=2Gi}

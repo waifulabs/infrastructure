@@ -17,8 +17,6 @@ spec:
       namespace: external-secrets
     - name: mosquitto
       namespace: default
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
   path: ./kubernetes/puddle/default/home-assistant/app
   postBuild:
     substitute:

@@ -15,8 +15,6 @@ spec:
   dependsOn:
     - name: intel-device-plugin
       namespace: kube-system
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
   interval: 1h
   path: ./kubernetes/puddle/entertainment/plex/app
   postBuild:

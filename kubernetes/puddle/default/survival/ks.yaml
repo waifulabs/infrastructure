@@ -15,8 +15,6 @@ spec:
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
   path: ./kubernetes/puddle/minecraft/survival/app
   postBuild:
     substitute:

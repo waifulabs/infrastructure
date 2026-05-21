@@ -18,7 +18,7 @@ spec:
 
   storage:
     size: 15Gi
-    storageClass: ceph-block
+    storageClass: openebs-hostpath
 
   enableSuperuserAccess: true
   superuserSecret:

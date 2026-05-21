@@ -12,9 +12,6 @@ spec:
   components:
     - ../../../../components/nfs-scaler
     - ../../../../components/volsync
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
   interval: 1h
   path: ./kubernetes/puddle/entertainment/radarr/app
   postBuild:
