@@ -4,4 +4,4 @@ serviceMonitor:
   create: true
 web:
   networkPolicy:
-    enabled: false
+    create: false
