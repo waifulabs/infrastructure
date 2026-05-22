@@ -60,7 +60,7 @@ spec:
                   httpGet:
                     path: /
                     port: 51515
-                  initialDelaySeconds: 30
+                  initialDelaySeconds: 300
                   periodSeconds: 30
                   failureThreshold: 3
               readiness:
@@ -70,12 +70,15 @@ spec:
                   httpGet:
                     path: /
                     port: 51515
-                  initialDelaySeconds: 15
+                  initialDelaySeconds: 30
                   periodSeconds: 10
             securityContext:
               allowPrivilegeEscalation: false
               capabilities:
                 drop: ["ALL"]
+              runAsUser: 1000
+              runAsGroup: 1000
+              runAsNonRoot: true
             resources:
               requests:
                 cpu: 10m
