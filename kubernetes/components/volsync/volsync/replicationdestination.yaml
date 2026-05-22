@@ -26,3 +26,8 @@ spec:
     sourceIdentity:
       sourceName: ${APP}
     storageClassName: ${VOLSYNC_STORAGECLASS:=openebs-hostpath}
+    moverVolumes:
+      - mountPath: repository
+        volumeSource:
+          persistentVolumeClaim:
+            claimName: kopia-repository
