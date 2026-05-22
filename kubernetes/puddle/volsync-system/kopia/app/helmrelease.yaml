@@ -3,110 +3,110 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app kopia
+  name: kopia
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
-    name: *app
-  install:
-    remediation:
-      retries: 3
-  upgrade:
-    cleanupOnFail: true
-    remediation:
-      strategy: rollback
-      retries: 3
+    name: kopia
+  interval: 1h
   values:
     controllers:
       kopia:
+        annotations:
+          reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
-              # renovate: datasource=docker depName=docker.io/kopia/kopia
-              repository: docker.io/kopia/kopia
-              tag: "0.17.0"
-            command: ["/bin/sh", "-c"]
-            args:
-              - |
-                kopia repository connect filesystem \
-                  --path=/repository \
-                  --password="$KOPIA_PASSWORD" \
-                  --override-username=kopia \
-                  --override-hostname=volsync \
-                  --no-check-for-updates
-                kopia server user add kopia@volsync \
-                  --user-password="$KOPIA_PASSWORD" 2>/dev/null || true
-                exec kopia server start \
-                  --insecure \
-                  --address=0.0.0.0:51515 \
-                  --server-control-user=kopia \
-                  --server-control-password="$KOPIA_PASSWORD"
+              repository: ghcr.io/home-operations/kopia
+              tag: 0.23.0@sha256:76865b421548b1d7bb26a8268f0f0bc828be4eec3f8d8b9c8ece991c99878f94
             env:
-              KOPIA_CONFIG_PATH: /config/repository.config
-              KOPIA_CACHE_DIRECTORY: /cache
-              KOPIA_CHECK_FOR_UPDATES: "false"
-              KOPIA_LOG_DIR: /logs
-              KOPIA_PASSWORD:
-                valueFrom:
-                  secretKeyRef:
-                    name: kopia-secret
-                    key: KOPIA_PASSWORD
+              KOPIA_WEB_ENABLED: true
+              KOPIA_WEB_PORT: &port 80
+              TZ: America/Los_Angeles
+            envFrom:
+              - secretRef:
+                  name: kopia-secret
+            args:
+              - --refresh-interval=5m
+              - --without-password
             probes:
-              liveness:
+              liveness: &probes
                 enabled: true
                 custom: true
                 spec:
                   httpGet:
                     path: /
-                    port: 51515
-                  initialDelaySeconds: 300
-                  periodSeconds: 30
-                  failureThreshold: 3
-              readiness:
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /
-                    port: 51515
-                  initialDelaySeconds: 30
+                    port: *port
+                  initialDelaySeconds: 0
                   periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
             securityContext:
               allowPrivilegeEscalation: false
-              capabilities:
-                drop: ["ALL"]
-              runAsUser: 1000
-              runAsGroup: 1000
-              runAsNonRoot: true
+              readOnlyRootFilesystem: true
+              capabilities: {drop: ["ALL"]}
             resources:
               requests:
                 cpu: 10m
-                memory: 256Mi
               limits:
-                memory: 2Gi
+                memory: 1Gi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        controller: kopia
         ports:
           http:
-            port: 51515
+            port: *port
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.ok8.sh"
+        parentRefs:
+          - name: internal
+            namespace: network
+    configMaps:
+      config:
+        data:
+          repository.config: |-
+            {
+              "storage": {
+                "type": "filesystem",
+                "config": {
+                  "path": "/repository"
+                }
+              },
+              "hostname": "volsync.{{ .Release.Namespace }}.svc.cluster.local",
+              "username": "volsync",
+              "description": "volsync",
+              "enableActions": false
+            }
     persistence:
+      config-file:
+        type: configMap
+        identifier: config
+        globalMounts:
+          - path: /config/repository.config
+            subPath: repository.config
       repository:
         type: hostPath
         hostPath: /var/mnt/puddle/kubernetes/kopia
         hostPathType: Directory
         globalMounts:
           - path: /repository
-      config:
+      tmpfs:
         type: emptyDir
-        globalMounts:
-          - path: /config
-      cache:
-        type: emptyDir
-        globalMounts:
-          - path: /cache
-      logs:
-        type: emptyDir
-        globalMounts:
-          - path: /logs
+        advancedMounts:
+          kopia:
+            app:
+              - path: /config/cache
+                subPath: cache
+              - path: /config/logs
+                subPath: logs
+              - path: /tmp
+                subPath: tmp
