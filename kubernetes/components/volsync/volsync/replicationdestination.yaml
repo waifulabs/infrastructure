@@ -16,7 +16,7 @@ spec:
     capacity: ${VOLSYNC_CAPACITY:=5Gi}
     cleanupCachePVC: true
     cleanupTempPVC: true
-    copyMethod: Snapshot
+    copyMethod: Direct
     enableFileDeletion: true
     moverSecurityContext:
       runAsUser: ${VOLSYNC_PUID:=1000}
@@ -25,11 +25,10 @@ spec:
     moverVolumes:
       - mountPath: repository
         volumeSource:
-          nfs:
-            path: /mnt/puddle/kubernetes/kopia
-            server: puddle.outsideour.casa
+          hostPath:
+            path: /var/mnt/puddle/kubernetes/kopia
+            type: Directory
     repository: ${APP}-volsync-secret
     sourceIdentity:
       sourceName: ${APP}
-    storageClassName: ${VOLSYNC_STORAGECLASS:=ceph-block}
-    volumeSnapshotClassName: ${VOLSYNC_SNAPSHOTCLASS:=csi-ceph-blockpool}
+    storageClassName: ${VOLSYNC_STORAGECLASS:=openebs-hostpath}
