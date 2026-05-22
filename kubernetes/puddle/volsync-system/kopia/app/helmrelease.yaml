@@ -1,0 +1,109 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app kopia
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: *app
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      kopia:
+        containers:
+          app:
+            image:
+              # renovate: datasource=docker depName=ghcr.io/kopia/kopia
+              repository: ghcr.io/kopia/kopia
+              tag: "0.17.0"
+            command: ["/bin/sh", "-c"]
+            args:
+              - |
+                kopia repository connect filesystem \
+                  --path=/repository \
+                  --password="$KOPIA_PASSWORD" \
+                  --override-username=kopia \
+                  --override-hostname=volsync \
+                  --no-check-for-updates
+                kopia server user add kopia@volsync \
+                  --user-password="$KOPIA_PASSWORD" 2>/dev/null || true
+                exec kopia server start \
+                  --insecure \
+                  --address=0.0.0.0:51515 \
+                  --server-control-user=kopia \
+                  --server-control-password="$KOPIA_PASSWORD"
+            env:
+              KOPIA_CONFIG_PATH: /config/repository.config
+              KOPIA_CACHE_DIRECTORY: /cache
+              KOPIA_CHECK_FOR_UPDATES: "false"
+              KOPIA_LOG_DIR: /logs
+              KOPIA_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: kopia-secret
+                    key: KOPIA_PASSWORD
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 51515
+                  initialDelaySeconds: 30
+                  periodSeconds: 30
+                  failureThreshold: 3
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 51515
+                  initialDelaySeconds: 15
+                  periodSeconds: 10
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop: ["ALL"]
+            resources:
+              requests:
+                cpu: 10m
+                memory: 256Mi
+              limits:
+                memory: 2Gi
+    service:
+      app:
+        controller: kopia
+        ports:
+          http:
+            port: 51515
+    persistence:
+      repository:
+        type: hostPath
+        hostPath: /var/mnt/puddle/kubernetes/kopia
+        hostPathType: Directory
+        globalMounts:
+          - path: /repository
+      config:
+        type: emptyDir
+        globalMounts:
+          - path: /config
+      cache:
+        type: emptyDir
+        globalMounts:
+          - path: /cache
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /logs

@@ -9,3 +9,4 @@ replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
   - ./volsync/ks.yaml
+  - ./kopia/ks.yaml
