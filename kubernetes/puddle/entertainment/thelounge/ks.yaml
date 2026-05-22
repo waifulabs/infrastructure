@@ -5,15 +5,11 @@ kind: Kustomization
 metadata:
   name: thelounge
 spec:
-  components:
-    - ../../../../components/volsync
   interval: 1h
   path: ./kubernetes/puddle/entertainment/thelounge/app
   postBuild:
     substitute:
       APP: thelounge
-      VOLSYNC_CAPACITY: 5Gi
-      VOLSYNC_SCHEDULE: "34 * * * *"
   prune: true
   targetNamespace: entertainment
   wait: false

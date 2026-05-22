@@ -9,20 +9,11 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  components:
-    - ../../../../components/nfs-scaler
-    - ../../../../components/volsync
-  dependsOn:
-    - name: intel-device-plugin
-      namespace: kube-system
   interval: 1h
   path: ./kubernetes/puddle/entertainment/plex/app
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CACHE_CAPACITY: 25Gi
-      VOLSYNC_CAPACITY: 50Gi
-      VOLSYNC_SCHEDULE: "8 * * * *"
   prune: true
   retryInterval: 2m
   targetNamespace: *namespace

@@ -31,13 +31,6 @@ endpoints:
     interval: 1m
     conditions:
       - "[CONNECTED] == true"
-  - name: Fran (NAS-1)
-    group: infrastructure
-    url: "icmp://puddle.outsideour.casa"
-    interval: 1m
-    conditions:
-      - "[CONNECTED] == true"
-
 metrics: true
 
 ui:

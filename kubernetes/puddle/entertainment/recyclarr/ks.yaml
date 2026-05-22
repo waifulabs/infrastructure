@@ -9,15 +9,11 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  components:
-    - ../../../../components/volsync
   interval: 1h
   path: ./kubernetes/puddle/entertainment/recyclarr/app
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 1Gi
-      VOLSYNC_SCHEDULE: "22 * * * *"
   prune: true
   retryInterval: 2m
   targetNamespace: *namespace

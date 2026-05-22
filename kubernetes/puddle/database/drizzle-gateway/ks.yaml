@@ -9,15 +9,11 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  components:
-    - ../../../../components/volsync
   interval: 1h
   path: ./kubernetes/puddle/database/drizzle-gateway/app
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 5Gi
-      VOLSYNC_SCHEDULE: "3 * * * *"
   prune: true
   retryInterval: 2m
   targetNamespace: *namespace

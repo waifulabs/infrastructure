@@ -9,17 +9,12 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  components:
-    - ../../../../components/nfs-scaler
-    - ../../../../components/volsync
   interval: 1h
   path: ./kubernetes/puddle/entertainment/sabnzbd/app
   postBuild:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: sab
-      VOLSYNC_CAPACITY: 1Gi
-      VOLSYNC_SCHEDULE: "24 * * * *"
   prune: true
   retryInterval: 2m
   targetNamespace: *namespace

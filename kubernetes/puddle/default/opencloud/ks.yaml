@@ -8,16 +8,11 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  components:
-    - ../../../../components/volsync
   interval: 1h
   path: ./kubernetes/puddle/default/opencloud/app
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CLAIM: opencloud
-      VOLSYNC_CAPACITY: 15Gi
-      VOLSYNC_SCHEDULE: "5 * * * *"
   prune: true
   timeout: 5m
   wait: false

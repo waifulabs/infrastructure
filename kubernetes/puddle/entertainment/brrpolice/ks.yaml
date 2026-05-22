@@ -8,14 +8,10 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  components:
-    - ../../../../components/nfs-scaler
-    - ../../../../components/volsync
   interval: 1h
   path: ./kubernetes/puddle/entertainment/brrpolice/app
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_SCHEDULE: "4 * * * *"
   prune: true
   targetNamespace: entertainment

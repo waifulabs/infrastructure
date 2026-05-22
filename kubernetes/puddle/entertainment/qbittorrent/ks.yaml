@@ -9,16 +9,11 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  components:
-    - ../../../../components/nfs-scaler
-    - ../../../../components/volsync
   interval: 1h
   path: ./kubernetes/puddle/entertainment/qbittorrent/app
   postBuild:
     substitute:
       APP: *app
-      VOLSYNC_CAPACITY: 2Gi
-      VOLSYNC_SCHEDULE: "14 * * * *"
   prune: true
   retryInterval: 2m
   targetNamespace: *namespace

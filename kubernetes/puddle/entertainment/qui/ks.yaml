@@ -5,15 +5,10 @@ kind: Kustomization
 metadata:
   name: qui
 spec:
-  components:
-    - ../../../../components/nfs-scaler
-    - ../../../../components/volsync
   interval: 1h
   path: ./kubernetes/puddle/entertainment/qui/app
   postBuild:
     substitute:
       APP: qui
-      VOLSYNC_CAPACITY: 2Gi
-      VOLSYNC_SCHEDULE: "16 * * * *"
   prune: true
   wait: false
