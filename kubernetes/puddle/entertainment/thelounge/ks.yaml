@@ -7,9 +7,12 @@ metadata:
 spec:
   interval: 1h
   path: ./kubernetes/puddle/entertainment/thelounge/app
+  components:
+    - ../../../../components/volsync
   postBuild:
     substitute:
       APP: thelounge
+      VOLSYNC_CAPACITY: 5Gi
   prune: true
   targetNamespace: entertainment
   wait: false

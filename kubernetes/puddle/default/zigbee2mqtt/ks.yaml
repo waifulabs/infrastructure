@@ -14,9 +14,12 @@ spec:
     - name: onepassword
       namespace: external-secrets
   path: ./kubernetes/puddle/default/zigbee2mqtt/app
+  components:
+    - ../../../../components/volsync
   postBuild:
     substitute:
       APP: *app
+      VOLSYNC_CAPACITY: 2Gi
   prune: true
   wait: false
   interval: 30m

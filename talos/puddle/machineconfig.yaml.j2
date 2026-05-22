@@ -49,6 +49,10 @@ machine:
         type: bind
         source: /var/mnt/extra
         options: ["bind", "rshared", "rw"]
+      - destination: /var/mnt/puddle
+        type: bind
+        source: /var/mnt/puddle
+        options: ["bind", "rshared", "rw"]
     nodeIP:
       validSubnets: ["10.0.10.0/24"]
   nodeLabels:

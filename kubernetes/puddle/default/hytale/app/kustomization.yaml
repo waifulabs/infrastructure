@@ -5,7 +5,6 @@ kind: Kustomization
 resources:
   - ./dnsendpoint.yaml
   - ./ocirepository.yaml
-  - ./pvc.yaml
   - ./helmrelease.yaml
 configMapGenerator:
   - name: hytale-configmap

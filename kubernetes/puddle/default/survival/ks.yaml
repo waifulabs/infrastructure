@@ -14,9 +14,12 @@ spec:
     - name: external-secrets
       namespace: external-secrets
   path: ./kubernetes/puddle/minecraft/survival/app
+  components:
+    - ../../../../components/volsync
   postBuild:
     substitute:
       APP: *app
+      VOLSYNC_CAPACITY: 50Gi
   prune: true
   wait: true
   interval: 30m

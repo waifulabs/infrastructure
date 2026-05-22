@@ -11,9 +11,12 @@ spec:
       app.kubernetes.io/name: *app
   interval: 1h
   path: ./kubernetes/puddle/entertainment/plex/app
+  components:
+    - ../../../../components/volsync
   postBuild:
     substitute:
       APP: *app
+      VOLSYNC_CAPACITY: 50Gi
   prune: true
   retryInterval: 2m
   targetNamespace: *namespace

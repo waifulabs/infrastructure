@@ -7,8 +7,11 @@ metadata:
 spec:
   interval: 1h
   path: ./kubernetes/puddle/entertainment/qui/app
+  components:
+    - ../../../../components/volsync
   postBuild:
     substitute:
       APP: qui
+      VOLSYNC_CAPACITY: 2Gi
   prune: true
   wait: false

@@ -3,19 +3,19 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app plex-next
-  namespace: &namespace entertainment
+  name: &app volsync
+  namespace: &namespace volsync-system
 spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: openebs
+      namespace: openebs-system
   interval: 1h
-  path: ./kubernetes/puddle/entertainment/plex-next/app
-  postBuild:
-    substitute:
-      APP: *app
+  path: ./kubernetes/puddle/volsync-system/volsync/app
   prune: true
-  retryInterval: 2m
+  retryInterval: 1m
   targetNamespace: *namespace
   timeout: 5m
-  wait: false
+  wait: true
