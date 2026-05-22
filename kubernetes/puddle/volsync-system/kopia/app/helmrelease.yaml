@@ -23,8 +23,8 @@ spec:
         containers:
           app:
             image:
-              # renovate: datasource=docker depName=ghcr.io/kopia/kopia
-              repository: ghcr.io/kopia/kopia
+              # renovate: datasource=docker depName=docker.io/kopia/kopia
+              repository: docker.io/kopia/kopia
               tag: "0.17.0"
             command: ["/bin/sh", "-c"]
             args:
