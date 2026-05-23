@@ -11,4 +11,3 @@ resources:
   - ./barman-cloud/ks.yaml
   - ./cloudnative-pg/ks.yaml
   - ./dragonfly/ks.yaml
-  - ./drizzle-gateway/ks.yaml
