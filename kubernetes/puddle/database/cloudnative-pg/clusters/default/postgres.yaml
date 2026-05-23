@@ -10,7 +10,7 @@ metadata:
 spec:
   # 1 replica is very difficult to drain the node where postgres is running
   # 3 replicas increases write amplication issues when leveraging replicated storage like Rook Ceph.
-  instances: 2
+  instances: 1
   primaryUpdateStrategy: unsupervised
 
   storage:
@@ -27,11 +27,6 @@ spec:
       shared_buffers: 512MB
       pg_stat_statements.max: "10000"
       pg_stat_statements.track: all
-
-  affinity:
-    enablePodAntiAffinity: true
-    topologyKey: kubernetes.io/hostname
-    podAntiAffinityType: required
 
   # https://github.com/cloudnative-pg/cloudnative-pg/issues/2570
   enablePDB: false
