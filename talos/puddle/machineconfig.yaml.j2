@@ -22,7 +22,7 @@ machine:
     kubernetesTalosAPIAccess:
       enabled: true
       allowedRoles: ["os:admin"]
-      allowedKubernetesNamespaces: ["system-upgrade"]
+      allowedKubernetesNamespaces: ["actions-runner-system", "system-upgrade"]
     {% endif %}
   files:
     - op: overwrite
