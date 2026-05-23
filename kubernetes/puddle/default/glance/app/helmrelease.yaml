@@ -68,6 +68,7 @@ spec:
         serviceAccount:
           identifier: *app
         pod:
+          automountServiceAccountToken: true
           securityContext:
             runAsUser: 568
             runAsGroup: 568

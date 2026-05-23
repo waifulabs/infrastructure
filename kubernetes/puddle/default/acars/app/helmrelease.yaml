@@ -23,6 +23,7 @@ spec:
       annotations:
         reloader.stakater.com/auto: "true"
       pod:
+        automountServiceAccountToken: true
         terminationGracePeriodSeconds: 1
         nodeSelector:
           rtlamr.feature.node.kubernetes.io/rtlamr: "true"
