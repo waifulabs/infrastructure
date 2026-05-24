@@ -62,7 +62,8 @@ spec:
     kubeApiServer:
       serviceMonitor:
         selector:
-          k8s-app: kube-apiserver
+          matchLabels:
+            k8s-app: kube-apiserver
     kubeScheduler:
       service:
         selector:

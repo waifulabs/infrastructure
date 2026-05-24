@@ -36,6 +36,7 @@ spec:
               capabilities: { drop: ["ALL"], add: ["SYS_ADMIN", "DAC_READ_SEARCH"] }
             resources: {}
     defaultPodOptions:
+      automountServiceAccountToken: true
       annotations:
         k8s.v1.cni.cncf.io/networks: |-
           [{

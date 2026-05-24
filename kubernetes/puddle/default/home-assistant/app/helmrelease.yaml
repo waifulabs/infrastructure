@@ -46,6 +46,7 @@ spec:
                 cpu: 750m
                 memory: 2G
     defaultPodOptions:
+      automountServiceAccountToken: true
       annotations:
         k8s.v1.cni.cncf.io/networks: |-
           [{
