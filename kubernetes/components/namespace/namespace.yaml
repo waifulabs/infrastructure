@@ -5,4 +5,4 @@ metadata:
   name: not-used
   annotations:
     kustomize.toolkit.fluxcd.io/prune: disabled
-    volsync.backube/privileged-movers: "true"
+    volsync.backube/privileged-movers: "false"
