@@ -46,3 +46,15 @@ tasks:
       NODE: "{{.NODE}}"
     preconditions:
       - test -f {{.ROOT_DIR}}/.taskfiles/Kubernetes/template/privileged-pod.tmpl.yaml
+
+  zfs:
+    desc: Run a privileged pod with zfs and /var/mnt/puddle
+    cmd: |
+      kubectl run zfs-{{.NODE}} -i --rm --image=null \
+        --overrides="$(yq {{.ROOT_DIR}}/.taskfiles/Kubernetes/template/zfs-pod.tmpl.yaml -o=json | envsubst)"
+    requires:
+      vars: ["NODE"]
+    env:
+      NODE: "{{.NODE}}"
+    preconditions:
+      - test -f {{.ROOT_DIR}}/.taskfiles/Kubernetes/template/zfs-pod.tmpl.yaml
