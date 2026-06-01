@@ -13,7 +13,7 @@ metrics:
     title: Talos Version
 
   - name: kubernetes_version
-    query: kubernetes_build_info{service="kubernetes"}
+    query: kubernetes_build_info{service="kube-prometheus-stack-kube-controller-manager"}
     value: labels["git_version"]
     title: Kubernetes
 
