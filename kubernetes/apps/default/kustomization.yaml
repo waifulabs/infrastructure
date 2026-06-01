@@ -8,8 +8,6 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
-  - ./kopia-repository.yaml
-  #- ./acars/ks.yaml
   - ./glance/ks.yaml
   - ./home-assistant/ks.yaml
   - ./immich/ks.yaml
