@@ -26,7 +26,7 @@ metrics:
   - name: cluster_node_count
     query: count(count by (node) (kube_node_status_condition{condition="Ready"}))
     value: humanizeNumber(result)
-    color: 'result >= 3 ? "green" : result == 2 ? "orange" : "red"'
+    color: 'result >= 3 ? "green" : result >= 2 ? "orange" : "red"'
     title: Nodes
 
   - name: cluster_network_transmit_usage
