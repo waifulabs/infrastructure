@@ -6,7 +6,7 @@ metadata:
   name: grafana-operator
 spec:
   interval: 1h
-  path: ./kubernetes/puddle/observability/grafana/operator
+  path: ./kubernetes/apps/observability/grafana/operator
   prune: true
   targetNamespace: observability
   wait: true
@@ -22,7 +22,7 @@ spec:
     #- name: rook-ceph-cluster
     # namespace: rook-ceph
   interval: 1h
-  path: ./kubernetes/puddle/observability/grafana/instance
+  path: ./kubernetes/apps/observability/grafana/instance
   prune: true
   targetNamespace: observability
   wait: false

@@ -95,7 +95,7 @@ spec:
             subPath: repository.config
       repository:
         type: hostPath
-        hostPath: /var/mnt/puddle/kubernetes/kopia
+        hostPath: /var/mnt/apps/kubernetes/kopia
         hostPathType: Directory
         globalMounts:
           - path: /repository

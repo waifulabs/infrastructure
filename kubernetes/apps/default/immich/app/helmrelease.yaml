@@ -137,12 +137,12 @@ spec:
               - path: /config/matplotlib
       library:
         type: hostPath
-        hostPath: /var/mnt/puddle/kubernetes/immich
+        hostPath: /var/mnt/apps/kubernetes/immich
         globalMounts:
           - path: *mediaLocation
       import:
         type: hostPath
-        hostPath: /var/mnt/puddle/kubernetes/immich/upload/1c469f42-6c62-4945-86ae-1f0a172b6bda
+        hostPath: /var/mnt/apps/kubernetes/immich/upload/1c469f42-6c62-4945-86ae-1f0a172b6bda
         advancedMounts:
           immich:
             main:

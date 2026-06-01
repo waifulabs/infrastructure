@@ -17,7 +17,7 @@ spec:
       namespace: default
     - name: onepassword
       namespace: external-secrets
-  path: ./kubernetes/puddle/default/rtlamr2mqtt/app
+  path: ./kubernetes/apps/default/rtlamr2mqtt/app
   prune: true
   wait: false
   interval: 30m

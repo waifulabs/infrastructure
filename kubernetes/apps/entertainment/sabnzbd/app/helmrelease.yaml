@@ -95,7 +95,7 @@ spec:
         existingClaim: sabnzbd
       media:
         type: hostPath
-        hostPath: /var/mnt/puddle/media
+        hostPath: /var/mnt/apps/media
         globalMounts:
           - path: /media/Downloads/sabnzbd
             subPath: Downloads/sabnzbd

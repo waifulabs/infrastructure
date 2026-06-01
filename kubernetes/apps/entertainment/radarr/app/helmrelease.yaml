@@ -94,7 +94,7 @@ spec:
           - path: /config/MediaCover
       media:
         type: hostPath
-        hostPath: /var/mnt/puddle/media
+        hostPath: /var/mnt/apps/media
         globalMounts:
           - path: /media
       tmp:

@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: onepassword
       namespace: external-secrets
-  path: ./kubernetes/puddle/default/ok8-sh/app
+  path: ./kubernetes/apps/default/ok8-sh/app
   prune: false
   wait: true
   interval: 30m

@@ -14,7 +14,7 @@ spec:
       name: *appname
       namespace: networking
   interval: 1h
-  path: ./kubernetes/puddle/networking/multus/app
+  path: ./kubernetes/apps/networking/multus/app
   prune: true
   timeout: 5m
 ---
@@ -31,7 +31,7 @@ spec:
     - name: multus
       namespace: networking
   interval: 1h
-  path: ./kubernetes/puddle/networking/multus/networks
+  path: ./kubernetes/apps/networking/multus/networks
   prune: true
   timeout: 5m
   wait: true

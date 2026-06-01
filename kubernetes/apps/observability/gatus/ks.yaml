@@ -11,6 +11,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 1h
-  path: ./kubernetes/puddle/observability/gatus/app
+  path: ./kubernetes/apps/observability/gatus/app
   prune: true
   wait: false

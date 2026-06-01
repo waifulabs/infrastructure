@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/puddle/database/barman-cloud/app
+  path: ./kubernetes/apps/database/barman-cloud/app
   prune: true
   wait: false
   interval: 30m

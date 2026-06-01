@@ -15,7 +15,7 @@ spec:
     - name: onepassword
       namespace: external-secrets
   interval: 1h
-  path: ./kubernetes/puddle/volsync-system/kopia/app
+  path: ./kubernetes/apps/volsync-system/kopia/app
   postBuild:
     substitute:
       APP: *app

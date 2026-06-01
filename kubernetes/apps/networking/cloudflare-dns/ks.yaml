@@ -21,7 +21,7 @@ spec:
   dependsOn:
     - name: onepassword
       namespace: external-secrets
-  path: ./kubernetes/puddle/networking/cloudflare-dns/app
+  path: ./kubernetes/apps/networking/cloudflare-dns/app
   prune: false
   wait: true
   interval: 30m

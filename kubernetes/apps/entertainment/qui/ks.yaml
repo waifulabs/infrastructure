@@ -6,7 +6,7 @@ metadata:
   name: qui
 spec:
   interval: 1h
-  path: ./kubernetes/puddle/entertainment/qui/app
+  path: ./kubernetes/apps/entertainment/qui/app
   components:
     - ../../../../components/volsync
   postBuild:

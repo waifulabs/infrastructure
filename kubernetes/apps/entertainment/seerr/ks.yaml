@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 1h
-  path: ./kubernetes/puddle/entertainment/seerr/app
+  path: ./kubernetes/apps/entertainment/seerr/app
   components:
     - ../../../../components/volsync
   postBuild:

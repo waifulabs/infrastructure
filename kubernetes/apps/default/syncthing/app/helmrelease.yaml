@@ -91,7 +91,7 @@ spec:
           - path: /var/syncthing/config
       data:
         type: hostPath
-        hostPath: /var/mnt/puddle/kubernetes/syncthing
+        hostPath: /var/mnt/apps/kubernetes/syncthing
         globalMounts:
           - path: /var/syncthing
       tmp:

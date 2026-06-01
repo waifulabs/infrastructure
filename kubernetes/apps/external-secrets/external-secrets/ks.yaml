@@ -22,7 +22,7 @@ spec:
   dependsOn:
     - name: grafana-operator
       namespace: observability
-  path: ./kubernetes/puddle/external-secrets/external-secrets/app
+  path: ./kubernetes/apps/external-secrets/external-secrets/app
   prune: true
   wait: true
   interval: 30m

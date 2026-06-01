@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/puddle/observability/smartctl-exporter/app
+  path: ./kubernetes/apps/observability/smartctl-exporter/app
   prune: true
   wait: true
   interval: 30m

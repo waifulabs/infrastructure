@@ -87,7 +87,7 @@ spec:
           - path: /etc/yt-dlp
       media:
         type: hostPath
-        hostPath: /var/mnt/puddle/media
+        hostPath: /var/mnt/apps/media
         advancedMounts:
           pinchflat:
             app:

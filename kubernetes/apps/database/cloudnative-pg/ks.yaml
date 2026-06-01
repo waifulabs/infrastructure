@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: onepassword
       namespace: external-secrets
-  path: ./kubernetes/puddle/database/cloudnative-pg/app
+  path: ./kubernetes/apps/database/cloudnative-pg/app
   prune: true
   wait: false
   interval: 30m
@@ -38,7 +38,7 @@ spec:
       namespace: database
     - name: barman-cloud
       namespace: database
-  path: ./kubernetes/puddle/database/cloudnative-pg/clusters/immich
+  path: ./kubernetes/apps/database/cloudnative-pg/clusters/immich
   prune: true
   wait: false
   interval: 30m
@@ -63,7 +63,7 @@ spec:
 #       namespace: database
 #     - name: barman-cloud
 #       namespace: database
-#   path: ./kubernetes/puddle/database/cloudnative-pg/clusters/default
+#   path: ./kubernetes/apps/database/cloudnative-pg/clusters/default
 #   prune: true
 #   wait: false
 #   interval: 30m

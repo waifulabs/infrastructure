@@ -19,7 +19,7 @@ spec:
     substituteFrom:
       - kind: Secret
         name: cloudflare-tunnel-id-secret
-  path: ./kubernetes/puddle/networking/cloudflare-tunnel/app
+  path: ./kubernetes/apps/networking/cloudflare-tunnel/app
   prune: false
   wait: true
   interval: 30m

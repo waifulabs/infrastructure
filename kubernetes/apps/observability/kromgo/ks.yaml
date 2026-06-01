@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/puddle/observability/kromgo/app
+  path: ./kubernetes/apps/observability/kromgo/app
   prune: true
   wait: false
   interval: 30m

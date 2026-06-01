@@ -11,7 +11,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: ""
   hostPath:
-    path: /var/mnt/puddle/kubernetes/kopia
+    path: /var/mnt/apps/kubernetes/kopia
     type: Directory
   claimRef:
     namespace: matrix

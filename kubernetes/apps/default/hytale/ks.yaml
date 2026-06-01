@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
-  path: ./kubernetes/puddle/minecraft/hytale/app
+  path: ./kubernetes/apps/minecraft/hytale/app
   components:
     - ../../../../components/volsync
   postBuild:

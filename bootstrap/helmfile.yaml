@@ -10,7 +10,7 @@ releases:
     namespace: kube-system
     chart: oci://ghcr.io/home-operations/charts-mirror/cilium
     version: 1.18.6
-    values: ["../kubernetes/puddle/kube-system/cilium/app/helm-values.yaml"]
+    values: ["../kubernetes/apps/kube-system/cilium/app/helm-values.yaml"]
     hooks:
       - # Advertise Kubernetes VIP and BGP config
         events: ['postsync']
@@ -19,15 +19,15 @@ releases:
           - apply
           - --server-side
           - --field-manager=kustomize-controller
-          - --filename=../kubernetes/puddle/kube-system/cilium/app/networking.yaml
-          - --filename=../kubernetes/puddle/kube-system/cilium/app/vip.yaml
+          - --filename=../kubernetes/apps/kube-system/cilium/app/networking.yaml
+          - --filename=../kubernetes/apps/kube-system/cilium/app/vip.yaml
         showlogs: true
 
   - name: coredns
     namespace: kube-system
     chart: oci://ghcr.io/coredns/charts/coredns
     version: 1.45.2
-    values: ["../kubernetes/puddle/kube-system/coredns/app/helm-values.yaml"]
+    values: ["../kubernetes/apps/kube-system/coredns/app/helm-values.yaml"]
     needs: ["kube-system/cilium"]
 
   - name: cert-manager
@@ -35,7 +35,7 @@ releases:
     chart: oci://quay.io/jetstack/charts/cert-manager
     version: v1.20.2
     values:
-      ["../kubernetes/puddle/cert-manager/cert-manager/app/helm/values.yaml"]
+      ["../kubernetes/apps/cert-manager/cert-manager/app/helm/values.yaml"]
     needs: ["kube-system/coredns"]
 
   - name: envoy-gateway
@@ -49,7 +49,7 @@ releases:
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
     version: 0.50.0
     values:
-      ["../kubernetes/puddle/flux-system/flux-operator/app/helm-values.yaml"]
+      ["../kubernetes/apps/flux-system/flux-operator/app/helm-values.yaml"]
     needs: ["kube-system/coredns"]
     force: true
 
@@ -58,7 +58,7 @@ releases:
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-instance
     version: 0.50.0
     values:
-      ["../kubernetes/puddle/flux-system/flux-instance/app/helm-values.yaml"]
+      ["../kubernetes/apps/flux-system/flux-instance/app/helm-values.yaml"]
     needs: ["flux-system/flux-operator"]
 
   - name: external-secrets
@@ -72,7 +72,7 @@ releases:
     chart: oci://ghcr.io/bjw-s-labs/helm/app-template
     version: 5.0.1
     values:
-      ["../kubernetes/puddle/external-secrets/onepassword/app/helm-values.yaml"]
+      ["../kubernetes/apps/external-secrets/onepassword/app/helm-values.yaml"]
     needs: ["external-secrets/external-secrets"]
     hooks:
       - events: ['postsync']
@@ -81,5 +81,5 @@ releases:
           - apply
           - --server-side
           - --field-manager=kustomize-controller
-          - --filename=../kubernetes/puddle/external-secrets/onepassword/app/clustersecretstore.yaml
+          - --filename=../kubernetes/apps/external-secrets/onepassword/app/clustersecretstore.yaml
         showlogs: true

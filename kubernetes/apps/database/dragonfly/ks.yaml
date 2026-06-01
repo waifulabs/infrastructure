@@ -11,7 +11,7 @@ spec:
   dependsOn:
     - name: grafana-operator
       namespace: observability
-  path: ./kubernetes/puddle/database/dragonfly/app
+  path: ./kubernetes/apps/database/dragonfly/app
   prune: true
   wait: true
   interval: 30m

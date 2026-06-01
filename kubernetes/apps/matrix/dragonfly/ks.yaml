@@ -11,7 +11,7 @@ spec:
   dependsOn:
     - name: dragonfly
       namespace: database
-  path: ./kubernetes/puddle/matrix/dragonfly/app
+  path: ./kubernetes/apps/matrix/dragonfly/app
   prune: true
   wait: true
   interval: 30m

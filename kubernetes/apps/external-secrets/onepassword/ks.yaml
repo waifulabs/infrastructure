@@ -11,7 +11,7 @@ spec:
   interval: 30m
   dependsOn:
     - name: external-secrets
-  path: ./kubernetes/puddle/external-secrets/onepassword/app
+  path: ./kubernetes/apps/external-secrets/onepassword/app
   prune: true
   timeout: 5m
   wait: true

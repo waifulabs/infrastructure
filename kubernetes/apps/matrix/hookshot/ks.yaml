@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: onepassword
       namespace: external-secrets
-  path: ./kubernetes/puddle/matrix/hookshot/app
+  path: ./kubernetes/apps/matrix/hookshot/app
   components:
     - ../../../../components/volsync
   postBuild:

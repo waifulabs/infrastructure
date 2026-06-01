@@ -15,7 +15,7 @@ spec:
       namespace: external-secrets
     - name: mosquitto
       namespace: default
-  path: ./kubernetes/puddle/default/home-assistant/app
+  path: ./kubernetes/apps/default/home-assistant/app
   components:
     - ../../../../components/volsync
   postBuild:

@@ -9,7 +9,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 1h
-  path: ./kubernetes/puddle/entertainment/brrpolice/app
+  path: ./kubernetes/apps/entertainment/brrpolice/app
   components:
     - ../../../../components/volsync
   postBuild:

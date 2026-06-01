@@ -9,7 +9,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 1h
-  path: ./kubernetes/puddle/default/opencloud/app
+  path: ./kubernetes/apps/default/opencloud/app
   components:
     - ../../../../components/volsync
   postBuild:

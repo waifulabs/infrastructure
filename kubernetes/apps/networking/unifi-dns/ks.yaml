@@ -21,7 +21,7 @@ spec:
   dependsOn:
     - name: onepassword
       namespace: external-secrets
-  path: ./kubernetes/puddle/networking/unifi-dns/app
+  path: ./kubernetes/apps/networking/unifi-dns/app
   prune: false
   wait: false
   interval: 30m

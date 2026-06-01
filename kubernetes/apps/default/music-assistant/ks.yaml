@@ -13,7 +13,7 @@ spec:
       namespace: external-secrets
     - name: mosquitto
       namespace: default
-  path: ./kubernetes/puddle/default/music-assistant/app
+  path: ./kubernetes/apps/default/music-assistant/app
   components:
     - ../../../../components/volsync
   postBuild:

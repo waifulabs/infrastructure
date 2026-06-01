@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: grafana-operator
       namespace: observability
-  path: ./kubernetes/puddle/kube-system/cilium/app
+  path: ./kubernetes/apps/kube-system/cilium/app
   prune: false
   wait: true
   interval: 30m

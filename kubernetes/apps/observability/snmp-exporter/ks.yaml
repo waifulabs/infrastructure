@@ -6,7 +6,7 @@ metadata:
   name: snmp-exporter
 spec:
   interval: 1h
-  path: ./kubernetes/puddle/observability/snmp-exporter/app
+  path: ./kubernetes/apps/observability/snmp-exporter/app
   prune: true
   targetNamespace: observability
   wait: false

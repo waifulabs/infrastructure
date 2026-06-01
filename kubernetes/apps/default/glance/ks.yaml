@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: onepassword
       namespace: external-secrets
-  path: ./kubernetes/puddle/default/glance/app
+  path: ./kubernetes/apps/default/glance/app
   prune: true
   wait: false
   interval: 30m

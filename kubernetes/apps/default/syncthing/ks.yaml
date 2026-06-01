@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 1h
-  path: ./kubernetes/puddle/default/syncthing/app
+  path: ./kubernetes/apps/default/syncthing/app
   components:
     - ../../../../components/volsync
   postBuild:

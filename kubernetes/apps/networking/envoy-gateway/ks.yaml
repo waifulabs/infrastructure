@@ -10,7 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   interval: 1h
-  path: ./kubernetes/puddle/networking/envoy-gateway/app
+  path: ./kubernetes/apps/networking/envoy-gateway/app
   prune: true
   targetNamespace: *namespace
   timeout: 15m

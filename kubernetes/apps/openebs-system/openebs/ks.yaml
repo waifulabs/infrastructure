@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/puddle/openebs-system/openebs/app
+  path: ./kubernetes/apps/openebs-system/openebs/app
   prune: true
   wait: true
   interval: 30m
