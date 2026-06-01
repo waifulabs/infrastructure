@@ -8,7 +8,7 @@ spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
-    name: gha-runner-scale-set-amd64
+    name: gha-runner-scale-set
   install:
     remediation:
       retries: 3

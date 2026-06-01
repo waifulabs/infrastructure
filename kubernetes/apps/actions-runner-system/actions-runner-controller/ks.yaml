@@ -39,7 +39,7 @@ spec:
     - name: openebs
       namespace: openebs-system
   interval: 30m
-  path: ./kubernetes/apps/actions-runner-system/actions-runner-controller/runners/amd64
+  path: ./kubernetes/apps/actions-runner-system/actions-runner-controller/runners
   prune: true
   targetNamespace: *namespace
   timeout: 5m
