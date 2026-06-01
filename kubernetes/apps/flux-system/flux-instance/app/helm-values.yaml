@@ -13,8 +13,8 @@ instance:
     kind: GitRepository
     name: home-kubernetes
     url: https://github.com/waifulabs/infrastructure
-    ref: refs/heads/puddle
-    path: kubernetes/puddle
+    ref: refs/heads/main
+    path: kubernetes/apps
     interval: 1h
   commonMetadata:
     labels:
