@@ -1,87 +1,78 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/kashalls/kromgo/main/config.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/home-operations/kromgo/main/config.schema.json
+defaults:
+  hidden: false
+
+badge:
+  size: 12
+
 metrics:
   - name: talos_version
-    title: "Talos Version"
-    query: node_os_info{ name="Talos"}
-    label: version_id
+    query: node_os_info{name="Talos"}
+    value: labels["version_id"]
+    title: Talos Version
 
   - name: kubernetes_version
-    query: kubernetes_build_info{ service="kubernetes"}
-    label: git_version
+    query: kubernetes_build_info{service="kubernetes"}
+    value: labels["git_version"]
+    title: Kubernetes
 
   - name: cluster_cpu_usage
     query: round(cluster:node_cpu:ratio_rate5m * 100, 0.1)
-    suffix: "%"
-    colors:
-      - { color: "green", min: 0, max: 35 }
-      - { color: "orange", min: 36, max: 75 }
-      - { color: "red", min: 76, max: 1000 }
+    value: string(result) + "%"
+    color: 'result <= 35 ? "green" : result <= 75 ? "orange" : "red"'
+    title: CPU
 
   - name: cluster_node_count
-    query: count(count by (node) (kube_node_status_condition{ condition="Ready"}))
-    colors:
-      - { color: "green", min: 3, max: 999 }
-      - { color: "orange", min: 2, max: 2 }
-      - { color: "red", min: 0, max: 1 }
+    query: count(count by (node) (kube_node_status_condition{condition="Ready"}))
+    value: humanizeNumber(result)
+    color: 'result >= 3 ? "green" : result == 2 ? "orange" : "red"'
+    title: Nodes
 
   - name: cluster_network_transmit_usage
     query: round(avg(instance:node_network_transmit_bytes_excluding_lo:rate5m / 1024 / 1024), 0.1)
-    suffix: "MB/s"
-    colors:
-      - { color: "green", min: 0, max: 50 }
-      - { color: "orange", min: 51, max: 75 }
-      - { color: "red", min: 76, max: 1000 }
+    value: string(result) + "MB/s"
+    color: 'result <= 50 ? "green" : result <= 75 ? "orange" : "red"'
+    title: Transmit
 
   - name: cluster_network_receive_usage
     query: round(avg(instance:node_network_receive_bytes_excluding_lo:rate5m / 1024 / 1024), 0.1)
-    suffix: "MB/s"
-    colors:
-      - { color: "green", min: 0, max: 50 }
-      - { color: "orange", min: 51, max: 75 }
-      - { color: "red", min: 76, max: 1000 }
+    value: string(result) + "MB/s"
+    color: 'result <= 50 ? "green" : result <= 75 ? "orange" : "red"'
+    title: Receive
 
   - name: cluster_pods_running
     query: sum(kube_pod_status_phase{phase="Running"})
+    value: humanizeNumber(result)
+    color: '"green"'
+    title: Pods
 
   - name: cluster_power_usage
     query: round(avg_over_time(unpoller_device_outlet_ac_power_consumption[5m]), 0.1)
-    suffix: "w"
-    colors:
-      - { color: "green", min: 0, max: 400 }
-      - { color: "orange", min: 401, max: 750 }
-      - { color: "red", min: 751, max: 2000 }
+    value: humanizeNumber(math.round(result)) + "w"
+    color: 'result <= 400 ? "green" : result <= 750 ? "orange" : "red"'
+    title: Power
 
-  - name: cluster_age_days
-    query: round((time() - min(kube_node_created) ) / 86400)
-    suffix: " days"
-    colors:
-      - { color: "green", min: 0, max: 99999 }
+  - name: cluster_birth_age
+    query: round(time() - min(kube_node_created))
+    value: humanizeDuration(result)
+    color: '"green"'
+    title: Age
 
-  - name: cluster_uptime_days
-    query: round(avg((node_time_seconds - node_boot_time_seconds) / 3600 / 24), 0.1)
-    suffix: " days"
-    colors:
-      - { color: "green", min: 0, max: 99999 }
-
-  - name: kubernetes_build_version
-    query: kubernetes_build_info{service="kubernetes"}
-    label: git_version
+  - name: cluster_uptime_age
+    query: round(avg(node_time_seconds{pod!=""} - node_boot_time_seconds{pod!=""}))
+    value: humanizeDuration(result)
+    color: '"green"'
+    title: Uptime
 
   - name: prometheus_active_alerts
     query: sum(alertmanager_alerts{state="active"})
-    colors:
-      - { color: "green", min: 0, max: 1 }
-      - { color: "orange", min: 2, max: 10 }
-      - { color: "red", min: 11, max: 9999 }
-
-  - name: cluster_age
-    query: "floor((time() - kube_node_created) / 86400)"
-    valueTemplate: "clusterAge"
+    value: humanizeNumber(result)
+    color: 'result <= 1 ? "green" : result <= 10 ? "orange" : "red"'
+    title: Alerts
 
   - name: node_memory_used
-    query: "node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes"
-    valueTemplate: "{{ . | humanBytes }}"
-
-templates:
-  clusterAge: "{{ . | simplifyDays }}"   # 1159 → "3y64d"
+    query: node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes
+    value: humanizeBytes(result)
+    color: '"green"'
+    title: Memory
