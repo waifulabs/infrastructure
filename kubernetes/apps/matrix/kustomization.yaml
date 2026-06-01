@@ -8,7 +8,6 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
-  - ./kopia-repository.yaml
   - ./continuwuity/ks.yaml
   #- ./dragonfly/ks.yaml
   #- ./hookshot/ks.yaml
