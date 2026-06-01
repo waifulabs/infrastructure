@@ -71,7 +71,7 @@ spec:
       - service
     txtOwnerId: default
     txtPrefix: k8s.
-    domainFilters: ["ok8.sh", "salmon.cafe", "outsideour.casa"]
+    domainFilters: ["normal.ok8.sh", "salmon.cafe", "normal.outsideour.casa"]
     serviceMonitor:
       enabled: true
     podAnnotations:
