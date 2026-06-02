@@ -46,7 +46,7 @@ jobs:
           args: >-
             get cluster
             --all-namespaces
-            --path /github/workspace/kubernetes/puddle
+            --path /github/workspace/kubernetes/apps
             --enable-images
             --only-images
             --output json

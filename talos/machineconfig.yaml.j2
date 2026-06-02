@@ -120,8 +120,7 @@ cluster:
       service:
         disabled: false
   extraManifests:
-    - # renovate: datasource=github-releases depName=kubernetes-sigs/gateway-api
-      https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.0/experimental-install.yaml
+    # Gateway API CRDs are installed and owned by the envoy-gateway Helm chart
     - # renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
       https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.86.2/stripped-down-crds.yaml
   id: op://Kubernetes/talos/CLUSTER_ID

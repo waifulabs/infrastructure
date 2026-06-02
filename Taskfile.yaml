@@ -6,9 +6,8 @@ set: [pipefail]
 shopt: [globstar]
 
 vars:
-  CLUSTER: '{{.CLUSTER | default "puddle"}}'
-  KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes/{{.CLUSTER}}"
-  TALOS_DIR: "{{.ROOT_DIR}}/talos/{{.CLUSTER}}"
+  KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
+  TALOS_DIR: "{{.ROOT_DIR}}/talos"
   BOOTSTRAP_DIR: "{{.ROOT_DIR}}/bootstrap"
 
 env:

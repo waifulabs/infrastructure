@@ -4,7 +4,7 @@ version: "3"
 
 tasks:
   apply-node:
-    desc: Apply Talos config to a node [CLUSTER=puddle] [NODE=required]
+    desc: Apply Talos config to a node [NODE=required]
     dotenv: ["{{.TALOS_DIR}}/talos.env"]
     cmd: |-
       minijinja-cli "{{.TALOS_DIR}}/machineconfig.yaml.j2" \
@@ -12,7 +12,8 @@ tasks:
       | talosctl --nodes "{{.NODE}}" apply-config \
           --mode "{{.MODE}}" \
           --config-patch @<(minijinja-cli "{{.TALOS_DIR}}/nodes/{{.NODE}}.yaml") \{{if .NETWORKING_FILE}}
-          --config-patch @<(cat "{{.NETWORKING_FILE}}") \{{end}}
+          --config-patch @<(cat "{{.NETWORKING_FILE}}") \{{end}}{{if .INSECURE}}
+          --insecure \{{end}}
           --file /dev/stdin
 
     vars:
@@ -39,7 +40,7 @@ tasks:
       - which minijinja-cli talosctl yq
 
   upgrade-node:
-    desc: Upgrade Talos on a single node [CLUSTER=puddle] [NODE=required]
+    desc: Upgrade Talos on a single node [NODE=required]
     cmd: talosctl --nodes {{.NODE}} upgrade --force --image={{.TALOS_IMAGE}}
     vars:
       MACHINE_TYPE:
@@ -56,7 +57,7 @@ tasks:
       - which minijinja-cli talosctl yq
 
   upgrade-k8s:
-    desc: Upgrade Kubernetes across the whole cluster [CLUSTER=puddle] [VERSION=required]
+    desc: Upgrade Kubernetes across the whole cluster [VERSION=required]
     dotenv: ["{{.TALOS_DIR}}/talos.env"]
     cmds:
       - talosctl --nodes {{.TALOS_CONTROLLER}} upgrade-k8s --to $KUBERNETES_VERSION
@@ -72,7 +73,7 @@ tasks:
       - which jq talosctl
 
   reset-node:
-    desc: Reset Talos on a single node [CLUSTER=puddle] [NODE=required]
+    desc: Reset Talos on a single node [NODE=required]
     prompt: Reset Talos node '{{.NODE}}' ... continue?
     cmd: talosctl reset --nodes {{.NODE}} --graceful=false
     requires:
@@ -83,7 +84,7 @@ tasks:
       - which talosctl
 
   reset-cluster:
-    desc: Reset Talos across the whole cluster [CLUSTER=puddle]
+    desc: Reset Talos across the whole cluster
     prompt: Reset Talos  ... continue?
     cmd: talosctl reset --nodes {{.NODE_ADDRS}} --graceful=false
     vars:
@@ -95,7 +96,7 @@ tasks:
       - which jq talosctl
 
   apply-cluster:
-    desc: Apply Talos config across the whole cluster [CLUSTER=puddle] [MODE=default]
+    desc: Apply Talos config across the whole cluster [MODE=default]
     cmds:
       - for: { var: NODE_ADDRS }
         task: apply-node
