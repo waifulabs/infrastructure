@@ -7,6 +7,6 @@ components:
   - ../../components/namespace
 replacements:
   - path: ../../components/replacements/ks.yaml
-resources:
-  - ./volsync/ks.yaml
-  - ./kopia/ks.yaml
+resources: []
+  #- ./volsync/ks.yaml
+  #- ./kopia/ks.yaml
