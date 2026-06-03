@@ -1,0 +1,69 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app intel-device-plugin
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: *app
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      intel-device-plugin:
+        type: daemonset
+        containers:
+          app:
+            image:
+              repository: intel/intel-gpu-plugin
+              tag: 0.35.0
+            env:
+              NODE_NAME:
+                valueFrom:
+                  fieldRef:
+                    fieldPath: spec.nodeName
+              HOST_IP:
+                valueFrom:
+                  fieldRef:
+                    fieldPath: status.hostIP
+            args: ["-v", "2", "-enable-monitoring", "-shared-dev-num", "1", "-allocation-policy", "none"]
+            resources: {}
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
+              readOnlyRootFilesystem: true
+              seccompProfile:
+                type: RuntimeDefault
+    defaultPodOptions:
+      nodeSelector:
+        kubernetes.io/arch: amd64
+    persistence:
+      dri:
+        type: hostPath
+        hostPath: /dev/dri
+        globalMounts:
+          - path: /dev/dri
+      drm:
+        type: hostPath
+        hostPath: /sys/class/drm
+        globalMounts:
+          - path: /sys/class/drm
+      devices:
+        type: hostPath
+        hostPath: /var/lib/kubelet/device-plugins
+        globalMounts:
+          - path: /var/lib/kubelet/device-plugins
+      cdipath:
+        type: hostPath
+        hostPath: /var/run/cdi
+        globalMounts:
+          - path: /var/run/cdi
