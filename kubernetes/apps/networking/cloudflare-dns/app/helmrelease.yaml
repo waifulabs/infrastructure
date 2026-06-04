@@ -60,7 +60,7 @@ spec:
     sources: ["crd", "gateway-httproute"]
     txtPrefix: k8s.
     txtOwnerId: default
-    domainFilters: ["normal.ok8.sh"]
+    domainFilters: ["ok8.sh"]
     serviceMonitor:
       enabled: true
     podAnnotations:
