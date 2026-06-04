@@ -139,8 +139,9 @@ spec:
         globalMounts:
           - path: *data
       extra:
-        type: hostPath
-        hostPath: /var/mnt/apps/kubernetes/continuwuity
+        type: nfs
+        server: puddle.outsideour.casa
+        path: /mnt/puddle/kubernetes/continuwuity
         globalMounts:
           - path: /data/media
             subPath: media

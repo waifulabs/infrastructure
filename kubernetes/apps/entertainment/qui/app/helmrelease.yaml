@@ -72,7 +72,8 @@ spec:
       config:
         existingClaim: "{{ .Release.Name }}"
       media:
-        type: hostPath
-        hostPath: /var/mnt/apps/media
+        type: nfs
+        server: puddle.outsideour.casa
+        path: /mnt/puddle/media
         globalMounts:
           - path: /media

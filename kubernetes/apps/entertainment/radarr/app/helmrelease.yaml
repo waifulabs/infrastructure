@@ -93,8 +93,9 @@ spec:
         globalMounts:
           - path: /config/MediaCover
       media:
-        type: hostPath
-        hostPath: /var/mnt/apps/media
+        type: nfs
+        server: puddle.outsideour.casa
+        path: /mnt/puddle/media
         globalMounts:
           - path: /media
       tmp:
