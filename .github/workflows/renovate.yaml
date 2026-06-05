@@ -39,7 +39,6 @@ jobs:
     name: Renovate
     runs-on: ubuntu-latest
     permissions:
-      contents: read
       packages: read
     steps:
       - name: Generate Token
@@ -48,11 +47,13 @@ jobs:
         with:
           client-id: "${{ secrets.BOT_APP_ID }}"
           private-key: "${{ secrets.BOT_APP_PRIVATE_KEY }}"
+          permission-checks: write
           permission-contents: write
-          permission-pull-requests: write
           permission-issues: write
-          permission-workflows: write
+          permission-pull-requests: write
+          permission-statuses: write
           permission-vulnerability-alerts: read
+          permission-workflows: write
 
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
@@ -62,10 +63,6 @@ jobs:
 
       - name: Renovate
         uses: renovatebot/github-action@693b9ef15eec82123529a37c782242f091365961 # v46.1.14
-        with:
-          configurationFile: .renovaterc.json5
-          token: "${{ steps.app-token.outputs.token }}"
-          renovate-version: "${{ inputs.version || 'latest' }}"
         env:
           LOG_LEVEL: ${{ inputs.logLevel || 'debug' }}
           RENOVATE_AUTODISCOVER: true
@@ -74,4 +71,6 @@ jobs:
           RENOVATE_INTERNAL_CHECKS_FILTER: strict
           RENOVATE_PLATFORM: github
           RENOVATE_PLATFORM_COMMIT: true
-          RENOVATE_HOST_RULES: "[{\"matchHost\": \"ghcr.io\",\"username\": \"${{ github.repository_owner }}\",\"password\": \"${{ secrets.GITHUB_TOKEN }}\", \"hostType\": \"docker\"}]"
+        with:
+          token: "${{ steps.app-token.outputs.token }}"
+          renovate-version: "${{ inputs.version || 'latest' }}"
