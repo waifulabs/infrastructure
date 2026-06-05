@@ -19,6 +19,7 @@
     ':timezone(America/Los_Angeles)'
   ],
   dependencyDashboardTitle: 'Renovate Dashboard 🗡️',
+  prBodyTemplate: "{{{header}}}{{{table}}}{{{warnings}}}{{{notes}}}{{{changelogs}}}{{{controls}}}{{{footer}}}",
   suppressNotifications: [
     'prEditedNotification',
     'prIgnoreNotification',
