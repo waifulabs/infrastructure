@@ -89,19 +89,20 @@ flowchart LR
 
     Internet(["The Internet"])
 
-    Internet -- "2 Gbps ↓ / 350 Mbps ↑" --> UCG["UCG Fiber"]:::gateway
+    Internet -- "2 Gbps ↓ / 350 Mbps ↑" --> UCG["UCG Fiber (Mystic)"]:::gateway
+
     UCG -- 2.5G --> FLEX["USW Flex 2.5G 8 PoE"]:::switch
-    UCG -- 10G --> AGG["USW Pro Aggregation"]:::switch
+    UCG -- 2.5G --> U7XG(["U7 Pro XG (Office)"]):::ap
+    UCG -- 10G SFP+ --> AGG["USW Pro Aggregation"]:::switch
 
-    FLEX -- 2.5G --> U7XG(["U7 Pro XG (Office)"]):::ap
-    FLEX -- 1G --> UAPAC(["UAP-AC-Pro (Dining Room)"]):::ap
-
-    AGG -- 10G --> MAX["USW Pro Max 16"]:::switch
+    AGG -- 10G SFP+ --> MAX["USW Pro Max 16 PoE"]:::switch
     AGG -- 20G LACP --> MS01["3x MS-01 (Main)"]:::compute
     AGG -- 10G --> PUDDLE["Puddle (NAS)"]:::storage
 
     MAX -- 1G --> U6LR(["U6-LR (Garage)"]):::ap
-    MAX -- 1G --> U7PRO(["U7-Pro (Lab)"]):::ap
+    MAX --> PDU["USP PDU Pro"]:::switch
+
+    U7XG -. mesh .-> UDB["UDB Switch (Garage)"]:::switch
 ```
 
 ### Networks & Vlans
@@ -122,25 +123,17 @@ I wrote [External DNS UniFi Webhook](https://github.com/kashalls/external-dns-un
 
 ## 🔧 Hardware
 
-| Device              | Count | OS Disk Size | Data Disk Size | Ram  | Operating System | Purpose          |
-|---------------------|-------|--------------|----------------|------|------------------|------------------|
-| UCG Fiber           | 1     | -            | 1TiB NVMe      | -    | UniFi OS         | Router           |
-| USW Flex 2.5G 8 PoE | 1     | -            | -              | -    | UniFi OS         | Switching        |
-| USW Pro Max 16 PoE  | 1     | -            | -              | -    | UniFi OS         | Switching        |
-| USW Pro Aggregation | 1     | -            | -              | -    | UniFi OS         | Aggregation      |
-| U7 Pro XG           | 1     | -            | -              | -    | -                | Office AP        |
-| U6 LR               | 1     | -            | -              | -    | -                | Garage AP        |
-| UDB Switch          | 1     | -            | -              | -    | UniFi OS         | Garage Workbench |
-| USP-PDU-Pro         | 1     | -            | -              | -    | -                | Rack PDU         |
-| MS-01               | 3     | 1TB NVMe     | 2TB PM9A3 U.2  | 96GB | Talos            | Main Cluster     |
-| Puddle              | 1     | 1TB NVMe     | 6x 12TB + 2TB   | 256GB| TrueNAS SCALE   | NAS              |
-| JetKVM              | 1     | 16GB (Flash) | -              | -    | JetKVM           | Network KVM      |
-| Eaton 5PX1500RT     | 1     | -            | -              | -    | -                | UPS              |
-| Meshtastic MQTT GW  | 1     | -            | -              | -    | -                | MQTT GW          |
-| SMLIGHT SLZB-06M    | 1     | -            | -              | -    | -                | Matter Gateway   |
+### Compute
 
-<details>
-  <summary>💾 Puddle — TrueNAS SCALE storage</summary>
+**Minisforum MS-01 × 3** · 96 GB RAM · Talos / Kubernetes
+
+- **OS** — 1 TB Crucial NVMe
+- **Local storage** — 2 TB Samsung PM9A3 U.2 NVMe
+- **Out-of-band** — JetKVM
+
+### Storage
+
+**45HomeLab HL15** · 256 GB RAM · TrueNAS SCALE / ZFS
 
 ```sh
 💾 Puddle                          # TrueNAS SCALE · 45HomeLab HL15 · 256 GB RAM
@@ -158,7 +151,25 @@ I wrote [External DNS UniFi Webhook](https://github.com/kashalls/external-dns-un
 └── 💿 750 GB Intel Optane NVMe    # future SLOG
 ```
 
-</details>
+### Networking — UniFi
+
+- **UCG Fiber** ("Mystic") — router · 2.5 G WAN
+- **USW Pro Aggregation** — 10 G SFP+ aggregation switch
+- **USW Pro Max 16 PoE** — 10 G SFP+ / PoE switch
+- **USW Flex 2.5G 8 PoE** — 2.5 G PoE switch
+- **USP PDU Pro** — rack PDU
+- **U7 Pro XG** — Wi-Fi 7 AP (Office)
+- **U6 LR** — Wi-Fi 6 AP (Garage)
+- **UDB Switch** — workbench switch, wireless mesh (Garage)
+
+### Power
+
+**Eaton 5PX1500RT** — 1500 VA rackmount UPS
+
+### IoT Gateways
+
+- **Meshtastic MQTT Gateway** — LoRa mesh → MQTT
+- **SMLIGHT SLZB-06M** — Zigbee / Matter gateway
 
 ---
 
