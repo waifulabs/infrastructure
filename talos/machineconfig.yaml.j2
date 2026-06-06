@@ -1,14 +1,12 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.12/website/content/v1.12/schemas/v1alpha1_config.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.13/website/content/v1.13/schemas/v1alpha1_config.schema.json
 version: v1alpha1
 debug: false
 persist: true
 machine:
   ca:
     crt: op://Kubernetes/talos/CERTS_OS_CRT
-    {% if ENV.MACHINE_TYPE == 'controlplane' %}
     key: op://Kubernetes/talos/CERTS_OS_KEY
-    {% endif %}
   features:
     diskQuotaSupport: true
     hostDNS:
@@ -18,12 +16,10 @@ machine:
     kubePrism:
       enabled: true
       port: 7445
-    {% if ENV.MACHINE_TYPE == 'controlplane' %}
     kubernetesTalosAPIAccess:
       enabled: true
       allowedRoles: ["os:admin"]
       allowedKubernetesNamespaces: ["actions-runner-system", "system-upgrade"]
-    {% endif %}
   files:
     # Required for Spegel: https://spegel.dev/docs/getting-started/#talos
     - op: create
@@ -52,12 +48,13 @@ machine:
     nodeIP:
       validSubnets: ["10.0.10.0/24"]
   nodeLabels:
-    topology.kubernetes.io/zone: {{ ENV.MACHINE_TYPE }}
-  {% if ENV.MACHINE_TYPE == 'controlplane' %}
+    topology.kubernetes.io/zone: { { ENV.MACHINE_TYPE } }
   sysctls:
     fs.inotify.max_user_watches: 1048576 # Watchdog
     fs.inotify.max_user_instances: 8192 # Watchdog
     net.core.default_qdisc: fq # 10Gb/s
+    net.core.netdev_max_backlog: 50000 # 10Gb/s
+    net.core.somaxconn: 65535 # 10Gb/s
     net.core.rmem_max: 67108864 # 10Gb/s | Cloudflared / QUIC
     net.core.wmem_max: 67108864 # 10Gb/s | Cloudflared / QUIC
     net.ipv4.neigh.default.gc_thresh1: "4096"
@@ -66,9 +63,14 @@ machine:
     net.ipv4.ping_group_range: 0 2147483647
     net.ipv4.tcp_congestion_control: bbr # 10Gb/s
     net.ipv4.tcp_fastopen: 3 # Send and accept data in the opening SYN packet
+    net.ipv4.tcp_fin_timeout: 15 # Faster timeouts
+    net.ipv4.tcp_max_syn_backlog: 65535 # 10Gb/s
     net.ipv4.tcp_mtu_probing: 1 # 10Gb/s | Jumbo frames
+    net.ipv4.tcp_notsent_lowat: 131072 # 10Gb/s
+    net.ipv4.tcp_slow_start_after_idle: 0 # 10Gb/s
     net.ipv4.tcp_rmem: 4096 87380 33554432 # 10Gb/s
     net.ipv4.tcp_wmem: 4096 65536 33554432 # 10Gb/s
+    net.ipv4.tcp_tw_reuse: 1 # Reuse sockets in TIME_WAIT
     net.ipv4.tcp_window_scaling: 1 # 10Gb/s
     sunrpc.tcp_max_slot_table_entries: "128"
     sunrpc.tcp_slot_table_entries: "128"
@@ -96,19 +98,15 @@ machine:
     devices.system.cpu.cpu17.cpufreq.energy_performance_preference: balance_performance
     devices.system.cpu.cpu18.cpufreq.energy_performance_preference: balance_performance
     devices.system.cpu.cpu19.cpufreq.energy_performance_preference: balance_performance
-  {% endif %}
   token: op://Kubernetes/talos/TRUSTDINFO_TOKEN
-  type: {{ ENV.MACHINE_TYPE }}
+  type: { { ENV.MACHINE_TYPE } }
   udev:
     rules:
-      - ACTION=="add", SUBSYSTEM=="thunderbolt", ATTR{authorized}=="0", ATTR{authorized}="1" # Thunderbolt
       - SUBSYSTEM=="drm", KERNEL=="renderD*", GROUP="44", MODE="0660" # Intel GPU
 cluster:
   ca:
     crt: op://Kubernetes/talos/CERTS_K8S_CRT
-    {% if ENV.MACHINE_TYPE == 'controlplane' %}
     key: op://Kubernetes/talos/CERTS_K8S_KEY
-    {% endif %}
   clusterName: main
   controlPlane:
     endpoint: https://k8s.internal:6443
@@ -132,7 +130,6 @@ cluster:
     serviceSubnets: ["172.31.0.0/16"]
   secret: op://Kubernetes/talos/CLUSTER_SECRET
   token: op://Kubernetes/talos/SECRETS_BOOTSTRAPTOKEN
-  {% if ENV.MACHINE_TYPE == 'controlplane' %}
   aggregatorCA:
     crt: op://Kubernetes/talos/CERTS_K8SAGGREGATOR_CRT
     key: op://Kubernetes/talos/CERTS_K8SAGGREGATOR_KEY
@@ -191,7 +188,6 @@ cluster:
                     whenUnsatisfiable: ScheduleAnyway
   serviceAccount:
     key: op://Kubernetes/talos/CERTS_KUBERNETES_SERVICEACCOUNT_KEY
-  {% endif %}
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.12/website/content/v1.12/schemas/config.schema.json
 apiVersion: v1alpha1

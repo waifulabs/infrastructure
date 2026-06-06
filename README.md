@@ -27,15 +27,15 @@ Thanks to [onedr0p](https://github.com/onedr0p), there is the [cluster template]
 
 If you're interested, you can also join the community [Home Operations](https://discord.gg/home-operations). Several people are involved daily and it makes for some interesting conversations.
 
-### Clusters
+### Cluster
 
-This repository manages three independent Kubernetes clusters, each with its own Flux stack.
+This repository manages a single Kubernetes cluster managed by Flux.
 
 | Cluster | Nodes | Purpose |
 |---------|-------|---------|
-| **Main** (MS-01 × 3) | fenrys, maomao, shylily | Primary workloads |
-| **Puddle** | 1 node | NAS — ZFS storage, home automation, media |
-| **Sable** (MS-R1, ARM64) | nyanners | CI runners, automation |
+| **Main** (MS-01 × 3) | fenrys, maomao, shylily | All workloads |
+
+Storage is backed by [Puddle](#-hardware), a dedicated NAS that serves ZFS-backed NFS to the cluster.
 
 ### Directory Helper
 
@@ -46,11 +46,8 @@ This repository uses the following layout for [Kubernetes](./kubernetes/).
 ├── 📝 helmfile.yaml         # Helmreleases required to bootstrap Flux.
 └── 📝 secrets.yaml.tpl      # Secrets required to bootstrap Flux.
 📁 kubernetes
-├── 📁 apps                  # Main cluster application configurations.
-├── 📁 components            # Shared Kustomize components used across all clusters.
-├── 📁 flux                  # Main cluster Flux entrypoint.
-├── 📁 puddle                # Puddle (NAS) cluster application configurations.
-└── 📁 sable                 # Sable (runner) cluster application configurations.
+├── 📁 apps                  # Application configurations.
+└── 📁 components            # Shared Kustomize components.
 📁 talos
 ├── 📁 nodes                 # Per-node override configurations.
 ├── 📝 machineconfig.yaml.j2 # Base Talos configuration for all nodes.
@@ -99,7 +96,6 @@ flowchart LR
 
     AGG -- 10G --> MAX["USW Pro Max 16"]:::switch
     AGG -- 20G LACP --> MS01["3x MS-01 (Main)"]:::compute
-    AGG -- 10G --> MSR1["MS-R1 (Sable)"]:::compute
     AGG -- 10G --> PUDDLE["Puddle (NAS)"]:::storage
 
     MAX -- 1G --> U6LR(["U6-LR (Garage)"]):::ap
@@ -142,12 +138,25 @@ UniFi released a new feature update with UniFi routers that allow you to create 
 | UDB Switch          | 1     | -            | -              | -    | UniFi OS         | Garage Workbench |
 | USP-PDU-Pro         | 1     | -            | -              | -    | -                | Rack PDU         |
 | MS-01               | 3     | 1TB NVMe     | 2TB PM9A3 U.2  | 96GB | Talos            | Main Cluster     |
-| MS-R1               | 1     | 1TB NVMe     | 1TB NVMe       | 64GB | Talos            | Sable (Runners)  |
-| Puddle              | 1     | -            | -              | 256GB| Talos            | NAS Cluster      |
+| Puddle              | 1     | 1TB NVMe     | 6x 12TB + 2TB   | 256GB| TrueNAS SCALE   | NAS              |
 | JetKVM              | 1     | 16GB (Flash) | -              | -    | JetKVM           | Network KVM      |
 | Eaton 5PX1500RT     | 1     | -            | -              | -    | -                | UPS              |
 | Meshtastic MQTT GW  | 1     | -            | -              | -    | -                | MQTT GW          |
 | SMLIGHT SLZB-06M    | 1     | -            | -              | -    | -                | Matter Gateway   |
+
+<details>
+  <summary>💾 Puddle — TrueNAS SCALE storage</summary>
+
+  **45HomeLab HL15** · 256 GB RAM · ZFS
+
+  | Pool      | Role    | Drives                              | Layout        |
+  |-----------|---------|-------------------------------------|---------------|
+  | boot-pool | boot    | 1 × 1 TB Kingston NV3 NVMe          | Single        |
+  | puddle    | data    | 6 × 12 TB Seagate IronWolf / Exos   | 6-wide RAIDZ2 |
+  | puddle    | L2ARC   | 2 × 1.92 TB Samsung PM9A3 NVMe      | Cache         |
+  | puddle    | spare   | 1 × 12 TB Seagate IronWolf          | Hot spare     |
+
+</details>
 
 ---
 

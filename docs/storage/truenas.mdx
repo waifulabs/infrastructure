@@ -3,4 +3,19 @@ title: 'TrueNAS'
 icon: 'badger-honey'
 ---
 
-*I haven't gotten to writing this page yet... Sorry!*
+Puddle is my NAS, running **TrueNAS SCALE** on a **45HomeLab HL15** with 256 GB
+of RAM. It serves ZFS-backed NFS to the Kubernetes cluster (`puddle.outsideour.casa`).
+
+## Pools
+
+| Pool      | Role    | Drives                              | Layout        |
+|-----------|---------|-------------------------------------|---------------|
+| boot-pool | boot    | 1 × 1 TB Kingston NV3 NVMe          | Single        |
+| puddle    | data    | 6 × 12 TB Seagate IronWolf / Exos   | 6-wide RAIDZ2 |
+| puddle    | L2ARC   | 2 × 1.92 TB Samsung PM9A3 NVMe      | Cache         |
+| puddle    | spare   | 1 × 12 TB Seagate IronWolf          | Hot spare     |
+
+<Note>
+A 750 GB Intel Optane drive is installed but currently unassigned — earmarked
+for a future SLOG / special vdev.
+</Note>
