@@ -135,21 +135,12 @@ I wrote [External DNS UniFi Webhook](https://github.com/kashalls/external-dns-un
 
 **45HomeLab HL15** · 256 GB RAM · TrueNAS SCALE / ZFS
 
-```sh
-💾 Puddle                          # TrueNAS SCALE · 45HomeLab HL15 · 256 GB RAM
-📦 boot-pool                       # single
-└── 💿 1 TB Kingston NV3 NVMe
-📦 puddle
-├── 🗄️ data (raidz2-0)            # 6-wide RAIDZ2
-│   ├── 💿 4 × 12 TB Seagate IronWolf
-│   └── 💿 2 × 12 TB Seagate Exos 7E8
-├── ⚡ cache (L2ARC)
-│   └── 💿 2 × 1.92 TB Samsung PM9A3 NVMe
-└── 🔁 spare
-    └── 💿 1 × 12 TB Seagate IronWolf
-🧊 unassigned
-└── 💿 750 GB Intel Optane NVMe    # future SLOG
-```
+- **Boot** — 1 × 1 TB Kingston NV3 NVMe
+- **`puddle` pool**
+    - 6 × 12 TB Seagate IronWolf / Exos 7E8 HDD — 6-wide RAIDZ2
+    - 2 × 1.92 TB Samsung PM9A3 NVMe — L2ARC cache
+    - 1 × 12 TB Seagate IronWolf — hot spare
+- **Unassigned** — 750 GB Intel Optane NVMe (future SLOG)
 
 ### Networking — UniFi
 
@@ -168,8 +159,8 @@ I wrote [External DNS UniFi Webhook](https://github.com/kashalls/external-dns-un
 
 ### IoT Gateways
 
-- **Meshtastic MQTT Gateway** — LoRa mesh → MQTT
-- **SMLIGHT SLZB-06M** — Zigbee / Matter gateway
+- **[Meshtastic MQTT Gateway](https://store.rakwireless.com/products/wismesh-ethernet-gateway?variant=44413995516102)** — LoRa mesh → MQTT
+- **[SMLIGHT SLZB-06M](https://smlight.tech/global/slzb06m)** — Zigbee / Matter gateway
 
 ---
 
