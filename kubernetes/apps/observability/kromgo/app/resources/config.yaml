@@ -72,3 +72,44 @@ badges:
     query: sum(alertmanager_alerts{state="active"})
     valueExpr: humanizeCommas(result)
     colorExpr: 'colorScale(result, [1.0, 10.0], ["green", "orange", "red"])'
+
+  - title: ARC
+    id: nas_arc_size
+    query: node_zfs_arc_size{instance=~"puddle.*"}
+    valueExpr: humanizeBytes(result)
+    colorExpr: '"green"'
+
+  - title: Used
+    id: nas_storage_used
+    query: sum(node_filesystem_size_bytes{instance=~"puddle.*",fstype="zfs"} - node_filesystem_avail_bytes{instance=~"puddle.*",fstype="zfs"})
+    valueExpr: humanizeBytes(result)
+    colorExpr: '"green"'
+
+  - title: Free
+    id: nas_storage_free
+    query: max(node_filesystem_avail_bytes{instance=~"puddle.*",mountpoint="/mnt/puddle"})
+    valueExpr: humanizeBytes(result)
+    colorExpr: 'colorScale(result, [2e12, 5e12], ["red", "orange", "green"])'
+
+  - title: Disk Temp
+    id: nas_disk_temp
+    query: round(max(node_hwmon_temp_celsius{instance=~"puddle.*"}))
+    valueExpr: string(result) + "°C"
+    colorExpr: 'colorScale(result, [45.0, 55.0], ["green", "orange", "red"])'
+
+  - title: Disks
+    id: nas_disk_count
+    query: count(smartctl_device{instance=~"puddle.*"})
+    colorExpr: '"green"'
+
+  - title: Pools
+    id: nas_pools_online
+    query: sum(node_zfs_zpool_state{instance=~"puddle.*",state="online"})
+    valueExpr: string(result) + " online"
+    colorExpr: '"green"'
+
+  - title: NAS Uptime
+    id: nas_uptime
+    query: round(avg(node_time_seconds{instance=~"puddle.*"} - node_boot_time_seconds{instance=~"puddle.*"}))
+    valueExpr: humanizeDurationDays(result)
+    colorExpr: '"green"'
