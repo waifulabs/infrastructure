@@ -81,6 +81,16 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
+            filters:
+              - type: ResponseHeaderModifier
+                responseHeaderModifier:
+                  set:
+                    - name: Access-Control-Allow-Origin
+                      value: "*"
+                    - name: Access-Control-Allow-Methods
+                      value: "GET, OPTIONS"
+                    - name: Access-Control-Allow-Headers
+                      value: "*"
     persistence:
       config-file:
         type: configMap
