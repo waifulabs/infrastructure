@@ -31,11 +31,20 @@ badges:
     valueExpr: string(result) + "%"
     colorExpr: 'colorScale(result, [35.0, 75.0], ["green", "orange", "red"])'
 
+  # Update the existing Memory badge to sum across cluster nodes:
   - title: Memory
     id: node_memory_used
-    query: node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes
+    query: sum(node_memory_MemTotal_bytes{kubernetes_node!=""} - node_memory_MemAvailable_bytes{kubernetes_node!=""})
     valueExpr: humanizeBytes(result)
     colorExpr: '"green"'
+
+  # New: cluster total memory (renders as the smaller "/ total"):
+  - title: Total Memory
+    id: node_memory_total
+    query: sum(node_memory_MemTotal_bytes{kubernetes_node!=""})
+    valueExpr: humanizeBytes(result)
+    colorExpr: '"green"'
+
 
   - title: Transmit
     id: cluster_network_transmit_usage
@@ -78,6 +87,13 @@ badges:
     query: node_zfs_arc_size{instance=~"puddle.*"}
     valueExpr: humanizeBytes(result)
     colorExpr: '"green"'
+
+  - title: ARC Max
+    id: nas_arc_max
+    query: node_zfs_arc_c_max{instance=~"puddle.*"}
+    valueExpr: humanizeBytes(result)
+    colorExpr: '"green"'
+
 
   - title: Used
     id: nas_storage_used
