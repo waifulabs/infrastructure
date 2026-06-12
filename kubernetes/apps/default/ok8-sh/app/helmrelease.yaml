@@ -25,11 +25,16 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/kashalls/ok8.sh
-              tag: latest
+              repository: ghcr.io/kashalls/kashall.dev
+              tag: 1.0.0
             env:
-              GATEWAY_CONTACT_EMAIL: "noc@ok8.sh"
-              KROMGO_BASE_URL: "http://kromgo.observability.svc.cluster.local"
+              NUXT_PUBLIC_SITE_URL: "https://ok8.sh"
+              NUXT_PUBLIC_USER_ID: "201077739589992448"
+              NUXT_PUBLIC_GITHUB: "kashalls"
+              NUXT_CONTACT_TO: "noc@ok8.sh"
+            envFrom:
+              - secretRef:
+                  name: ok8-sh-secret
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
@@ -44,9 +49,9 @@ spec:
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
+        runAsUser: 65532
+        runAsGroup: 65532
+        fsGroup: 65532
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
@@ -84,7 +89,7 @@ spec:
                     type: ReplaceFullPath
                     replaceFullPath: /gateway
     persistence:
-      cache:
+      tmp:
         type: emptyDir
         globalMounts:
-          - path: /app/.next/cache
+          - path: /tmp
