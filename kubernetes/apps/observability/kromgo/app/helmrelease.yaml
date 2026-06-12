@@ -1,9 +1,9 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app kromgo
+  name: kromgo
 spec:
   interval: 1h
   chartRef:
@@ -18,84 +18,157 @@ spec:
       strategy: rollback
       retries: 3
   values:
-    controllers:
-      kromgo:
-        replicas: 1
-        strategy: RollingUpdate
-        annotations:
-          reloader.stakater.com/auto: "true"
-        containers:
-          app:
-            image:
-              repository: ghcr.io/home-operations/kromgo
-              tag: 0.14.6@sha256:fde658bf90bf6ea8f423843d2ebbb3e8bfdbd9449f3a99695563af33d3a5028e
-            env:
-              PROMETHEUS_URL: http://prometheus-operated.observability.svc.cluster.local:9090
-              SERVER_PORT: &port 80
-              HEALTH_PORT: &healthPort 8080
-            probes:
-              liveness: &probes
-                enabled: true
-                custom: true
-                spec:
-                  httpGet:
-                    path: /readyz
-                    port: *healthPort
-                  initialDelaySeconds: 0
-                  periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"] }
-            resources:
-              requests:
-                cpu: 10m
-              limits:
-                memory: 64Mi
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
-    service:
-      app:
-        ports:
-          http:
-            port: *port
-          health:
-            port: *healthPort
-    route:
-      app:
-        annotations:
-          gatus.home-operations.com/endpoint: |-
-            conditions: ["[STATUS] == 200"]
-        hostnames: ["{{ .Release.Name }}.ok8.sh"]
-        parentRefs:
-          - name: external
-            namespace: networking
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
-            filters:
-              - type: ResponseHeaderModifier
-                responseHeaderModifier:
-                  set:
-                    - name: Access-Control-Allow-Origin
-                      value: "*"
-                    - name: Access-Control-Allow-Methods
-                      value: "GET, OPTIONS"
-                    - name: Access-Control-Allow-Headers
-                      value: "*"
-    persistence:
-      config-file:
-        type: configMap
-        name: kromgo-configmap
-        globalMounts:
-          - path: /config/config.yaml
-            subPath: config.yaml
-            readOnly: true
+    config:
+      prometheus: http://prometheus-operated.{{ .Release.Namespace }}.svc.cluster.local:9090
+      badges:
+        - title: Talos
+          id: talos_version
+          query: label_replace(node_os_info{name="Talos"}, "version_id", "$1", "version_id", "v(.+)")
+          valueExpr: labels["version_id"]
+          icon: si:talos
+
+        - title: Kubernetes
+          id: kubernetes_version
+          query: label_replace(kubernetes_build_info{service="kube-prometheus-stack-kube-controller-manager"}, "git_version", "$1", "git_version", "v(.+)")
+          valueExpr: labels["git_version"]
+          icon: si:kubernetes
+
+        - title: Nodes
+          id: cluster_node_count
+          query: count(count by (node) (kube_node_status_condition{condition="Ready"}))
+          colorExpr: 'colorScale(result, [2.0, 3.0], ["red", "orange", "green"])'
+
+        - title: Pods
+          id: cluster_pods_running
+          query: sum(kube_pod_status_phase{phase="Running"})
+          valueExpr: humanizeCommas(result)
+          colorExpr: '"green"'
+
+        - title: CPU
+          id: cluster_cpu_usage
+          query: round(cluster:node_cpu:ratio_rate5m * 100, 0.1)
+          valueExpr: string(result) + "%"
+          colorExpr: 'colorScale(result, [35.0, 75.0], ["green", "orange", "red"])'
+
+        # Update the existing Memory badge to sum across cluster nodes:
+        - title: Memory
+          id: node_memory_used
+          query: sum(node_memory_MemTotal_bytes{kubernetes_node!=""} - node_memory_MemAvailable_bytes{kubernetes_node!=""})
+          valueExpr: humanizeBytes(result)
+          colorExpr: '"green"'
+
+        # New: cluster total memory (renders as the smaller "/ total"):
+        - title: Total Memory
+          id: node_memory_total
+          query: sum(node_memory_MemTotal_bytes{kubernetes_node!=""})
+          valueExpr: humanizeBytes(result)
+          colorExpr: '"green"'
+
+        - title: Transmit
+          id: cluster_network_transmit_usage
+          query: round(avg(instance:node_network_transmit_bytes_excluding_lo:rate5m / 1024 / 1024), 0.1)
+          valueExpr: string(result) + "MB/s"
+          colorExpr: 'colorScale(result, [50.0, 75.0], ["green", "orange", "red"])'
+
+        - title: Receive
+          id: cluster_network_receive_usage
+          query: round(avg(instance:node_network_receive_bytes_excluding_lo:rate5m / 1024 / 1024), 0.1)
+          valueExpr: string(result) + "MB/s"
+          colorExpr: 'colorScale(result, [50.0, 75.0], ["green", "orange", "red"])'
+
+        - title: Power
+          id: cluster_power_usage
+          query: round(avg_over_time(unpoller_device_outlet_ac_power_consumption[5m]), 0.1)
+          valueExpr: humanizeCommas(math.round(result)) + "w"
+          colorExpr: 'colorScale(result, [400.0, 750.0], ["green", "orange", "red"])'
+
+        - title: Age
+          id: cluster_birth_age
+          query: round(time() - min(kube_node_created))
+          valueExpr: humanizeDurationDays(result)
+          colorExpr: '"green"'
+
+        - title: Uptime
+          id: cluster_uptime_age
+          query: round(avg(node_time_seconds{pod!=""} - node_boot_time_seconds{pod!=""}))
+          valueExpr: humanizeDurationDays(result)
+          colorExpr: '"green"'
+
+        - title: Alerts
+          id: prometheus_active_alerts
+          query: sum(alertmanager_alerts{state="active"})
+          valueExpr: humanizeCommas(result)
+          colorExpr: 'colorScale(result, [1.0, 10.0], ["green", "orange", "red"])'
+
+        - title: ARC
+          id: nas_arc_size
+          query: node_zfs_arc_size{instance=~"puddle.*"}
+          valueExpr: humanizeBytes(result)
+          colorExpr: '"green"'
+
+        - title: ARC Max
+          id: nas_arc_max
+          query: node_zfs_arc_c_max{instance=~"puddle.*"}
+          valueExpr: humanizeBytes(result)
+          colorExpr: '"green"'
+
+        - title: Used
+          id: nas_storage_used
+          query: sum(node_filesystem_size_bytes{instance=~"puddle.*",fstype="zfs"} - node_filesystem_avail_bytes{instance=~"puddle.*",fstype="zfs"})
+          valueExpr: humanizeBytes(result)
+          colorExpr: '"green"'
+
+        - title: Free
+          id: nas_storage_free
+          query: max(node_filesystem_avail_bytes{instance=~"puddle.*",mountpoint="/mnt/puddle"})
+          valueExpr: humanizeBytes(result)
+          colorExpr: 'colorScale(result, [2e12, 5e12], ["red", "orange", "green"])'
+
+        - title: Disk Temp
+          id: nas_disk_temp
+          query: round(max(node_hwmon_temp_celsius{instance=~"puddle.*"}))
+          valueExpr: string(result) + "°C"
+          colorExpr: 'colorScale(result, [45.0, 55.0], ["green", "orange", "red"])'
+
+        - title: Disks
+          id: nas_disk_count
+          query: count(smartctl_device{instance=~"puddle.*"})
+          colorExpr: '"green"'
+
+        - title: Pools
+          id: nas_pools_online
+          query: sum(node_zfs_zpool_state{instance=~"puddle.*",state="online"})
+          valueExpr: string(result) + " online"
+          colorExpr: '"green"'
+
+        - title: NAS Uptime
+          id: nas_uptime
+          query: round(avg(node_time_seconds{instance=~"puddle.*"} - node_boot_time_seconds{instance=~"puddle.*"}))
+          valueExpr: humanizeDurationDays(result)
+          colorExpr: '"green"'
+    httpRoute:
+      enabled: true
+      annotations:
+        gatus.home-operations.com/endpoint: |-
+          conditions: ["[STATUS] == 200"]
+      parentRefs:
+        - name: external
+          namespace: networking
+          sectionName: https
+      hostnames:
+        - "{{ .Release.Name }}.ok8.sh"
+      filters:
+        - type: ResponseHeaderModifier
+          responseHeaderModifier:
+            set:
+              - name: Access-Control-Allow-Origin
+                value: "*"
+              - name: Access-Control-Allow-Methods
+                value: "GET, OPTIONS"
+              - name: Access-Control-Allow-Headers
+                value: "*"
+    resources:
+      requests:
+        cpu: 10m
+      limits:
+        memory: 64Mi
