@@ -43,7 +43,7 @@ spec:
               ZIGBEE2MQTT_CONFIG_PERMIT_JOIN: "false"
               ZIGBEE2MQTT_CONFIG_SERIAL_ADAPTER: "ember"
               ZIGBEE2MQTT_CONFIG_SERIAL_BAUDRATE: 115200
-              ZIGBEE2MQTT_CONFIG_SERIAL_DISABLE_LED: "true"
+              ZIGBEE2MQTT_CONFIG_SERIAL_DISABLE_LED: "false"
               ZIGBEE2MQTT_CONFIG_SERIAL_PORT: tcp://zigbee.outsideour.casa:6638
             envFrom:
               - secretRef:
