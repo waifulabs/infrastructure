@@ -14,7 +14,7 @@ spec:
       repo: github://waifulabs/infrastructure
       statusChecks: true
       prComments: true
-      publicUrl: https://{{ .Release.Name }}.turbo.ac
+      publicUrl: https://{{ .Release.Name }}.ok8.sh
     secret:
       existingSecret: konflate-webhook-token-secret
     httpRoute:
@@ -26,7 +26,7 @@ spec:
         - name: envoy-external
           namespace: network
       hostnames:
-        - "{{ .Release.Name }}.turbo.ac"
+        - "{{ .Release.Name }}.ok8.sh"
     monitoring:
       serviceMonitor:
         enabled: true
