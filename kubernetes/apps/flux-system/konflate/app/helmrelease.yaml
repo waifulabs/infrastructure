@@ -23,8 +23,8 @@ spec:
         gatus.home-operations.com/endpoint: |-
           conditions: ["[STATUS] == 200"]
       parentRefs:
-        - name: envoy-external
-          namespace: network
+        - name: external
+          namespace: networking
       hostnames:
         - "{{ .Release.Name }}.ok8.sh"
     monitoring:
