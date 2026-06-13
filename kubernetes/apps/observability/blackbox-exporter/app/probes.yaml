@@ -41,22 +41,22 @@ spec:
     - targetLabel: service
       replacement: blackbox-exporter-devices
       action: replace
----
-# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/monitoring.coreos.com/probe_v1.json
-apiVersion: monitoring.coreos.com/v1
-kind: Probe
-metadata:
-  name: slzb
-spec:
-  jobName: slzb_probe
-  module: icmp
-  prober:
-    url: blackbox-exporter-lan.o11y.svc.cluster.local:9115
-  targets:
-    staticConfig:
-      static:
-        - zigbee.outsideour.casa
-  metricRelabelings:
-    - targetLabel: service
-      replacement: blackbox-exporter-lan
-      action: replace
+# ---
+# # yaml-language-server: $schema=https://k8s-schemas.home-operations.com/monitoring.coreos.com/probe_v1.json
+# apiVersion: monitoring.coreos.com/v1
+# kind: Probe
+# metadata:
+#   name: slzb
+# spec:
+#   jobName: slzb_probe
+#   module: icmp
+#   prober:
+#     url: blackbox-exporter-lan.o11y.svc.cluster.local:9115
+#   targets:
+#     staticConfig:
+#       static:
+#         - zigbee.outsideour.casa
+#   metricRelabelings:
+#     - targetLabel: service
+#       replacement: blackbox-exporter-lan
+#       action: replace
