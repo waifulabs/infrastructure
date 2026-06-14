@@ -7,6 +7,7 @@ metadata:
 spec:
   image: ghcr.io/dragonflydb/dragonfly:v1.39.0@sha256:0fa01a2b929e704c7a9300d23e7f52002ebd39e90996fb8bb63826aed92fa06f
   replicas: 1
+  networkPolicyEnabled: false
   env:
     - name: MAX_MEMORY
       valueFrom:
