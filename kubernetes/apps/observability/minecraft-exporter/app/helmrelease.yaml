@@ -25,7 +25,7 @@ spec:
           app:
             image:
               repository: itzg/mc-monitor
-              tag: 0.16.6@sha256:1957e638f79280090a92bf7aaf90d60db566378e6485b25491c2b766e99ba832
+              tag: 0.16.7@sha256:f316952cbd0e3d01143f666e232879afd2d3085d522ba6cf4540b4ec0b826892
             args: ["export-for-prometheus"]
             env:
               TZ: "America/Los_Angeles"
