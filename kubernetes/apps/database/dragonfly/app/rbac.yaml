@@ -27,7 +27,7 @@ rules:
     verbs: ["get", "patch", "update"]
   - apiGroups: ["networking.k8s.io"]
     resources: ["networkpolicies"]
-    verbs: ["get", "list", "watch"]
+    verbs: ["create", "delete", "get", "list", "patch", "update", "watch"]
   - apiGroups: ["policy"]
     resources: ["poddisruptionbudgets"]
     verbs: ["create", "delete", "get", "list", "patch", "update", "watch"]
