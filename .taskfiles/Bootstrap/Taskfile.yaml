@@ -21,8 +21,8 @@ tasks:
     prompt: Bootstrap Kubernetes Apps ...?
     cmds:
       #- until kubectl --kubeconfig {{.KUBERNETES_DIR}}/kubeconfig wait nodes --for=condition=Ready=False --all --timeout=10m; do sleep 5; done
-      - op inject --in-file {{.BOOTSTRAP_DIR}}/secrets.yaml.tpl | kubectl --kubeconfig {{.KUBERNETES_DIR}}/kubeconfig apply --server-side --filename -
-      - KUBECONFIG={{.KUBERNETES_DIR}}/kubeconfig helmfile --file {{.BOOTSTRAP_DIR}}/helmfile.yaml apply --skip-diff-on-install --suppress-diff
+      - op inject --in-file {{.BOOTSTRAP_DIR}}/secrets.yaml.tpl | kubectl --kubeconfig {{.KUBERNETES_DIR}}/kubeconfig.tuddle apply --server-side --filename -
+      - KUBECONFIG={{.KUBERNETES_DIR}}/kubeconfig.tuddle helmfile --file {{.BOOTSTRAP_DIR}}/helmfile.yaml apply --skip-diff-on-install --suppress-diff
     preconditions:
       - op user get --me
       - test -f {{.KUBERNETES_DIR}}/kubeconfig

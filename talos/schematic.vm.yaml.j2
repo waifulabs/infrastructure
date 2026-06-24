@@ -1,0 +1,12 @@
+customization:
+    extraKernelArgs:
+        - -selinux
+        - apparmor=0
+        - mitigations=off
+        - security=none
+        - talos.auditd.disabled=1
+        - talos.dashboard.disabled=1
+    systemExtensions:
+        officialExtensions:
+            - siderolabs/qemu-guest-agent   # graceful shutdown / agent for TrueNAS
+            - siderolabs/util-linux-tools
