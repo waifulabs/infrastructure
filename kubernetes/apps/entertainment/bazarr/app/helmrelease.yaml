@@ -76,7 +76,10 @@ spec:
                 port: *port
     persistence:
       config:
-        existingClaim: bazarr
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: openebs-hostpath
       config-cache:
         type: emptyDir
         globalMounts:

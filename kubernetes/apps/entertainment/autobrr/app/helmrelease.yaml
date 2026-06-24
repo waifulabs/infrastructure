@@ -93,7 +93,10 @@ spec:
                 port: *port
     persistence:
       config:
-        existingClaim: autobrr
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: openebs-hostpath
       config-log:
         type: emptyDir
         globalMounts:

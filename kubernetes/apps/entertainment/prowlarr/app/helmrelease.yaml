@@ -87,6 +87,9 @@ spec:
                 port: *port
     persistence:
       config:
-        existingClaim: prowlarr
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: openebs-hostpath
       tmp:
         type: emptyDir

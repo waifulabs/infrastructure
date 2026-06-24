@@ -10,12 +10,6 @@ spec:
       app.kubernetes.io/name: *app
   interval: 1h
   path: ./kubernetes/apps/default/opencloud/app
-  components:
-    - ../../../../components/volsync
-  postBuild:
-    substitute:
-      APP: *app
-      VOLSYNC_CAPACITY: 15Gi
   prune: true
   timeout: 5m
   wait: false

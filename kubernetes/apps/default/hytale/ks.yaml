@@ -14,12 +14,6 @@ spec:
     - name: external-secrets
       namespace: external-secrets
   path: ./kubernetes/apps/minecraft/hytale/app
-  components:
-    - ../../../../components/volsync
-  postBuild:
-    substitute:
-      APP: *app
-      VOLSYNC_CAPACITY: 25Gi
   prune: true
   wait: true
   interval: 30m

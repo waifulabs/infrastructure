@@ -67,7 +67,10 @@ spec:
             port: &port 9200
     persistence:
       data:
-        existingClaim: opencloud
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 15Gi
+        storageClass: openebs-hostpath
         globalMounts:
           - path: /var/lib/opencloud
             subPath: data

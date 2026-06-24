@@ -71,7 +71,10 @@ spec:
             sectionName: https
     persistence:
       data:
-        existingClaim: music-assistant
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: openebs-hostpath
         advancedMounts:
           music-assistant:
             app:

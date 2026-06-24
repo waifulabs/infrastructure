@@ -87,7 +87,10 @@ spec:
                 port: *port
     persistence:
       config:
-        existingClaim: sonarr
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: openebs-hostpath
       config-cache:
         existingClaim: sonarr-cache
         globalMounts:

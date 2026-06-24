@@ -103,7 +103,10 @@ spec:
                 port: *port
     persistence:
       config:
-        existingClaim: plex
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 50Gi
+        storageClass: openebs-hostpath
       config-cache:
         existingClaim: plex-cache
         globalMounts:

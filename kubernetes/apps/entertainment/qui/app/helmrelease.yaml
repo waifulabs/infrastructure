@@ -70,7 +70,10 @@ spec:
             namespace: networking
     persistence:
       config:
-        existingClaim: "{{ .Release.Name }}"
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 2Gi
+        storageClass: openebs-hostpath
       media:
         type: hostPath
         hostPath: /var/mnt/puddle/media

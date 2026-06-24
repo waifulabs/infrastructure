@@ -11,12 +11,6 @@ spec:
       app.kubernetes.io/name: *app
   interval: 1h
   path: ./kubernetes/apps/entertainment/seerr/app
-  components:
-    - ../../../../components/volsync
-  postBuild:
-    substitute:
-      APP: jellyseerr
-      VOLSYNC_CAPACITY: 5Gi
   prune: true
   retryInterval: 2m
   targetNamespace: *namespace

@@ -89,4 +89,7 @@ spec:
     persistence:
       dataDir:
         enabled: true
-        existingClaim: *app
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 50Gi
+        storageClass: openebs-hostpath

@@ -79,7 +79,10 @@ spec:
             sectionName: https
     persistence:
       config:
-        existingClaim: home-assistant
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: openebs-hostpath
         globalMounts:
           - path: /config
       config-cache:

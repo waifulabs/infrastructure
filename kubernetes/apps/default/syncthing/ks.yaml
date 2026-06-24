@@ -12,12 +12,6 @@ spec:
       app.kubernetes.io/name: *app
   interval: 1h
   path: ./kubernetes/apps/default/syncthing/app
-  components:
-    - ../../../../components/volsync
-  postBuild:
-    substitute:
-      APP: *app
-      VOLSYNC_CAPACITY: 1Gi
   prune: true
   retryInterval: 2m
   timeout: 5m

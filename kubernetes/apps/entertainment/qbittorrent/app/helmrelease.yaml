@@ -92,7 +92,10 @@ spec:
                 port: *port
     persistence:
       config:
-        existingClaim: qbittorrent
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 2Gi
+        storageClass: openebs-hostpath
       media:
         type: hostPath
         hostPath: /var/mnt/puddle/media

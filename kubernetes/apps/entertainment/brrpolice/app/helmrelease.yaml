@@ -62,7 +62,10 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     persistence:
       data:
-        existingClaim: "{{ .Release.Name }}"
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: openebs-hostpath
     service:
       app:
         ports:

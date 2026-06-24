@@ -16,12 +16,6 @@ spec:
     - name: mosquitto
       namespace: default
   path: ./kubernetes/apps/default/home-assistant/app
-  components:
-    - ../../../../components/volsync
-  postBuild:
-    substitute:
-      APP: *app
-      VOLSYNC_CAPACITY: 5Gi
   prune: true
   wait: false
   interval: 30m

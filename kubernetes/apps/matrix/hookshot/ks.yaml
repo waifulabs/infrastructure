@@ -14,12 +14,6 @@ spec:
     - name: onepassword
       namespace: external-secrets
   path: ./kubernetes/apps/matrix/hookshot/app
-  components:
-    - ../../../../components/volsync
-  postBuild:
-    substitute:
-      APP: *app
-      VOLSYNC_CAPACITY: 5Gi
   prune: true
   wait: false
   interval: 30m

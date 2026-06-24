@@ -56,4 +56,7 @@ spec:
             namespace: networking
     persistence:
       config:
-        existingClaim: "{{ .Release.Name }}"
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: openebs-hostpath

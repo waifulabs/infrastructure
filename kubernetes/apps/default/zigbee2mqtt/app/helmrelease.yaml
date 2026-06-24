@@ -87,4 +87,7 @@ spec:
             namespace: networking
     persistence:
       data:
-        existingClaim: *app
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 2Gi
+        storageClass: openebs-hostpath

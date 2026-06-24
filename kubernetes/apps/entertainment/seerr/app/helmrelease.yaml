@@ -82,7 +82,11 @@ spec:
             sectionName: https
     persistence:
       config:
-        existingClaim: "jellyseerr"
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: openebs-hostpath
+        forceRename: jellyseerr
         globalMounts:
           - path: /app/config
       config-cache:

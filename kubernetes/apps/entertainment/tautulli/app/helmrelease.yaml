@@ -78,7 +78,10 @@ spec:
                 port: *port
     persistence:
       config:
-        existingClaim: tautulli
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: openebs-hostpath
       config-cache:
         existingClaim: tautulli-cache
         globalMounts:

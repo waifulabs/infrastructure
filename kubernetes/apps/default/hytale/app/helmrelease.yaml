@@ -71,7 +71,10 @@ spec:
            port: *udpPort
     persistence:
       data:
-        existingClaim: "{{ .Release.Name }}"
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 25Gi
+        storageClass: openebs-hostpath
         globalMounts:
           - path: /home/container
       bans-json:

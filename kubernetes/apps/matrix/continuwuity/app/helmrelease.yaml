@@ -135,7 +135,10 @@ spec:
                   value: /.well-known/matrix/
     persistence:
       data:
-        existingClaim: continuwuity
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: openebs-hostpath
         globalMounts:
           - path: *data
       extra:

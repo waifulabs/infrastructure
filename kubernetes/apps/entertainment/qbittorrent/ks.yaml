@@ -11,12 +11,6 @@ spec:
       app.kubernetes.io/name: *app
   interval: 1h
   path: ./kubernetes/apps/entertainment/qbittorrent/app
-  components:
-    - ../../../../components/volsync
-  postBuild:
-    substitute:
-      APP: *app
-      VOLSYNC_CAPACITY: 2Gi
   prune: true
   retryInterval: 2m
   targetNamespace: *namespace
