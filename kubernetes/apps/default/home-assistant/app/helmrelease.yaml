@@ -47,14 +47,14 @@ spec:
                 memory: 2G
     defaultPodOptions:
       automountServiceAccountToken: true
-      annotations:
-        k8s.v1.cni.cncf.io/networks: |-
-          [{
-            "name": "iot",
-            "namespace": "networking",
-            "ips": ["10.0.30.5/24"],
-            "mac": "c6:07:27:af:fb:53"
-          }]
+      # annotations:
+        # k8s.v1.cni.cncf.io/networks: |-
+        #   [{
+        #     "name": "iot",
+        #     "namespace": "networking",
+        #     "ips": ["10.0.30.5/24"],
+        #     "mac": "c6:07:27:af:fb:53"
+        #   }]
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
