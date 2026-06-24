@@ -164,10 +164,6 @@ tasks:
       minijinja-cli {{.TALOS_DIR}}/schematic.yaml.j2 \
         | curl --silent -X POST --data-binary @- https://factory.talos.dev/schematics \
         | jq --raw-output '.id'
-    env:
-      TALOS_CONFIG_EARLY:
-        sh: zstd -c {{.TALOS_DIR}}/networking.yaml | base64 -w0
     preconditions:
       - test -f {{.TALOS_DIR}}/schematic.yaml.j2
-      - test -f {{.TALOS_DIR}}/networking.yaml
       - which base64 curl jq minijinja-cli zstd

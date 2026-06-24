@@ -1,0 +1,11 @@
+customization:
+    extraKernelArgs:
+        - amd_iommu=on
+        - amd_pstate=active
+        - iommu=pt
+        - pcie_aspm=off
+        - talos.dashboard.disabled=1
+    systemExtensions:
+        officialExtensions:
+            - siderolabs/amd-ucode
+            - siderolabs/zfs
