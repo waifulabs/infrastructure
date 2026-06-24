@@ -1,8 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.13/website/content/v1.13/schemas/v1alpha1_config.schema.json
 version: v1alpha1
-debug: false
-persist: true
 machine:
   ca:
     crt: op://Kubernetes/talos/CERTS_OS_CRT
@@ -40,15 +37,10 @@ machine:
     defaultRuntimeSeccompProfileEnabled: true
     disableManifestsDirectory: true
     image: ghcr.io/siderolabs/kubelet:{{ ENV.KUBERNETES_VERSION }}
-    extraMounts:
-      - destination: /var/mnt/extra
-        type: bind
-        source: /var/mnt/extra
-        options: ["bind", "rshared", "rw"]
     nodeIP:
       validSubnets: ["10.0.10.0/24"]
   nodeLabels:
-    topology.kubernetes.io/zone: { { ENV.MACHINE_TYPE } }
+    topology.kubernetes.io/zone: {{ ENV.MACHINE_TYPE }}
   sysctls:
     fs.inotify.max_user_watches: 1048576 # Watchdog
     fs.inotify.max_user_instances: 8192 # Watchdog
@@ -76,30 +68,8 @@ machine:
     sunrpc.tcp_slot_table_entries: "128"
     user.max_user_namespaces: "11255"
     vm.nr_hugepages: "1024"
-  sysfs:
-    devices.system.cpu.intel_pstate.hwp_dynamic_boost: 1
-    devices.system.cpu.cpu0.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu1.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu2.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu3.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu4.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu5.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu6.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu7.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu8.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu9.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu10.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu11.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu12.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu13.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu14.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu15.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu16.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu17.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu18.cpufreq.energy_performance_preference: balance_performance
-    devices.system.cpu.cpu19.cpufreq.energy_performance_preference: balance_performance
   token: op://Kubernetes/talos/TRUSTDINFO_TOKEN
-  type: { { ENV.MACHINE_TYPE } }
+  type: {{ ENV.MACHINE_TYPE }}
   udev:
     rules:
       - SUBSYSTEM=="drm", KERNEL=="renderD*", GROUP="44", MODE="0660" # Intel GPU
@@ -109,14 +79,7 @@ cluster:
     key: op://Kubernetes/talos/CERTS_K8S_KEY
   clusterName: main
   controlPlane:
-    endpoint: https://k8s.internal:6443
-  discovery:
-    enabled: true
-    registries:
-      kubernetes:
-        disabled: true
-      service:
-        disabled: false
+    endpoint: https://10.0.10.40:6443
   extraManifests:
     # Gateway API CRDs are installed and owned by the envoy-gateway Helm chart
     - # renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
@@ -136,7 +99,7 @@ cluster:
   allowSchedulingOnControlPlanes: true
   apiServer:
     image: registry.k8s.io/kube-apiserver:{{ ENV.KUBERNETES_VERSION }}
-    certSANs: ["k8s.internal"]
+    certSANs: ["10.0.10.40"]
     extraArgs:
       enable-aggregator-routing: true
       feature-gates: MutatingAdmissionPolicy=true
@@ -152,6 +115,8 @@ cluster:
     image: registry.k8s.io/kube-controller-manager:{{ ENV.KUBERNETES_VERSION }}
     extraArgs:
       bind-address: 0.0.0.0
+  discovery:
+    enabled: false
   etcd:
     advertisedSubnets: ["10.0.10.0/24"]
     ca:
@@ -204,13 +169,3 @@ ntp:
   servers:
     - pool.ntp.org
     - time.cloudflare.com
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.12/website/content/v1.12/schemas/config.schema.json
-apiVersion: v1alpha1
-kind: ExtensionServiceConfig
-name: nut-client
-configFiles:
-  - content: |-
-      MONITOR 10.0.10.3 1 slaveuser "op://Kubernetes/nut/NUT_PASSWORD" slave
-      SHUTDOWNCMD "/sbin/poweroff"
-    mountPath: /usr/local/etc/nut/upsmon.conf

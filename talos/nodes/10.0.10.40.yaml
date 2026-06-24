@@ -1,0 +1,49 @@
+---
+machine:
+  type: controlplane
+  install:
+    image: factory.talos.dev/metal-installer/2ef4f1505f9a0d52ddf31023ba74cbcbbeaa9b0204f2670c48fe59f12a8e9e3c:v1.13.5
+    diskSelector:
+      serial: 50026B76878F13D4
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: puddle
+---
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: net0
+selector:
+  match: mac(link.permanent_addr) == "7c:fe:90:19:f5:00"
+---
+apiVersion: v1alpha1
+kind: BondConfig
+name: bond0
+links: [net0]
+bondMode: active-backup
+mtu: 9000
+---
+apiVersion: v1alpha1
+kind: DHCPv4Config
+name: bond0
+clientIdentifier: mac
+---
+apiVersion: v1alpha1
+kind: VLANConfig
+name: bond0.30
+parent: bond0
+vlanID: 30
+mtu: 9000
+---
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-hostpath
+provisioning:
+  diskSelector:
+    match: disk.serial == "S64GNE0R817067" && !system_disk
+  minSize: 1TB
+---
+apiVersion: v1alpha1
+kind: WatchdogTimerConfig
+device: /dev/watchdog0
+timeout: 5m

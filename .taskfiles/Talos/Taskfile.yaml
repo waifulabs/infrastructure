@@ -11,8 +11,7 @@ tasks:
       | op inject \
       | talosctl --nodes "{{.NODE}}" apply-config \
           --mode "{{.MODE}}" \
-          --config-patch @<(minijinja-cli "{{.TALOS_DIR}}/nodes/{{.NODE}}.yaml") \{{if .NETWORKING_FILE}}
-          --config-patch @<(cat "{{.NETWORKING_FILE}}") \{{end}}{{if .INSECURE}}
+          --config-patch @<(minijinja-cli "{{.TALOS_DIR}}/nodes/{{.NODE}}.yaml") \{{if .INSECURE}}
           --insecure \{{end}}
           --file /dev/stdin
 
@@ -24,8 +23,6 @@ tasks:
         sh: |-
           talosctl --nodes {{.NODE}} get machinetypes --output=jsonpath='{.spec}' 2> /dev/null \
             || yq 'select(di == 0) | .machine.type // "worker"' "{{.TALOS_DIR}}/nodes/{{.NODE}}.yaml"
-      NETWORKING_FILE:
-        sh: test -f "{{.TALOS_DIR}}/networking.yaml" && echo "{{.TALOS_DIR}}/networking.yaml" || echo ""
     env:
       MACHINE_TYPE: '{{.MACHINE_TYPE}}'
     requires:

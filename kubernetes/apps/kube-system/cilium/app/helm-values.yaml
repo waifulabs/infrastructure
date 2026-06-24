@@ -39,6 +39,8 @@ loadBalancer:
   mode: dsr
 localRedirectPolicies:
   enabled: true
+nodePort:
+  directRoutingDevice: bond0
 operator:
   replicas: 1
   rollOutPods: true
