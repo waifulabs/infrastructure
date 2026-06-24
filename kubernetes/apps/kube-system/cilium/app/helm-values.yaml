@@ -19,7 +19,7 @@ cni:
 cluster:
   id: 2
   name: puddle
-devices: bond+
+devices: bond+,ens+
 enableIPv4BIGTCP: true
 endpointRoutes:
   enabled: true
