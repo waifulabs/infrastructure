@@ -18,4 +18,4 @@ resources:
   - ./openspeedtest/ks.yaml
   #- ./rtlamr2mqtt/ks.yaml
   - ./syncthing/ks.yaml
-  #- ./zigbee2mqtt/ks.yaml
+  - ./zigbee2mqtt/ks.yaml
