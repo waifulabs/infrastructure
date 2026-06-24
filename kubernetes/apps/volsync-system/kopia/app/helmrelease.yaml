@@ -94,9 +94,8 @@ spec:
           - path: /config/repository.config
             subPath: repository.config
       repository:
-        type: nfs
-        server: puddle.outsideour.casa
-        path: /mnt/puddle/kubernetes/kopia
+        type: hostPath
+        hostPath: /var/mnt/puddle/kubernetes/kopia
         globalMounts:
           - path: /repository
       tmpfs:

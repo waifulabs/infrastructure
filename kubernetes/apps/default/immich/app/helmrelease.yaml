@@ -136,15 +136,13 @@ spec:
             main:
               - path: /config/matplotlib
       library:
-        type: nfs
-        server: puddle.outsideour.casa
-        path: /mnt/puddle/kubernetes/immich
+        type: hostPath
+        hostPath: /var/mnt/puddle/kubernetes/immich
         globalMounts:
           - path: *mediaLocation
       import:
-        type: nfs
-        server: puddle.outsideour.casa
-        path: /mnt/puddle/kubernetes/immich/upload/1c469f42-6c62-4945-86ae-1f0a172b6bda
+        type: hostPath
+        hostPath: /var/mnt/puddle/kubernetes/immich/upload/1c469f42-6c62-4945-86ae-1f0a172b6bda
         advancedMounts:
           immich:
             main:

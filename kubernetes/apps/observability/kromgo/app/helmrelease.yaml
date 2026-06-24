@@ -120,7 +120,7 @@ spec:
 
         - title: Free
           id: nas_storage_free
-          query: max(node_filesystem_avail_bytes{instance=~"puddle.*",mountpoint="/mnt/puddle"})
+          query: max(node_filesystem_avail_bytes{instance=~"puddle.*",mountpoint="/var/mnt/puddle"})
           valueExpr: humanizeBytes(result)
           colorExpr: 'colorScale(result, [2e12, 5e12], ["red", "orange", "green"])'
 
