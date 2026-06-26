@@ -12,35 +12,32 @@ spec:
     staticConfig:
       static:
         - airgradient.outsideour.casa
-        - puddle.outsideour.casa
+        #- puddle.outsideour.casa
         - puddle-ipmi.internal
-        - fenrys.internal
-        - maomao.internal
-        - shylily.internal
         - ups.outsideour.casa
   metricRelabelings:
     - targetLabel: service
       replacement: blackbox-exporter-devices
       action: replace
----
-# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/monitoring.coreos.com/probe_v1.json
-apiVersion: monitoring.coreos.com/v1
-kind: Probe
-metadata:
-  name: nfs
-spec:
-  jobName: nfs_probe
-  module: tcp_connect
-  prober:
-    url: blackbox-exporter.observability.svc.cluster.local:9115
-  targets:
-    staticConfig:
-      static:
-        - puddle.outsideour.casa:2049
-  metricRelabelings:
-    - targetLabel: service
-      replacement: blackbox-exporter-devices
-      action: replace
+# ---
+# # yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/monitoring.coreos.com/probe_v1.json
+# apiVersion: monitoring.coreos.com/v1
+# kind: Probe
+# metadata:
+#   name: nfs
+# spec:
+#   jobName: nfs_probe
+#   module: tcp_connect
+#   prober:
+#     url: blackbox-exporter.observability.svc.cluster.local:9115
+#   targets:
+#     staticConfig:
+#       static:
+#         - puddle.outsideour.casa:2049
+#   metricRelabelings:
+#     - targetLabel: service
+#       replacement: blackbox-exporter-devices
+#       action: replace
 # ---
 # # yaml-language-server: $schema=https://k8s-schemas.home-operations.com/monitoring.coreos.com/probe_v1.json
 # apiVersion: monitoring.coreos.com/v1
