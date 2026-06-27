@@ -11,8 +11,6 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: node-feature-discovery
-      namespace: kube-system
     - name: mosquitto
       namespace: default
     - name: onepassword
