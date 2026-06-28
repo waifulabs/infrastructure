@@ -3,11 +3,13 @@
 apiVersion: externaldns.k8s.io/v1alpha1
 kind: DNSEndpoint
 metadata:
-  name: cloudflared
+  name: towonel-agent
   labels:
     thisisstupid.ok8.sh: external
+  annotations:
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "false"
 spec:
   endpoints:
     - dnsName: external.ok8.sh
       recordType: CNAME
-      targets: ["${CLOUDFLARE_TUNNEL_MAIN_ID}.cfargotunnel.com"]
+      targets: ["edge-na.towonel.dev"]

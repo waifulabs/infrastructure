@@ -3,7 +3,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app cloudflare-tunnel
+  name: &app towonel-agent
   namespace: &namespace networking
   labels:
     substitution.flux.home.arpa/enabled: "true"
@@ -15,11 +15,7 @@ spec:
   dependsOn:
     - name: onepassword
       namespace: external-secrets
-  postBuild:
-    substituteFrom:
-      - kind: Secret
-        name: cloudflare-tunnel-id-secret
-  path: ./kubernetes/apps/networking/cloudflare-tunnel/app
+  path: ./kubernetes/apps/networking/towonel-agent/app
   prune: false
   wait: true
   interval: 30m

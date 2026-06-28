@@ -12,6 +12,8 @@ spec:
     - group: gateway.networking.k8s.io
       kind: Gateway
       name: external
+  proxyProtocol:
+    optional: true
   clientIPDetection:
     xForwardedFor:
       numTrustedHops: 1
