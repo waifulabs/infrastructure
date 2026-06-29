@@ -11,6 +11,7 @@ resources:
   - ./glance/ks.yaml
   - ./home-assistant/ks.yaml
   - ./immich/ks.yaml
+  - ./meshtastic-web/ks.yaml
   - ./mosquitto/ks.yaml
   #- ./music-assistant/ks.yaml
   - ./ok8-sh/ks.yaml
