@@ -57,7 +57,7 @@ spec:
           mosquitto.conf: |
             allow_anonymous true
             autosave_interval 60
-            connection_messages false
+            connection_messages true
             listener 1883
             per_listener_settings false
             persistence true
