@@ -5,6 +5,7 @@ customization:
         - iommu=pt
         - pcie_aspm=off
         - talos.dashboard.disabled=1
+        - zfs.zfs_arc_max=235149459456 # 219 GiB ARC cap (~32 GiB reserved for k8s/system on 256 GiB node)
     systemExtensions:
         officialExtensions:
             - siderolabs/amd-ucode

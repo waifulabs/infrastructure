@@ -15,8 +15,8 @@ spec:
         - mountPath: /var/mnt/puddle
           name: puddle
           mountPropagation: HostToContainer
-        - mountPath: /dev/zfs
-          name: zfs
+        - mountPath: /dev
+          name: dev
   dnsPolicy: ClusterFirstWithHostNet
   hostIPC: true
   hostNetwork: true
@@ -27,6 +27,6 @@ spec:
     - name: puddle
       hostPath:
         path: /var/mnt/puddle
-    - name: zfs
+    - name: dev
       hostPath:
-        path: /dev/zfs
+        path: /dev
