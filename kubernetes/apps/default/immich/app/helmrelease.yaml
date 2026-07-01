@@ -17,6 +17,7 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [44] # render group for /dev/dri
     controllers:
       immich:
         strategy: RollingUpdate
@@ -56,7 +57,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v2.7.5@sha256:a2501141440f10516d329fdfba2c68082e19eb9ba6016c061ac80d23beadf7f3
+              tag: v2.7.5-openvino
             env:
               REDIS_HOSTNAME: *redisHostname
               MPLCONFIGDIR: "/cache/matplotlib"
@@ -168,3 +169,10 @@ spec:
                 subPath: geocoding
               - path: /usr/src/app/.transformers_cache
                 subPath: transformers
+      dev-dri:
+        type: hostPath
+        hostPath: /dev/dri
+        advancedMounts:
+          machine-learning:
+            main:
+              - path: /dev/dri
