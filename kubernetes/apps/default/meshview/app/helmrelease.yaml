@@ -1,0 +1,142 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app meshview
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: meshview
+  values:
+    controllers:
+      meshview:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/pablorevilla-meshtastic/meshview
+              tag: 3.0.8@sha256:7918c1cef844f8bbdb2b28b0725b42059b4883f9037cfd238e4f4f30548541fb
+            env:
+              TZ: America/Los_Angeles
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 512Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        ports:
+          http:
+            port: &port 8081
+    route:
+      app:
+        hostnames: ["{{ .Release.Name }}.ok8.sh"]
+        parentRefs:
+          - name: internal
+            namespace: networking
+    persistence:
+      config:
+        type: configMap
+        identifier: config
+        globalMounts:
+          - path: /etc/meshview/config.ini
+            subPath: config.ini
+            readOnly: true
+      data:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 10Gi
+        storageClass: openebs-hostpath
+        globalMounts:
+          - path: /data
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+    configMaps:
+      config:
+        data:
+          config.ini: |
+            [server]
+            bind = *
+            port = 8081
+            tls_cert =
+            acme_challenge =
+
+            [site]
+            domain = meshview.ok8.sh
+            language = en
+            title = Oregon Mesh
+            message = Real time data from the Oregon mesh and beyond.
+            starting = /chat
+            nodes = True
+            conversations = True
+            everything = True
+            graphs = True
+            stats = True
+            net = True
+            map = True
+            top = True
+            map_top_left_lat = 46.3
+            map_top_left_lon = -124.6
+            map_bottom_right_lat = 42.0
+            map_bottom_right_lon = -116.4
+            map_interval = 3
+            firehose_interal = 3
+            weekly_net_message = Weekly Mesh check-in.
+            net_tag = #OregonMeshNet
+
+            [mqtt]
+            server = mosquitto.default.svc.cluster.local
+            topics = ["msh/US/OR/#"]
+            port = 1883
+            username =
+            password =
+            skip_node_ids =
+            secondary_keys =
+
+            [database]
+            connection_string = sqlite+aiosqlite:////data/meshview.db
+
+            [cleanup]
+            enabled = False
+            days_to_keep = 14
+            hour = 2
+            minute = 00
+            vacuum = False
+            backup_enabled = False
+            backup_dir = /data/backups
+            backup_hour = 2
+            backup_minute = 00
+
+            [snapshot]
+            hour = 1
+            minute = 00
+
+            [logging]
+            access_log = False
+            db_cleanup_logfile = /tmp/dbcleanup.log
