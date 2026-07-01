@@ -65,6 +65,7 @@ spec:
         runAsGroup: 1000
         fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [44] # render group for /dev/dri
     service:
       app:
         controller: plex
@@ -122,5 +123,10 @@ spec:
         globalMounts:
           - path: /media
             readOnly: true
+      dev-dri:
+        type: hostPath
+        hostPath: /dev/dri
+        globalMounts:
+          - path: /dev/dri
       tmp:
         type: emptyDir
