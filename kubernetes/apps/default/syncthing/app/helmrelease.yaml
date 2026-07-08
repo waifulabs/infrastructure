@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: docker.io/syncthing/syncthing
-              tag: 2.1.1
+              tag: 2.1.2
             env:
               PUID: 1000
               PGID: 1000
