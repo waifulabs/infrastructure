@@ -76,7 +76,7 @@ spec:
         size: 25Gi
         storageClass: openebs-hostpath
         globalMounts:
-          - path: /home/container=
+          - path: /home/container
       machine-id:
         type: configMap
         name: "{{ .Release.Name }}-configmap"
