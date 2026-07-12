@@ -95,3 +95,10 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /tmp
+      # Stopgap: the current rolling image still tries to mkdir /data/images
+      # at startup even though juno no longer serves TRMNL routes. Remove
+      # once upstream publishes a rebuilt image that drops this.
+      data:
+        type: emptyDir
+        globalMounts:
+          - path: /data
