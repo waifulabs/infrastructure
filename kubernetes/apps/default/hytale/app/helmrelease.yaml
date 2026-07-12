@@ -42,8 +42,9 @@ spec:
               TZ: "America/Los_Angeles"
               HYTALE_ACCEPT_EARLY_PLUGINS: "TRUE"
               HYTALE_ALLOW_OP: "TRUE"
+              HYTALE_UNIVERSE: "/home/container/universe"
               JAVA_ARGS: >-
-                -Xms8G -Xmx8G -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200
+                -Xms2G -Xmx10G -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200
                 -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20
                 -XX:InitiatingHeapOccupancyPercent=15 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem
                 -XX:MaxTenuringThreshold=1 -XX:+UseCompactObjectHeaders -Djava.net.preferIPv4Stack=true
@@ -85,4 +86,13 @@ spec:
             hytale:
               - path: /etc/machine-id
                 subPath: machine-id
+                readOnly: true
+      hytale-start-script:
+        type: configMap
+        name: "{{ .Release.Name }}-configmap"
+        advancedMounts:
+          hytale:
+            hytale:
+              - path: /usr/local/bin/scripts/hytale/hytale_start.sh
+                subPath: hytale_start.sh
                 readOnly: true

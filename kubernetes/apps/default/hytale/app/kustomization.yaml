@@ -9,7 +9,7 @@ resources:
 configMapGenerator:
   - name: hytale-configmap
     files:
-      - ./resources/bans.json
       - ./resources/machine-id
+      - ./resources/hytale_start.sh
 generatorOptions:
   disableNameSuffixHash: true
