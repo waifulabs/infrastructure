@@ -76,16 +76,7 @@ spec:
         size: 25Gi
         storageClass: openebs-hostpath
         globalMounts:
-          - path: /home/container
-      bans-json:
-        type: configMap
-        name: "{{ .Release.Name }}-configmap"
-        advancedMounts:
-          hytale:
-            hytale:
-              - path: /home/container/bans.json
-                subPath: bans.json
-                readOnly: true
+          - path: /home/container=
       machine-id:
         type: configMap
         name: "{{ .Release.Name }}-configmap"
