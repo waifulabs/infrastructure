@@ -80,13 +80,13 @@ spec:
             sectionName: https
         rules:
           - matches:
-              - path: { type: PathPrefix, value: /juno }
+              - path: { type: PathPrefix, value: /discord }
             filters:
               - type: URLRewrite
                 urlRewrite:
                   path:
                     type: ReplacePrefixMatch
-                    replacePrefixMatch: ""
+                    replacePrefixMatch: /api/
             backendRefs:
               - name: *app
                 port: *port
