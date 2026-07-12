@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: ghcr.io/kashalls/juno
-              tag: rolling@sha256:9afd14691810b503b75317771204c69298d1ff65144ffa41e030fdb3d7d45ba9
+              tag: rolling@sha256:7f08a095d328edbcaf9f92d53e19e8945039386e1d97ba309773d5c2738e8fdf
             env:
               TZ: America/Los_Angeles
               TRUSTED_PROXY_CIDRS: "10.0.20.0/24,172.30.0.0/16"
