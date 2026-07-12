@@ -9,4 +9,6 @@ replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
   - ./apirouter/ks.yaml
+  - ./home-assistant-api/ks.yaml
   - ./ok8-sh/ks.yaml
+  - ./trmnl/ks.yaml

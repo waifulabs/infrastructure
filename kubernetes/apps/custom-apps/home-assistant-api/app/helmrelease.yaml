@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app juno
+  name: &app home-assistant-api
 spec:
   interval: 1h
   chartRef:
@@ -19,20 +19,20 @@ spec:
       retries: 3
   values:
     controllers:
-      juno:
+      home-assistant-api:
         annotations:
           reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
-              repository: ghcr.io/kashalls/juno
-              tag: rolling@sha256:9afd14691810b503b75317771204c69298d1ff65144ffa41e030fdb3d7d45ba9
+              repository: ghcr.io/kashalls/homeassistant
+              tag: rolling@sha256:784348430616bb9f0f0f26c0ba62ae50cd43b6b043b70b8287ddb07e0c8382ab
             env:
               TZ: America/Los_Angeles
               TRUSTED_PROXY_CIDRS: "10.0.20.0/24,172.30.0.0/16"
             envFrom:
               - secretRef:
-                  name: juno-secret
+                  name: home-assistant-api-secret
             probes:
               liveness: &probes
                 enabled: true
@@ -67,19 +67,27 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     service:
       app:
-        controller: juno
+        controller: home-assistant-api
         ports:
           http:
             port: &port 8080
     route:
       app:
-        hostnames: ["{{ .Release.Name }}.ok8.sh"]
+        hostnames: ["api.ok8.sh"]
         parentRefs:
-          - name: internal
+          - name: external
             namespace: networking
             sectionName: https
         rules:
-          - backendRefs:
+          - matches:
+              - path: { type: PathPrefix, value: /home-assistant }
+            filters:
+              - type: URLRewrite
+                urlRewrite:
+                  path:
+                    type: ReplacePrefixMatch
+                    replacePrefixMatch: /api/lights
+            backendRefs:
               - name: *app
                 port: *port
     persistence:
