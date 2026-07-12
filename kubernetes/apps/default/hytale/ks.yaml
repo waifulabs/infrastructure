@@ -4,7 +4,7 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app hytale
-  namespace: &namespace minecraft
+  namespace: &namespace default
 spec:
   targetNamespace: *namespace
   commonMetadata:
@@ -13,7 +13,7 @@ spec:
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
-  path: ./kubernetes/apps/minecraft/hytale/app
+  path: ./kubernetes/apps/default/hytale/app
   prune: true
   wait: true
   interval: 30m
