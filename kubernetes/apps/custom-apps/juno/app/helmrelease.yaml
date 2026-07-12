@@ -73,13 +73,21 @@ spec:
             port: &port 8080
     route:
       app:
-        hostnames: ["{{ .Release.Name }}.ok8.sh"]
+        hostnames: ["api.ok8.sh"]
         parentRefs:
-          - name: internal
+          - name: external
             namespace: networking
             sectionName: https
         rules:
-          - backendRefs:
+          - matches:
+              - path: { type: PathPrefix, value: /juno }
+            filters:
+              - type: URLRewrite
+                urlRewrite:
+                  path:
+                    type: ReplacePrefixMatch
+                    replacePrefixMatch: ""
+            backendRefs:
               - name: *app
                 port: *port
     persistence:
