@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: ghcr.io/kashalls/trmnl
-              tag: rolling@sha256:5221beeae808fec373f23bf95b7059fe3814de462f32e5153e5baafdc616c4de
+              tag: rolling@sha256:a4f86bdcd011e48be8fbd7a959a2d0404e3c79247769dba2175a367604197a15
             env:
               TZ: America/Los_Angeles
               PUBLIC_BASE_URL: "https://api.ok8.sh/trmnl"
