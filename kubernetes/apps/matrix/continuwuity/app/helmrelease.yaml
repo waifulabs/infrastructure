@@ -32,7 +32,7 @@ spec:
           app:
             image:
               repository: forgejo.ellis.link/continuwuation/continuwuity
-              tag: v26.6.1-maxperf@sha256:61ec9556407cec900749f346f084bc007d2c9791c61e9b43ad1eafb552b29bcc
+              tag: v26.6.2-maxperf@sha256:080802be0cb0051825fabedc694e43a3384d0cabbe428dcf4c58acd3428d8d86
             env:
               TZ: "America/Los_Angeles"
               CONDUWUIT_SERVER_NAME: ok8.sh
