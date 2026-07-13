@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: ghcr.io/kashalls/kashall.dev
-              tag: 1.0.1
+              tag: 1.0.2
             env:
               NUXT_PUBLIC_SITE_URL: "https://ok8.sh"
               NUXT_PUBLIC_USER_ID: "201077739589992448"
