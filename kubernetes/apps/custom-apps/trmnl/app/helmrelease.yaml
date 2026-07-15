@@ -98,7 +98,7 @@ spec:
                 urlRewrite:
                   path:
                     type: ReplacePrefixMatch
-                    replacePrefixMatch: /api/trmnl
+                    replacePrefixMatch: /api
             backendRefs:
               - name: *app
                 port: *port
