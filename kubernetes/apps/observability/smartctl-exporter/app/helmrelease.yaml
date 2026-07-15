@@ -43,6 +43,17 @@ spec:
       devices:
         - /dev/nvme0n1
         - /dev/nvme1n1
+        - /dev/nvme2n1
+        - /dev/nvme3n1
+        - /dev/nvme4n1
+        - /dev/nvme5n1
+        - /dev/sda
+        - /dev/sdb
+        - /dev/sdc
+        - /dev/sdd
+        - /dev/sde
+        - /dev/sdf
+        - /dev/sdg
     serviceMonitor:
       enabled: true
     prometheusRules:
