@@ -13,7 +13,7 @@ resources:
   - ./grafana/ks.yaml
   - ./kromgo/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
-  - ./loki/ks.yaml
+  # - ./loki/ks.yaml
   - ./minecraft-exporter/ks.yaml
   - ./silence-operator/ks.yaml
   - ./promtail/ks.yaml
