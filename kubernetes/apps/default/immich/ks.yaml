@@ -12,6 +12,12 @@ spec:
     - name: immich-postgres
       namespace: database
   path: ./kubernetes/apps/default/immich/app
+  components:
+    - ../../../../components/volsync
+  postBuild:
+    substitute:
+      APP: *app
+      VOLSYNC_CAPACITY: 10Gi
   prune: true
   wait: false
   interval: 30m

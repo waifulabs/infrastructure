@@ -11,8 +11,12 @@ spec:
       app.kubernetes.io/name: *app
   interval: 1h
   path: ./kubernetes/apps/entertainment/sabnzbd/app
+  components:
+    - ../../../../components/volsync
   postBuild:
     substitute:
+      APP: *app
+      VOLSYNC_CAPACITY: 1Gi
       GATUS_SUBDOMAIN: sab
   prune: true
   retryInterval: 2m

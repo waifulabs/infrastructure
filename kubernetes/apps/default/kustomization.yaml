@@ -8,6 +8,7 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
+  - ./kopia-repository.yaml
   - ./glance/ks.yaml
   - ./home-assistant/ks.yaml
   - ./hytale/ks.yaml

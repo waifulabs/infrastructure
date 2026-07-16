@@ -10,5 +10,11 @@ spec:
       app.kubernetes.io/name: *app
   interval: 1h
   path: ./kubernetes/apps/entertainment/brrpolice/app
+  components:
+    - ../../../../components/volsync
+  postBuild:
+    substitute:
+      APP: *app
+      VOLSYNC_CAPACITY: 5Gi
   prune: true
   targetNamespace: entertainment

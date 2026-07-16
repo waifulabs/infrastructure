@@ -14,6 +14,12 @@ spec:
     - name: onepassword
       namespace: external-secrets
   path: ./kubernetes/apps/default/mosquitto/app
+  components:
+    - ../../../../components/volsync
+  postBuild:
+    substitute:
+      APP: *app
+      VOLSYNC_CAPACITY: 1Gi
   prune: true
   wait: false
   interval: 30m
