@@ -41,19 +41,19 @@ spec:
       tag: 0.14.0@sha256:04bf03f15e28330f0fc5ce561e97c3cb3cd0fce22e51a141eccee160c6e736f5
     config:
       devices:
-        - /dev/nvme0n1
-        - /dev/nvme1n1
-        - /dev/nvme2n1
-        - /dev/nvme3n1
-        - /dev/nvme4n1
-        - /dev/nvme5n1
-        - /dev/sda
-        - /dev/sdb
-        - /dev/sdc
-        - /dev/sdd
-        - /dev/sde
-        - /dev/sdf
-        - /dev/sdg
+        - /hostdev/disk/by-id/nvme-ET000750KWJTF_PHKS8263004Y750BGN;nvme
+        - /hostdev/disk/by-id/nvme-SAMSUNG_MZQL21T9HCJR-00A07_S64GNE0NC00462;nvme
+        - /hostdev/disk/by-id/nvme-SAMSUNG_MZQL21T9HCJR-00A07_S64GNE0R817070;nvme
+        - /hostdev/disk/by-id/nvme-ET000750KWJTF_PHKS826300MT750BGN;nvme
+        - /hostdev/disk/by-id/nvme-SAMSUNG_MZQL21T9HCJR-00A07_S64GNE0R817067;nvme
+        - /hostdev/disk/by-id/nvme-KINGSTON_SNV3S1000G_50026B76878F13D4;nvme
+        - /hostdev/disk/by-id/ata-ST12000VN0007-2GS116_ZCH03QF6;sat
+        - /hostdev/disk/by-id/ata-ST12000VN0007-2GS116_ZCH0BBYP;sat
+        - /hostdev/disk/by-id/ata-ST12000NM000J-2TY103_WV70FRVY;sat
+        - /hostdev/disk/by-id/ata-ST12000VN0007-2GS116_ZCH0FFE1;sat
+        - /hostdev/disk/by-id/ata-ST12000NM000J-2TY103_WV706V39;sat
+        - /hostdev/disk/by-id/ata-ST12000VN0007-2GS116_ZCH098M3;sat
+        - /hostdev/disk/by-id/ata-ST12000VN0007-2GS116_ZCH0B3D2;sat
     serviceMonitor:
       enabled: true
     prometheusRules:
