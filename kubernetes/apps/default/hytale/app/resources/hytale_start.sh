@@ -127,14 +127,14 @@ handle_exit_code() {
 
     # Warn on crash shortly after update
     if [ $exit_code -ne 0 ] && [ "$applied_update" = true ] && [ $elapsed -lt 30 ]; then
-        log_error "Server crashed ${elapsed}s after update" "Exit code: $exit_code"
-        printf "\n${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}\n"
-        printf "${YELLOW}Update Failed${NC}\n"
-        printf "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}\n\n"
-        printf "Server crashed within ${elapsed}s of applying the update.\n"
+        log_error "Server crashed $${elapsed}s after update" "Exit code: $exit_code"
+        printf "\n$${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$${NC}\n"
+        printf "$${YELLOW}Update Failed$${NC}\n"
+        printf "$${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$${NC}\n\n"
+        printf "Server crashed within $${elapsed}s of applying the update.\n"
         printf "This may indicate the update is incompatible.\n\n"
-        printf "${DIM}Check logs in: /home/container/Server/logs/${NC}\n\n"
-        printf "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}\n"
+        printf "$${DIM}Check logs in: /home/container/Server/logs/$${NC}\n\n"
+        printf "$${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━$${NC}\n"
     fi
 
     exit $exit_code
