@@ -3,8 +3,12 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: thelounge
+  name: &app thelounge
+  namespace: &namespace entertainment
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   interval: 1h
   path: ./kubernetes/apps/entertainment/thelounge/app
   components:
@@ -14,5 +18,5 @@ spec:
       APP: *app
       VOLSYNC_CAPACITY: 5Gi
   prune: true
-  targetNamespace: entertainment
+  targetNamespace: *namespace
   wait: false

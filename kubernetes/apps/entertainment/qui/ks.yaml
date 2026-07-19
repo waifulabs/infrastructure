@@ -3,15 +3,20 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: qui
+  name: &app qui
+  namespace: &namespace entertainment
 spec:
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   interval: 1h
   path: ./kubernetes/apps/entertainment/qui/app
   components:
     - ../../../../components/volsync
   postBuild:
     substitute:
-      APP: qui
+      APP: *app
       VOLSYNC_CAPACITY: 2Gi
   prune: true
+  targetNamespace: *namespace
   wait: false
