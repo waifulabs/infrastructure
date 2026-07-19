@@ -73,6 +73,8 @@ spec:
             port: &port 8080
     route:
       app:
+        annotations:
+          gatus.home-operations.com/enabled: "false"
         hostnames: ["api.ok8.sh"]
         parentRefs:
           - name: external
