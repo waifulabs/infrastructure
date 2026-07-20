@@ -10,3 +10,4 @@ replacements:
 resources:
   - ./volsync/ks.yaml
   - ./kopia/ks.yaml
+  - ./kopia-b2/ks.yaml

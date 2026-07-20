@@ -1,0 +1,79 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: kopia-b2
+spec:
+  schedule: "0 2 * * 0"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          nodeName: puddle
+          restartPolicy: OnFailure
+          securityContext:
+            runAsUser: 0
+          containers:
+            - name: kopia
+              image: ghcr.io/home-operations/kopia:0.23.1@sha256:27da0a33b44e1b902150a6c963514237217464bb13118a95bb056667be93cda5
+              command:
+                - /bin/sh
+                - -c
+              args:
+                - |
+                  set -eu
+                  CFG=/tmp/kopia.config
+
+                  kopia --config-file="$CFG" repository connect s3 \
+                    --bucket=puddle-kopia \
+                    --endpoint=s3.us-west-004.backblazeb2.com \
+                    --password="$KOPIA_PASSWORD" \
+                  || kopia --config-file="$CFG" repository create s3 \
+                       --bucket=puddle-kopia \
+                       --endpoint=s3.us-west-004.backblazeb2.com \
+                       --password="$KOPIA_PASSWORD"
+
+                  kopia --config-file="$CFG" policy set --global \
+                    --keep-weekly=3 \
+                    --keep-latest=1
+
+                  kopia --config-file="$CFG" snapshot create /data/documents/archive
+                  kopia --config-file="$CFG" snapshot create /data/documents/family
+                  kopia --config-file="$CFG" snapshot create /data/projects
+                  kopia --config-file="$CFG" snapshot create /data/immich
+              envFrom:
+                - secretRef:
+                    name: kopia-b2-secret
+              volumeMounts:
+                - name: documents-archive
+                  mountPath: /data/documents/archive
+                  readOnly: true
+                - name: documents-family
+                  mountPath: /data/documents/family
+                  readOnly: true
+                - name: projects
+                  mountPath: /data/projects
+                  readOnly: true
+                - name: immich
+                  mountPath: /data/immich
+                  readOnly: true
+          volumes:
+            - name: documents-archive
+              hostPath:
+                path: /var/mnt/puddle/documents/archive
+                type: Directory
+            - name: documents-family
+              hostPath:
+                path: /var/mnt/puddle/documents/family
+                type: Directory
+            - name: projects
+              hostPath:
+                path: /var/mnt/puddle/projects
+                type: Directory
+            - name: immich
+              hostPath:
+                path: /var/mnt/puddle/kubernetes/immich
+                type: Directory
