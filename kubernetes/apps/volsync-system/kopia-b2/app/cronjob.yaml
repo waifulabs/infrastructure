@@ -5,15 +5,23 @@ metadata:
   name: kopia-b2
 spec:
   schedule: "0 2 * * 0"
+  timeZone: America/Los_Angeles
+  # Run anyway if the node was down at 02:00, as long as it's back within 6h
+  startingDeadlineSeconds: 21600
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
   jobTemplate:
     spec:
+      backoffLimit: 2
+      # Generous ceiling for the initial seed upload; steady-state runs are incremental
+      activeDeadlineSeconds: 86400
       template:
         spec:
           nodeName: puddle
-          restartPolicy: OnFailure
+          # Never (not OnFailure) so each retry is a fresh pod and failed pods
+          # stick around with their logs
+          restartPolicy: Never
           securityContext:
             runAsUser: 0
           containers:
@@ -25,29 +33,64 @@ spec:
               args:
                 - |
                   set -eu
-                  CFG=/tmp/kopia.config
 
-                  kopia --config-file="$CFG" repository connect s3 \
+                  # Fixed identity: kopia keys snapshots and maintenance ownership by
+                  # user@host, and pod hostnames are random per run.
+                  # AWS_* and KOPIA_PASSWORD come from the environment.
+                  kopia repository connect s3 \
                     --bucket=puddle-kopia \
                     --endpoint=s3.us-west-004.backblazeb2.com \
-                    --password="$KOPIA_PASSWORD" \
-                  || kopia --config-file="$CFG" repository create s3 \
+                    --override-hostname=puddle \
+                    --override-username=root \
+                  || kopia repository create s3 \
                        --bucket=puddle-kopia \
                        --endpoint=s3.us-west-004.backblazeb2.com \
-                       --password="$KOPIA_PASSWORD"
+                       --override-hostname=puddle \
+                       --override-username=root
 
-                  kopia --config-file="$CFG" policy set --global \
+                  # Kopia's global defaults keep hourly/daily/monthly/annual snapshots
+                  # unless explicitly zeroed
+                  kopia policy set --global \
+                    --keep-latest=3 \
+                    --keep-hourly=0 \
+                    --keep-daily=0 \
                     --keep-weekly=3 \
-                    --keep-latest=1
+                    --keep-monthly=0 \
+                    --keep-annual=0
 
-                  kopia --config-file="$CFG" snapshot create /data/documents/archive
-                  kopia --config-file="$CFG" snapshot create /data/documents/family
-                  kopia --config-file="$CFG" snapshot create /data/projects
-                  kopia --config-file="$CFG" snapshot create /data/immich
+                  kopia maintenance set --owner=root@puddle
+
+                  kopia snapshot create \
+                    /data/documents/archive \
+                    /data/documents/family \
+                    /data/projects \
+                    /data/immich
+
+                  # Full maintenance actually reclaims space in B2 for pruned snapshots
+                  kopia maintenance run --full
+
+                  kopia snapshot list --all
               envFrom:
                 - secretRef:
                     name: kopia-b2-secret
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 256Mi
+                limits:
+                  memory: 2Gi
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities: {drop: ["ALL"]}
               volumeMounts:
+                # Image expects config/cache/logs under /config (KOPIA_CONFIG_PATH etc.)
+                - name: scratch
+                  mountPath: /config
+                  subPath: config
+                - name: scratch
+                  mountPath: /tmp
+                  subPath: tmp
                 - name: documents-archive
                   mountPath: /data/documents/archive
                   readOnly: true
@@ -61,6 +104,8 @@ spec:
                   mountPath: /data/immich
                   readOnly: true
           volumes:
+            - name: scratch
+              emptyDir: {}
             - name: documents-archive
               hostPath:
                 path: /var/mnt/puddle/documents/archive
