@@ -63,7 +63,9 @@ spec:
 
                   kopia maintenance set --owner=root@puddle
 
-                  kopia snapshot create \
+                  # Default parallelism is one worker per CPU (64 on puddle),
+                  # which OOMs; B2 upload bandwidth is the bottleneck anyway
+                  kopia snapshot create --parallel=8 \
                     /data/documents/archive \
                     /data/documents/family \
                     /data/projects \
@@ -73,15 +75,19 @@ spec:
                   kopia maintenance run --full
 
                   kopia snapshot list --all
+              env:
+                # Keep Go's GC under the cgroup limit instead of OOMKilling
+                - name: GOMEMLIMIT
+                  value: 7GiB
               envFrom:
                 - secretRef:
                     name: kopia-b2-secret
               resources:
                 requests:
                   cpu: 100m
-                  memory: 256Mi
+                  memory: 1Gi
                 limits:
-                  memory: 2Gi
+                  memory: 8Gi
               securityContext:
                 allowPrivilegeEscalation: false
                 readOnlyRootFilesystem: true
