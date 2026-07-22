@@ -50,7 +50,10 @@ spec:
 
                   # Kopia's global defaults keep hourly/daily/monthly/annual snapshots
                   # unless explicitly zeroed
+                  # snapdir=visible exposes .zfs/snapshot automounts, which kopia
+                  # can't traverse in-container and shouldn't back up anyway
                   kopia policy set --global \
+                    --add-ignore=".zfs/" \
                     --keep-latest=3 \
                     --keep-hourly=0 \
                     --keep-daily=0 \
