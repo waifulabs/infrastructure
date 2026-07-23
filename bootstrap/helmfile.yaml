@@ -41,7 +41,7 @@ releases:
   - name: envoy-gateway
     namespace: networking
     chart: oci://mirror.gcr.io/envoyproxy/gateway-helm
-    version: v1.8.2
+    version: v1.8.3
     needs: ["cert-manager/cert-manager"]
 
   - name: external-secrets
