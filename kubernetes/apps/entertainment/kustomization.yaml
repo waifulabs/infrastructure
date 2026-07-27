@@ -12,6 +12,8 @@ resources:
   - ./autobrr/ks.yaml
   - ./bazarr/ks.yaml
   - ./brrpolice/ks.yaml
+  - ./kavita/ks.yaml
+  - ./mangarr/ks.yaml
   - ./prowlarr/ks.yaml
   - ./plex/ks.yaml
   - ./qbittorrent/ks.yaml
@@ -21,5 +23,6 @@ resources:
   - ./sabnzbd/ks.yaml
   - ./seerr/ks.yaml
   - ./sonarr/ks.yaml
+  - ./suwayomi/ks.yaml
   - ./tautulli/ks.yaml
   - ./thelounge/ks.yaml
