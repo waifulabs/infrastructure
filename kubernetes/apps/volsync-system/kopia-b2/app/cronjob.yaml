@@ -91,7 +91,9 @@ spec:
               securityContext:
                 allowPrivilegeEscalation: false
                 readOnlyRootFilesystem: true
-                capabilities: {drop: ["ALL"]}
+                # DAC_READ_SEARCH lets root traverse/read 0700 dirs (e.g. projects/kashall)
+                # despite dropping ALL; all mounts are readOnly so no write bypass is granted.
+                capabilities: {add: ["DAC_READ_SEARCH"], drop: ["ALL"]}
               volumeMounts:
                 # Image expects config/cache/logs under /config (KOPIA_CONFIG_PATH etc.)
                 - name: scratch
