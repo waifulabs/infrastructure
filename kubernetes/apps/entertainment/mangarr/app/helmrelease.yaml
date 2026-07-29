@@ -1,0 +1,99 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mangarr
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: mangarr
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      mangarr:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/gavinmcfall/mangarr
+              tag: sha-79dc68b@sha256:ead7fc49064bb35b8f5b9ca4bf5413cf4847f79efad40586ac5c263a7192a5d5
+            env:
+              TZ: America/Los_Angeles
+              MANGARR_DOWNLOAD_ROOTS: /media/Downloads/suwayomi
+              MANGARR_DB_PATH: /config/mangarr.db
+              MANGARR_HTTP_ADDR: :8590
+              # Recycle bin must live on the SAME filesystem as the media it
+              # bins — /media is the shared hostPath (downloads + library),
+              # /config is a separate PVC, so a bin under /config would fail
+              # os.Rename with "invalid cross-device link" on delete-with-files.
+              MANGARR_RECYCLE_BIN_PATH: /media/Downloads/.recyclebin
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  tcpSocket:
+                    port: &port 8590
+                  initialDelaySeconds: 15
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 25m
+                memory: 64Mi
+              limits:
+                memory: 512Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        controller: mangarr
+        ports:
+          http:
+            port: *port
+    route:
+      app:
+        hostnames: ["{{ .Release.Name }}.ok8.sh"]
+        parentRefs:
+          - name: internal
+            namespace: networking
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *port
+    persistence:
+      config:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 1Gi
+        storageClass: openebs-hostpath
+        globalMounts:
+          - path: /config
+      media:
+        type: hostPath
+        hostPath: /var/mnt/puddle/media
+        globalMounts:
+          - path: /media
+      tmp:
+        type: emptyDir

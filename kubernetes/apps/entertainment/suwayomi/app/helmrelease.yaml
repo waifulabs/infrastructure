@@ -1,0 +1,175 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: suwayomi
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: suwayomi
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      suwayomi:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        initContainers:
+          # Seed server.conf onto the writable PVC. Suwayomi's entrypoint runs
+          # sed -i against server.conf which fails on a configMap subPath bind
+          # mount ('Device or resource busy' during atomic rename). Copying the
+          # ConfigMap into the PVC sidesteps the bind-mount restriction while
+          # keeping the config in git via Reloader.
+          01-init-config:
+            image:
+              repository: docker.io/library/busybox
+              tag: 1.38
+            command:
+              - sh
+              - -c
+              - |
+                set -e
+                cp /configmap/server.conf /tachidesk-data/server.conf
+                # Suwayomi refuses to start with server.downloadsPath pointing
+                # at a non-existent directory; pre-create it on shared media.
+                mkdir -p /media/Downloads/suwayomi
+        containers:
+          app:
+            image:
+              repository: ghcr.io/suwayomi/tachidesk
+              tag: v2.3.2259@sha256:2556d81e3370ddf76af028bb5d49b6857a839aea10b5d027a11e74a44d1fe83e
+            env:
+              TZ: America/Los_Angeles
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  tcpSocket:
+                    port: &port 4567
+                  initialDelaySeconds: 60
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              readiness: *probes
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 100m
+                memory: 512Mi
+              limits:
+                memory: 2Gi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        controller: suwayomi
+        ports:
+          http:
+            port: *port
+    route:
+      app:
+        hostnames: ["{{ .Release.Name }}.ok8.sh"]
+        parentRefs:
+          - name: internal
+            namespace: networking
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *port
+    persistence:
+      config:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: openebs-hostpath
+        advancedMounts:
+          suwayomi:
+            01-init-config:
+              - path: /tachidesk-data
+            app:
+              - path: /home/suwayomi/.local/share/Tachidesk
+      config-file:
+        type: configMap
+        name: suwayomi
+        advancedMounts:
+          suwayomi:
+            01-init-config:
+              - path: /configmap
+                readOnly: true
+      media:
+        type: hostPath
+        hostPath: /var/mnt/puddle/media
+        globalMounts:
+          - path: /media
+      tmp:
+        type: emptyDir
+    configMaps:
+      config:
+        data:
+          server.conf: |
+            # Suwayomi-Server config. Database is the embedded H2 default.
+
+            # === Networking ===
+            server.ip = "0.0.0.0"
+            server.port = 4567
+
+            # === Auth (internal-only; enable later if needed) ===
+            server.authMode = "none"
+
+            # === Downloads ===
+            server.downloadAsCbz = true
+            server.downloadsPath = "/media/Downloads/suwayomi"
+            server.autoDownloadNewChapters = true
+            server.excludeEntryWithUnreadChapters = false
+            server.autoDownloadNewChaptersLimit = 0
+            server.autoDownloadIgnoreReUploads = true
+
+            # === Global update (scheduled new-chapter checks) ===
+            # "Pull everything" stance: don't skip series we're behind on or
+            # haven't started. globalUpdateInterval is hours (minimum 6).
+            server.globalUpdateInterval = 12
+            server.excludeUnreadChapters = false
+            server.excludeNotStarted = false
+            server.excludeCompleted = false
+            server.updateMangas = false
+
+            # === FlareSolverr (not deployed in this cluster) ===
+            server.flareSolverrEnabled = false
+
+            # === Web UI ===
+            server.webUIEnabled = true
+            server.initialOpenInBrowserEnabled = false
+            server.webUIInterface = "browser"
+            server.webUIFlavor = "WebUI"
+            server.webUIChannel = "STABLE"
+            server.webUIUpdateCheckInterval = 23
+
+            # === Pre-seeded extension repos (Keiyoushi + Yuzono) ===
+            server.extensionRepos = [
+              "https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.min.json",
+              "https://raw.githubusercontent.com/yuzonomanga/yuzono-extensions/repo/index.min.json"
+            ]
+
+            # === Misc ===
+            server.debugLogsEnabled = false
+            server.systemTrayEnabled = false
+            server.maxSourcesInParallel = 6
+            server.maxLogFiles = 14
+            server.maxLogFileSize = "10mb"
+            server.maxLogFolderSize = "100mb"
