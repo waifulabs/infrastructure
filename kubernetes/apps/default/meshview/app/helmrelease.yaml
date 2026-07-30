@@ -56,7 +56,7 @@ spec:
       app:
         hostnames: ["{{ .Release.Name }}.ok8.sh"]
         parentRefs:
-          - name: internal
+          - name: external
             namespace: networking
     persistence:
       config:
