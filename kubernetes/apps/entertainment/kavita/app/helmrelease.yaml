@@ -87,5 +87,3 @@ spec:
         hostPath: /var/mnt/puddle/media
         globalMounts:
           - path: /media
-      tmp:
-        type: emptyDir
