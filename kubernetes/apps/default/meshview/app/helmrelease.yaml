@@ -90,8 +90,8 @@ spec:
             [site]
             domain = meshview.ok8.sh
             language = en
-            title = Oregon Mesh
-            message = Real time data from the Oregon mesh and beyond.
+            title = Kash's View - Oregon Mesh
+            message = Real time data from the Oregon mesh (that I can see)
             starting = /chat
             nodes = True
             conversations = True
@@ -106,8 +106,8 @@ spec:
             map_bottom_right_lat = 42.0
             map_bottom_right_lon = -116.4
             map_interval = 3
-            firehose_interal = 3
-            weekly_net_message = Weekly Mesh check-in.
+            firehose_interval = 3
+            weekly_net_message = Hello o/
             net_tag = #OregonMeshNet
 
             [mqtt]
