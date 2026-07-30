@@ -149,8 +149,13 @@ spec:
             server.excludeCompleted = false
             server.updateMangas = false
 
-            # === FlareSolverr (not deployed in this cluster) ===
-            server.flareSolverrEnabled = false
+            # === FlareSolverr (cluster-local service) ===
+            server.flareSolverrEnabled = true
+            server.flareSolverrUrl = "http://flaresolverr.entertainment.svc.cluster.local:8191"
+            server.flareSolverrTimeout = 60
+            server.flareSolverrSessionName = "suwayomi"
+            server.flareSolverrSessionTtl = 15
+            server.flareSolverrAsResponseFallback = false
 
             # === Web UI ===
             server.webUIEnabled = true
