@@ -85,16 +85,35 @@ spec:
             sectionName: https
         rules:
           - matches:
-              - path: { type: PathPrefix, value: / }
+              - path: { type: PathPrefix, value: /trmnl }
             filters:
               - type: URLRewrite
                 urlRewrite:
-                  path:
-                    type: ReplacePrefixMatch
-                    replacePrefixMatch: /api/
-            backendRefs:
+                  path: { type: ReplacePrefixMatch, replacePrefixMatch: /api/trmnl }
+            backendRefs: &backend
               - name: *app
                 port: *port
+          - matches:
+              - path: { type: PathPrefix, value: /homeassistant }
+            filters:
+              - type: URLRewrite
+                urlRewrite:
+                  path: { type: ReplacePrefixMatch, replacePrefixMatch: /api/homeassistant }
+            backendRefs: *backend
+          - matches:
+              - path: { type: PathPrefix, value: /spotify }
+            filters:
+              - type: URLRewrite
+                urlRewrite:
+                  path: { type: ReplacePrefixMatch, replacePrefixMatch: /api/spotify }
+            backendRefs: *backend
+          - matches:
+              - path: { type: PathPrefix, value: /github }
+            filters:
+              - type: URLRewrite
+                urlRewrite:
+                  path: { type: ReplacePrefixMatch, replacePrefixMatch: /api/github }
+            backendRefs: *backend
     persistence:
       data:
         type: persistentVolumeClaim
