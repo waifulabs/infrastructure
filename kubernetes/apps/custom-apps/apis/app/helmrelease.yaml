@@ -85,7 +85,7 @@ spec:
             sectionName: https
         rules:
           - matches:
-              - path: { type: PathPrefix, value: /api }
+              - path: { type: PathPrefix, value: / }
             filters:
               - type: URLRewrite
                 urlRewrite:
