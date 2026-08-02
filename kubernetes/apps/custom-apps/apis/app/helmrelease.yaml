@@ -86,6 +86,12 @@ spec:
         rules:
           - matches:
               - path: { type: PathPrefix, value: /api }
+            filters:
+              - type: URLRewrite
+                urlRewrite:
+                  path:
+                    type: ReplacePrefixMatch
+                    replacePrefixMatch: /api/
             backendRefs:
               - name: *app
                 port: *port
