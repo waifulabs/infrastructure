@@ -19,17 +19,6 @@ spec:
             group: gateway.envoyproxy.io
             kind: HTTPRouteFilter
             name: api-hello-filter
-    - matches:
-        - path: { type: PathPrefix, value: / }
-      filters:
-        - type: RequestRedirect
-          requestRedirect:
-            scheme: https
-            hostname: ok8.sh
-            statusCode: 302
-            path:
-              type: ReplaceFullPath
-              replaceFullPath: /
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/gateway.envoyproxy.io/httproutefilter_v1alpha1.json
 apiVersion: gateway.envoyproxy.io/v1alpha1
