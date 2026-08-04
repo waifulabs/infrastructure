@@ -30,6 +30,7 @@ spec:
             env:
               TZ: America/Los_Angeles
               TRUSTED_PROXY_CIDRS: "10.0.20.0/24,172.30.0.0/16"
+              DB_PATH: /data/juno.db
             envFrom:
               - secretRef:
                   name: juno-secret
@@ -101,6 +102,9 @@ spec:
       # at startup even though juno no longer serves TRMNL routes. Remove
       # once upstream publishes a rebuilt image that drops this.
       data:
-        type: emptyDir
+        type: persistentVolumeClaim
+        storageClass: openebs-hostpath
+        size: 2Gi
+        accessMode: ReadWriteOnce
         globalMounts:
           - path: /data
