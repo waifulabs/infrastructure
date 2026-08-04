@@ -83,7 +83,7 @@ spec:
             sectionName: https
         rules:
           - matches:
-              - path: { type: PathPrefix, value: /discord }
+              - path: { type: PathPrefix, value: /juno }
             filters:
               - type: URLRewrite
                 urlRewrite:
