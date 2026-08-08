@@ -31,6 +31,8 @@ spec:
               TZ: America/Los_Angeles
               TRUSTED_PROXY_CIDRS: "10.0.20.0/24,172.30.0.0/16"
               DB_PATH: /data/juno.db
+              VOICE_HUB_CHANNEL_ID: "1127461830286127205"
+              VOICE_HUB_CATEGORY_ID: "893310131251601408"
             envFrom:
               - secretRef:
                   name: juno-secret
