@@ -86,10 +86,7 @@ spec:
                 port: *port
     persistence:
       config:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: openebs-hostpath
+        existingClaim: syncthing-zfs
         globalMounts:
           - path: /var/syncthing/config
       data:

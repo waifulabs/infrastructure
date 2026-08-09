@@ -16,7 +16,7 @@ spec:
     - ../../../../components/volsync
   postBuild:
     substitute:
-      APP: *app
+      APP: syncthing-zfs
       VOLSYNC_CAPACITY: 1Gi
   prune: true
   retryInterval: 2m
