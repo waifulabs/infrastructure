@@ -18,7 +18,7 @@ spec:
     - ../../../../components/volsync
   postBuild:
     substitute:
-      APP: *app
+      APP: mosquitto-zfs
       VOLSYNC_CAPACITY: 1Gi
   prune: true
   wait: false
