@@ -67,10 +67,7 @@ spec:
             subPath: config.ini
             readOnly: true
       data:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 10Gi
-        storageClass: openebs-hostpath
+        existingClaim: meshview-zfs
         globalMounts:
           - path: /data
       tmp:
