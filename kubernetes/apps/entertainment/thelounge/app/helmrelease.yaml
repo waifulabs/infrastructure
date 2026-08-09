@@ -56,7 +56,4 @@ spec:
             namespace: networking
     persistence:
       config:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 5Gi
-        storageClass: openebs-hostpath
+        existingClaim: thelounge-zfs

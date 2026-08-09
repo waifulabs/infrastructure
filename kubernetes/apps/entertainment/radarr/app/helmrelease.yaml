@@ -87,12 +87,9 @@ spec:
                 port: *port
     persistence:
       config:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 5Gi
-        storageClass: openebs-hostpath
+        existingClaim: radarr-zfs
       config-cache:
-        existingClaim: radarr-cache
+        existingClaim: radarr-cache-zfs
         globalMounts:
           - path: /config/MediaCover
       media:

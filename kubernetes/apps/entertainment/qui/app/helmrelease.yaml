@@ -70,10 +70,7 @@ spec:
             namespace: networking
     persistence:
       config:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 2Gi
-        storageClass: openebs-hostpath
+        existingClaim: qui-zfs
       media:
         type: hostPath
         hostPath: /var/mnt/puddle/media

@@ -87,12 +87,9 @@ spec:
                 port: *port
     persistence:
       config:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 5Gi
-        storageClass: openebs-hostpath
+        existingClaim: sonarr-zfs
       config-cache:
-        existingClaim: sonarr-cache
+        existingClaim: sonarr-cache-zfs
         globalMounts:
           - path: /config/MediaCover
       media:

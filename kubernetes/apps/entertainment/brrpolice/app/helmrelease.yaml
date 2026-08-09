@@ -62,10 +62,7 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     persistence:
       data:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 5Gi
-        storageClass: openebs-hostpath
+        existingClaim: brrpolice-zfs
     service:
       app:
         ports:

@@ -15,7 +15,7 @@ spec:
     - ../../../../components/volsync
   postBuild:
     substitute:
-      APP: *app
+      APP: radarr-zfs
       VOLSYNC_CAPACITY: 5Gi
   prune: true
   retryInterval: 2m

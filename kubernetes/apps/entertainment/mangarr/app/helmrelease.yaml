@@ -84,10 +84,7 @@ spec:
                 port: *port
     persistence:
       config:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: openebs-hostpath
+        existingClaim: mangarr-zfs
         globalMounts:
           - path: /config
       media:

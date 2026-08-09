@@ -5,8 +5,9 @@ kind: Kustomization
 resources:
   - ./ocirepository.yaml
   - ./externalsecret.yaml
-  - ./pvc.yaml
   - ./helmrelease.yaml
+  - ./pvc-zfs.yaml
+  - ./pvc-cache-zfs.yaml
 configMapGenerator:
   - name: sonarr-loki-rules
     files:

@@ -6,6 +6,7 @@ resources:
   - ./ocirepository.yaml
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+  - ./pvc-zfs.yaml
 configMapGenerator:
   - name: prowlarr-loki-rules
     files:

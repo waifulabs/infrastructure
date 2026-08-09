@@ -15,7 +15,7 @@ spec:
     - ../../../../components/volsync
   postBuild:
     substitute:
-      APP: *app
+      APP: sabnzbd-zfs
       VOLSYNC_CAPACITY: 1Gi
       GATUS_SUBDOMAIN: sab
   prune: true

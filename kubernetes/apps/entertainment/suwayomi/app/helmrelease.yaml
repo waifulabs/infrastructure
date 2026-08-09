@@ -94,10 +94,7 @@ spec:
                 port: *port
     persistence:
       config:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 5Gi
-        storageClass: openebs-hostpath
+        existingClaim: suwayomi-zfs
         advancedMounts:
           suwayomi:
             01-init-config:

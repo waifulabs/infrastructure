@@ -58,10 +58,7 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
     persistence:
       config:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: openebs-hostpath
+        existingClaim: recyclarr-zfs
       config-file:
         type: configMap
         name: recyclarr-configmap

@@ -14,7 +14,7 @@ spec:
     - ../../../../components/volsync
   postBuild:
     substitute:
-      APP: *app
+      APP: brrpolice-zfs
       VOLSYNC_CAPACITY: 5Gi
   prune: true
   targetNamespace: entertainment

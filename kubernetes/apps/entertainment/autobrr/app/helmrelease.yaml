@@ -93,10 +93,7 @@ spec:
                 port: *port
     persistence:
       config:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 5Gi
-        storageClass: openebs-hostpath
+        existingClaim: autobrr-zfs
       config-log:
         type: emptyDir
         globalMounts:

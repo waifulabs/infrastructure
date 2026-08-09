@@ -92,10 +92,7 @@ spec:
                 port: *port
     persistence:
       config:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: openebs-hostpath
+        existingClaim: sabnzbd-zfs
       media:
         type: hostPath
         hostPath: /var/mnt/puddle/media
