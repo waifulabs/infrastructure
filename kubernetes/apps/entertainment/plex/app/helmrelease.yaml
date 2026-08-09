@@ -10,10 +10,12 @@ spec:
     kind: OCIRepository
     name: plex
   install:
+    disableWait: true
     remediation:
       retries: 3
   upgrade:
     cleanupOnFail: true
+    disableWait: true
     remediation:
       strategy: rollback
       retries: 3
