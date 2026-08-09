@@ -52,8 +52,6 @@ spec:
         volumeSnapshots:
           enabled: true
           keep: true
-    zfs-localpv:
-      enabled: false
     lvm-localpv:
       enabled: false
     mayastor:
@@ -63,7 +61,7 @@ spec:
         lvm:
           enabled: false
         zfs:
-          enabled: false
+          enabled: true
       replicated:
         mayastor:
           enabled: false
