@@ -12,13 +12,11 @@ spec:
   interval: 1h
   path: ./kubernetes/apps/entertainment/sonarr/app
   components:
-    - ../../../../components/volsync
+    - ../../../../components/kopiur/backup
   postBuild:
     substitute:
       APP: sonarr-zfs
-      VOLSYNC_COPYMETHOD: Snapshot
-      VOLSYNC_STORAGECLASS: openebs-zfs-luddle
-      VOLSYNC_CAPACITY: 5Gi
+      KOPIUR_CACHE_CAPACITY: 5Gi
   prune: true
   retryInterval: 2m
   targetNamespace: *namespace

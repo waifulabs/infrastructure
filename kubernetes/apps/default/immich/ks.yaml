@@ -13,13 +13,11 @@ spec:
       namespace: database
   path: ./kubernetes/apps/default/immich/app
   components:
-    - ../../../../components/volsync
+    - ../../../../components/kopiur/backup
   postBuild:
     substitute:
       APP: immich-zfs
-      VOLSYNC_COPYMETHOD: Snapshot
-      VOLSYNC_STORAGECLASS: openebs-zfs-luddle
-      VOLSYNC_CAPACITY: 10Gi
+      KOPIUR_CACHE_CAPACITY: 10Gi
   prune: true
   wait: false
   interval: 30m
