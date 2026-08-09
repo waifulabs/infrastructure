@@ -116,10 +116,7 @@ spec:
             backendRefs: *backend
     persistence:
       data:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClass: openebs-hostpath
+        existingClaim: apis-zfs
         globalMounts:
           - path: /data
       tmp:

@@ -5,4 +5,5 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./ocirepository.yaml
+  - ./pvc-zfs.yaml
   - ./helmrelease.yaml
