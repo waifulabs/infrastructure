@@ -17,6 +17,7 @@ spec:
     substitute:
       APP: qui-zfs
       VOLSYNC_COPYMETHOD: Snapshot
+      VOLSYNC_STORAGECLASS: openebs-zfs-luddle
       VOLSYNC_CAPACITY: 2Gi
   prune: true
   targetNamespace: *namespace

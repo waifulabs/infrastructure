@@ -17,6 +17,7 @@ spec:
     substitute:
       APP: sabnzbd-zfs
       VOLSYNC_COPYMETHOD: Snapshot
+      VOLSYNC_STORAGECLASS: openebs-zfs-luddle
       VOLSYNC_CAPACITY: 1Gi
       GATUS_SUBDOMAIN: sab
   prune: true

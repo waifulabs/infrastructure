@@ -17,6 +17,7 @@ spec:
     substitute:
       APP: radarr-zfs
       VOLSYNC_COPYMETHOD: Snapshot
+      VOLSYNC_STORAGECLASS: openebs-zfs-luddle
       VOLSYNC_CAPACITY: 5Gi
   prune: true
   retryInterval: 2m

@@ -22,6 +22,7 @@ spec:
     substitute:
       APP: home-assistant-zfs
       VOLSYNC_COPYMETHOD: Snapshot
+      VOLSYNC_STORAGECLASS: openebs-zfs-luddle
       VOLSYNC_CAPACITY: 5Gi
   prune: true
   wait: false

@@ -18,6 +18,7 @@ spec:
     substitute:
       APP: immich-zfs
       VOLSYNC_COPYMETHOD: Snapshot
+      VOLSYNC_STORAGECLASS: openebs-zfs-luddle
       VOLSYNC_CAPACITY: 10Gi
   prune: true
   wait: false
