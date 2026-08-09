@@ -1,0 +1,26 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/kopiur.home-operations.com/snapshotpolicy_v1alpha1.json
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: SnapshotPolicy
+metadata:
+  name: ${APP}
+spec:
+  repository:
+    kind: ClusterRepository
+    name: b2
+  sources:
+    - pvc:
+        name: ${APP}
+  retention:
+    keepDaily: 14
+    keepWeekly: 4
+  volumeSnapshotClassName: ${KOPIUR_SNAPSHOTCLASS:=zfspv-snapclass}
+  mover:
+    cache:
+      capacity: ${KOPIUR_CACHE_CAPACITY:=5Gi}
+      mode: Persistent
+      storageClassName: ${KOPIUR_CACHE_STORAGECLASS:=openebs-hostpath}
+    podSecurityContext:
+      runAsUser: ${KOPIUR_PUID:=1000}
+      runAsGroup: ${KOPIUR_PGID:=1000}
+      fsGroup: ${KOPIUR_PGID:=1000}
