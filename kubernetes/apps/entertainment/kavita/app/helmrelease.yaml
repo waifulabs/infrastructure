@@ -10,12 +10,16 @@ spec:
     kind: OCIRepository
     name: kavita
   install:
+    disableWait: true
     remediation:
       retries: -1
   upgrade:
     cleanupOnFail: true
+    disableWait: true
     remediation:
       retries: 3
+  rollback:
+    disableWait: true
   values:
     controllers:
       kavita:
