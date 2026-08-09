@@ -39,6 +39,8 @@ machine:
     image: ghcr.io/siderolabs/kubelet:{{ ENV.KUBERNETES_VERSION }}
     nodeIP:
       validSubnets: ["10.0.10.0/24"]
+    extraConfig:
+      maxPods: 250
   nodeLabels:
     topology.kubernetes.io/zone: {{ ENV.MACHINE_TYPE }}
   sysctls:

@@ -52,6 +52,11 @@ spec:
         volumeSnapshots:
           enabled: true
           keep: true
+    zfs-localpv:
+      zfsNode:
+        # Talos' root filesystem is read-only outside /var; the chart's
+        # default (/home/keys) can't be created there.
+        encrKeysDir: /var/openebs-zfs-keys
     lvm-localpv:
       enabled: false
     mayastor:
