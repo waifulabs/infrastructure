@@ -19,6 +19,7 @@ spec:
   postBuild:
     substitute:
       APP: mosquitto-zfs
+      VOLSYNC_COPYMETHOD: Snapshot
       VOLSYNC_CAPACITY: 1Gi
   prune: true
   wait: false

@@ -17,6 +17,7 @@ spec:
   postBuild:
     substitute:
       APP: immich-zfs
+      VOLSYNC_COPYMETHOD: Snapshot
       VOLSYNC_CAPACITY: 10Gi
   prune: true
   wait: false

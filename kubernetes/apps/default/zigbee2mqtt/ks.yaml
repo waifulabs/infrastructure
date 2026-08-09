@@ -19,6 +19,7 @@ spec:
   postBuild:
     substitute:
       APP: zigbee2mqtt-zfs
+      VOLSYNC_COPYMETHOD: Snapshot
       VOLSYNC_CAPACITY: 2Gi
   prune: true
   wait: false

@@ -16,6 +16,7 @@ spec:
   postBuild:
     substitute:
       APP: tautulli-zfs
+      VOLSYNC_COPYMETHOD: Snapshot
       VOLSYNC_CAPACITY: 5Gi
   prune: true
   retryInterval: 2m

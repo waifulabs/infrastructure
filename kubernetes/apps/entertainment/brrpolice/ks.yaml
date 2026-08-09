@@ -15,6 +15,7 @@ spec:
   postBuild:
     substitute:
       APP: brrpolice-zfs
+      VOLSYNC_COPYMETHOD: Snapshot
       VOLSYNC_CAPACITY: 5Gi
   prune: true
   targetNamespace: entertainment

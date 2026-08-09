@@ -16,6 +16,7 @@ spec:
   postBuild:
     substitute:
       APP: qui-zfs
+      VOLSYNC_COPYMETHOD: Snapshot
       VOLSYNC_CAPACITY: 2Gi
   prune: true
   targetNamespace: *namespace

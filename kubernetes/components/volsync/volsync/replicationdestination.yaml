@@ -16,7 +16,7 @@ spec:
     capacity: ${VOLSYNC_CAPACITY:=5Gi}
     cleanupCachePVC: true
     cleanupTempPVC: true
-    copyMethod: Direct
+    copyMethod: ${VOLSYNC_COPYMETHOD:=Direct}
     destinationPVC: ${APP}
     enableFileDeletion: true
     moverSecurityContext:

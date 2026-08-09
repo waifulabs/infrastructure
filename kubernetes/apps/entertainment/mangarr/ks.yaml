@@ -16,6 +16,7 @@ spec:
   postBuild:
     substitute:
       APP: mangarr-zfs
+      VOLSYNC_COPYMETHOD: Snapshot
       VOLSYNC_CAPACITY: 1Gi
   prune: true
   retryInterval: 2m

@@ -19,6 +19,7 @@ spec:
   postBuild:
     substitute:
       APP: hytale-zfs
+      VOLSYNC_COPYMETHOD: Snapshot
       VOLSYNC_CAPACITY: 25Gi
   prune: true
   wait: true
