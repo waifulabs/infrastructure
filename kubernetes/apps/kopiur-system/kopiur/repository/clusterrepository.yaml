@@ -7,6 +7,8 @@ metadata:
 spec:
   allowedNamespaces:
     all: true
+  credentialProjection:
+    allowed: true
   backend:
     s3:
       bucket: puddle-kopia

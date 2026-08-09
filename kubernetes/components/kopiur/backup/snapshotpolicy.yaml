@@ -8,6 +8,8 @@ spec:
   repository:
     kind: ClusterRepository
     name: b2
+  credentialProjection:
+    enabled: true
   sources:
     - pvc:
         name: ${APP}
