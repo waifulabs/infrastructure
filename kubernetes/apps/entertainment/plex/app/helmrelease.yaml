@@ -19,6 +19,8 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  rollback:
+    disableWait: true
   values:
     controllers:
       plex:
