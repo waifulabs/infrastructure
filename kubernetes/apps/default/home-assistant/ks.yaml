@@ -20,7 +20,7 @@ spec:
     - ../../../../components/volsync
   postBuild:
     substitute:
-      APP: *app
+      APP: home-assistant-zfs
       VOLSYNC_CAPACITY: 5Gi
   prune: true
   wait: false

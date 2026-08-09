@@ -79,14 +79,11 @@ spec:
             sectionName: https
     persistence:
       config:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 5Gi
-        storageClass: openebs-hostpath
+        existingClaim: home-assistant-zfs
         globalMounts:
           - path: /config
       config-cache:
-        existingClaim: home-assistant-cache
+        existingClaim: home-assistant-cache-zfs
         globalMounts:
           - path: /config/.venv
       tmpfs:

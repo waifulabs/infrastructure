@@ -7,3 +7,5 @@ resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
   - ./pvc.yaml
+  - ./pvc-zfs.yaml
+  - ./pvc-cache-zfs.yaml
