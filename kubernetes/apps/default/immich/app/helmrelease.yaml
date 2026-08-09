@@ -149,10 +149,7 @@ spec:
             main:
               - path: /import
       cache:
-        type: persistentVolumeClaim
-        storageClass: openebs-hostpath
-        accessMode: ReadWriteOnce
-        size: 10Gi
+        existingClaim: immich-zfs
         advancedMounts:
           machine-learning:
             main:

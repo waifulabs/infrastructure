@@ -16,7 +16,7 @@ spec:
     - ../../../../components/volsync
   postBuild:
     substitute:
-      APP: *app
+      APP: immich-zfs
       VOLSYNC_CAPACITY: 10Gi
   prune: true
   wait: false
