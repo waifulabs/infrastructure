@@ -104,9 +104,6 @@ spec:
       # at startup even though juno no longer serves TRMNL routes. Remove
       # once upstream publishes a rebuilt image that drops this.
       data:
-        type: persistentVolumeClaim
-        storageClass: openebs-hostpath
-        size: 2Gi
-        accessMode: ReadWriteOnce
+        existingClaim: juno-zfs
         globalMounts:
           - path: /data
