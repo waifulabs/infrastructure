@@ -8,9 +8,10 @@ spec:
   allowedNamespaces:
     all: true
   backend:
-    b2:
+    s3:
       bucket: puddle-kopia
       prefix: kopiur/
+      endpoint: s3.us-west-004.backblazeb2.com
       auth:
         secretRef:
           name: kopiur-repository-secret
