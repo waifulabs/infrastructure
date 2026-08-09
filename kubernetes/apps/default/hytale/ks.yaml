@@ -18,7 +18,7 @@ spec:
     - ../../../../components/volsync
   postBuild:
     substitute:
-      APP: *app
+      APP: hytale-zfs
       VOLSYNC_CAPACITY: 25Gi
   prune: true
   wait: true

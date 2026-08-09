@@ -72,10 +72,7 @@ spec:
            port: *udpPort
     persistence:
       data:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 25Gi
-        storageClass: openebs-hostpath
+        existingClaim: hytale-zfs
         globalMounts:
           - path: /home/container
       machine-id:

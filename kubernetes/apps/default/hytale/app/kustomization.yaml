@@ -6,6 +6,7 @@ resources:
   - ./dnsendpoint.yaml
   - ./ocirepository.yaml
   - ./helmrelease.yaml
+  - ./pvc-zfs.yaml
 configMapGenerator:
   - name: hytale-configmap
     files:
