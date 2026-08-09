@@ -103,12 +103,9 @@ spec:
                 port: *port
     persistence:
       config:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 50Gi
-        storageClass: openebs-hostpath
+        existingClaim: plex-zfs
       config-cache:
-        existingClaim: plex-cache
+        existingClaim: plex-cache-zfs
         globalMounts:
           - path: /config/Library/Application Support/Plex Media Server/Cache
       config-logs:

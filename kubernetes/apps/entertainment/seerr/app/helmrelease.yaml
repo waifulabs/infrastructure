@@ -82,15 +82,11 @@ spec:
             sectionName: https
     persistence:
       config:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 5Gi
-        storageClass: openebs-hostpath
-        forceRename: jellyseerr
+        existingClaim: jellyseerr-zfs
         globalMounts:
           - path: /app/config
       config-cache:
-        existingClaim: "{{ .Release.Name }}-cache"
+        existingClaim: seerr-cache-zfs
         globalMounts:
           - path: /app/config/cache
       tmpfs:
