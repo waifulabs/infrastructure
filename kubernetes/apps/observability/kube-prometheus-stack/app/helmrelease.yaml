@@ -55,7 +55,7 @@ spec:
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: openebs-hostpath
+              storageClassName: openebs-zfs-luddle
               resources:
                 requests:
                   storage: 1Gi
@@ -92,6 +92,7 @@ spec:
           - memory-snapshot-on-shutdown
         retention: 14d
         retentionSize: 80GB
+        maximumStartupDurationSeconds: 1800
         resources:
           requests:
             cpu: 250m
@@ -100,7 +101,7 @@ spec:
         storageSpec:
           volumeClaimTemplate:
             spec:
-              storageClassName: openebs-hostpath
+              storageClassName: openebs-zfs-luddle
               resources:
                 requests:
                   storage: 100Gi

@@ -7,39 +7,9 @@ metadata:
   namespace: observability
 spec:
   staticConfigs:
-    - targets: ["airgradient.outsideour.casa:9926"]
+    - targets: ["airgradient.outsideour.casa:9926", "office.airgradient.outsideour.casa"]
   metricsPath: /metrics
   relabelings:
     - action: replace
       targetLabel: job
       replacement: *name
-# ---
-# # yaml-language-server: $schema=https://k8s-schemas.home-operations.com/monitoring.coreos.com/scrapeconfig_v1alpha1.json
-# apiVersion: monitoring.coreos.com/v1alpha1
-# kind: ScrapeConfig
-# metadata:
-#   name: node-exporter
-# spec:
-#   staticConfigs:
-#     - targets:
-#         - puddle.outsideour.casa:9100
-#   metricsPath: /metrics
-#   relabelings:
-#     - action: replace
-#       targetLabel: job
-#       replacement: node-exporter
-# ---
-# # yaml-language-server: $schema=https://k8s-schemas.home-operations.com/monitoring.coreos.com/scrapeconfig_v1alpha1.json
-# apiVersion: monitoring.coreos.com/v1alpha1
-# kind: ScrapeConfig
-# metadata:
-#   name: smartctl-exporter
-# spec:
-#   staticConfigs:
-#     - targets:
-#         - puddle.outsideour.casa:9633
-#   metricsPath: /metrics
-#   relabelings:
-#     - action: replace
-#       targetLabel: job
-#       replacement: smartctl-exporter
