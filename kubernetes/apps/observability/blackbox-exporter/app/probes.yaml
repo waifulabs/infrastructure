@@ -29,7 +29,7 @@ spec:
   jobName: slzb_probe
   module: icmp
   prober:
-    url: blackbox-exporter-lan.observability.svc.cluster.local:9115
+    url: blackbox-exporter.observability.svc.cluster.local:9115
   targets:
     staticConfig:
       static:
