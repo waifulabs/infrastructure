@@ -11,8 +11,7 @@ spec:
     allowed: true
   backend:
     s3:
-      bucket: puddle-kopia
-      prefix: kopiur/
+      bucket: puddle-kopiur
       endpoint: s3.us-west-004.backblazeb2.com
       auth:
         secretRef:
