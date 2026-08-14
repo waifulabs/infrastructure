@@ -22,3 +22,5 @@ spec:
       name: kopiur-repository-secret
       namespace: kopiur-system
       key: KOPIA_PASSWORD
+  scheduleDefaults:
+    timezone: America/Los_Angeles
