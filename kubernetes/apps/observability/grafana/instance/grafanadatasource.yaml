@@ -36,15 +36,16 @@ spec:
 apiVersion: grafana.integreatly.org/v1beta1
 kind: GrafanaDatasource
 metadata:
-  name: loki
+  name: victoria-logs
 spec:
   instanceSelector:
     matchLabels:
       grafana.internal/instance: grafana
+  plugins:
+    - name: victoriametrics-logs-datasource
+      version: 0.31.0
   datasource:
-    type: loki
-    name: loki
+    type: victoriametrics-logs-datasource
+    name: victoria-logs
     access: proxy
-    jsonData:
-      implementation: prometheus
-    url: http://loki-headless.observability.svc.cluster.local:3100
+    url: http://victoria-logs.observability.svc.cluster.local:9428

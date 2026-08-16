@@ -1,0 +1,59 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app victoria-logs
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: *app
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: openebs
+      namespace: openebs-system
+  values:
+    global:
+      image:
+        registry: quay.io
+    server:
+      fullnameOverride: victoria-logs
+      retentionPeriod: 90d
+      # Whichever cap hits first wins; keeps the PVC from filling before 90d
+      retentionDiskSpaceUsage: 40GiB
+      persistentVolume:
+        enabled: true
+        storageClassName: openebs-zfs-luddle
+        size: 50Gi
+      resources:
+        requests:
+          cpu: 100m
+        limits:
+          memory: 1Gi
+      route:
+        enabled: true
+        hostnames: ["vlogs.ok8.sh"]
+        parentRefs:
+          - name: internal
+            namespace: networking
+            sectionName: https
+      serviceMonitor:
+        enabled: true
+    dashboards:
+      enabled: true
+      grafanaOperator:
+        enabled: true
+        spec:
+          instanceSelector:
+            matchLabels:
+              # Null out the chart's default selector label so only ours applies
+              dashboards: null
+              grafana.internal/instance: grafana
