@@ -8,8 +8,8 @@ mqtt:
   host: mosquitto.default.svc.cluster.local
   port: 1883
   tls_enabled: false
-  user: "{{ .MOSQUITTO_MQTT_USERNAME }}"
-  password: "{{ .MOSQUITTO_MQTT_PASSWORD }}"
+  user: "{{ .mosquitto_MOSQUITTO_MQTT_USERNAME }}"
+  password: "{{ .mosquitto_MOSQUITTO_MQTT_PASSWORD }}"
   ha_autodiscovery: true
   ha_autodiscovery_topic: homeassistant
   base_topic: rtlamr
@@ -19,7 +19,7 @@ custom_parameters:
   rtlamr: -unique=true -symbollength=32
 
 meters:
-  - id: "{{ .RTLAMR2MQTT_METER_ID }}"
+  - id: "{{ .rtlamr2mqtt_RTLAMR2MQTT_METER_ID }}"
     protocol: scm
     name: meter_pwr
     format: "######"
