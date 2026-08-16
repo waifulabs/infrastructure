@@ -97,7 +97,7 @@ spec:
           requests:
             cpu: 250m
           limits:
-            memory: 2048Mi
+            memory: 3072Mi
         storageSpec:
           volumeClaimTemplate:
             spec:
