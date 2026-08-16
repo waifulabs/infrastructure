@@ -40,4 +40,7 @@ spec:
       requests:
         cpu: 10m
       limits:
-        memory: 256Mi
+        # Initial/catch-up ingestion of the full /var/log/pods backlog spikes
+        # far above the tiny steady-state footprint; 256Mi OOMKilled on first
+        # rollout before the checkpoint file could ever be written
+        memory: 1Gi
