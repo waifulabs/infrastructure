@@ -3,26 +3,35 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: grafana-operator
+  name: &app grafana-operator
+  namespace: &namespace observability
 spec:
-  interval: 1h
+  targetNamespace: *namespace
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   path: ./kubernetes/apps/observability/grafana/operator
   prune: true
-  targetNamespace: observability
   wait: true
+  interval: 1h
+  timeout: 5m
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: grafana
+  name: &app grafana
+  namespace: &namespace observability
 spec:
+  targetNamespace: *namespace
+  commonMetadata:
+    labels:
+      app.kubernetes.io/name: *app
   dependsOn:
     - name: grafana-operator
-    #- name: rook-ceph-cluster
-    # namespace: rook-ceph
-  interval: 1h
+      namespace: *namespace
   path: ./kubernetes/apps/observability/grafana/instance
   prune: true
-  targetNamespace: observability
   wait: false
+  interval: 1h
+  timeout: 5m

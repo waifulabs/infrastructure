@@ -14,7 +14,7 @@ spec:
       kind: HelmRelease
       name: *app
       namespace: *namespace
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/actions-runner-system/actions-runner-controller/app
   prune: true
   targetNamespace: *namespace
@@ -38,7 +38,7 @@ spec:
       namespace: external-secrets
     - name: openebs
       namespace: openebs-system
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/actions-runner-system/actions-runner-controller/runners
   prune: true
   targetNamespace: *namespace

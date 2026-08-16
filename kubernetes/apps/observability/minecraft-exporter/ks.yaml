@@ -16,5 +16,5 @@ spec:
   path: ./kubernetes/apps/observability/minecraft-exporter/app
   prune: true
   wait: false
-  interval: 30m
+  interval: 1h
   timeout: 5m

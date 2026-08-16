@@ -14,6 +14,6 @@ spec:
   path: ./kubernetes/apps/database/dragonfly/app
   prune: true
   wait: true
-  interval: 30m
+  interval: 1h
   retryInterval: 1m
   timeout: 5m

@@ -20,7 +20,7 @@ spec:
       KOPIUR_CACHE_CAPACITY: 10Gi
   prune: true
   wait: false
-  interval: 30m
+  interval: 1h
   retryInterval: 1m
   timeout: 5m
 ---
@@ -37,6 +37,6 @@ spec:
     - name: immich
   path: ./kubernetes/apps/default/immich/frame
   prune: true
-  interval: 30m
+  interval: 1h
   retryInterval: 1m
   timeout: 5m

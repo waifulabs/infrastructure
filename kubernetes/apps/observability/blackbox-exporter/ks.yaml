@@ -13,5 +13,5 @@ spec:
   path: ./kubernetes/apps/observability/blackbox-exporter/app
   prune: true
   wait: false
-  interval: 30m
+  interval: 1h
   timeout: 15m

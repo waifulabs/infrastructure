@@ -22,6 +22,6 @@ spec:
       KOPIUR_CACHE_CAPACITY: 25Gi
   prune: true
   wait: true
-  interval: 30m
+  interval: 1h
   retryInterval: 1m
   timeout: 5m

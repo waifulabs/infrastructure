@@ -13,7 +13,7 @@ spec:
   path: ./kubernetes/apps/observability/victoria-logs/app
   prune: true
   wait: false
-  interval: 30m
+  interval: 1h
   timeout: 5m
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/kustomize.toolkit.fluxcd.io/kustomization_v1.json
@@ -33,5 +33,5 @@ spec:
   path: ./kubernetes/apps/observability/victoria-logs/collector
   prune: true
   wait: false
-  interval: 30m
+  interval: 1h
   timeout: 5m
