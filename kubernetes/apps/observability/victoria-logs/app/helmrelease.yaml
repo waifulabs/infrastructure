@@ -37,7 +37,10 @@ spec:
         requests:
           cpu: 100m
         limits:
-          memory: 1Gi
+          # Bulk ingest (initial backlog, post-outage collector buffer drains)
+          # holds large in-memory parts before flushing; 1Gi OOMKilled ~48s
+          # into the first backlog delivery
+          memory: 4Gi
       route:
         enabled: true
         hostnames: ["vlogs.ok8.sh"]
