@@ -24,6 +24,6 @@ spec:
   path: ./kubernetes/apps/networking/cloudflare-dns/app
   prune: false
   wait: true
-  interval: 30m
+  interval: 1h
   retryInterval: 1m
   timeout: 5m

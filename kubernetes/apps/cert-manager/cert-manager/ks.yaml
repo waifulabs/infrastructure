@@ -22,7 +22,7 @@ spec:
   dependsOn:
     - name: grafana-operator
       namespace: observability
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/cert-manager/cert-manager/app
   prune: true
   retryInterval: 1m

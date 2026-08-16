@@ -18,6 +18,6 @@ spec:
   path: ./kubernetes/apps/custom-apps/apis/app
   prune: true
   wait: false
-  interval: 30m
+  interval: 1h
   retryInterval: 1m
   timeout: 5m

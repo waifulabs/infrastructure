@@ -25,7 +25,7 @@ spec:
   path: ./kubernetes/apps/external-secrets/external-secrets/app
   prune: true
   wait: true
-  interval: 30m
+  interval: 1h
   retryInterval: 1m
   targetNamespace: *namespace
   timeout: 5m

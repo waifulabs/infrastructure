@@ -13,5 +13,5 @@ spec:
   path: ./kubernetes/apps/kube-system/intel-device-plugin/app
   prune: true
   wait: false
-  interval: 30m
+  interval: 1h
   timeout: 5m
