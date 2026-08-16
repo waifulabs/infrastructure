@@ -59,6 +59,19 @@ spec:
               resources:
                 requests:
                   storage: 1Gi
+    kubeApiServer:
+      serviceMonitor:
+        # Overrides the chart default relabelings, which only trim le buckets
+        metricRelabelings:
+          # Histogram families unused by any dashboard, recording rule, or alert
+          - action: drop
+            sourceLabels: ["__name__"]
+            regex: (apiserver_request_duration_seconds|apiserver_request_body_size_bytes|etcd_request_duration_seconds|apiserver_watch_list_duration_seconds|apiserver_watch_cache_read_wait_seconds|apiserver_response_sizes|apiserver_watch_events_sizes)_bucket
+          # Chart default trim, kept for the SLI histogram that feeds the
+          # KubeAPIErrorBudgetBurn recording rules
+          - action: drop
+            sourceLabels: ["__name__", "le"]
+            regex: (apiserver_request_slo|apiserver_request_sli)_duration_seconds_bucket;(0\.15|0\.2|0\.3|0\.35|0\.4|0\.45|0\.6|0\.7|0\.8|0\.9|1\.25|1\.5|1\.75|2|3|3\.5|4|4\.5|6|7|8|9|15|20|40|45|50)(\.0)?
     kubeScheduler:
       service:
         selector:
@@ -97,7 +110,7 @@ spec:
           requests:
             cpu: 250m
           limits:
-            memory: 2048Mi
+            memory: 3072Mi
         storageSpec:
           volumeClaimTemplate:
             spec:
