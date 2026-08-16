@@ -69,10 +69,13 @@ spec:
           - "{{ .Release.Name }}.ok8.sh"
         parentRefs:
           - name: internal
-            namespace: network
+            namespace: networking
     configMaps:
       config:
         data:
+          # hostname/username are the kopia repository identity the historical
+          # volsync snapshots are keyed under, not a live DNS name; they must
+          # not change with the release namespace
           repository.config: |-
             {
               "storage": {
@@ -81,7 +84,7 @@ spec:
                   "path": "/repository"
                 }
               },
-              "hostname": "volsync.{{ .Release.Namespace }}.svc.cluster.local",
+              "hostname": "volsync.volsync-system.svc.cluster.local",
               "username": "volsync",
               "description": "volsync",
               "enableActions": false

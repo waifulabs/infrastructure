@@ -3,8 +3,8 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app kopia-b2
-  namespace: &namespace volsync-system
+  name: &app kopia
+  namespace: &namespace kopiur-system
 spec:
   commonMetadata:
     labels:
@@ -13,7 +13,10 @@ spec:
     - name: onepassword
       namespace: external-secrets
   interval: 1h
-  path: ./kubernetes/apps/volsync-system/kopia-b2/app
+  path: ./kubernetes/apps/kopiur-system/kopia/app
+  postBuild:
+    substitute:
+      APP: *app
   prune: true
   retryInterval: 1m
   targetNamespace: *namespace

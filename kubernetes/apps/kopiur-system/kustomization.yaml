@@ -8,4 +8,6 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
+  - ./kopia/ks.yaml
+  - ./kopia-b2/ks.yaml
   - ./kopiur/ks.yaml
