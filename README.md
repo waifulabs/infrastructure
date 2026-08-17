@@ -31,7 +31,7 @@ The twist: nothing is configured by hand. The *entire* setup is written down as 
 - **[Cilium](https://cilium.io/) + BGP** — pods get routable IPs and LoadBalancer services are advertised straight to my UniFi router via BGP.
 - **[External DNS UniFi Webhook](https://github.com/kashalls/external-dns-unifi-webhook)** — a webhook I wrote so DNS records publish directly to UniFi, no extra resolvers.
 - **[Renovate](https://github.com/renovatebot/renovate)** — container images and Helm charts stay current through automated pull requests.
-- **[VolSync](https://volsync.readthedocs.io/) + ZFS** — persistent data is snapshotted and backed up off-site, on top of a dedicated [TrueNAS box](#-hardware).
+- **[Kopiur](https://github.com/home-operations/kopiur) + ZFS** — persistent volumes are ZFS-snapshotted and backed up off-site to Backblaze B2, with the bulk datasets (documents, projects, photo library) shipped to the same bucket on their own schedule.
 
 </details>
 
