@@ -138,7 +138,7 @@ spec:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 5Gi
-        storageClass: openebs-hostpath
+        storageClass: openebs-zfs-luddle
         globalMounts:
           - path: *data
       extra:

@@ -18,7 +18,7 @@ spec:
 
   storage:
     size: 15Gi
-    storageClass: openebs-hostpath
+    storageClass: openebs-zfs-luddle
 
   enableSuperuserAccess: true
   superuserSecret:
@@ -49,7 +49,7 @@ spec:
       isWALArchiver: true
       parameters:
         barmanObjectName: immich
-        serverName: &currentServer immich
+        serverName: &currentServer immich-v2
 
   bootstrap:
     recovery:

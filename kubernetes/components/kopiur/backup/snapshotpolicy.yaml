@@ -21,7 +21,7 @@ spec:
     cache:
       capacity: ${KOPIUR_CACHE_CAPACITY:=5Gi}
       mode: Persistent
-      storageClassName: ${KOPIUR_CACHE_STORAGECLASS:=openebs-hostpath}
+      storageClassName: ${KOPIUR_CACHE_STORAGECLASS:=openebs-zfs-luddle}
     podSecurityContext:
       runAsUser: ${KOPIUR_PUID:=1000}
       runAsGroup: ${KOPIUR_PGID:=1000}
