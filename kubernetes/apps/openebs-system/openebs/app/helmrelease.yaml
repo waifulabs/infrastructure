@@ -42,7 +42,7 @@ spec:
       hostpathClass:
         enabled: true
         name: openebs-hostpath
-        isDefaultClass: true
+        isDefaultClass: false
         basePath: *basePath
       helperPod:
         image:

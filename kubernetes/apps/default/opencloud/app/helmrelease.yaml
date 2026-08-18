@@ -70,7 +70,7 @@ spec:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
         size: 15Gi
-        storageClass: openebs-hostpath
+        storageClass: openebs-zfs-luddle
         globalMounts:
           - path: /var/lib/opencloud
             subPath: data
