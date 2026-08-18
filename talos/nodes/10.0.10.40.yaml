@@ -36,14 +36,6 @@ vlanID: 30
 mtu: 9000
 ---
 apiVersion: v1alpha1
-kind: UserVolumeConfig
-name: local-hostpath
-provisioning:
-  diskSelector:
-    match: disk.serial == "S64GNE0R817067" && !system_disk
-  minSize: 1TB
----
-apiVersion: v1alpha1
 kind: WatchdogTimerConfig
 device: /dev/watchdog0
 timeout: 5m
