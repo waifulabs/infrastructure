@@ -179,7 +179,6 @@
       group: {
         commitMessageTopic: '{{{groupName}}} group',
       },
-      minimumGroupSize: 5,
     },
     {
       description: 'Rook-Ceph Group',
@@ -207,7 +206,6 @@
       group: {
         commitMessageTopic: '{{{groupName}}} group',
       },
-      minimumGroupSize: 2,
     },
     {
       matchUpdateTypes: [
