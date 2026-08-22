@@ -8,9 +8,12 @@ components:
 replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
+  - ./agregarr/ks.yaml
   - ./autobrr/ks.yaml
   - ./bazarr/ks.yaml
   - ./brrpolice/ks.yaml
+  - ./chaski/ks.yaml
+  - ./cleanrr/ks.yaml
   - ./flaresolverr/ks.yaml
   - ./kavita/ks.yaml
   - ./mangarr/ks.yaml
