@@ -7,7 +7,7 @@ metadata:
 spec:
   interval: 1h
   ref:
-    tag: 0.10.3
+    tag: 0.10.5
   url: oci://ghcr.io/home-operations/charts/kopiur
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/helm.toolkit.fluxcd.io/helmrelease_v2.json
