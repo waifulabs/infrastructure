@@ -22,5 +22,11 @@ spec:
       name: kopiur-repository-secret
       namespace: kopiur-system
       key: KOPIA_PASSWORD
+  parameters:
+    epoch:
+      # kopia's 24h default let epochs hold ~2600 index blobs at this cluster's
+      # write rate; compaction trails two epochs, so the repo carried ~5k
+      # uncompacted blobs and `repository connect` took over 4 minutes.
+      minDuration: 4h
   scheduleDefaults:
     timezone: America/Los_Angeles
