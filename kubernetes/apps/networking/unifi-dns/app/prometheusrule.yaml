@@ -10,7 +10,7 @@ spec:
       rules:
         - alert: ExternalDNSRegistryError
           expr: |
-            external_dns_registry_errors_total > 0
+            increase(external_dns_registry_errors_total[15m]) > 0
           for: 5m
           annotations:
             summary: >-
@@ -20,7 +20,7 @@ spec:
 
         - alert: ExternalDNSSourceError
           expr: |
-            external_dns_source_errors_total > 0
+            increase(external_dns_source_errors_total[15m]) > 0
           for: 5m
           annotations:
             summary: >-
@@ -30,7 +30,7 @@ spec:
 
         - alert: ExternalDNSApplyChangesError
           expr: |
-            external_dns_webhook_provider_applychanges_errors_total > 0
+            increase(external_dns_webhook_provider_applychanges_errors_total[15m]) > 0
           for: 5m
           annotations:
             summary: >-
@@ -40,7 +40,7 @@ spec:
 
         - alert: ExternalDNSRecordsError
           expr: |
-            external_dns_webhook_provider_records_errors_total > 0
+            increase(external_dns_webhook_provider_records_errors_total[15m]) > 0
           for: 5m
           annotations:
             summary: >-
