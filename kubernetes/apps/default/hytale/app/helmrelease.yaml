@@ -30,7 +30,7 @@ spec:
             tty: true
             image:
               repository: ghcr.io/deinfreu/hytale-server
-              tag: 1.0.2@sha256:87d1ee002cf453f1ecc7a26d27c4b6aecb539870c9fc217993ba833645c9d42a
+              tag: 1.0.3@sha256:10cb4fe54cfb44a6187b4c3f8dbc6d71b7e5e726954d69a67bf8f259e4b6fae1
             ports:
               - containerPort: &udpPort 5520
                 protocol: UDP
