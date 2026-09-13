@@ -68,7 +68,7 @@ spec:
     route:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+          external-dns.kubernetes.io/cloudflare-proxied: "true"
           gatus.home-operations.com/endpoint: |-
             conditions: ["[STATUS] == 404"]
         hostnames: ["hookshot.ok8.sh"]

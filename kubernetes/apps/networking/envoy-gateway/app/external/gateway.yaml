@@ -5,7 +5,7 @@ kind: Gateway
 metadata:
   name: external
   annotations:
-    external-dns.alpha.kubernetes.io/target: &hostname external.ok8.sh
+    external-dns.kubernetes.io/target: &hostname external.ok8.sh
     gatus.home-operations.com/endpoint: |-
       client:
         dns-resolver: tcp://1.1.1.1:53
@@ -17,7 +17,7 @@ spec:
       value: &address 10.0.20.11
   infrastructure:
     annotations:
-      external-dns.alpha.kubernetes.io/hostname: *hostname
+      external-dns.kubernetes.io/hostname: *hostname
       lbipam.cilium.io/ips: *address
     parametersRef:
       group: gateway.envoyproxy.io
