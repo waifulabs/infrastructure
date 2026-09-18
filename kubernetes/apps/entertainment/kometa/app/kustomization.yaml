@@ -1,0 +1,22 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./ocirepository.yaml
+  - ./externalsecret.yaml
+  - ./helmrelease.yaml
+configMapGenerator:
+  - name: kometa-configmap
+    files:
+      - config.yml=./resources/config.yml
+  - name: kometa-collections
+    files:
+      - adult-swim-shows.yml=./resources/collections/adult-swim-shows.yml
+      - adult-swim-movies.yml=./resources/collections/adult-swim-movies.yml
+      - originals.txt=./resources/ids/originals.txt
+      - anime.txt=./resources/ids/anime.txt
+      - anime-films.txt=./resources/ids/anime-films.txt
+      - dc-films.txt=./resources/ids/dc-films.txt
+generatorOptions:
+  disableNameSuffixHash: true

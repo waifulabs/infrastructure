@@ -1,0 +1,86 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kometa
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: kometa
+  install:
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    controllers:
+      kometa:
+        type: cronjob
+        annotations:
+          reloader.stakater.com/auto: "true"
+        cronjob:
+          schedule: 0 5 * * *
+          backoffLimit: 0
+          concurrencyPolicy: Forbid
+          successfulJobsHistory: 1
+          failedJobsHistory: 1
+          ttlSecondsAfterFinished: 86400
+        containers:
+          app:
+            image:
+              repository: kometateam/kometa
+              tag: v2.4.8@sha256:c58f6d4af511613f218b6dafbfc84078af4e5a6089790c1fdba58fd7c5dad70a
+            env:
+              TZ: America/Los_Angeles
+            envFrom:
+              - secretRef:
+                  name: kometa-secret
+            args: ["--run", "--read-only-config", "--collections-only"]
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+                memory: 512Mi
+              limits:
+                memory: 2Gi
+        pod:
+          restartPolicy: Never
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    persistence:
+      config:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 5Gi
+        storageClass: openebs-zfs-luddle
+      config-file:
+        type: configMap
+        name: kometa-configmap
+        globalMounts:
+          - path: /config/config.yml
+            subPath: config.yml
+            readOnly: true
+      collections:
+        type: configMap
+        name: kometa-collections
+        globalMounts:
+          - path: /config/collections
+            readOnly: true
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /config/logs
+      tmp:
+        type: emptyDir

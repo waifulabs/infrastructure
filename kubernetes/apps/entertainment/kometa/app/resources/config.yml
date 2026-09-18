@@ -1,0 +1,83 @@
+---
+libraries:
+  TV Shows:
+    report_path: /config/reports/tv-shows.yml
+    collection_files:
+      - file: /config/collections/adult-swim-shows.yml
+      - default: basic
+      - default: imdb
+      - default: tautulli
+      - default: anilist
+      - default: myanimelist
+  Movies:
+    report_path: /config/reports/movies.yml
+    collection_files:
+      - file: /config/collections/adult-swim-movies.yml
+      - default: basic
+      - default: imdb
+      - default: tautulli
+
+settings:
+  cache: true
+  cache_expiration: 60
+  sync_mode: sync
+  minimum_items: 1
+  delete_below_minimum: false
+  run_again_delay: 2
+  save_report: false
+  show_unmanaged: false
+  show_unconfigured: false
+  verify_ssl: true
+
+plex:
+  url: http://plex.entertainment.svc.cluster.local:32400
+  token: <<PLEX_API_KEY>>
+  timeout: 60
+  clean_bundles: false
+  empty_trash: false
+  optimize: false
+
+tmdb:
+  apikey: <<TMDB_API_KEY>>
+  language: en
+  cache_expiration: 60
+
+tautulli:
+  url: http://tautulli.entertainment.svc.cluster.local
+  apikey: <<TAUTULLI_API_KEY>>
+
+mal:
+  client_id: <<MYANIMELIST_CLIENT_ID>>
+  client_secret: <<MYANIMELIST_CLIENT_SECRET>>
+  localhost_url: <<MYANIMELIST_LOCALHOST_URL>>
+  authorization:
+    access_token: <<MYANIMELIST_ACCESS_TOKEN>>
+    token_type: Bearer
+    expires_in: <<MYANIMELIST_EXPIRES_IN>>
+    refresh_token: <<MYANIMELIST_REFRESH_TOKEN>>
+
+sonarr:
+  url: http://sonarr.entertainment.svc.cluster.local
+  token: <<SONARR_API_KEY>>
+  add_missing: false
+  add_existing: false
+  upgrade_existing: false
+  monitor: all
+  quality_profile: WEB-2160p (Combined)
+  series_type: standard
+  season_folder: true
+  search: false
+  cutoff_search: false
+  root_folder_path: /media/TV
+
+radarr:
+  url: http://radarr.entertainment.svc.cluster.local
+  token: <<RADARR_API_KEY>>
+  add_missing: false
+  add_existing: false
+  upgrade_existing: false
+  monitor: true
+  availability: released
+  quality_profile: "[SQP] SQP-1 (2160p)"
+  search: false
+  root_folder_path: /media/Movies

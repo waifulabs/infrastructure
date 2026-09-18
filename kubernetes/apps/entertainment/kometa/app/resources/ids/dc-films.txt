@@ -1,0 +1,3 @@
+# DC animated films aired on Adult Swim / Toonami. One TMDb movie ID per line.
+# Source: https://www.reddit.com/r/adultswim/comments/1dvah9t/
+# 15 titles pending ID resolution and review.

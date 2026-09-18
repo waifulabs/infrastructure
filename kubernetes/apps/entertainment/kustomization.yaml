@@ -16,6 +16,7 @@ resources:
   - ./cleanrr/ks.yaml
   - ./flaresolverr/ks.yaml
   - ./kavita/ks.yaml
+  - ./kometa/ks.yaml
   - ./mangarr/ks.yaml
   - ./prowlarr/ks.yaml
   - ./plex/ks.yaml

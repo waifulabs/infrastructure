@@ -1,0 +1,19 @@
+---
+collections:
+  Adult Swim Originals:
+    text_file: /config/collections/originals.txt
+    sync_mode: sync
+    collection_order: alpha
+    summary: Original animated series produced for Adult Swim.
+    item_sonarr_tag: adultswim
+    sonarr_add_missing: false
+
+  Adult Swim Anime:
+    text_file: /config/collections/anime.txt
+    sync_mode: sync
+    collection_order: alpha
+    summary: Anime series that aired on Adult Swim and Toonami.
+    item_sonarr_tag: adultswim
+    sonarr_add_missing: false
+    sonarr_series: anime
+    sonarr_quality: "[Anime] Remux-1080p"

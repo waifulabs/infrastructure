@@ -1,0 +1,3 @@
+# Anime films and specials aired on Adult Swim / Toonami. One TMDb movie ID per line.
+# Source: https://www.reddit.com/r/adultswim/comments/1dvah9t/
+# 28 titles pending ID resolution and review.
