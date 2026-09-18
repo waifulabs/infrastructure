@@ -1,3 +1,67 @@
-# Adult Swim originals - animated. One TVDb series ID per line.
+# Adult Swim — originals. One TVDb ID per line.
 # Source: https://www.reddit.com/r/adultswim/comments/1dvah9t/
-# 64 titles pending ID resolution and review.
+
+79171  # Space Ghost Coast to Coast
+75318  # Home Movies
+77118  # The Brak Show
+76884  # Sealab 2021
+77119  # Harvey Birdman, Attorney at Law
+77120  # Aqua Teen Hunger Force
+72306  # The Venture Bros.
+75221  # Tom Goes to the Mayor
+75734  # Robot Chicken
+79207  # Stroker & Hoop
+79159  # 12 oz. Mouse
+79017  # Squidbillies
+74413  # The Boondocks
+79196  # Perfect Hair Forever
+79302  # Moral Orel
+79402  # Minoriteam
+79563  # Metalocalypse
+79930  # Frisky Dingo
+82661  # Assy McGee
+79019  # Lucy, the Daughter of the Devil
+80923  # Xavier: Renegade Angel
+83306  # Superjail!
+83931  # The Drinky Crow Show
+83707  # The Xtacles
+116421  # Titan Maximum
+172221  # Mary Shelley's Frankenhole
+249792  # Off the Air
+225291  # Mongo Wrestling Alliance
+249055  # Soul Quest Overdrive
+251507  # China, IL
+250821  # Black Dynamite
+275274  # Rick and Morty
+277952  # King Star King
+277953  # Mr. Pickles
+277954  # Mike Tyson Mysteries
+312995  # Brad Neely's Harg Nallin' Sclopio Peepio
+320739  # Apollo Gauntlet
+336685  # The Jellies!
+339508  # Tender Touches
+339577  # Hot Streets
+332353  # Final Space
+344021  # Ballmastrz: 9009
+353366  # The Shivering Truth
+# UNRESOLVED: Smalls
+347654  # Tigtone
+365476  # Gemusetto
+361911  # Lazor Wulf
+364007  # Primal
+372586  # Momma Named Me Sheriff
+379608  # JJ Villard's Fairy Tales
+379568  # YOLO
+398876  # Birdgirl
+361005  # Tuca & Bertie
+357909  # Teenage Euthanasia
+379403  # Smiling Friends
+403176  # Royal Crackers
+395072  # Unicorn: Warriors Eternal
+403172  # My Adventures with Superman
+420279  # Rick and Morty: The Anime
+419969  # Invincible Fight Girl
+436198  # Common Side Effects
+458834  # Oh My God, Yes! A Series of Extremely Relatable Circumstances
+440829  # Women Wearing Shoulder Pads
+440075  # Haha, You Clowns

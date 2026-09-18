@@ -1,3 +1,111 @@
-# Anime series aired on Adult Swim / Toonami. One TVDb series ID per line.
+# Adult Swim — anime. One TVDb ID per line.
 # Source: https://www.reddit.com/r/adultswim/comments/1dvah9t/
-# 108 titles pending ID resolution and review.
+
+76885  # Cowboy Bebop
+76665  # Yu Yu Hakusho
+72719  # Pilot Candidate
+80783  # Mobile Suit Gundam 0083: Stardust Memory
+75911  # Outlaw Star
+# UNRESOLVED: Tenchi Muyo!
+# UNRESOLVED: Tenchi Universe
+76547  # Mobile Suit Gundam
+71361  # Inuyasha
+80785  # Mobile Suit Gundam 0080: War in the Pocket
+# UNRESOLVED: Lupin the 3rd Part II
+183171  # Reign: The Conqueror
+77680  # Trigun
+72629  # Android Kikaider: The Animation
+# UNRESOLVED: Kikaider 01 the Animation
+73988  # The Big O
+78878  # FLCL
+76664  # Blue Gender
+78936  # Witch Hunter Robin
+79060  # Wolf's Rain
+72454  # Case Closed
+75579  # Fullmetal Alchemist
+73749  # Ghost in the Shell: Stand Alone Complex
+91391  # The Super Milk-Chan Show
+79089  # Samurai Champloo
+75092  # Paranoia Agent
+78953  # S-CRY-ed
+70350  # Neon Genesis Evangelion
+105441  # Gigantor
+79360  # Eureka Seven
+82694  # Shin Chan
+78967  # Trinity Blood
+74796  # Bleach
+78646  # Voltron
+78960  # Blood+
+# UNRESOLVED: Astro Boy
+79481  # Death Note
+79525  # Code Geass: Lelouch of the Rebellion
+80044  # Moribito: Guardian of the Spirit
+85249  # Fullmetal Alchemist: Brotherhood
+80921  # Kekkaishi
+133341  # Durarara!!
+81472  # Dragon Ball Z
+79327  # Mobile Suit Gundam Wing
+73499  # Blue Submarine No. 6
+247997  # Deadman Wonderland
+83316  # Casshern Sins
+79127  # Samurai 7
+79064  # Tenchi Muyo! GXP
+78857  # Naruto
+81751  # Soul Eater
+80391  # IGPX
+81797  # One Piece
+259640  # Sword Art Online
+272849  # Space Dandy
+79824  # Naruto: Shippuden
+248035  # Blue Exorcist
+79604  # Black Lagoon
+267440  # Attack on Titan
+80096  # Gurren Lagann
+263688  # Hellsing Ultimate
+88031  # Dragon Ball Z Kai
+272074  # Kill la Kill
+83475  # Michiko & Hatchin
+280329  # Akame ga Kill!
+279831  # Parasyte -the maxim-
+299963  # Dimension W
+252322  # Hunter x Hunter
+299497  # Mobile Suit Gundam: Iron-Blooded Orphans
+293088  # One Punch Man
+262954  # JoJo's Bizarre Adventure
+295068  # Dragon Ball Super
+142601  # Mobile Suit Gundam Unicorn RE:0096
+281249  # Tokyo Ghoul
+# UNRESOLVED: Lupin the 3rd Part IV
+331753  # Black Clover
+305074  # My Hero Academia
+339278  # Pop Team Epic
+321285  # Boruto: Naruto Next Generations
+307375  # Mob Psycho 100
+341437  # Megalobox
+348002  # The Promised Neverland
+# UNRESOLVED: Lupin the 3rd Part V
+289909  # Food Wars! Shokugeki no Soma
+319976  # Mobile Suit Gundam: The Origin - Advent of the Red Comet
+355480  # Fire Force
+355774  # Dr. Stone
+348545  # Demon Slayer: Kimetsu no Yaiba
+283947  # Assassination Classroom
+349418  # SSSS.Gridman
+299019  # Cosmo Samurai
+384485  # Yashahime: Princess Half-Demon
+386570  # Fena: Pirate Princess
+356155  # Blade Runner: Black Lotus
+326109  # Made in Abyss
+402726  # Shenmue the Animation
+# UNRESOLVED: Lupin the 3rd Part 6
+420753  # Housing Complex C
+414057  # Lycoris Recoil
+420280  # Ninja Kamui
+429310  # Zom 100: Bucket List of the Dead
+78500  # Sailor Moon
+369026  # Uzumaki
+421737  # Mashle: Magic and Muscles
+437408  # Lazarus
+# UNRESOLVED: Bleach: Thousand-Year Blood War
+440820  # Dragon Ball DAIMA
+432832  # DAN DA DAN

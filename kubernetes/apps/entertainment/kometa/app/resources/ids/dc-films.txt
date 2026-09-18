@@ -1,3 +1,19 @@
-# DC animated films aired on Adult Swim / Toonami. One TMDb movie ID per line.
+# Adult Swim — dc-films. One TMDb ID per line.
 # Source: https://www.reddit.com/r/adultswim/comments/1dvah9t/
-# 15 titles pending ID resolution and review.
+
+264170  # Batman: Strange Days
+269246  # Batman Beyond
+13851  # Batman: Gotham Knight
+123025  # Batman: The Dark Knight Returns Part 1
+142061  # Batman: The Dark Knight Returns Part 2
+69735  # Batman: Year One
+14011  # Justice League: The New Frontier
+537055  # Wonder Woman: Bloodlines
+736073  # Batman: The Long Halloween
+736074  # Batman: The Long Halloween
+40662  # Batman: Under the Red Hood
+485942  # Batman Ninja
+537056  # Batman: Hush
+14919  # Batman: Mask of the Phantasm
+831405  # Injustice
+537059  # Justice League vs. the Fatal Five

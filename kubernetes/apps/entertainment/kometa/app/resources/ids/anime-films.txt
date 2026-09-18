@@ -1,3 +1,31 @@
-# Anime films and specials aired on Adult Swim / Toonami. One TMDb movie ID per line.
+# Adult Swim — anime-films. One TMDb ID per line.
 # Source: https://www.reddit.com/r/adultswim/comments/1dvah9t/
-# 28 titles pending ID resolution and review.
+
+16157  # Mobile Suit Gundam: Char's Counterattack
+37789  # Read or Die
+55931  # The Animatrix
+11299  # Cowboy Bebop: The Movie
+16990  # Escaflowne: The Movie
+42360  # Inuyasha the Movie: Affections Touching Across Time
+22537  # Inuyasha the Movie: The Castle Beyond the Looking Glass
+27812  # Kakurenbo: Hide and Seek
+9606  # Metropolis
+34295  # Inuyasha the Movie: Swords of an Honorable Ruler
+34297  # Inuyasha the Movie: Fire on the Mystic Island
+15575  # Bleach: Memories of Nobody
+17101  # Bleach: The DiamondDust Rebellion
+149  # Akira
+15137  # Evangelion 1.11 You Are (Not) Alone
+22843  # Evangelion 2.22 You Can (Not) Advance
+14003  # Fullmetal Alchemist the Movie: Conqueror of Shamballa
+165718  # Kick-Heart
+28874  # Summer Wars
+51859  # Trigun: Badlands Rumble
+34433  # Dragon Ball Z: Broly - The Legendary Super Saiyan
+24752  # Dragon Ball Z: Cooler's Revenge
+80518  # Fullmetal Alchemist: The Sacred Star of Milos
+79707  # Children Who Chase Lost Voices
+422141  # Shelter: The Animation (UNVERIFIED - Wikidata claim is non-truthy; confirm against TMDb)
+21712  # Mind Game
+475946  # Blade Runner Black Out 2022
+1067282  # Demon Slayer: Swordsmith Village Arc - Someone's Dream
