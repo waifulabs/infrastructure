@@ -6,7 +6,6 @@ libraries:
       - file: /config/collections/adult-swim-shows.yml
       - default: basic
       - default: imdb
-      - default: tautulli
       - default: anilist
       - default: myanimelist
   Movies:
@@ -15,7 +14,6 @@ libraries:
       - file: /config/collections/adult-swim-movies.yml
       - default: basic
       - default: imdb
-      - default: tautulli
 
 settings:
   cache: true
@@ -41,10 +39,6 @@ tmdb:
   apikey: <<TMDB_API_KEY>>
   language: en
   cache_expiration: 60
-
-tautulli:
-  url: http://tautulli.entertainment.svc.cluster.local
-  apikey: <<TAUTULLI_API_KEY>>
 
 mal:
   client_id: <<MYANIMELIST_CLIENT_ID>>
