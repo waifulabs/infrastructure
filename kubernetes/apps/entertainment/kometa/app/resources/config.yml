@@ -17,7 +17,7 @@ libraries:
       mass_user_rating_update: imdb
     sonarr:
       root_folder_path: "/media/Library/Anime"
-      quality_profile: HD - Anime
+      quality_profile: "[Anime] Remux-1080p"
       series_type: anime
   TV Shows:
     collection_files:
@@ -81,6 +81,7 @@ mdblist:
 
 mal:
   client_id: <<MYANIMELIST_CLIENT_ID>>
+  client_secret: <<MYANIMELIST_CLIENT_SECRET>>
   localhost_url: <<MYANIMELIST_LOCALHOST_URL>>
   authorization:
     access_token: <<MYANIMELIST_ACCESS_TOKEN>>
@@ -116,13 +117,12 @@ radarr:
 
 
 trakt:
-  client_id: <<TRAKT_CLIENT_ID>>
-  client_secret: <<TRAKT_CLIENT_SECRET>>
+  client_id: <<KOMETA_TRAKT_CLIENT_ID>>
+  client_secret: <<KOMETA_TRAKT_CLIENT_SECRET>>
   authorization:
-    access_token: <<TRAKT_ACCESS_TOKEN>>
+    access_token: <<KOMETA_TRAKT_ACCESS_TOKEN>>
     token_type: Bearer
-    expires_in: <<TRAKT_EXPIRES_IN>>
-    refresh_token: <<TRAKT_REFRESH_TOKEN>>
+    expires_in: <<KOMETA_TRAKT_EXPIRES_IN>>
+    refresh_token: <<KOMETA_TRAKT_REFRESH_TOKEN>>
     scope: public
-    created_at: <<TRAKT_CREATED_AT>>
-  pin:
+    created_at: <<KOMETA_TRAKT_CREATED_AT>>
