@@ -84,6 +84,7 @@ sonarr:
           - e1a997ddb54e3ecbfe06341ad323c458 # Obfuscated
           - 06d66ab109d4d2eddb2794d21526d140 # Retags
         assign_scores_to:
+          - name: "[Anime] Remux-1080p"
           - trash_id: c4cadd6b35b95f62c3d47a408e53e2f7 # WEB-2160p (Combined)
 
 radarr:
@@ -154,14 +155,19 @@ radarr:
           - b23eae459cc960816f2d6ba84af45055 # Dubs Only
         assign_scores_to:
           - name: "[Anime] Remux-1080p"
-      - # Unwanted
+      - # Unwanted (movie + anime)
         trash_ids:
-          - 957d0f44b592285f26449575e8b1167e # Special Edition
           - b6832f586342ef70d9c128d40c07b872 # Bad Dual Groups
-          - cc444569854e9de0b084ab2b8b1532b2 # Black and White Editions
           - ae9b7c9ebde1f3bd336a8cbd1ec4c5e5 # No-RlsGroup
           - 7357cf5161efbf8c4d5d0c30b4815ee2 # Obfuscated
           - 5c44f52a8714fdd79bb4d98e2673be1f # Retags
+        assign_scores_to:
+          - name: "[Anime] Remux-1080p"
+          - trash_id: 5128baeb2b081b72126bc8482b2a86a0 # [SQP] SQP-1 (2160p)
+      - # Unwanted (movie-only)
+        trash_ids:
+          - 957d0f44b592285f26449575e8b1167e # Special Edition
+          - cc444569854e9de0b084ab2b8b1532b2 # Black and White Editions
           - f537cf427b64c38c8e36298f657e4828 # Scene
         assign_scores_to:
           - trash_id: 5128baeb2b081b72126bc8482b2a86a0 # [SQP] SQP-1 (2160p)
