@@ -118,6 +118,33 @@ params:
   user.max_user_namespaces: "11255"
   vm.nr_hugepages: "1024"
 ---
+# Talos stops injecting the default Node,RBAC authorizers once a KubeAPIServerConfig
+# document is present, so they must be declared explicitly or kube-apiserver crash-loops
+# with "authorizers: Required value: at least one authorization mode must be defined".
+apiVersion: v1alpha1
+kind: KubeAuthorizerConfig
+name: node
+type: Node
+---
+apiVersion: v1alpha1
+kind: KubeAuthorizerConfig
+name: rbac
+type: RBAC
+---
+# Same as above: KubeAPIServerConfig also disables the default authentication config
+# (kube-apiserver rejects --oidc-* extraArgs once --authentication-config is set, and
+# Talos always sets it), so this reproduces Talos's own DefaultAuthenticationConfig().
+apiVersion: v1alpha1
+kind: KubeAuthenticationConfig
+configuration:
+  anonymous:
+    conditions:
+      - path: /livez
+      - path: /readyz
+      - path: /healthz
+    enabled: true
+  jwt: []
+---
 apiVersion: v1alpha1
 kind: KubeAPIServerConfig
 image: registry.k8s.io/kube-apiserver:{{ ENV.KUBERNETES_VERSION }}
