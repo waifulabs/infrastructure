@@ -1,7 +1,6 @@
 ---
 libraries:
   Anime:
-    report_path: /config/reports/anime.yml
     collection_files:
       - file: /config/collections/adult-swim-anime.yml
       - default: basic
@@ -21,7 +20,6 @@ libraries:
       quality_profile: HD - Anime
       series_type: anime
   TV Shows:
-    report_path: /config/reports/tv-shows.yml
     collection_files:
       - file: /config/collections/adult-swim-shows.yml
       - default: basic
@@ -37,7 +35,6 @@ libraries:
       mass_critic_rating_update: mdb_metacritic
       mass_user_rating_update: imdb
   Movies:
-    report_path: /config/reports/movies.yml
     collection_files:
       - file: /config/collections/adult-swim-movies.yml
       - default: basic
