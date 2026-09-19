@@ -14,6 +14,7 @@ resources:
   - ./brrpolice/ks.yaml
   - ./chaski/ks.yaml
   - ./cleanrr/ks.yaml
+  - ./ersatztv/ks.yaml
   - ./flaresolverr/ks.yaml
   - ./kavita/ks.yaml
   - ./kometa/ks.yaml

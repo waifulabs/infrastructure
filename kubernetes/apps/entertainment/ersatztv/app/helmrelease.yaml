@@ -1,0 +1,86 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ersatztv
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: ersatztv
+  install:
+    disableWait: true
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    disableWait: true
+    remediation:
+      retries: 3
+  rollback:
+    disableWait: true
+  values:
+    controllers:
+      ersatztv:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/ersatztv/legacy
+              tag: v26.9.0@sha256:c52a8e89e0e4a76364b32b02aa9c55daee69e3b5c7d77bfcd098512cf728d43a
+            env:
+              TZ: America/Los_Angeles
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 15m
+                memory: 300Mi
+              limits:
+                memory: 4Gi
+    defaultPodOptions:
+      securityContext:
+        supplementalGroups: [44] # render group for /dev/dri
+    service:
+      app:
+        controller: ersatztv
+        ports:
+          http:
+            port: &port 8409
+    route:
+      app:
+        hostnames: ["{{ .Release.Name }}.ok8.sh", "live.ok8.sh"]
+        parentRefs:
+          - name: internal
+            namespace: networking
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *port
+    persistence:
+      config:
+        existingClaim: ersatztv-zfs
+        globalMounts:
+          - path: /config
+      media:
+        type: hostPath
+        hostPath: /var/mnt/puddle/media
+        globalMounts:
+          - path: /media
+            readOnly: true
+      transcode:
+        type: emptyDir
+      dev-dri:
+        type: hostPath
+        hostPath: /dev/dri
+        globalMounts:
+          - path: /dev/dri
