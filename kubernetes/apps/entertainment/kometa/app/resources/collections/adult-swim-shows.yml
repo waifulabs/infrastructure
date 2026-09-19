@@ -6,4 +6,7 @@ collections:
     collection_order: alpha
     summary: Original animated series produced for Adult Swim.
     item_sonarr_tag: adultswim
-    sonarr_add_missing: false
+    sonarr_add_missing: true
+    visible_home: true
+    visible_shared: true
+    visible_library: true

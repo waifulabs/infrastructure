@@ -6,9 +6,12 @@ collections:
     collection_order: alpha
     summary: Anime series that aired on Adult Swim and Toonami.
     item_sonarr_tag: adultswim
-    sonarr_add_missing: false
+    sonarr_add_missing: true
     sonarr_series: anime
     sonarr_quality: "[Anime] Remux-1080p"
+    visible_home: true
+    visible_shared: true
+    visible_library: true
 
   Adult Swim Anime Films:
     text_file: /config/collections/anime-films.txt
@@ -16,5 +19,8 @@ collections:
     collection_order: alpha
     summary: Anime films and specials that aired on Adult Swim and Toonami.
     item_radarr_tag: adultswim
-    radarr_add_missing: false
+    radarr_add_missing: true
     radarr_quality: "[Anime] Remux-1080p"
+    visible_home: true
+    visible_shared: true
+    visible_library: true
