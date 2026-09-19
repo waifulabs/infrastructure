@@ -40,6 +40,10 @@ tmdb:
   language: en
   cache_expiration: 60
 
+mdblist:
+  apikey: <<MDBLIST_API_KEY>>
+  cache_expiration: 60
+
 mal:
   client_id: <<MYANIMELIST_CLIENT_ID>>
   localhost_url: <<MYANIMELIST_LOCALHOST_URL>>
@@ -74,3 +78,16 @@ radarr:
   quality_profile: "[SQP] SQP-1 (2160p)"
   search: false
   root_folder_path: /media/Movies
+
+
+trakt:
+  client_id: <<TRAKT_CLIENT_ID>>
+  client_secret: <<TRAKT_CLIENT_SECRET>>
+  authorization:
+    access_token: <<TRAKT_ACCESS_TOKEN>>
+    token_type: Bearer
+    expires_in: <<TRAKT_EXPIRES_IN>>
+    refresh_token: <<TRAKT_REFRESH_TOKEN>>
+    scope: public
+    created_at: <<TRAKT_CREATED_AT>>
+  pin:
