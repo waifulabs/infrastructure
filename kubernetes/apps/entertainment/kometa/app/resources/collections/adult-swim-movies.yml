@@ -1,14 +1,5 @@
 ---
 collections:
-  Adult Swim Anime Films:
-    text_file: /config/collections/anime-films.txt
-    sync_mode: sync
-    collection_order: alpha
-    summary: Anime films and specials that aired on Adult Swim and Toonami.
-    item_radarr_tag: adultswim
-    radarr_add_missing: false
-    radarr_quality: "[Anime] Remux-1080p"
-
   Adult Swim DC Animated Films:
     text_file: /config/collections/dc-films.txt
     sync_mode: sync

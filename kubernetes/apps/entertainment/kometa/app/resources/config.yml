@@ -1,13 +1,18 @@
 ---
 libraries:
+  Anime:
+    report_path: /config/reports/anime.yml
+    collection_files:
+      - file: /config/collections/adult-swim-anime.yml
+      - default: basic
+      - default: anilist
+      - default: myanimelist
   TV Shows:
     report_path: /config/reports/tv-shows.yml
     collection_files:
       - file: /config/collections/adult-swim-shows.yml
       - default: basic
       - default: imdb
-      - default: anilist
-      - default: myanimelist
   Movies:
     report_path: /config/reports/movies.yml
     collection_files:
