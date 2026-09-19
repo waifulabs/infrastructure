@@ -12,6 +12,7 @@ configMapGenerator:
       - config.yml=./resources/config.yml
   - name: kometa-collections
     files:
+      - adult-swim-anime.yml=./resources/collections/adult-swim-anime.yml
       - adult-swim-shows.yml=./resources/collections/adult-swim-shows.yml
       - adult-swim-movies.yml=./resources/collections/adult-swim-movies.yml
       - originals.txt=./resources/ids/originals.txt
