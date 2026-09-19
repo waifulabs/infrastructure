@@ -28,7 +28,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-server
-              tag: v3.2.0@sha256:ae13784ffcfcce8f4178113eb6661602a1fd1912f3d539880b8ac0dd95fc8ac2
+              tag: v3.2.2@sha256:79cc1623323d5894922686d8743b4780181428f98eecbfb58ce12c41ef02d1ea
             env:
               TZ: "America/Los_Angeles"
               IMMICH_HOST: "::"
@@ -57,7 +57,7 @@ spec:
           main:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
-              tag: v3.2.0-openvino
+              tag: v3.2.2-openvino
             env:
               REDIS_HOSTNAME: *redisHostname
               MPLCONFIGDIR: "/cache/matplotlib"
