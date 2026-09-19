@@ -5,6 +5,7 @@ collections:
     sync_mode: sync
     collection_order: alpha
     summary: Anime series that aired on Adult Swim and Toonami.
+    url_poster: https://theposterdb.com/api/assets/137490
     item_sonarr_tag: adultswim
     sonarr_add_missing: true
     sonarr_series: anime
@@ -18,6 +19,7 @@ collections:
     sync_mode: sync
     collection_order: alpha
     summary: Anime films and specials that aired on Adult Swim and Toonami.
+    url_poster: https://theposterdb.com/api/assets/137490
     item_radarr_tag: adultswim
     radarr_add_missing: true
     radarr_quality: "[Anime] Remux-1080p"

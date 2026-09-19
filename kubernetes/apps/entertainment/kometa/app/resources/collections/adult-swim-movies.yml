@@ -5,6 +5,7 @@ collections:
     sync_mode: sync
     collection_order: alpha
     summary: DC animated films that aired on Adult Swim and Toonami.
+    url_poster: https://theposterdb.com/api/assets/113116
     item_radarr_tag: adultswim
     radarr_add_missing: true
     visible_home: true

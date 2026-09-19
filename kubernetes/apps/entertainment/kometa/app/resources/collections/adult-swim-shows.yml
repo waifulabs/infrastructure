@@ -5,6 +5,7 @@ collections:
     sync_mode: sync
     collection_order: alpha
     summary: Original animated series produced for Adult Swim.
+    url_poster: https://theposterdb.com/api/assets/113116
     item_sonarr_tag: adultswim
     sonarr_add_missing: true
     visible_home: true
