@@ -42,7 +42,6 @@ tmdb:
 
 mal:
   client_id: <<MYANIMELIST_CLIENT_ID>>
-  client_secret: <<MYANIMELIST_CLIENT_SECRET>>
   localhost_url: <<MYANIMELIST_LOCALHOST_URL>>
   authorization:
     access_token: <<MYANIMELIST_ACCESS_TOKEN>>
