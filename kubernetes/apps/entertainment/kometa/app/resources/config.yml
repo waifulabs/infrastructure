@@ -79,6 +79,10 @@ mdblist:
   apikey: <<MDBLIST_API_KEY>>
   cache_expiration: 60
 
+omdb:
+  apikey: <<OMDB_API_KEY>>
+  cache_expiration: 60
+
 mal:
   client_id: <<MYANIMELIST_CLIENT_ID>>
   client_secret: <<MYANIMELIST_CLIENT_SECRET>>
