@@ -50,7 +50,7 @@ jobs:
         run: curl -fsSL https://raw.githubusercontent.com/kashalls/home-cluster/refs/heads/main/.github/workflows/scripts/generate_index.sh | bash
 
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4.0.0
+        uses: cloudflare/wrangler-action@07f223c985581cebbce0955478de02d74d81ca47 # v4.1.0
         with:
           apiToken: "${{ secrets.CLOUDFLARE_API_TOKEN }}"
           accountId: "${{ secrets.CLOUDFLARE_ACCOUNT_ID }}"
