@@ -17,6 +17,8 @@ spec:
     substitute:
       APP: ersatztv-zfs
       KOPIUR_CACHE_CAPACITY: 5Gi
+      KOPIUR_PUID: "0"
+      KOPIUR_PGID: "0"
   prune: true
   retryInterval: 2m
   targetNamespace: *namespace
