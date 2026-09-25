@@ -17,7 +17,7 @@ spec:
   postBuild:
     substitute:
       APP: syncthing-zfs
-      KOPIUR_CACHE_CAPACITY: 1Gi
+      KOPIUR_CACHE_CAPACITY: 2Gi
   prune: true
   retryInterval: 2m
   timeout: 5m
