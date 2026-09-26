@@ -19,23 +19,24 @@
 
 ## Overview
 
-This repository runs my **home lab** — a few computers in my house that host the apps and services my household depends on (media library, home automation, dashboards, chat, and more) instead of renting them from big cloud providers.
+This repository runs my **home lab** — a single machine in my house that hosts the apps and services my household depends on (media library, home automation, dashboards, chat, and more) instead of renting them from big cloud providers.
 
-The twist: nothing is configured by hand. The *entire* setup is written down as code in this repo, and software continuously keeps the real machines matched to it. Push a change and it rolls out on its own; if a machine dies, I can rebuild it from scratch in minutes.
+The twist: nothing is configured by hand. The *entire* setup is written down as code in this repo, and software continuously keeps the real machines matched to it. Push a change and it rolls out on its own; if the machine dies, I can rebuild it from scratch in minutes.
 
 <details>
 <summary>🤓 <b>For the technically curious</b> — the interesting bits</summary>
 
-- **[Talos Linux](https://www.talos.dev/)** — a minimal, immutable OS with no SSH or shell; every node is defined entirely from [`talos/`](./talos/) and managed over an API.
+- **[Talos Linux](https://www.talos.dev/)** — a minimal, immutable OS with no SSH or shell; the node is defined entirely from [`talos/`](./talos/) and managed over an API. It runs bare metal on my NAS, with ZFS provided by a Talos system extension.
 - **[Flux](https://fluxcd.io/) GitOps** — the cluster reconciles itself to match this repo. Every change is a reviewed commit, never a manual `kubectl apply`.
 - **[Cilium](https://cilium.io/) + BGP** — pods get routable IPs and LoadBalancer services are advertised straight to my UniFi router via BGP.
 - **[External DNS UniFi Webhook](https://github.com/kashalls/external-dns-unifi-webhook)** — a webhook I wrote so DNS records publish directly to UniFi, no extra resolvers.
 - **[Renovate](https://github.com/renovatebot/renovate)** — container images and Helm charts stay current through automated pull requests.
+- **[OpenEBS ZFS LocalPV](https://openebs.io/docs/user-guides/local-storage-user-guide/local-pv-zfs/zfs-overview)** — persistent volumes are ZFS datasets carved directly out of a fast NVMe pool, with bulk media on a separate HDD pool.
 - **[Kopiur](https://github.com/home-operations/kopiur) + ZFS** — persistent volumes are ZFS-snapshotted and backed up off-site to Backblaze B2, with the bulk datasets (documents, projects, photo library) shipped to the same bucket on their own schedule.
 
 </details>
 
-Built from onedr0p's [cluster template](https://github.com/onedr0p/flux-cluster-template) — you don't need a fancy multi-node setup to run your own. Come say hi in the [Home Operations](https://discord.gg/home-operations) Discord.
+Built from onedr0p's [cluster template](https://github.com/onedr0p/flux-cluster-template) — you don't need a fancy multi-node setup to run your own (this one is a single node). Come say hi in the [Home Operations](https://discord.gg/home-operations) Discord.
 
 ### Directory Helper
 
@@ -84,7 +85,6 @@ flowchart LR
     classDef gateway fill:#163a1e,stroke:#27ae60,color:#fff
     classDef switch fill:#1e2a4a,stroke:#3498db,color:#fff
     classDef compute fill:#4a1e3a,stroke:#e74c3c,color:#fff
-    classDef storage fill:#3a2a1e,stroke:#f39c12,color:#fff
     classDef ap fill:#1e3a2a,stroke:#2ecc71,color:#fff
 
     Internet(["The Internet"])
@@ -93,11 +93,9 @@ flowchart LR
 
     UCG -- 2.5G --> FLEX["USW Flex 2.5G 8 PoE"]:::switch
     UCG -- 2.5G --> U7XG(["U7 Pro XG (Office)"]):::ap
-    UCG -- 10G SFP+ --> AGG["USW Pro Aggregation"]:::switch
+    UCG -- 10G SFP+ --> MAX["USW Pro Max 16 PoE"]:::switch
 
-    AGG -- 10G SFP+ --> MAX["USW Pro Max 16 PoE"]:::switch
-    AGG -- 20G LACP --> MS01["3x MS-01 (Main)"]:::compute
-    AGG -- 10G --> PUDDLE["Puddle (NAS)"]:::storage
+    MAX -- 10G --> PUDDLE["Puddle (TalosNAS)"]:::compute
 
     MAX -- 1G --> U6LR(["U6-LR (Garage)"]):::ap
     MAX --> PDU["USP PDU Pro"]:::switch
@@ -123,29 +121,23 @@ I wrote [External DNS UniFi Webhook](https://github.com/kashalls/external-dns-un
 
 ## 🔧 Hardware
 
-### Compute
+### TalosNAS (`puddle`)
 
-**Minisforum MS-01 × 3** · 96 GB RAM · Talos / Kubernetes
+**45HomeLab HL15** · 256 GB RAM · 64 threads · Talos Linux (bare metal) · single-node Kubernetes
 
-- **OS** — 1 TB Crucial NVMe
-- **Local storage** — 2 TB Samsung PM9A3 U.2 NVMe
-- **Out-of-band** — JetKVM
-
-### Storage
-
-**45HomeLab HL15** · 256 GB RAM · TrueNAS SCALE / ZFS
+The same box is the NAS and the cluster: Talos runs directly on the hardware, ZFS comes from the `siderolabs/zfs` extension (ARC capped at 219 GiB), and [OpenEBS ZFS LocalPV](#overview) provisions volumes from the pools below. Intel iGPU is exposed to pods for transcoding.
 
 - **Boot** — 1 × 1 TB Kingston NV3 NVMe
-- **`puddle` pool**
+- **`luddle` pool** — Samsung PM9A3 1.92 TB U.2 NVMe; app PVCs (`openebs-zfs-luddle`, default StorageClass)
+- **`puddle` pool** — bulk storage
     - 6 × 12 TB Seagate IronWolf / Exos 7E8 HDD — 6-wide RAIDZ2
     - 2 × 1.92 TB Samsung PM9A3 NVMe — L2ARC cache
+    - 2 × 750 GB Intel Optane NVMe — mirrored metadata (special) and log (SLOG)
     - 1 × 12 TB Seagate IronWolf — hot spare
-- **Unassigned** — 750 GB Intel Optane NVMe (future SLOG)
 
 ### Networking — UniFi
 
 - **UCG Fiber** ("Mystic") — router · 2.5 G WAN
-- **USW Pro Aggregation** — 10 G SFP+ aggregation switch
 - **USW Pro Max 16 PoE** — 10 G SFP+ / PoE switch
 - **USW Flex 2.5G 8 PoE** — 2.5 G PoE switch
 - **USP PDU Pro** — rack PDU
