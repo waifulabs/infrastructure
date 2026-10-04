@@ -33,6 +33,8 @@ spec:
               TZ: America/Los_Angeles
               PUBLIC_BASE_URL: "https://api.ok8.sh"
               TRUSTED_PROXY_CIDRS: "10.0.20.0/24,172.30.0.0/16"
+              WOW_CHARACTERS: "retail/area-52/Nyãna"
+              OVERWATCH_BATTLETAGS: "Kashall#11253"
             envFrom:
               - secretRef:
                   name: apis-secret
@@ -113,6 +115,20 @@ spec:
               - type: URLRewrite
                 urlRewrite:
                   path: { type: ReplacePrefixMatch, replacePrefixMatch: /api/github }
+            backendRefs: *backend
+          - matches:
+              - path: { type: PathPrefix, value: /wow }
+            filters:
+              - type: URLRewrite
+                urlRewrite:
+                  path: { type: ReplacePrefixMatch, replacePrefixMatch: /api/wow }
+            backendRefs: *backend
+          - matches:
+              - path: { type: PathPrefix, value: /overwatch }
+            filters:
+              - type: URLRewrite
+                urlRewrite:
+                  path: { type: ReplacePrefixMatch, replacePrefixMatch: /api/overwatch }
             backendRefs: *backend
     persistence:
       data:
