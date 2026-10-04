@@ -26,9 +26,7 @@ spec:
           app:
             image:
               repository: ghcr.io/kashalls/apis
-              # TODO: pin to rolling@sha256:... once kashalls/apis#11 merges
-              # and ghcr.io/kashalls/apis publishes.
-              tag: rolling
+              tag: 0.0.2@sha256:cd7367fbcaa2a0eb12cedc1366d0c72d03282a037f345ae51f0e1f463cbb0dc5
             env:
               TZ: America/Los_Angeles
               PUBLIC_BASE_URL: "https://api.ok8.sh"
