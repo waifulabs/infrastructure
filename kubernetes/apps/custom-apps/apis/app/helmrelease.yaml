@@ -26,7 +26,7 @@ spec:
           app:
             image:
               repository: ghcr.io/kashalls/apis
-              tag: 0.0.2@sha256:cd7367fbcaa2a0eb12cedc1366d0c72d03282a037f345ae51f0e1f463cbb0dc5
+              tag: 0.0.3@sha256:f0f526389a446d9ea2e70e3a39058258cd4f9dc20b40eac56e344609e916ae50
             env:
               TZ: America/Los_Angeles
               PUBLIC_BASE_URL: "https://api.ok8.sh"
