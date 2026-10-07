@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: kometateam/kometa
-              tag: v2.5.1@sha256:20388de48f0e088ad9feb9904f6a452fd9ef933a79c7b2bf186e388224e8f437
+              tag: v2.5.2@sha256:06e498cded70c9815522c6b2d8708b31759c1e37714746d1eeb56f1e40a8fd95
             env:
               TZ: America/Los_Angeles
             envFrom:
