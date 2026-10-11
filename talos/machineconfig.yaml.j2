@@ -7,34 +7,6 @@ machine:
   features:
     apidCheckExtKeyUsage: true
     diskQuotaSupport: true
-    hostDNS:
-      enabled: true
-      resolveMemberNames: true
-      forwardKubeDNSToHost: true # Requires Cilium socketLB features
-    kubePrism:
-      enabled: true
-      port: 7445
-    kubernetesTalosAPIAccess:
-      enabled: true
-      allowedRoles: ["os:admin"]
-      allowedKubernetesNamespaces: ["actions-runner-system", "system-upgrade"]
-  kubelet:
-    defaultRuntimeSeccompProfileEnabled: true
-    disableManifestsDirectory: true
-    image: ghcr.io/siderolabs/kubelet:{{ ENV.KUBERNETES_VERSION }}
-    nodeIP:
-      validSubnets: ["10.0.10.0/24"]
-    extraConfig:
-      maxPods: 250
-      crashLoopBackOff:
-        maxContainerRestartPeriod: 60s
-      imageMaximumGCAge: 168h
-      maxParallelImagePulls: 3
-      serializeImagePulls: false
-      shutdownGracePeriod: 90s
-      shutdownGracePeriodCriticalPods: 60s
-  nodeLabels:
-    topology.kubernetes.io/zone: {{ ENV.MACHINE_TYPE }}
   token: op://Kubernetes/talos/TRUSTDINFO_TOKEN
   type: {{ ENV.MACHINE_TYPE }}
   udev:
@@ -52,18 +24,11 @@ cluster:
     - # renovate: datasource=github-releases depName=prometheus-operator/prometheus-operator
       https://github.com/prometheus-operator/prometheus-operator/releases/download/v0.86.2/stripped-down-crds.yaml
   id: op://Kubernetes/talos/CLUSTER_ID
-  network:
-    cni:
-      name: none
-    dnsDomain: cluster.local
-    podSubnets: ["172.30.0.0/16"]
-    serviceSubnets: ["172.31.0.0/16"]
   secret: op://Kubernetes/talos/CLUSTER_SECRET
   token: op://Kubernetes/talos/SECRETS_BOOTSTRAPTOKEN
   aggregatorCA:
     crt: op://Kubernetes/talos/CERTS_K8SAGGREGATOR_CRT
     key: op://Kubernetes/talos/CERTS_K8SAGGREGATOR_KEY
-  allowSchedulingOnControlPlanes: true
   discovery:
     enabled: false
   etcd:
@@ -87,6 +52,10 @@ nameservers:
   - address: 10.0.10.1
 searchDomains:
   disableDefault: true
+hostDNS:
+  enabled: true
+  forwardKubeDNSToHost: true # Requires Cilium socketLB features
+  resolveMemberNames: true
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/siderolabs/talos/refs/heads/release-1.14/website/content/v1.14/schemas/config.schema.json
 apiVersion: v1alpha1
@@ -218,3 +187,46 @@ interval: 168h0m0s
 apiVersion: v1alpha1
 kind: FilesystemScrubConfig
 interval: 168h0m0s
+---
+apiVersion: v1alpha1
+kind: KubePrismConfig
+port: 7445
+---
+apiVersion: v1alpha1
+kind: KubeTalosAPIAccessConfig
+allowedRoles:
+  - os:admin
+allowedKubernetesNamespaces:
+  - actions-runner-system
+  - system-upgrade
+---
+apiVersion: v1alpha1
+kind: KubeNetworkConfig
+dnsDomain: cluster.local
+podSubnets:
+  - 172.30.0.0/16
+serviceSubnets:
+  - 172.31.0.0/16
+---
+apiVersion: v1alpha1
+kind: KubeNodeConfig
+nodeIP:
+  validSubnets:
+    - 10.0.10.0/24
+labels:
+  node-role.kubernetes.io/control-plane: ""
+  topology.kubernetes.io/zone: {{ ENV.MACHINE_TYPE }}
+---
+apiVersion: v1alpha1
+kind: KubeletConfig
+image: ghcr.io/siderolabs/kubelet:{{ ENV.KUBERNETES_VERSION }}
+defaultRuntimeSeccompProfileEnabled: true
+config:
+  maxPods: 250
+  crashLoopBackOff:
+    maxContainerRestartPeriod: 60s
+  imageMaximumGCAge: 168h
+  maxParallelImagePulls: 3
+  serializeImagePulls: false
+  shutdownGracePeriod: 90s
+  shutdownGracePeriodCriticalPods: 60s
