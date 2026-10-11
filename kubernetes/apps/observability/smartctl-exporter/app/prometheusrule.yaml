@@ -12,7 +12,7 @@ spec:
           annotations:
             summary: Mounted drive {{ $labels.device }} on device {{ $labels.instance }}
               has a temperature higher than 60°C.
-          expr: smartctl_device_temperature > 60
+          expr: smartctl_device_temperature{temperature_type="current"} > 60
           for: 15m
           labels:
             severity: critical
