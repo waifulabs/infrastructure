@@ -10,8 +10,7 @@ tasks:
       minijinja-cli --config-file "{{.ROOT_DIR}}/.minijinja.toml" "{{.TALOS_DIR}}/machineconfig.yaml.j2" \
       | op inject \
       | talosctl --nodes "{{.NODE}}" apply-config \
-          --mode "{{.MODE}}" \
-          --config-patch @<(minijinja-cli --config-file "{{.ROOT_DIR}}/.minijinja.toml" "{{.TALOS_DIR}}/nodes/{{.NODE}}.yaml") \{{if .INSECURE}}
+          --mode "{{.MODE}}" \{{if .INSECURE}}
           --insecure \{{end}}
           --file /dev/stdin
 
@@ -19,12 +18,6 @@ tasks:
       MODE: '{{.MODE | default "auto"}}'
       INSECURE:
         sh: talosctl --nodes {{.NODE}} get machineconfig &> /dev/null || echo true
-      MACHINE_TYPE:
-        sh: |-
-          talosctl --nodes {{.NODE}} get machinetypes --output=jsonpath='{.spec}' 2> /dev/null \
-            || yq 'select(di == 0) | .machine.type // "worker"' "{{.TALOS_DIR}}/nodes/{{.NODE}}.yaml"
-    env:
-      MACHINE_TYPE: '{{.MACHINE_TYPE}}'
     requires:
       vars: [NODE]
     preconditions:
@@ -32,7 +25,6 @@ tasks:
       - talosctl config info
       - test -f {{.TALOS_DIR}}/talos.env
       - test -f {{.TALOS_DIR}}/machineconfig.yaml.j2
-      - test -f {{.TALOS_DIR}}/nodes/{{.NODE}}.yaml
       - test -f {{.TALOS_DIR}}/talosconfig
       - which minijinja-cli talosctl yq
 
