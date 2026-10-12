@@ -50,8 +50,8 @@ This repository uses the following layout for [Kubernetes](./kubernetes/).
 ├── 📁 apps                  # Application configurations.
 └── 📁 components            # Shared Kustomize components.
 📁 talos
-├── 📁 nodes                 # Per-node override configurations.
-├── 📝 machineconfig.yaml.j2 # Base Talos configuration for all nodes.
+├── 📝 machineconfig.yaml.j2 # Talos configuration for the node.
+├── 📝 schematic.yaml.j2     # Image Factory schematic.
 └── 📝 talos.env             # Kubernetes and Talos version variables.
 📁 unifi                     # Configuration files for UniFi
 ```

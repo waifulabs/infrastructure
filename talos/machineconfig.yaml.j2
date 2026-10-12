@@ -34,9 +34,13 @@ machine:
       shutdownGracePeriod: 90s
       shutdownGracePeriodCriticalPods: 60s
   nodeLabels:
-    topology.kubernetes.io/zone: {{ ENV.MACHINE_TYPE }}
+    topology.kubernetes.io/zone: controlplane
+  install:
+    image: factory.talos.dev/metal-installer/0d5c45fad11b1770393092f64cf31d3cd212d8e5973d706e9c7114c017eb4695:{{ ENV.TALOS_VERSION }}
+    diskSelector:
+      serial: 50026B76878F13D4
   token: op://Kubernetes/talos/TRUSTDINFO_TOKEN
-  type: {{ ENV.MACHINE_TYPE }}
+  type: controlplane
   udev:
     rules:
       - SUBSYSTEM=="drm", KERNEL=="renderD*", GROUP="44", MODE="0660" # Intel GPU
@@ -218,3 +222,37 @@ interval: 168h0m0s
 apiVersion: v1alpha1
 kind: FilesystemScrubConfig
 interval: 168h0m0s
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: puddle
+---
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: net0
+selector:
+  match: mac(link.permanent_addr) == "7c:fe:90:19:f5:00"
+---
+apiVersion: v1alpha1
+kind: BondConfig
+name: bond0
+links: [net0]
+bondMode: active-backup
+mtu: 9000
+---
+apiVersion: v1alpha1
+kind: DHCPv4Config
+name: bond0
+clientIdentifier: mac
+---
+apiVersion: v1alpha1
+kind: VLANConfig
+name: bond0.30
+parent: bond0
+vlanID: 30
+mtu: 9000
+---
+apiVersion: v1alpha1
+kind: WatchdogTimerConfig
+device: /dev/watchdog0
+timeout: 5m
