@@ -9,11 +9,27 @@ spec:
     - name: snmp-exporter.rules
       rules:
         - alert: UPSOnBattery
-          expr: |-
-            (upsAdvBatteryRunTimeRemaining/60/100 <= 20 and upsBasicBatteryTimeOnBattery > 0)
+          expr: upsOutputSource{upsOutputSource="battery"} == 1
           annotations:
             summary: >-
-              ZPM {{$labels.instance}} is running on batteries and has less than 20 minutes of battery left
-          for: 5m
+              UPS {{$labels.instance}} is running on battery
+          for: 1m
           labels:
             severity: critical
+        - alert: UPSLowRuntime
+          expr: |-
+            upsEstimatedMinutesRemaining <= 20 and on(instance) upsOutputSource{upsOutputSource="battery"} == 1
+          annotations:
+            summary: >-
+              UPS {{$labels.instance}} has {{$value}} minutes of battery left
+          labels:
+            severity: critical
+        - alert: UPSAlarm
+          expr: |-
+            upsAlarmsPresent > 0 unless on(instance) upsOutputSource{upsOutputSource="battery"} == 1
+          annotations:
+            summary: >-
+              UPS {{$labels.instance}} has {{$value}} active alarm(s)
+          for: 5m
+          labels:
+            severity: warning
