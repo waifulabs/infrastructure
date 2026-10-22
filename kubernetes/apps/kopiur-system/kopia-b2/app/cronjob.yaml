@@ -26,7 +26,7 @@ spec:
             runAsUser: 0
           containers:
             - name: kopia
-              image: ghcr.io/home-operations/kopia:0.23.1@sha256:27da0a33b44e1b902150a6c963514237217464bb13118a95bb056667be93cda5
+              image: ghcr.io/home-operations/kopia:0.23.1@sha256:6025a14d5a673bc38de3efdf48711ee93f0130787798b677c85ca95d4eaa0f7a
               command:
                 - /bin/sh
                 - -c
