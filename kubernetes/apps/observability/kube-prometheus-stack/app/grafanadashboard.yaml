@@ -14,7 +14,7 @@ spec:
       inputName: DS_PROMETHEUS
   grafanaCom:
     id: 15761
-    revision: 20
+    revision: 21
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/grafana.integreatly.org/grafanadashboard_v1beta1.json
 apiVersion: grafana.integreatly.org/v1beta1
