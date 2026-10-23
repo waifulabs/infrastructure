@@ -150,4 +150,4 @@ spec:
       inputName: DS_PROMETHEUS
   grafanaCom:
     id: 19105
-    revision: 8
+    revision: 9
