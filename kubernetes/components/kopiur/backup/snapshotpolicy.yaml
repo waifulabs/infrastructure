@@ -20,6 +20,10 @@ spec:
   mover:
     cache:
       capacity: ${KOPIUR_CACHE_CAPACITY:=5Gi}
+      # Unset, kopia budgets ~5GB each for content and metadata cache, which
+      # overruns the smaller cache PVCs and fails `repository connect`.
+      contentCacheSizeMb: ${KOPIUR_CONTENT_CACHE_MB:=512}
+      metadataCacheSizeMb: ${KOPIUR_METADATA_CACHE_MB:=256}
       mode: Persistent
       storageClassName: ${KOPIUR_CACHE_STORAGECLASS:=openebs-zfs-luddle}
     podSecurityContext:
