@@ -8,7 +8,7 @@ on:
     - cron: "0 0 * * *" # Every day at midnight
   push:
     branches: ["main"]
-    paths: [".github/workflows/schemas.yaml"]
+    paths: [".github/workflows/schemas.yaml", ".github/workflows/scripts/schemas-index.html"]
 
 env:
   UV_SYSTEM_PYTHON: "1"
@@ -47,7 +47,36 @@ jobs:
         run: curl -fsSL https://raw.githubusercontent.com/datreeio/CRDs-catalog/43e4407642d4c37683c88711f37caa6c9c20ca40/Utilities/crd-extractor.sh | bash
 
       - name: Generate index.html
-        run: curl -fsSL https://raw.githubusercontent.com/kashalls/home-cluster/refs/heads/main/.github/workflows/scripts/generate_index.sh | bash
+        run: |
+          cd /home/runner/.datree/crdSchemas
+
+          group_count=$(find . -mindepth 1 -maxdepth 1 -type d | wc -l)
+          schema_count=$(find . -name "*.json" | wc -l)
+          updated=$(date -u +"%Y-%m-%d")
+
+          schemas_html=""
+          for dir in */; do
+            dir_name="${dir%/}"
+            file_count=$(find "$dir" -maxdepth 1 -name "*.json" | wc -l)
+            files_html=""
+            for file in "$dir"*.json; do
+              if [ -f "$file" ]; then
+                filename=$(basename "$file")
+                files_html="${files_html}<a href=\"${file}\" class=\"file-link\">${filename}</a>"
+              fi
+            done
+            schemas_html="${schemas_html}<div class=\"group-card\"><div class=\"group-header\"><span class=\"group-name\">${dir_name}</span><span class=\"group-count\">${file_count}</span><svg class=\"chevron\" width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" fill=\"currentColor\"><path d=\"M4.427 5.427l3.396 3.396a.25.25 0 00.354 0l3.396-3.396A.25.25 0 0011.396 5H4.604a.25.25 0 00-.177.427z\"/></svg></div><div class=\"group-files\">${files_html}</div></div>"
+          done
+
+          cp "$GITHUB_WORKSPACE/.github/workflows/scripts/schemas-index.html" index.html
+          sed -i "s|<!-- SCHEMAS_PLACEHOLDER -->|${schemas_html}|g" index.html
+          sed -i "s|<div class=\"stat-value\" id=\"group-count\">-</div>|<div class=\"stat-value\" id=\"group-count\">${group_count}</div>|g" index.html
+          sed -i "s|<div class=\"stat-value\" id=\"schema-count\">-</div>|<div class=\"stat-value\" id=\"schema-count\">${schema_count}</div>|g" index.html
+          sed -i "s|<div class=\"stat-value\" id=\"last-updated\">-</div>|<div class=\"stat-value\" id=\"last-updated\">${updated}</div>|g" index.html
+
+      # Without a top-level 404.html, Pages treats the site as an SPA and serves index.html with 200 for missing paths
+      - name: Generate 404.html
+        run: echo "404 Not Found" > /home/runner/.datree/crdSchemas/404.html
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@953926a2e2182532811c01a25e53647d93bf07c0 # v4.1.3

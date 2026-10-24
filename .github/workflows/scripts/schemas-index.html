@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kubernetes Schemas | ok8.sh</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☸️</text></svg>">
+  <style>
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-tertiary: #21262d;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent: #58a6ff;
+      --accent-hover: #79c0ff;
+      --border: #30363d;
+      --success: #3fb950;
+      --gradient-start: #58a6ff;
+      --gradient-end: #a371f7;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    header {
+      text-align: center;
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 2rem;
+    }
+
+    .logo {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+    }
+
+    .usage-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .usage-card h2 {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .code-block {
+      background: var(--bg-tertiary);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+      font-size: 0.9rem;
+      overflow-x: auto;
+      position: relative;
+    }
+
+    .code-block code {
+      color: var(--text-primary);
+    }
+
+    .code-block .comment {
+      color: var(--text-muted);
+    }
+
+    .code-block .string {
+      color: var(--success);
+    }
+
+    .search-container {
+      margin-bottom: 2rem;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.875rem 1.25rem;
+      font-size: 1rem;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .stats {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.5rem;
+      flex: 1;
+      min-width: 150px;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .stat-label {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+    }
+
+    .schemas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 1rem;
+    }
+
+    .group-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .group-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .group-header {
+      padding: 1rem 1.25rem;
+      background: var(--bg-tertiary);
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .group-name {
+      font-weight: 600;
+      font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+      font-size: 0.9rem;
+      color: var(--accent);
+    }
+
+    .group-count {
+      background: var(--bg-primary);
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .group-files {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+
+    .group-card.open .group-files {
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .file-link {
+      display: block;
+      padding: 0.625rem 1.25rem;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+      font-size: 0.85rem;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+
+    .file-link:last-child {
+      border-bottom: none;
+    }
+
+    .file-link:hover {
+      background: var(--bg-tertiary);
+      color: var(--accent);
+    }
+
+    .chevron {
+      transition: transform 0.2s;
+    }
+
+    .group-card.open .chevron {
+      transform: rotate(180deg);
+    }
+
+    footer {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+
+      header {
+        padding: 2rem 0;
+      }
+
+      h1 {
+        font-size: 1.75rem;
+      }
+
+      .schemas-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">☸️</div>
+      <h1>Kubernetes Schemas</h1>
+      <p class="subtitle">CRD JSON schemas from the ok8.sh cluster</p>
+    </header>
+
+    <div class="usage-card">
+      <h2>Usage</h2>
+      <div class="code-block">
+        <code><span class="comment"># yaml-language-server: </span><span class="string">$schema=https://kubernetes-schemas.ok8.sh/{group}/{kind}_{version}.json</span></code>
+      </div>
+    </div>
+
+    <div class="search-container">
+      <input type="text" class="search-input" id="search" placeholder="Search schemas... (e.g., helmrelease, certificate, gateway)">
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-value" id="group-count">-</div>
+        <div class="stat-label">API Groups</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="schema-count">-</div>
+        <div class="stat-label">Schemas</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" id="last-updated">-</div>
+        <div class="stat-label">Last Updated</div>
+      </div>
+    </div>
+
+    <div class="schemas-grid" id="schemas-grid">
+      <!-- SCHEMAS_PLACEHOLDER -->
+    </div>
+
+    <footer>
+      <p>
+        Generated by <a href="https://github.com/datreeio/CRDs-catalog" target="_blank">crd-extractor</a> •
+        Hosted on <a href="https://pages.cloudflare.com" target="_blank">Cloudflare Pages</a> •
+        <a href="https://github.com/waifulabs/infrastructure" target="_blank">Source</a>
+      </p>
+    </footer>
+  </div>
+
+  <script>
+    // Search functionality
+    const searchInput = document.getElementById('search');
+    const grid = document.getElementById('schemas-grid');
+
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      const cards = grid.querySelectorAll('.group-card');
+
+      cards.forEach(card => {
+        const groupName = card.querySelector('.group-name').textContent.toLowerCase();
+        const files = card.querySelectorAll('.file-link');
+        let hasMatch = groupName.includes(query);
+
+        files.forEach(file => {
+          const fileName = file.textContent.toLowerCase();
+          if (fileName.includes(query)) {
+            hasMatch = true;
+            file.classList.remove('hidden');
+          } else if (query) {
+            file.classList.add('hidden');
+          } else {
+            file.classList.remove('hidden');
+          }
+        });
+
+        if (hasMatch) {
+          card.classList.remove('hidden');
+          if (query) card.classList.add('open');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+
+    // Toggle group expansion
+    grid.addEventListener('click', (e) => {
+      const header = e.target.closest('.group-header');
+      if (header) {
+        header.closest('.group-card').classList.toggle('open');
+      }
+    });
+  </script>
+</body>
+</html>
