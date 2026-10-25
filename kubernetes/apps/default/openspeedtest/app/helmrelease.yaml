@@ -16,7 +16,7 @@ spec:
           app:
             image:
               repository: openspeedtest/latest
-              tag: v2.0.6
+              tag: v2.0.7
             probes:
               liveness: &probes
                 enabled: true
