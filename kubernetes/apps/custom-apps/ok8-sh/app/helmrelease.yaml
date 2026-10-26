@@ -64,7 +64,7 @@ spec:
         annotations:
           gatus.home-operations.com/endpoint: |-
             conditions: ["[STATUS] == 200"]
-        hostnames: ["landing.ok8.sh", "ok8.sh"]
+        hostnames: ["landing.ok8.sh"]
         parentRefs:
           - name: external
             namespace: networking
