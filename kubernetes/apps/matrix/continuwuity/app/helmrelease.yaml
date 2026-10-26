@@ -122,20 +122,20 @@ spec:
             conditions: ["[STATUS] == 200"]
         hostnames: ["federation.ok8.sh"]
         parentRefs: *envoyParents
-      well-known:
-        annotations:
-          external-dns.kubernetes.io/cloudflare-proxied: "true"
-          gatus.home-operations.com/enabled: "false"
-        hostnames: ["ok8.sh"]
-        parentRefs: *envoyParents
-        rules:
-          - backendRefs:
-             - name: *app
-               port: *http
-            matches:
-              - path:
-                  type: PathPrefix
-                  value: /.well-known/matrix/
+      # well-known:
+      #   annotations:
+      #     external-dns.kubernetes.io/cloudflare-proxied: "true"
+      #     gatus.home-operations.com/enabled: "false"
+      #   hostnames: ["ok8.sh"]
+      #   parentRefs: *envoyParents
+      #   rules:
+      #     - backendRefs:
+      #        - name: *app
+      #          port: *http
+      #       matches:
+      #         - path:
+      #             type: PathPrefix
+      #             value: /.well-known/matrix/
     persistence:
       data:
         type: persistentVolumeClaim
