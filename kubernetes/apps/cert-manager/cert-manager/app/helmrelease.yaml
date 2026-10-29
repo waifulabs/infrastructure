@@ -11,7 +11,7 @@ spec:
     operation: copy
   ref:
     tag: v1.17.1
-  url: oci://ghcr.io/home-operations/charts-mirror/cert-manager
+  url: oci://quay.io/jetstack/charts/cert-manager
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
