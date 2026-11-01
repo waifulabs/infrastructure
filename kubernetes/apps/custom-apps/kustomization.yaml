@@ -10,6 +10,4 @@ replacements:
 resources:
   - ./apirouter/ks.yaml
   - ./apis/ks.yaml
-  #- ./home-assistant-api/ks.yaml
   - ./juno/ks.yaml
-  - ./ok8-sh/ks.yaml
