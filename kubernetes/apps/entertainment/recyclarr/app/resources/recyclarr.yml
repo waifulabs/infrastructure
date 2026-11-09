@@ -100,7 +100,7 @@ radarr:
         rename: true
         standard: plex-imdb
     quality_definition:
-      type: sqp-uhd
+      type: movie
       qualities:
         - name: HDTV-720p
           min: 5
