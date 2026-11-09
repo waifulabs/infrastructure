@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/recyclarr/recyclarr/refs/tags/v8.6.0/schemas/config-schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/recyclarr/recyclarr/refs/tags/v8.8.1/schemas/config-schema.json
 sonarr:
   series:
     base_url: http://sonarr.entertainment.svc.cluster.local
@@ -15,8 +15,6 @@ sonarr:
         standard: default
       season: default
       series: plex-imdb
-    quality_definition:
-      type: anime
     quality_profiles:
       - name: "[Anime] Remux-1080p"
         reset_unmatched_scores:
@@ -34,12 +32,14 @@ sonarr:
               - HDTV-1080p
               - WEBDL-1080p
               - WEBRip-1080p
+          - name: Bluray-720p
           - name: WEB 720p
             qualities:
               - HDTV-720p
               - WEBDL-720p
               - WEBRip-720p
       - trash_id: c4cadd6b35b95f62c3d47a408e53e2f7 # WEB-2160p (Combined)
+        name: "WEB-2160p (Combined)"
         reset_unmatched_scores:
           enabled: true
     custom_formats:
@@ -101,6 +101,25 @@ radarr:
         standard: plex-imdb
     quality_definition:
       type: sqp-uhd
+      qualities:
+        - name: HDTV-720p
+          min: 5
+        - name: WEBDL-720p
+          min: 5
+        - name: WEBRip-720p
+          min: 5
+        - name: Bluray-720p
+          min: 5
+        - name: HDTV-1080p
+          min: 5
+        - name: WEBDL-1080p
+          min: 5
+        - name: WEBRip-1080p
+          min: 5
+        - name: Bluray-1080p
+          min: 5
+        - name: Remux-1080p
+          min: 5
     quality_profiles:
       - name: "[Anime] Remux-1080p"
         reset_unmatched_scores:
@@ -124,6 +143,7 @@ radarr:
               - WEBDL-720p
               - WEBRip-720p
       - trash_id: 5128baeb2b081b72126bc8482b2a86a0 # [SQP] SQP-1 (2160p)
+        name: "[SQP] SQP-1 (2160p)"
         reset_unmatched_scores:
           enabled: true
     custom_formats:
