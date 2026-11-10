@@ -18,7 +18,7 @@ spec:
           app:
             image:
               repository: ghcr.io/pablorevilla-meshtastic/meshview
-              tag: 3.0.9@sha256:4e44c3b37484b931da5b5d8269a861b0025ac26068fa1dc87e6f57cf73348d54
+              tag: 4.0.0@sha256:b68bb55dc2d7960915ce62b5e3d1e27adc329eaaa3844c0561d002d390b53502
             env:
               TZ: America/Los_Angeles
             probes:
