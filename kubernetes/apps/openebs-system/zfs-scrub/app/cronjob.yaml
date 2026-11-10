@@ -1,0 +1,138 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: zfs-scrub
+spec:
+  # Talos FilesystemScrubConfig only covers XFS via xfs_scrub, so ZFS pools
+  # need their own scrub schedule.
+  schedule: "0 3 1 * *"
+  timeZone: America/Los_Angeles
+  # Run anyway if the node was down at 03:00, as long as it's back within 12h
+  startingDeadlineSeconds: 43200
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      # puddle took 5h48m in Jun 2026; ceiling allows for growth and a
+      # concurrent resilver slowing things down
+      activeDeadlineSeconds: 86400
+      template:
+        spec:
+          nodeName: puddle
+          # Never (not OnFailure) so each retry is a fresh pod and failed pods
+          # stick around with their logs
+          restartPolicy: Never
+          containers:
+            - name: zfs-scrub
+              image: docker.io/library/alpine:3.23@sha256:469c9ea410b9215eaee7976ba6c0639039b444be8e5d638f7abbada189971eb2
+              command:
+                - /bin/sh
+                - -c
+              args:
+                - |
+                  set -eu
+
+                  # The node's own zpool binary is used rather than a ZFS build
+                  # shipped in this image: it is version-matched to the loaded
+                  # kernel module by construction. Talos links it against musl,
+                  # hence the alpine base.
+                  export LD_LIBRARY_PATH=/hostlib
+                  ZPOOL=/hostsbin/zpool
+                  failed=0
+
+                  for pool in $ZFS_POOLS; do
+                    echo "===================================================="
+                    echo "Starting scrub on pool: $pool"
+                    echo "===================================================="
+
+                    # A scrub already running (or a resilver) makes `zpool scrub`
+                    # fail; treat that as nothing to do rather than an error.
+                    if "$ZPOOL" status "$pool" | grep -qE "scrub in progress|resilver in progress"; then
+                      echo "Scrub or resilver already running on $pool, skipping"
+                      continue
+                    fi
+
+                    if ! "$ZPOOL" scrub "$pool"; then
+                      echo "FAILED to start scrub on $pool"
+                      failed=1
+                      continue
+                    fi
+
+                    # Poll to completion so the Job's lifetime reflects the real
+                    # scrub, which keeps concurrencyPolicy Forbid meaningful.
+                    while "$ZPOOL" status "$pool" | grep -q "scrub in progress"; do
+                      "$ZPOOL" status "$pool" | grep -A2 "scan:"
+                      sleep 300
+                    done
+
+                    status=$("$ZPOOL" status "$pool")
+                    scan=$(printf '%s\n' "$status" | grep "scan:" || true)
+                    errs=$(printf '%s\n' "$status" | grep "errors:" || true)
+                    echo "$scan"
+                    echo "$errs"
+
+                    # A clean scrub must exit 0 and a dirty one must not: the Job's
+                    # exit status is the only signal that reaches Alertmanager, via
+                    # the existing KubeJobFailed rule. Logging the findings is not
+                    # enough, nobody reads logs of a successful job.
+                    if ! printf '%s\n' "$errs" | grep -q "No known data errors"; then
+                      echo "DATA ERRORS reported on $pool"
+                      failed=1
+                    fi
+                    if printf '%s\n' "$scan" | grep -qE "scrub repaired [^0]"; then
+                      echo "SCRUB REPAIRED DATA on $pool, a disk is suspect"
+                      failed=1
+                    fi
+                    if ! "$ZPOOL" status -x "$pool" | grep -q "is healthy"; then
+                      echo "POOL $pool IS NOT HEALTHY"
+                      failed=1
+                    fi
+                  done
+
+                  echo "===================================================="
+                  echo "All scrubs finished (failed=$failed)"
+                  echo "===================================================="
+                  "$ZPOOL" list
+
+                  exit "$failed"
+              env:
+                - name: ZFS_POOLS
+                  value: puddle luddle
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 64Mi
+                limits:
+                  memory: 256Mi
+              securityContext:
+                # /dev/zfs ioctls need CAP_SYS_ADMIN, and a hostPath device node
+                # is not added to the container's device cgroup allowlist, so
+                # privileged is required. This matches openebs-zfs-plugin, which
+                # drives the same device on this node.
+                privileged: true
+                runAsUser: 0
+              volumeMounts:
+                - name: hostsbin
+                  mountPath: /hostsbin
+                  readOnly: true
+                - name: hostlib
+                  mountPath: /hostlib
+                  readOnly: true
+                - name: devzfs
+                  mountPath: /dev/zfs
+          volumes:
+            - name: hostsbin
+              hostPath:
+                path: /usr/local/sbin
+                type: Directory
+            - name: hostlib
+              hostPath:
+                path: /usr/local/lib
+                type: Directory
+            - name: devzfs
+              hostPath:
+                path: /dev/zfs
+                type: CharDevice

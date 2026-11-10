@@ -9,3 +9,4 @@ replacements:
   - path: ../../components/replacements/ks.yaml
 resources:
   - ./openebs/ks.yaml
+  - ./zfs-scrub/ks.yaml
