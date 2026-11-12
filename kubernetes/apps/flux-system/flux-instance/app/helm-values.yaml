@@ -51,15 +51,30 @@ instance:
           name: (kustomize-controller|helm-controller|source-controller)
       - # Enable in-memory kustomize builds
         patch: |
-          - op: add
-            path: /spec/template/spec/containers/0/args/-
-            value: --concurrent=20
           - op: replace
             path: /spec/template/spec/volumes/0
             value:
               name: temp
               emptyDir:
                 medium: Memory
+        target:
+          kind: Deployment
+          name: kustomize-controller
+      - # The node has 64 cores, so an unset GOMAXPROCS burns the 100ms CFS
+        # quota of the 1 core limit within a few milliseconds of a reconcile burst
+        patch: |
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: all
+          spec:
+            template:
+              spec:
+                containers:
+                  - name: manager
+                    env:
+                      - name: GOMAXPROCS
+                        value: "4"
         target:
           kind: Deployment
           name: kustomize-controller
