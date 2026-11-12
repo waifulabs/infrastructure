@@ -35,7 +35,7 @@ spec:
                 valueFrom:
                   fieldRef:
                     fieldPath: status.hostIP
-            args: ["-v", "2", "-enable-monitoring", "-shared-dev-num", "1", "-allocation-policy", "none"]
+            args: ["-v", "2", "-enable-monitoring", "-shared-dev-num", "4", "-allocation-policy", "none"]
             resources: {}
             securityContext:
               allowPrivilegeEscalation: false
