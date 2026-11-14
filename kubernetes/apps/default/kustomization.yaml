@@ -15,6 +15,5 @@ resources:
   - ./meshview/ks.yaml
   - ./mosquitto/ks.yaml
   #- ./music-assistant/ks.yaml
-  - ./openspeedtest/ks.yaml
   #- ./rtlamr2mqtt/ks.yaml
   - ./zigbee2mqtt/ks.yaml
