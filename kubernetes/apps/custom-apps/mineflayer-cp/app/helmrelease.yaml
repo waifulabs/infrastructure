@@ -1,0 +1,26 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mineflayer-cp
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: mineflayer-cp
+  values:
+    image:
+      repository: ghcr.io/kashalls/mineflayer-cp-panel
+    bot:
+      image:
+        repository: ghcr.io/kashalls/mineflayer-cp-bot
+    persistence:
+      existingClaim: mineflayer-cp-zfs
+    httpRoute:
+      enabled: true
+      hostnames: ["mineflayer.ok8.sh"]
+      parentRefs:
+        - name: internal
+          namespace: networking
+          sectionName: https
