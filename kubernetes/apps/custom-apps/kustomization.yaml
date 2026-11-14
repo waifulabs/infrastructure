@@ -11,3 +11,4 @@ resources:
   - ./apirouter/ks.yaml
   - ./apis/ks.yaml
   - ./juno/ks.yaml
+  - ./starlight/ks.yaml
