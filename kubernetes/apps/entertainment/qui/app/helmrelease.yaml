@@ -50,7 +50,7 @@ spec:
                 cpu: 10m
                 memory: 768Mi
               limits:
-                memory: 2Gi
+                memory: 4Gi
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
