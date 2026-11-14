@@ -12,7 +12,6 @@ resources:
   - ./home-assistant/ks.yaml
   - ./hytale/ks.yaml
   - ./immich/ks.yaml
-  - ./meshview/ks.yaml
   - ./mosquitto/ks.yaml
   #- ./music-assistant/ks.yaml
   - ./openspeedtest/ks.yaml
