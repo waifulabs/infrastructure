@@ -22,7 +22,7 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         type: statefulset
-        replicas: 1
+        replicas: 0
         strategy: RollingUpdate
         containers:
           hytale:
