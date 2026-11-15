@@ -42,7 +42,7 @@ ui:
     - name: Github
       link: https://github.com/kashalls
     - name: Homelab
-      link: https://github.com/waifulabs/infrastructure
+      link: https://github.com/kashalls/infrastructure
 
 web:
   port: ${GATUS_WEB_PORT}

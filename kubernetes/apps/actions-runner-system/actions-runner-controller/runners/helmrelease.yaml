@@ -19,7 +19,7 @@ spec:
       retries: 3
   values:
     runnerScaleSetName: waifulabs
-    githubConfigUrl: https://github.com/waifulabs
+    githubConfigUrl: https://github.com/kashalls/infrastructure
     githubConfigSecret: waifulabs-runner-secret
     minRunners: 1
     maxRunners: 7
