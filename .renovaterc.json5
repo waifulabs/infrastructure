@@ -8,7 +8,9 @@
     ':semanticCommits',
     ':timezone(America/Los_Angeles)',
   ],
-  dependencyDashboardTitle: 'Renovate Dashboard 🗡️',
+  dependencyDashboard: {
+    title: 'Renovate Dashboard 🗡️',
+  },
   prBodyTemplate: '{{{header}}}{{{table}}}{{{warnings}}}{{{notes}}}{{{changelogs}}}{{{controls}}}{{{footer}}}',
   suppressNotifications: [
     'prEditedNotification',
@@ -32,7 +34,7 @@
       matchPackageNames: [
         '/ghcr.io/bjw-s-labs/',
         '/ghcr.io/home-operations/',
-        '/ghcr.io/kashalls/'
+        '/ghcr.io/kashalls/',
       ],
     },
     {
