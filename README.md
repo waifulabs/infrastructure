@@ -5,7 +5,7 @@
 [![Discord](https://img.shields.io/discord/673534664354430999?style=flat-square&label&logo=discord&logoColor=white&color=blue)](https://discord.gg/home-operations)&nbsp;&nbsp;&nbsp;
 [![Talos](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.ok8.sh%2Fbadges%2Ftalos_version%3Fformat%3Dshields&style=flat-square&logo=talos&logoColor=white&color=blue&label=%20)](https://www.talos.dev/)&nbsp;&nbsp;&nbsp;
 [![Kubernetes](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.ok8.sh%2Fbadges%2Fkubernetes_version%3Fformat%3Dshields&style=flat-square&logo=kubernetes&logoColor=white&color=blue&label=%20)](https://www.talos.dev/)&nbsp;&nbsp;&nbsp;
-[![Renovate](https://img.shields.io/github/actions/workflow/status/waifulabs/infrastructure/renovate.yaml?branch=main&label=&logo=renovatebot&style=flat-square&color=blue)](https://github.com/waifulabs/infrastructure/actions/workflows/renovate.yaml)
+[![Renovate](https://img.shields.io/github/actions/workflow/status/kashalls/infrastructure/renovate.yaml?branch=main&label=&logo=renovatebot&style=flat-square&color=blue)](https://github.com/kashalls/infrastructure/actions/workflows/renovate.yaml)
 
 [![Age](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.ok8.sh%2Fbadges%2Fcluster_birth_age%3Fformat%3Dshields&style=flat-square&label=Age)](https://github.com/home-operations/kromgo/)&nbsp;&nbsp;&nbsp;
 [![Uptime](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.ok8.sh%2Fbadges%2Fcluster_uptime_age%3Fformat%3Dshields&style=flat-square&label=Uptime)](https://github.com/home-operations/kromgo/)&nbsp;&nbsp;&nbsp;
@@ -160,7 +160,7 @@ The same box is the NAS and the cluster: Talos runs directly on the hardware, ZF
 
 <div align="center">
 
-[![Star History Chart](https://api.star-history.com/svg?repos=waifulabs/infrastructure&type=Date)](https://star-history.com/#waifulabs/infrastructure&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=kashalls/infrastructure&type=Date)](https://star-history.com/#kashalls/infrastructure&Date)
 
 </div>
 

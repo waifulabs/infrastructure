@@ -11,7 +11,7 @@ spec:
   interval: 1h
   values:
     config:
-      repo: github://waifulabs/infrastructure
+      repo: github://kashalls/infrastructure
       statusChecks: true
       prComments: true
       publicUrl: https://{{ .Release.Name }}.ok8.sh

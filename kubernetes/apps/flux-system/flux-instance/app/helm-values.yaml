@@ -12,7 +12,7 @@ instance:
   sync:
     kind: GitRepository
     name: home-kubernetes
-    url: https://github.com/waifulabs/infrastructure
+    url: https://github.com/kashalls/infrastructure
     ref: refs/heads/main
     path: kubernetes/apps
     interval: 1h

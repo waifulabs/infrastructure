@@ -6,6 +6,6 @@ metadata:
   name: github-status
 spec:
   type: github
-  address: https://github.com/waifulabs/infrastructure
+  address: https://github.com/kashalls/infrastructure
   secretRef:
     name: github-status-token-secret
