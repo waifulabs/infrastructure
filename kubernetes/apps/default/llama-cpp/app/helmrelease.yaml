@@ -33,12 +33,17 @@ spec:
               LLAMA_CACHE: /models
               LLAMA_ARG_HOST: 0.0.0.0
               LLAMA_ARG_PORT: &port 8080
-              # Starter model, swap freely. Downloaded once into the PVC on first start.
-              LLAMA_ARG_HF_REPO: ggml-org/gemma-3-4b-it-GGUF
+              # Qwen3.6-35B-A3B (MoE, ~3B active): strong tool calling and fast on CPU. Q4_K_M is ~21 GB.
+              # Downloaded once into the PVC on first start. Swap freely.
+              LLAMA_ARG_HF_REPO: ggml-org/Qwen3.6-35B-A3B-GGUF:Q4_K_M
+              # Required for tool calling: uses the GGUF's own chat template (Qwen tool-call format)
+              LLAMA_ARG_JINJA: "1"
+              LLAMA_ARG_REASONING_FORMAT: deepseek
               # Zen 2 EPYC 7452 = 32 physical cores / 64 threads. Generation is memory-bandwidth bound,
               # so use physical cores only and leave headroom for the rest of the node.
               LLAMA_ARG_THREADS: "24"
-              LLAMA_ARG_CTX_SIZE: "8192"
+              # total context, split across parallel slots (16k each)
+              LLAMA_ARG_CTX_SIZE: "32768"
               LLAMA_ARG_N_PARALLEL: "2"
               # Load weights into anonymous memory (counted against the limit below) instead of mmap
               # from ZFS, to avoid mapped pages and ARC both holding the model.
