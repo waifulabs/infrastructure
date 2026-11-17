@@ -125,7 +125,7 @@ I wrote [External DNS UniFi Webhook](https://github.com/kashalls/external-dns-un
 
 **45HomeLab HL15** · 256 GB RAM · 64 threads · Talos Linux (bare metal) · single-node Kubernetes
 
-The same box is the NAS and the cluster: Talos runs directly on the hardware, ZFS comes from the `siderolabs/zfs` extension (ARC capped at 219 GiB), and [OpenEBS ZFS LocalPV](#overview) provisions volumes from the pools below. Intel iGPU is exposed to pods for transcoding.
+The same box is the NAS and the cluster: Talos runs directly on the hardware, ZFS comes from the `siderolabs/zfs` extension (ARC capped at 128 GiB), and [OpenEBS ZFS LocalPV](#overview) provisions volumes from the pools below. Intel iGPU is exposed to pods for transcoding.
 
 - **Boot** — 1 × 1 TB Kingston NV3 NVMe
 - **`luddle` pool** — Samsung PM9A3 1.92 TB U.2 NVMe; app PVCs (`openebs-zfs-luddle`, default StorageClass)

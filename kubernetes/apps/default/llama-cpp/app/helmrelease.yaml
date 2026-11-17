@@ -1,0 +1,118 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app llama-cpp
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: llama-cpp
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      llama-cpp:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/ggml-org/llama.cpp
+              tag: server-b12429@sha256:7751a6c0dc3d019c231d42678abbb0fac1a13a24c17c956109ed27533139f280
+            env:
+              TZ: America/Los_Angeles
+              LLAMA_CACHE: /models
+              LLAMA_ARG_HOST: 0.0.0.0
+              LLAMA_ARG_PORT: &port 8080
+              # Qwen3.6-35B-A3B (MoE, ~3B active): strong tool calling and fast on CPU. Q4_K_M is ~21 GB.
+              # Downloaded once into the PVC on first start. Swap freely.
+              LLAMA_ARG_HF_REPO: ggml-org/Qwen3.6-35B-A3B-GGUF:Q4_K_M
+              # Required for tool calling: uses the GGUF's own chat template (Qwen tool-call format)
+              LLAMA_ARG_JINJA: "1"
+              LLAMA_ARG_REASONING_FORMAT: deepseek
+              # Zen 2 EPYC 7452 = 32 physical cores / 64 threads. Generation is memory-bandwidth bound,
+              # so use physical cores only and leave headroom for the rest of the node.
+              LLAMA_ARG_THREADS: "24"
+              # total context, split across parallel slots (16k each)
+              LLAMA_ARG_CTX_SIZE: "32768"
+              LLAMA_ARG_N_PARALLEL: "2"
+              # Load weights into anonymous memory (counted against the limit below) instead of mmap
+              # from ZFS, to avoid mapped pages and ARC both holding the model.
+              LLAMA_ARG_NO_MMAP: "1"
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: *port
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 6
+              readiness: *probes
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: *port
+                  # first start downloads the model; allow up to 30 min
+                  failureThreshold: 180
+                  periodSeconds: 10
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            # Memory budget: 256 GiB node - 128 GiB ZFS ARC cap = ~128 GiB for everything else.
+            # Existing app limits in this repo sum to roughly 85 GiB worst case, so this app
+            # gets 32 GiB requested / 40 GiB limit (model weights + KV cache + overhead).
+            # CPU limit (32) is above the thread count (24) so inference threads aren't CFS-throttled.
+            resources:
+              requests:
+                cpu: 8
+                memory: 32Gi
+              limits:
+                cpu: 32
+                memory: 40Gi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+    service:
+      app:
+        controller: llama-cpp
+        ports:
+          http:
+            port: *port
+    route:
+      app:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            path: /health
+        hostnames:
+          - "{{ .Release.Name }}.ok8.sh"
+        parentRefs:
+          - name: internal
+            namespace: networking
+    persistence:
+      models:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 80Gi
+        storageClass: openebs-zfs-luddle
+        globalMounts:
+          - path: /models
+      tmp:
+        type: emptyDir

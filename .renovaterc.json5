@@ -209,6 +209,16 @@
       },
     },
     {
+      description: 'llama.cpp server build tags',
+      matchDatasources: [
+        'docker',
+      ],
+      matchPackageNames: [
+        'ghcr.io/ggml-org/llama.cpp',
+      ],
+      versioning: 'regex:^server-b(?<major>\\d+)$',
+    },
+    {
       matchUpdateTypes: [
         'major',
       ],
