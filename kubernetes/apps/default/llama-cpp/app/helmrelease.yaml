@@ -6,6 +6,8 @@ metadata:
   name: &app llama-cpp
 spec:
   interval: 1h
+  # first start downloads the model before /health passes
+  timeout: 40m
   chartRef:
     kind: OCIRepository
     name: llama-cpp
@@ -36,15 +38,19 @@ spec:
               # Required for tool calling: uses the GGUF's own chat template (Qwen tool-call format)
               LLAMA_ARG_JINJA: "1"
               LLAMA_ARG_REASONING_FORMAT: deepseek
-              # Zen 2 EPYC 7452 = 32 physical cores / 64 threads. Generation is memory-bandwidth bound,
-              # so use physical cores only and leave headroom for the rest of the node.
+              # Zen 2 EPYC 7452 = 32 physical cores / 64 threads. llama-bench: generation is
+              # memory-bandwidth bound (~19.5 t/s at 24 or 32 threads), prompt processing is
+              # ~14% faster with 32 threads + ubatch 1024 (see --threads-batch in args).
               LLAMA_ARG_THREADS: "24"
+              LLAMA_ARG_UBATCH: "1024"
               # total context, split across parallel slots (16k each)
               LLAMA_ARG_CTX_SIZE: "32768"
               LLAMA_ARG_N_PARALLEL: "2"
               # Load weights into anonymous memory (counted against the limit below) instead of mmap
               # from ZFS, to avoid mapped pages and ARC both holding the model.
               LLAMA_ARG_NO_MMAP: "1"
+            # --threads-batch has no LLAMA_ARG_* env equivalent
+            args: ["--threads-batch", "32"]
             probes:
               liveness: &probes
                 enabled: true
@@ -74,15 +80,15 @@ spec:
               capabilities: { drop: ["ALL"] }
             # Memory budget: 256 GiB node - 128 GiB ZFS ARC cap = ~128 GiB for everything else.
             # Existing app limits in this repo sum to roughly 85 GiB worst case, so this app
-            # gets 32 GiB requested / 40 GiB limit (model weights + KV cache + overhead).
-            # CPU limit (32) is above the thread count (24) so inference threads aren't CFS-throttled.
+            # gets 40 GiB requested / 48 GiB limit; measured ~38.5 GiB idle with the model loaded.
+            # CPU limit (32) matches the prompt-processing thread count so those threads aren't CFS-throttled.
             resources:
               requests:
                 cpu: 8
-                memory: 32Gi
+                memory: 40Gi
               limits:
                 cpu: 32
-                memory: 40Gi
+                memory: 48Gi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
