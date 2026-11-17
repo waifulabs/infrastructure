@@ -36,7 +36,7 @@ machine:
   nodeLabels:
     topology.kubernetes.io/zone: controlplane
   install:
-    image: factory.talos.dev/metal-installer/fe7e5e71e476f4e65392f149b0060a6e83e5613ddeaef4a81f1b89c81372ece6:{{ ENV.TALOS_VERSION }}
+    image: factory.talos.dev/metal-installer/386d15c7e2d51469ebc0764d9eb118151eb4262a8f6d2fccee3c42341e1151bf:{{ ENV.TALOS_VERSION }}
     diskSelector:
       serial: 50026B76878F13D4
   token: op://Kubernetes/talos/TRUSTDINFO_TOKEN

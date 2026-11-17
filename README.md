@@ -127,6 +127,9 @@ I wrote [External DNS UniFi Webhook](https://github.com/kashalls/external-dns-un
 
 The same box is the NAS and the cluster: Talos runs directly on the hardware, ZFS comes from the `siderolabs/zfs` extension (ARC capped at 128 GiB), and [OpenEBS ZFS LocalPV](#overview) provisions volumes from the pools below. Intel iGPU is exposed to pods for transcoding.
 
+> [!NOTE]
+> The IOMMU is disabled in the BIOS. With it enabled, Talos's kexec reboots lost PCIe interrupts (NVMe admin-queue timeouts, HBA and ConnectX-3 MSI-X failures) and hung shutdown or boot; cold boots were unaffected.
+
 - **Boot** — 1 × 1 TB Kingston NV3 NVMe
 - **`luddle` pool** — Samsung PM9A3 1.92 TB U.2 NVMe; app PVCs (`openebs-zfs-luddle`, default StorageClass)
 - **`puddle` pool** — bulk storage

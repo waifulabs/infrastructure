@@ -1,8 +1,6 @@
 customization:
     extraKernelArgs:
-        - amd_iommu=on
         - amd_pstate=active
-        - iommu=pt
         - pcie_aspm=off
         - talos.dashboard.disabled=1
         - zfs.zfs_arc_max=137438953472 # 128 GiB ARC cap (~128 GiB left for k8s apps, incl. llama.cpp, and system on 256 GiB node)
