@@ -20,14 +20,11 @@ spec:
   values:
     controllers:
       llama-cpp:
-        annotations:
-          reloader.stakater.com/auto: "true"
         containers:
           app:
             image:
               repository: ghcr.io/ggml-org/llama.cpp
-              # TODO: pin to a server-bNNNN tag + digest (couldn't be resolved when this was drafted); Renovate will keep it current
-              tag: server
+              tag: server-b12429@sha256:7751a6c0dc3d019c231d42678abbb0fac1a13a24c17c956109ed27533139f280
             env:
               TZ: America/Los_Angeles
               LLAMA_CACHE: /models
@@ -63,6 +60,7 @@ spec:
               readiness: *probes
               startup:
                 enabled: true
+                custom: true
                 spec:
                   httpGet:
                     path: /health
