@@ -1,0 +1,163 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app openclaw
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: openclaw
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      openclaw:
+        strategy: Recreate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          automountServiceAccountToken: false
+        initContainers:
+          # Adapted from upstream scripts/k8s/manifests/deployment.yaml: seed config
+          # only when missing, and prepare a sticky /tmp (OpenClaw rejects
+          # world-writable temp ancestors without the sticky bit).
+          init-config:
+            image:
+              repository: docker.io/library/busybox
+              tag: "1.38"
+            command:
+              - sh
+              - -c
+              - |
+                set -eu
+                [ -f /home/node/.openclaw/openclaw.json ] || cp /seed/openclaw.json /home/node/.openclaw/openclaw.json
+                mkdir -p /home/node/.openclaw/workspace
+                [ -f /home/node/.openclaw/workspace/AGENTS.md ] || cp /seed/AGENTS.md /home/node/.openclaw/workspace/AGENTS.md
+                mkdir -p /tmp-volume/gateway-tmp && chmod 1777 /tmp-volume/gateway-tmp
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 10m
+                memory: 32Mi
+              limits:
+                memory: 64Mi
+        containers:
+          app:
+            image:
+              repository: ghcr.io/openclaw/openclaw
+              tag: 2026.11.5-slim
+            command: ["node", "/app/dist/index.js", "gateway", "run"]
+            env:
+              TZ: America/Los_Angeles
+              HOME: /home/node
+              OPENCLAW_CONFIG_DIR: /home/node/.openclaw
+              # Private SQLite snapshots need a writable cache on the read-only rootfs.
+              XDG_CACHE_HOME: /home/node/.openclaw/.cache
+              NODE_ENV: production
+            envFrom:
+              - secretRef:
+                  name: openclaw-secret
+            probes:
+              # The Control UI answers unknown paths with a catch-all 200, so these
+              # assert the JSON body rather than the status code (as upstream does).
+              # /startupz ignores channel health, so a broken Discord token won't
+              # evict the Gateway from the Service.
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command: &startupz
+                      - node
+                      - -e
+                      - "require('http').get('http://127.0.0.1:18789/startupz', r => { let b = ''; r.on('data', d => b += d); r.on('end', () => { try { process.exit(r.statusCode < 400 && JSON.parse(b).ready === true ? 0 : 1); } catch { process.exit(1); } }); }).on('error', () => process.exit(1))"
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 30
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command: *startupz
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  exec:
+                    command:
+                      - node
+                      - -e
+                      - "require('http').get('http://127.0.0.1:18789/healthz', r => { let b = ''; r.on('data', d => b += d); r.on('end', () => { try { process.exit(r.statusCode < 400 && JSON.parse(b).ok === true ? 0 : 1); } catch { process.exit(1); } }); }).on('error', () => process.exit(1))"
+                  periodSeconds: 30
+                  timeoutSeconds: 10
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            # The model runs at the provider, so this is just the Node gateway.
+            resources:
+              requests:
+                cpu: 250m
+                memory: 512Mi
+              limits:
+                memory: 2Gi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+    service:
+      app:
+        controller: openclaw
+        ports:
+          http:
+            port: 18789
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.ok8.sh"
+        parentRefs:
+          - name: internal
+            namespace: networking
+    persistence:
+      home:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
+        size: 10Gi
+        storageClass: openebs-zfs-luddle
+        globalMounts:
+          - path: /home/node/.openclaw
+      seed:
+        type: configMap
+        name: openclaw-seed
+        advancedMounts:
+          openclaw:
+            init-config:
+              - path: /seed
+                readOnly: true
+      tmp:
+        type: emptyDir
+        advancedMounts:
+          openclaw:
+            init-config:
+              - path: /tmp-volume
+            app:
+              - path: /tmp
+                subPath: gateway-tmp

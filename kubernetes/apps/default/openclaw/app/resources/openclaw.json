@@ -1,0 +1,34 @@
+{
+  "gateway": {
+    "mode": "local",
+    "bind": "lan",
+    "port": 18789,
+    "auth": {
+      "mode": "token"
+    },
+    "controlUi": {
+      "enabled": true,
+      "allowedOrigins": ["https://openclaw.ok8.sh"]
+    }
+  },
+  "agents": {
+    "defaults": {
+      "workspace": "~/.openclaw/workspace"
+    },
+    "entries": {
+      "default": {
+        "name": "OpenClaw Assistant",
+        "workspace": "~/.openclaw/workspace"
+      }
+    }
+  },
+  "channels": {
+    "discord": {
+      "enabled": true,
+      "token": { "source": "env", "provider": "default", "id": "DISCORD_BOT_TOKEN" },
+      "dmPolicy": "pairing",
+      "groupPolicy": "allowlist"
+    }
+  },
+  "cron": { "enabled": false }
+}
