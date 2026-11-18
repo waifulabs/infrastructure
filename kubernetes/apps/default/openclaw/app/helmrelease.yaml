@@ -38,6 +38,7 @@ spec:
                 set -eu
                 mkdir -p /pvc/data/.openclaw/workspace
                 chmod 0700 /pvc/data
+                find /pvc/data -type d -user 1000 -perm -2000 -exec chmod g-s {} +
                 [ -f /pvc/data/.openclaw/openclaw.json ] || cp /seed/openclaw.json /pvc/data/.openclaw/openclaw.json
                 [ -f /pvc/data/.openclaw/workspace/AGENTS.md ] || cp /seed/AGENTS.md /pvc/data/.openclaw/workspace/AGENTS.md
                 mkdir -p /tmp-volume/gateway-tmp && chmod 1777 /tmp-volume/gateway-tmp
@@ -106,9 +107,9 @@ spec:
             resources:
               requests:
                 cpu: 250m
-                memory: 512Mi
-              limits:
                 memory: 2Gi
+              limits:
+                memory: 4Gi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
