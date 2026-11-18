@@ -26,12 +26,6 @@ spec:
         pod:
           automountServiceAccountToken: false
         initContainers:
-          # Adapted from upstream scripts/k8s/manifests/deployment.yaml: seed config
-          # only when missing, and prepare a sticky /tmp (OpenClaw rejects
-          # world-writable temp ancestors without the sticky bit).
-          # OpenClaw also rejects the fsGroup-managed PVC root (root-owned, group-writable)
-          # as an ancestor, so state lives in private subfolders created here as UID 1000
-          # and the app mounts them via subPath.
           init-config:
             image:
               repository: docker.io/library/busybox
@@ -41,11 +35,10 @@ spec:
               - -c
               - |
                 set -eu
-                mkdir -p /pvc/state /pvc/update-captures
-                chmod 0700 /pvc/state /pvc/update-captures
-                [ -f /pvc/state/openclaw.json ] || cp /seed/openclaw.json /pvc/state/openclaw.json
-                mkdir -p /pvc/state/workspace
-                [ -f /pvc/state/workspace/AGENTS.md ] || cp /seed/AGENTS.md /pvc/state/workspace/AGENTS.md
+                mkdir -p /pvc/data/.openclaw/workspace
+                chmod 0700 /pvc/data
+                [ -f /pvc/data/.openclaw/openclaw.json ] || cp /seed/openclaw.json /pvc/data/.openclaw/openclaw.json
+                [ -f /pvc/data/.openclaw/workspace/AGENTS.md ] || cp /seed/AGENTS.md /pvc/data/.openclaw/workspace/AGENTS.md
                 mkdir -p /tmp-volume/gateway-tmp && chmod 1777 /tmp-volume/gateway-tmp
             securityContext:
               allowPrivilegeEscalation: false
@@ -68,17 +61,12 @@ spec:
               HOME: /home/node
               OPENCLAW_CONFIG_DIR: /home/node/.openclaw
               OPENCLAW_STATE_DIR: /home/node/.openclaw
-              # Private SQLite snapshots need a writable cache on the read-only rootfs.
               XDG_CACHE_HOME: /home/node/.openclaw/.cache
               NODE_ENV: production
             envFrom:
               - secretRef:
                   name: openclaw-secret
             probes:
-              # The Control UI answers unknown paths with a catch-all 200, so these
-              # assert the JSON body rather than the status code (as upstream does).
-              # /startupz ignores channel health, so a broken Discord token won't
-              # evict the Gateway from the Service.
               startup:
                 enabled: true
                 custom: true
@@ -114,7 +102,6 @@ spec:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
-            # The model runs at the provider, so this is just the Node gateway.
             resources:
               requests:
                 cpu: 250m
@@ -153,10 +140,8 @@ spec:
             init-config:
               - path: /pvc
             app:
-              - path: /home/node/.openclaw
-                subPath: state
-              - path: /home/node/.openclaw.update-captures
-                subPath: update-captures
+              - path: /home/node
+                subPath: data
       config:
         type: configMap
         name: openclaw-config
