@@ -3,6 +3,7 @@
     "mode": "local",
     "bind": "lan",
     "port": 18789,
+    "trustedProxies": ["172.30.0.0/16"],
     "auth": {
       "mode": "token"
     },
