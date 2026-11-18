@@ -45,7 +45,7 @@
       "enabled": true,
       "token": { "source": "env", "provider": "default", "id": "DISCORD_BOT_TOKEN" },
       "dmPolicy": "allowlist",
-      "allowFrom": ["accessGroup:aevys"],
+      "allowFrom": ["accessGroup:aevys", "discord:201077739589992448"],
       "groupPolicy": "allowlist",
       "guilds": {
         "987908409984692225": {
@@ -54,6 +54,9 @@
         }
       }
     }
+  },
+  "commands": {
+    "ownerAllowFrom": ["discord:201077739589992448"]
   },
   "cron": { "enabled": false }
 }
