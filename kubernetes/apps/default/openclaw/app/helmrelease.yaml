@@ -26,43 +26,13 @@ spec:
         pod:
           automountServiceAccountToken: false
         initContainers:
-          # The fsGroup-managed PVC root is group-writable and not owned by UID 1000, so
-          # OpenClaw refuses it as a state/temp ancestor. Provision private children owned
-          # by the Gateway UID once and mount them via subPath (upstream
-          # docs/install/kubernetes.md "Private storage after a PVC remount").
-          init-dirs:
-            image:
-              repository: docker.io/library/busybox
-              tag: "1.38"
-            command:
-              - sh
-              - -c
-              - |
-                set -eu
-                for d in state update-captures; do
-                  [ -d "/pvc/$d" ] && continue
-                  mkdir "/pvc/$d"
-                  chmod 0700 "/pvc/$d"
-                  chown 1000:1000 "/pvc/$d"
-                done
-            securityContext:
-              runAsNonRoot: false
-              runAsUser: 0
-              runAsGroup: 0
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
-              capabilities: { drop: ["ALL"], add: ["CHOWN", "DAC_OVERRIDE"] }
-            resources:
-              requests:
-                cpu: 10m
-                memory: 16Mi
-              limits:
-                memory: 32Mi
           # Adapted from upstream scripts/k8s/manifests/deployment.yaml: seed config
           # only when missing, and prepare a sticky /tmp (OpenClaw rejects
           # world-writable temp ancestors without the sticky bit).
+          # OpenClaw also rejects the fsGroup-managed PVC root (root-owned, group-writable)
+          # as an ancestor, so state lives in private subfolders created here as UID 1000
+          # and the app mounts them via subPath.
           init-config:
-            dependsOn: init-dirs
             image:
               repository: docker.io/library/busybox
               tag: "1.38"
@@ -71,9 +41,11 @@ spec:
               - -c
               - |
                 set -eu
-                [ -f /home/node/.openclaw/openclaw.json ] || cp /seed/openclaw.json /home/node/.openclaw/openclaw.json
-                mkdir -p /home/node/.openclaw/workspace
-                [ -f /home/node/.openclaw/workspace/AGENTS.md ] || cp /seed/AGENTS.md /home/node/.openclaw/workspace/AGENTS.md
+                mkdir -p /pvc/state /pvc/update-captures
+                chmod 0700 /pvc/state /pvc/update-captures
+                [ -f /pvc/state/openclaw.json ] || cp /seed/openclaw.json /pvc/state/openclaw.json
+                mkdir -p /pvc/state/workspace
+                [ -f /pvc/state/workspace/AGENTS.md ] || cp /seed/AGENTS.md /pvc/state/workspace/AGENTS.md
                 mkdir -p /tmp-volume/gateway-tmp && chmod 1777 /tmp-volume/gateway-tmp
             securityContext:
               allowPrivilegeEscalation: false
@@ -178,11 +150,8 @@ spec:
         existingClaim: openclaw-zfs
         advancedMounts:
           openclaw:
-            init-dirs:
-              - path: /pvc
             init-config:
-              - path: /home/node/.openclaw
-                subPath: state
+              - path: /pvc
             app:
               - path: /home/node/.openclaw
                 subPath: state
