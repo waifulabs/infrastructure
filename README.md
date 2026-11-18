@@ -125,7 +125,7 @@ I wrote [External DNS UniFi Webhook](https://github.com/kashalls/external-dns-un
 
 **45HomeLab HL15** · 256 GB RAM · 64 threads · Talos Linux (bare metal) · single-node Kubernetes
 
-The same box is the NAS and the cluster: Talos runs directly on the hardware, ZFS comes from the `siderolabs/zfs` extension (ARC capped at 128 GiB), and [OpenEBS ZFS LocalPV](#overview) provisions volumes from the pools below. Intel iGPU is exposed to pods for transcoding.
+The same box is the NAS and the cluster: Talos runs directly on the hardware, ZFS comes from the `siderolabs/zfs` extension (ARC capped at 200 GiB), and [OpenEBS ZFS LocalPV](#overview) provisions volumes from the pools below. Intel iGPU is exposed to pods for transcoding.
 
 > [!NOTE]
 > The IOMMU is disabled in the BIOS. With it enabled, Talos's kexec reboots lost PCIe interrupts (NVMe admin-queue timeouts, HBA and ConnectX-3 MSI-X failures) and hung shutdown or boot; cold boots were unaffected.
