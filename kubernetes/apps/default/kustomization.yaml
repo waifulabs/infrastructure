@@ -11,8 +11,8 @@ resources:
   - ./home-assistant/ks.yaml
   - ./hytale/ks.yaml
   - ./immich/ks.yaml
-  - ./llama-cpp/ks.yaml
   - ./mosquitto/ks.yaml
+  - ./openclaw/ks.yaml
   #- ./music-assistant/ks.yaml
   #- ./rtlamr2mqtt/ks.yaml
   - ./zigbee2mqtt/ks.yaml

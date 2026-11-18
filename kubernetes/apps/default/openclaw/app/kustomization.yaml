@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./externalsecret.yaml
+  - ./ocirepository.yaml
+  - ./pvc-zfs.yaml
+  - ./backendtrafficpolicy.yaml
+  - ./helmrelease.yaml
+configMapGenerator:
+  # openclaw.json is mounted read-only. AGENTS.md is only a seed: the init container
+  # copies it into the workspace when missing, then the PVC copy is the source of truth.
+  - name: openclaw-config
+    files:
+      - openclaw.json=./resources/openclaw.json
+      - AGENTS.md=./resources/AGENTS.md
+generatorOptions:
+  disableNameSuffixHash: true

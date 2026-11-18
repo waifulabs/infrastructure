@@ -1,18 +1,16 @@
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.ok8.sh/gateway.envoyproxy.io/backendtrafficpolicy_v1alpha1.json
-# Replaces the gateway-wide policy for this route without compression: Envoy's compressor
-# strips Accept-Encoding upstream, and llama-server's web UI refuses clients without gzip.
+# The Control UI talks to the Gateway over a long-lived WebSocket; disable the request
+# timeout so Envoy doesn't cut it off.
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: BackendTrafficPolicy
 metadata:
-  name: llama-cpp
+  name: openclaw
 spec:
-  connection:
-    bufferLimit: 8Mi
   targetRefs:
     - group: gateway.networking.k8s.io
       kind: HTTPRoute
-      name: llama-cpp
+      name: openclaw
   tcpKeepalive: {}
   timeout:
     http:
