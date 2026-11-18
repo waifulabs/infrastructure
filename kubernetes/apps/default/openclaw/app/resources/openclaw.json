@@ -13,21 +13,46 @@
   },
   "agents": {
     "defaults": {
-      "workspace": "~/.openclaw/workspace"
+      "workspace": "~/.openclaw/workspace",
+      "model": {
+        "primary": "anthropic/claude-sonnet-5-5",
+        "fallbacks": ["openai/gpt-6.2-sol"]
+      },
+      "models": {
+        "anthropic/claude-opus-5-5": { "alias": "Opus" },
+        "anthropic/claude-sonnet-5-5": { "alias": "Sonnet" },
+        "openai/gpt-6.2-astra": { "alias": "Astra" },
+        "openai/gpt-6.2-sol": { "alias": "Sol" }
+      }
     },
     "entries": {
-      "default": {
-        "name": "OpenClaw Assistant",
-        "workspace": "~/.openclaw/workspace"
+      "aevys": {
+        "name": "Aevys",
+        "identity": { "name": "Aevys" }
       }
+    }
+  },
+  "accessGroups": {
+    "aevys": {
+      "type": "discord.channelAudience",
+      "guildId": "987908409984692225",
+      "channelId": "1572411252448170094",
+      "membership": "canViewChannel"
     }
   },
   "channels": {
     "discord": {
       "enabled": true,
       "token": { "source": "env", "provider": "default", "id": "DISCORD_BOT_TOKEN" },
-      "dmPolicy": "pairing",
-      "groupPolicy": "allowlist"
+      "dmPolicy": "allowlist",
+      "allowFrom": ["accessGroup:aevys"],
+      "groupPolicy": "allowlist",
+      "guilds": {
+        "987908409984692225": {
+          "requireMention": true,
+          "roles": ["1572416911310856223"]
+        }
+      }
     }
   },
   "cron": { "enabled": false }

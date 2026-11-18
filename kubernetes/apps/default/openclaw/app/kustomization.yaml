@@ -9,10 +9,9 @@ resources:
   - ./backendtrafficpolicy.yaml
   - ./helmrelease.yaml
 configMapGenerator:
-  # Seed files only: the init container copies these into the PVC when missing.
-  # After first boot the PVC copy is the source of truth (onboard, channels add,
-  # Control UI edits persist). To reseed, delete the file on the PVC and restart.
-  - name: openclaw-seed
+  # openclaw.json is mounted read-only. AGENTS.md is only a seed: the init container
+  # copies it into the workspace when missing, then the PVC copy is the source of truth.
+  - name: openclaw-config
     files:
       - openclaw.json=./resources/openclaw.json
       - AGENTS.md=./resources/AGENTS.md

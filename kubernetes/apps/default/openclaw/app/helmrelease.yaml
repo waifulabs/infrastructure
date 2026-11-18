@@ -26,9 +26,9 @@ spec:
         pod:
           automountServiceAccountToken: false
         initContainers:
-          # Adapted from upstream scripts/k8s/manifests/deployment.yaml: seed config
-          # only when missing, and prepare a sticky /tmp (OpenClaw rejects
-          # world-writable temp ancestors without the sticky bit).
+          # Adapted from upstream scripts/k8s/manifests/deployment.yaml: seed AGENTS.md
+          # only when missing (the agent may edit it), and prepare a sticky /tmp
+          # (OpenClaw rejects world-writable temp ancestors without the sticky bit).
           init-config:
             image:
               repository: docker.io/library/busybox
@@ -38,7 +38,6 @@ spec:
               - -c
               - |
                 set -eu
-                [ -f /home/node/.openclaw/openclaw.json ] || cp /seed/openclaw.json /home/node/.openclaw/openclaw.json
                 mkdir -p /home/node/.openclaw/workspace
                 [ -f /home/node/.openclaw/workspace/AGENTS.md ] || cp /seed/AGENTS.md /home/node/.openclaw/workspace/AGENTS.md
                 mkdir -p /tmp-volume/gateway-tmp && chmod 1777 /tmp-volume/gateway-tmp
@@ -62,6 +61,10 @@ spec:
               TZ: America/Los_Angeles
               HOME: /home/node
               OPENCLAW_CONFIG_DIR: /home/node/.openclaw
+              # Config is managed in Git; the directory mount (not subPath) lets
+              # ConfigMap updates reach the file so the Gateway hot-reloads them.
+              OPENCLAW_CONFIG_READONLY: "1"
+              OPENCLAW_CONFIG_PATH: /config/openclaw.json
               # Private SQLite snapshots need a writable cache on the read-only rootfs.
               XDG_CACHE_HOME: /home/node/.openclaw/.cache
               NODE_ENV: production
@@ -144,13 +147,16 @@ spec:
         existingClaim: openclaw-zfs
         globalMounts:
           - path: /home/node/.openclaw
-      seed:
+      config:
         type: configMap
-        name: openclaw-seed
+        name: openclaw-config
         advancedMounts:
           openclaw:
             init-config:
               - path: /seed
+                readOnly: true
+            app:
+              - path: /config
                 readOnly: true
       tmp:
         type: emptyDir
