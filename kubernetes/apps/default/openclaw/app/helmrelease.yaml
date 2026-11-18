@@ -22,9 +22,10 @@ spec:
       openclaw:
         strategy: Recreate
         annotations:
-          reloader.stakater.com/auto: "true"
+          secret.reloader.stakater.com/reload: openclaw-secret
         pod:
           automountServiceAccountToken: false
+          terminationGracePeriodSeconds: 120
         initContainers:
           init-config:
             image:
