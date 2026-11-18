@@ -56,7 +56,7 @@ spec:
           app:
             image:
               repository: ghcr.io/openclaw/openclaw
-              tag: 2026.11.5-slim
+              tag: 2026.11.5-slim@sha256:9c74476e3e79b5a1595fd5cf904286eaba3471c10c640aaa9a361a89b41d0882
             command: ["node", "/app/dist/index.js", "gateway", "run"]
             env:
               TZ: America/Los_Angeles
@@ -131,6 +131,9 @@ spec:
             port: 18789
     route:
       app:
+        annotations:
+          gatus.home-operations.com/endpoint: |-
+            path: /healthz
         hostnames:
           - "{{ .Release.Name }}.ok8.sh"
         parentRefs:
