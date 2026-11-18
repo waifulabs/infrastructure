@@ -81,7 +81,7 @@ spec:
                     command: &startupz
                       - node
                       - -e
-                      - "require('http').get('http://127.0.0.1:18789/startupz', r => { let b = ''; r.on('data', d => b += d); r.on('end', () => { try { process.exit(r.statusCode < 400 && JSON.parse(b).ready === true ? 0 : 1); } catch { process.exit(1); } }); }).on('error', () => process.exit(1))"
+                      - "require('http').get('http://127.0.0.1:18789/startupz', r => { let b = ''; r.on('data', d => b += d); r.on('end', () => { try { process.exit(r.statusCode < 400 && JSON.parse(b).ok === true ? 0 : 1); } catch { process.exit(1); } }); }).on('error', () => process.exit(1))"
                   periodSeconds: 10
                   timeoutSeconds: 5
                   failureThreshold: 30
@@ -138,10 +138,7 @@ spec:
             namespace: networking
     persistence:
       home:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 10Gi
-        storageClass: openebs-zfs-luddle
+        existingClaim: openclaw-zfs
         globalMounts:
           - path: /home/node/.openclaw
       seed:

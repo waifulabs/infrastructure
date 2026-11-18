@@ -12,6 +12,12 @@ spec:
     - name: onepassword
       namespace: external-secrets
   path: ./kubernetes/apps/default/openclaw/app
+  components:
+    - ../../../../components/kopiur/backup
+  postBuild:
+    substitute:
+      APP: openclaw-zfs
+      KOPIUR_CACHE_CAPACITY: 2Gi
   prune: true
   wait: false
   interval: 1h
