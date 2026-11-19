@@ -56,7 +56,7 @@ spec:
           app:
             image:
               repository: ghcr.io/openclaw/openclaw
-              tag: 2026.11.5-slim@sha256:9c74476e3e79b5a1595fd5cf904286eaba3471c10c640aaa9a361a89b41d0882
+              tag: 2026.11.6-slim@sha256:65e229536a2698f0ab211c8a3d1c5c8e2685d19379d153e95f93ff76f22779cf
             command: ["node", "/app/dist/index.js", "gateway", "run"]
             env:
               TZ: America/Los_Angeles
