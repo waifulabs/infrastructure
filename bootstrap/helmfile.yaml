@@ -41,7 +41,7 @@ releases:
   - name: envoy-gateway
     namespace: networking
     chart: oci://docker.io/envoyproxy/gateway-helm
-    version: v1.9.1
+    version: 1.10.0
     needs: ["cert-manager/cert-manager"]
 
   - name: external-secrets
